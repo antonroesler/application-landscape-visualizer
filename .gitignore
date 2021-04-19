@@ -4,3 +4,10 @@ go.js
 
 # Mac deleted files
 .DS*
+
+# fancy GoJs Stuff
+*go-*.js
+*go-*.ts
+*go.*.ts
+*go-*.mjs
+*go.mjs

@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+
+}
+
+h1 {
+  text-align: center;
+  font-style: italic;
+  font
+}
+
+.header {
+  font-size: 10px;
+  background-color: silver;
+
+
+
+}
+
+.main {
+  background-color: white;
+}
+.myDiagramDiv{
+  width: 300px;
+  height: 300px;
+  border: 2px solid black;
+
+
+}
+
+.footer {
+  background-color: silver;
+  font-size: 8px;
+  font-style: italic;
+}
