@@ -3,3 +3,4 @@ Summer 2021 group project for the module "Advanced Programming" of the Engineeri
 
 ## Contributor
 - Anton Roesler
+- Patrick Frech
