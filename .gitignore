@@ -1,0 +1,5 @@
+# GoJS should not be hosted on Github
+go.js
+
+# Mac deleted files
+.DS*
