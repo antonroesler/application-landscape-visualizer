@@ -1,9 +1,24 @@
 body {
-  background-color: black;
-  text-align: center;
-  font-family: sans-serif;
-  font-size: 14px;
+  font-family: Arial, Verdana, Helvetica;
+  background-color: silver;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  font-style: normal;
+  font-weight: 300;
+}
 
+.container {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: auto;
+  background-color: #FFFFFF;
+  -webkit-box-shadow: -10px 10px 19px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: -10px 10px 19px 5px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
@@ -12,9 +27,15 @@ h1 {
   font
 }
 
+h2{
+  text-align: center;
+  font-style: italic;
+}
+
 .header {
   font-size: 10px;
-  background-color: silver;
+  background-color: orange;
+  padding: 2%;
 
 
 
@@ -22,6 +43,7 @@ h1 {
 
 .main {
   background-color: white;
+  padding: 2%;
 }
 .myDiagramDiv{
   width: 300px;
@@ -31,8 +53,16 @@ h1 {
 
 }
 
+.subsection {
+  font-size: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
 .footer {
-  background-color: silver;
+  background-color: orange;
   font-size: 8px;
+  font-style: italic;
+  padding: 1%;
   font-style: italic;
 }
