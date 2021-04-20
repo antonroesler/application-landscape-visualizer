@@ -13,10 +13,9 @@ Summer 2021 group project for the module "Advanced Programming" of the Engineeri
 4. Your code should be cleanly written and commented as needed.
 5. Your code should be well tested before creating a pull request.
 6. Naming conventions and other style specifications are still to be announced. For JavaScript code, the naming conventions according to https://www.robinwieruch.de/javascript-naming-conventions should be used.
-7. Test
 
 ## Best Practices for Contributors
 1. To update your local repo, you need to initially use the command `git remote add upstream https://github.com/antonroesler/application-landscape-visualizer`.
-To pull the updated repo from other users use the command `git pull upstream main`.
+To pull the updated repo from the main repo use the command `git pull upstream main`.
 2. Naming rule for a commit is *#issue Here is a short description* e.g. *#1 Initial commit*.
 A branch should always contain the feature name and should be descriptive e.g. *test/foo*. Test is a leading token for categorization. More leading tokens are: *feat, bug, test, wip*.
