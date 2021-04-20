@@ -27,5 +27,5 @@ A branch should always contain the feature name and should be descriptive e.g. *
 1. Forking the main project.
 2. Cloning the forked project to the local machine.
 3. Creating a branch to develop a feature, debug, test, ...
-4. If you finished developing the feature, you sync (pull) your local repo with the main repo.
-6. You publish your branch and create a pull request to contribute your code to the antonroesler:main.
+4. You then start to work and commit your changes to the new branch.
+6. When you're done, make sure the branch is pushed to GitHub and create a pull request to contribute your code to the antonroesler:main.
