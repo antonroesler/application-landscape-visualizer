@@ -1,70 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Visual Test</title>
-    <link rel="stylesheet" href="css/pf_style.css">
-    <script src="release/go.js"></script>
-<script>
-      function init() {
-      var $ = go.GraphObject.make;
-      myDiagram = $(go.Diagram, "myDiagramDiv");
-      var nodeDataArray = [
-      { key: "Phostoshop CS" , color: "cyan"},
-      { key: "Dreamweaver CS" , color: "cyan"},
-      { key: "DxO Camera Lab" , color: "lime"},
-      { key: "Spring Boot" , color: "lime"},
-      { key: "Eclipse IDE" , color: "cyan"},
-      { key: "Visual Studio Code" , color: "cyan" }
-    ];
-      var linkDataArray = [
-      { to: "Dreamweaver CS", from: "Photoshop CS" },
-      { to: "Phostoshop CS", from: "DxO Camera Lab" },
-      { to: "Spring Boot", from: "Eclipse IDE"},
-      { to: "Visual Studio Code", from: "Eclipse IDE"},
-      { to: "Dreamweaver CS", from: "Spring Boot"}
-    ];
+
+<head>
+  <meta charset="utf-8">
+  <title>Visual Test for AP Project</title>
+  <link rel="stylesheet" href="css/pf_style.css">
+  <script src="js/go.js"></script>
+  <script src="js/init.js"></script>
 
 
-    myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
-    myDiagram.nodeTemplate = $(go.Node, "Auto",
-      $(go.Shape, "RoundedRectangle",{fill: "white"},
-          new go.Binding("fill", "color")
-          ),
+</head>
 
-          $(go.TextBlock, "Text",
-            new go.Binding("text", "key")
-            )
-
-
-  );
-
-  }
-
-      </script>
-
-
-  </head>
-  <body onload="init()">
-
+<body onload="init();">
+<div class="container">
 
 
 
   <div class="header">
     <h1>Visual Test for Project "Application Landscape Visualisation"</h1>
+    <h2>Part of the Project Advanced Programming Jung/Bremm EBIS 2021</h2>
 
   </div>
 
-  <hr>
+
   <div class="main">
     <h2>Visual Editor</h2>
-    <div id="myDiagramDiv" style="width: auto; height: 300px;"></div>
-    </div>
-    <hr>
-    <div class="footer">
-      <h1>Copyright Ecore</h1>
-    </div>
+    <div id="myDiagramDiv" style="width: auto; height: 600px;"></div>
+  </div>
+  <div class="subsection">
+    Disclaimer: This <b>SOFTWARE PRODUCT</b> is provided by <b>eCore Systems</b> "as is" and "with all faults." <b>eCore Systems</b> makes no representations or warranties of any kind concerning the safety, suitability, lack of viruses, inaccuracies, typographical errors, or other harmful components of this SOFTWARE PRODUCT. There are inherent dangers in the use of any software, and you are solely responsible for determining whether this SOFTWARE PRODUCT is compatible with your equipment and other software installed on your equipment. You are also solely responsible for the protection of your equipment and backup of your data, and <b>eCore Systems</b> will not be liable for any damages you may suffer in connection with using, modifying, or distributing this SOFTWARE PRODUCT.
+  </div>
+  <div class="footer">
+    <h1>Copyright Ecore - Patrick Frech - Have a nice Day </h1>
+  </div>
+</div>
 
+</body>
 
-  </body>
 </html>
