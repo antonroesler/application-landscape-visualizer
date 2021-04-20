@@ -5,6 +5,7 @@ Summer 2021 group project for the module "Advanced Programming" of the Engineeri
 - Anton Roesler
 - Patrick Frech
 - Leonard Hußke
+- Feng Yi Lu
 
 ## Rules for Contributors
 1. Before a new feature is developed or a change is made, there must be an issue. If there is no issue: open one. The issue is so that everyone else knows what is happening and can comment on it. Everyone should actively participate in the communication.
