@@ -20,7 +20,6 @@ Summer 2021 group project for the module "Advanced Programming" of the Engineeri
 To pull the updated repo from the main repo use the command `git pull upstream main` or `git merge upstream main`.
 2. Naming rule for a commit is *#issue Here is a short description* e.g. *#1 Initial commit*.
 A branch should always contain the feature name and should be descriptive e.g. *test/foo*. Test is a leading token for categorization. More leading tokens are: *feat, bug, test, wip*.
-3. Something
 
 ## GIT Workflow
 1. Forking the main project.
