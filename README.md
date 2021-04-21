@@ -28,24 +28,5 @@ A branch should always contain the feature name and should be descriptive e.g. *
 4. You then start to work and commit your changes to the new branch.
 6. When you're done, make sure the branch is pushed to GitHub and create a pull request to contribute your code to the antonroesler:main.
 
-## JS Header
-Before you start coding, create a header comment in the new file you created. It is important to  think about WHAT you are doing before you start coding.
-
-__EXAMPLE__
-
-/*
-\* Copyright (c) 2021 Ecore. All rights reserved.\
-\*\
-\* University:		 Frankfurt University of Applied Sciences\
-\* Study program:	 Engineering Business Information Systems\
-\* Semester:		   Advanced Programming 20/21\
-\* Professor:		   Prof. Dr. Jung, Prof. Dr. Bremm\
-\* Date:			     21.04.2021\
-\*\
-\*/
-
-/**
-\* A short description what this file/class is all about.\
-\* @author Your full name\
-\*\
-\*/
+## File Header
+Before you start coding, create a header comment in the new file you created. It is important to  think about WHAT you are doing before you start coding. You can find an example header in the misc folder under header.txt.
