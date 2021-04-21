@@ -4,8 +4,40 @@ var $ = go.GraphObject.make;
 function readAppName() {
   var textField = document.getElementById("a-name");
   appName = textField.value;
-  console.log(appName)
   D.add(appName, "lightblue")
+}
+
+function addElementToOptionsList(name) {
+  var optionsListDiv = document.getElementById("opt")
+  let div = document.createElement('div')
+  let checkbox = document.createElement('input')
+  checkbox.setAttribute("type", "checkbox")
+  checkbox.setAttribute("id", name)
+  checkbox.setAttribute("name", name)
+  let label = document.createElement('label')
+  label.setAttribute("for", name)
+  div.appendChild(checkbox)
+  div.appendChild(label)
+  optionsListDiv.appendChild(div)
+  label.innerHTML += name;
+}
+
+function getCheckedElementsFromOptionsList()
+  var checkedKeys = []
+  var optionsListDiv = document.getElementById("opt");
+  var childern = optionsListDiv.getElementsByTagName('div');
+  console.log(childern)
+  for (var i = 0; i < childern.length; i++){
+    var div = childern[i];
+    var label = div.getElementsByTagName('label')[0]
+    var check = div.getElementsByTagName('input')[0]
+    console.log(label);
+    console.log(check);
+    if (check.checked == true) {
+      checkedKeys.push(label.innerHTML) # HIER GEHTS WEITER
+    }
+
+  }
 }
 
 
@@ -26,6 +58,7 @@ class ApplicationDiagramm {
           },
           new go.Binding("text", "key"))
       );
+    this.diagram.layout = $(go.CircularLayout);
   }
 
   add(name, color) {
@@ -37,7 +70,11 @@ class ApplicationDiagramm {
     this.diagram.updateAllRelationshipsFromData();
     this.diagram.updateAllTargetBindings();
     this.diagram.commitTransaction("update");
+    addElementToOptionsList(name)
+    getCheckedElementsFromOptionsList()
+
   }
+
 }
 
 var D = new ApplicationDiagramm();
