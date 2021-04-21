@@ -31,19 +31,20 @@ A branch should always contain the feature name and should be descriptive e.g. *
 ## JS Header
 Before you start coding, create a header comment in the new file you created. It is important to  think about WHAT you are doing before you start coding.
 __EXAMPLE__
+
 /*
-\ * Copyright (c) 2021 Ecore. All rights reserved.\
-\*\
+\* Copyright (c) 2021 Ecore. All rights reserved.\
+\*
 \* University:		 Frankfurt University of Applied Sciences\
 \* Study program:	 Engineering Business Information Systems\
 \* Semester:		   Advanced Programming 20/21\
-\* Professor:		   Prof. Dr. Jung, Prof. Dr. Bremm
-\* Date:			     21.04.2021
+\* Professor:		   Prof. Dr. Jung, Prof. Dr. Bremm\
+\* Date:			     21.04.2021\
 \*
 \*/
 
- /**
-\* A short description what this file/class is all about.
-\* @author Your full name
+/**
+\* A short description what this file/class is all about.\
+\* @author Your full name\
 \*
 \*/
