@@ -3,10 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>Prototype Add Module</title>
-    <script src="../../gojs/go.js"></script>
-    <script src="AddModule.js"></script>
+    <script src="../../gojs-lib/go.js"></script>
   </head>
   <body onload="init()">
+    <form>
+      <label for="a-name">Anwendungsname:</label>
+      <input type="text" id="a-name" name="a-name">
+    </form>
+    <button onclick="readAppName()" name="a-button">OK!</button>
     <div id="myDia" style="width:500px; height:500px; border:1px solid black;"></div>
+    <div id="dia2" style="width:500px; height:500px; border:1px solid black;"></div>
   </body>
+  <script src="AddModule.js"></script>
 </html>
