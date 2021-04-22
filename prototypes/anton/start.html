@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Prototype Add Module</title>
-    <script src="../../gojs/go.js"></script>
-    <script src="AddModule.js"></script>
-  </head>
-  <body onload="init()">
-    <div id="myDia" style="width:500px; height:500px; border:1px solid black;"></div>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Prototype Add Module</title>
+  <script src="../../gojs-lib/go.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="outer">
+    <div class="container">
+      <form>
+        <label for="a-name">Anwendungsname:</label>
+        <input type="text" id="a-name" name="a-name">
+      </form>
+      <form>
+        <label for="farbe">Farbe:</label>
+        <input type="text" id="farbe" name="farbe" oninput="color()">
+      </form>
+      <p>Wähle Abhängigkeiten:</p>
+      <div id="opt">
+
+      </div>
+
+
+      <button onclick="readAppName()" name="a-button">OK!</button>
+    </div>
+    <div id="dia2"></div>
+  </div>
+</body>
+<script src="AddModule.js"></script>
+
 </html>

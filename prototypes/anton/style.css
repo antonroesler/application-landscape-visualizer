@@ -1,0 +1,55 @@
+
+body {
+  font-family: 'Monaco';
+  background-color: #DDD;
+}
+
+input {
+  margin: 0.5rem;
+}
+
+.outer {
+  width: 1000px;
+  height: 100%;
+}
+.container {
+  box-sizing: border-box;
+  width: inherit;
+  padding: 50px;
+  background-color: #0B354F;
+  color: #FDE319;
+  text-align: center;
+  clear: both;
+}
+
+.container input {
+  width: 100%;
+  clear: both;
+}
+
+#dia2 {
+  box-sizing: border-box;
+  width: inherit;
+  height:500px;
+  border:1px solid black;
+}
+
+button {
+  width: 500px;
+  height: 50px;
+  background-color: #1E8C70;
+  margin: 1rem;
+}
+.check-option input{
+    width: 1rem;
+}
+#opt {
+  width: 57%;
+  float: right;
+}
+.check-option {
+  width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
