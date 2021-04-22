@@ -11,6 +11,7 @@ function readAppName() {
 function addElementToOptionsList(name) {
   var optionsListDiv = document.getElementById("opt")
   let div = document.createElement('div')
+  div.setAttribute("class", "check-option")
   let checkbox = document.createElement('input')
   checkbox.setAttribute("type", "checkbox")
   checkbox.setAttribute("id", name)

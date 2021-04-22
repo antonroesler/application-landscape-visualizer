@@ -5,26 +5,29 @@
   <meta charset="utf-8">
   <title>Prototype Add Module</title>
   <script src="../../gojs-lib/go.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <form>
-    <label for="a-name">Anwendungsname:</label>
-    <input type="text" id="a-name" name="a-name">
-  </form>
-  <form>
-    <label for="farbe">Farbe:</label>
-    <input type="text" id="farbe" name="farbe" oninput="color()">
-  </form>
+  <div class="outer">
+    <div class="container">
+      <form>
+        <label for="a-name">Anwendungsname:</label>
+        <input type="text" id="a-name" name="a-name">
+      </form>
+      <form>
+        <label for="farbe">Farbe:</label>
+        <input type="text" id="farbe" name="farbe" oninput="color()">
+      </form>
+      <div id="opt">
+        <p>Wähle Abhängigkeiten:</p>
+      </div>
 
-  <div id="opt">
-    <p>Wähle Abhängigkeiten:</p>
+
+      <button onclick="readAppName()" name="a-button">OK!</button>
+    </div>
+    <div id="dia2"></div>
   </div>
-
-  <button onclick="readAppName()" name="a-button">OK!</button>
-
-  <div id="dia2" style="width:500px; height:500px; border:1px solid black;"></div>
-
 </body>
 <script src="AddModule.js"></script>
 
