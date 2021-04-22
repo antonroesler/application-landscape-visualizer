@@ -1,11 +1,18 @@
 var $ = go.GraphObject.make;
-
+var all = [];
 
 function readAppName() {
   var textField = document.getElementById("a-name");
   appName = textField.value;
   var color = getColor();
+  if (all.includes(appName)){
+    msg = appName + " existiert berreits. Name muss unique sein!"
+    window.alert(msg)
+  }
+  else{
+    all.push(appName)
   D.add(appName, color)
+}
 }
 
 function addElementToOptionsList(name) {
