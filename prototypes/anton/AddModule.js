@@ -4,7 +4,8 @@ var $ = go.GraphObject.make;
 function readAppName() {
   var textField = document.getElementById("a-name");
   appName = textField.value;
-  D.add(appName, "lightblue")
+  var color = getColor();
+  D.add(appName, color)
 }
 
 function addElementToOptionsList(name) {
@@ -22,22 +23,31 @@ function addElementToOptionsList(name) {
   label.innerHTML += name;
 }
 
-function getCheckedElementsFromOptionsList()
-  var checkedKeys = []
+function getCheckedElementsFromOptionsList(){
+  var checkedKeys;
+  checkedKeys = [];
   var optionsListDiv = document.getElementById("opt");
   var childern = optionsListDiv.getElementsByTagName('div');
-  console.log(childern)
   for (var i = 0; i < childern.length; i++){
     var div = childern[i];
     var label = div.getElementsByTagName('label')[0]
     var check = div.getElementsByTagName('input')[0]
-    console.log(label);
-    console.log(check);
+
     if (check.checked == true) {
-      checkedKeys.push(label.innerHTML) # HIER GEHTS WEITER
+      checkedKeys.push(label.innerHTML)
     }
 
+
   }
+  return checkedKeys;
+}
+
+function makeLinkDataArray(from, toArray){
+  var output = []
+  for (var i = 0; i < toArray.length; i++){
+    output.push({ 'from': from, 'to':toArray[i] })
+  }
+  return output;
 }
 
 
@@ -66,12 +76,16 @@ class ApplicationDiagramm {
       key: name,
       color: color
     })
+    var deps = getCheckedElementsFromOptionsList()
+    var links = makeLinkDataArray(name, deps)
+    for (var i = 0; i < links.length; i++){
+      this.linkDataArray.push(links[i])
+    }
     this.diagram.startTransaction();
     this.diagram.updateAllRelationshipsFromData();
     this.diagram.updateAllTargetBindings();
     this.diagram.commitTransaction("update");
     addElementToOptionsList(name)
-    getCheckedElementsFromOptionsList()
 
   }
 
@@ -96,6 +110,30 @@ function createApp(name) {
         },
         new go.Binding("text", "key"))
     );
+}
+
+function getColor() {
+  var col = document.getElementById('farbe').value
+  if (isColor(col)){
+    return col;
+  }
+  return 'white';
+}
+
+function color() {
+  var col = document.getElementById('farbe').value
+  if (isColor(col)){
+  document.getElementById('farbe').style.backgroundColor = col;
+  }
+}
+
+function isColor(strColor){
+  if (strColor == ""){
+    return false;
+  }
+  var s = new Option().style;
+  s.color = strColor;
+  return s.color == strColor;
 }
 
 function init() {
