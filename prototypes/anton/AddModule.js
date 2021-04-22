@@ -76,7 +76,7 @@ class ApplicationDiagramm {
           },
           new go.Binding("text", "key"))
       );
-    this.diagram.layout = $(go.CircularLayout);
+    this.diagram.layout = $(go.LayeredDigraphLayout);
   }
 
   add(name, color) {

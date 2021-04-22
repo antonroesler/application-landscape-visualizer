@@ -43,9 +43,13 @@ button {
 .check-option input{
     width: 1rem;
 }
+#opt {
+  width: 57%;
+  float: right;
+}
 .check-option {
-    width: 100%;
+  width: auto;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
 }
