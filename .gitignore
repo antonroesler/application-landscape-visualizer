@@ -15,3 +15,6 @@ go.js
 
 # Other stupid stuff
 .Rhistory
+
+# npm modules
+node_modules

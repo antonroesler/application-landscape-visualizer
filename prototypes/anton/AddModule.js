@@ -1,4 +1,5 @@
 var $ = go.GraphObject.make;
+
 var all = [];
 
 function readAppName() {
