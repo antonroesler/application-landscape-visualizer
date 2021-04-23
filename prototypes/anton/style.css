@@ -1,11 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+JP:wght@500&display=swap');
 
 body {
-  font-family: 'Monaco';
+  font-family: 'Lato';
   background-color: #DDD;
 }
 
 input {
   margin: 0.5rem;
+}
+form {
+  padding: 0;
+}
+
+form input {
+  font-family: 'Noto Sans JP';
+  height: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem 0 1rem 0;
+  padding: 0;
+}
+
+form label {
+  margin-bottom: 2rem;
 }
 
 .outer {
