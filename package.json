@@ -1,0 +1,26 @@
+{
+  "name": "application-landscape-visualizer",
+  "version": "1.0.0",
+  "description": "Summer 2021 group project for the module \"Advanced Programming\" of the Engineering Business Information Systems B.Sc. program at Frankfurt University of Applied Sciences.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonroesler/application-landscape-visualizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonroesler/application-landscape-visualizer/issues"
+  },
+  "homepage": "https://github.com/antonroesler/application-landscape-visualizer#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
