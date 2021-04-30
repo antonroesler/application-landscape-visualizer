@@ -1,0 +1,3 @@
+/public contains everything that is sent to the client (browser)
+
+/public/js therefore contains all javascript files that are meant for the execution in the client 
