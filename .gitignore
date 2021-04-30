@@ -19,6 +19,9 @@ go.js
 # npm modules
 node_modules
 
+# jQuery
+jquery*
+
 ##### STANDARD
 
 # Created by https://www.gitignore.io/api/node,linux,macos,windows,intellij,webstorm,jetbrains,visualstudio,visualstudiocode
