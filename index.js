@@ -6,6 +6,8 @@
 
 const express = require("express");
 const path = require("path");
+const mongoose = require("mongoose")
+require('dotenv/config')
 
 /**
  * App Variables
@@ -29,9 +31,16 @@ app.get("/", (req, res) => {
 });
 
 /**
+ * Database
+ */
+
+mongoose.connect()
+
+/**
  * Server Activation
  */
 
 app.listen(port, () => {
   console.log(`Listening to requests on http://localhost:${port}`);
 });
+
