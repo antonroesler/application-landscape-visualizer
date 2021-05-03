@@ -1,6 +1,8 @@
 # GoJS should not be hosted on Github
 go.js
 **/go.js
+Figures.js
+**/go.js
 
 # Mac deleted files
 .DS*
