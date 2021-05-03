@@ -2,9 +2,9 @@
   "name": "application-landscape-visualizer",
   "version": "1.0.0",
   "description": "Summer 2021 group project for the module \"Advanced Programming\" of the Engineering Business Information Systems B.Sc. program at Frankfurt University of Applied Sciences.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon ./index.js"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
