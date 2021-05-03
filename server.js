@@ -1,12 +1,28 @@
-// server.js
+/*
+* Copyright (c) 2021 Ecore. All rights reserved.
+*
+* University:		 Frankfurt University of Applied Sciences
+* Study program:	 Engineering Business Information Systems
+* Module:		     Advanced Programming 2021
+* Professor:		 Prof. Dr. Jung, Prof. Dr. Bremm
+* Date:			     03.05.2021
+*
+*/
+
+/**
+ * Defines the node.js server.
+ * @author Anton Roesler, Leonard Husske
+ *
+ */
 
 /**
  * Required External Modules
  */
 
-const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose")
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 require('dotenv/config')
 
 /**
@@ -14,27 +30,36 @@ require('dotenv/config')
  */
 
 const app = express();
-const port = process.env.PORT || "8000";
+const port = process.env.PORT || '8000';
+
 
 /**
  *  App Configuration
  */
 
 app.use(express.static('public')) // set the static files location
+app.use(bodyParser.json())
 
 /**
  * Routes Definitions
  */
 
-app.get("/", (req, res) => {
-  res.sendFile("./public/index.html");
+app.get('/', (req, res) => {
+  res.sendFile('./public/index.html');
 });
+
+// Import routes
+const mongoRoute = require('./routes/mongo')
+app.use('/mongo', mongoRoute)
 
 /**
  * Database
  */
 
-mongoose.connect()
+mongoose.connect(
+    process.env.DB_CONNECTION, {useNewUrlParser: true}, () =>
+        console.log('connected to DB')
+)
 
 /**
  * Server Activation
