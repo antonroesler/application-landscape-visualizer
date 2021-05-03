@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Application Landscape Viz</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="libs/gojs-lib/go-debug.js"></script>
   </head>
-  <body>
+  <body onload="init()">
     Hello
+    <div id="diagramDiv">
+
+    </div>
   </body>
+  <!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
+  <script src="js/index.js"></script>
 </html>
