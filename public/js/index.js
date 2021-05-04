@@ -1,19 +1,20 @@
 /*
 * Copyright (c) 2021 Ecore. All rights reserved.
 *
-* University:		 Frankfurt University of Applied Sciences
-* Study program:	 Engineering Business Information Systems
-* Module:		   Advanced Programming 2021
-* Professor:		   Prof. Dr. Jung, Prof. Dr. Bremm
-* Date:			     21.04.2021
+* University:        Frankfurt University of Applied Sciences
+* Study program:     Engineering Business Information Systems
+* Module:            Advanced Programming 2021
+* Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
+* Date:              21.04.2021
 *
 */
 
 /**
-* A short description what this file/class is all about.
-* @author Leonard Hußke , Feng Yi Lu
-* this file contains several functions that are needed to display and interact with the Diagram Canvas in the HTML File ()
-*/
+ * A short description what this file/class is all about.
+ * @author Leonard Hußke , Feng Yi Lu
+ * this file contains several functions that are needed to display and interact
+ * with the Diagram Canvas in the HTML File ()
+ */
 
 const $ = go.GraphObject.make;
 const diagram = $(go.Diagram, "diagramDiv",
@@ -38,7 +39,9 @@ function init() {
 }
 
 
-/**this function adds a new node to our nodeDataArray */
+/**
+ * Adds a new node to our nodeDataArray.
+ */
 function addNode(name, category, desc) {
     if (model.nodeDataArray.length === 0) {
         id = 0;
@@ -57,7 +60,8 @@ function addNode(name, category, desc) {
 
 }
 /**
- * this function gets the input values from the user and calls the addNode() function
+ * Gets the input values from the user and calls the addNode() function to add
+ * node to diagram.
  */
 function readNodeProperties() {
     var name = document.getElementById("name").value;
@@ -72,7 +76,7 @@ function readNodeProperties() {
 }
 
 /**
- * this function checks if the given name for the new node is already existing or not
+ * Checks if the given name for the new node is already existing or not
  */
 function checkNodeName(name) {
     for (i = 0; i < model.nodeDataArray.length; i++) {
