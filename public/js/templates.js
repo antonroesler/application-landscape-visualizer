@@ -7,6 +7,7 @@
 * Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
 * Date:              21.04.2021
 *
+*
 */
 
 /**
@@ -23,25 +24,36 @@
 *        
 */
 
+
 /**
 * databaseTemplate
-* is used for generating a "database" node
+* is used for generating a "database" node and also showing Metadata and key of the node while hovering
 */
 var databaseTemplate =
     // "vertical" determine the order of the go.objects 
     $(go.Node, "Vertical",
-        //per default color and size is setted, can be customised through e.g. "go.Binding()"
+        //per default color and size is setted, can be customised through e.g. "go.Binding()" 
         $(go.Shape, "Database", { height: 70, width: 70, fill: "blue" },
             new go.Binding("fill", "color")),
         $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "key")),
-        $(go.TextBlock, "Description:"),
-        $(go.TextBlock, new go.Binding("text", "desc")),
+            new go.Binding("text", "nameProperty")),
+        {
+            //toolTip is used for the hover function 
+            toolTip:
+                $(go.Adornment, "Auto",
+                    $(go.Shape, { fill: "white" }), $(go.Panel, "Vertical",
+                        $(go.TextBlock, "Description:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "desc")), $(go.TextBlock, "key_id:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "key"))
+                    ))
+        }
     );
 
 /**
 * componentTemplate
-* is used for generating a "component" node 
+* is used for generating a "component" node and also showing Metadata and key of the node while hovering
 */
 var componentTemplate =
     $(go.Node, "Vertical",
@@ -49,24 +61,41 @@ var componentTemplate =
             new go.Binding("fill", "color")),
 
         $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "key")),
-        $(go.TextBlock, "Description:"),
-        $(go.TextBlock, new go.Binding("text", "desc")),
+            new go.Binding("text", "nameProperty")),
+        {
+            toolTip:
+                $(go.Adornment, "Auto",
+                    $(go.Shape, { fill: "white" }), $(go.Panel, "Vertical",
+                        $(go.TextBlock, "Description:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "desc")), $(go.TextBlock, "key_id:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "key"))
+                    ))
+        }
     );
 
 /**
 * packageTemplate
-* is used for generating a "application" node 
+* is used for generating a "application" node and also showing Metadata and key of the node while hovering
 */
 var packageTemplate =
-    $(go.Node, "Vertical",
-        $(go.Shape, "Package", { height: 70, width: 70, fill: "green" },
-            new go.Binding("fill", "color")),
-
+    $(go.Node, "Vertical", $(go.Shape, "Package", {
+        height: 70, width: 70, fill: "green"
+    }, new go.Binding("fill", "color")),
         $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "key")),
-        $(go.TextBlock, "Description:"),
-        $(go.TextBlock, new go.Binding("text", "desc")),
+            new go.Binding("text", "nameProperty")),
+        {
+            toolTip:
+                $(go.Adornment, "Auto",
+                    $(go.Shape, { fill: "white" }), $(go.Panel, "Vertical",
+                        $(go.TextBlock, "Description:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "desc")), $(go.TextBlock, "key_id:"),
+                        $(go.TextBlock,
+                            new go.Binding("text", "key"))
+                    ))
+        },
     );
 
 
@@ -79,3 +108,4 @@ templmap.add("", diagram.nodeTemplate);
 templmap.add("Database", databaseTemplate);
 templmap.add("Component", componentTemplate)
 templmap.add("Package", packageTemplate);
+
