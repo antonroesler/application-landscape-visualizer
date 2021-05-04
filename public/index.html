@@ -5,23 +5,55 @@
   <meta charset="utf-8">
   <title>Application Landscape Viz</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="libs/gojs-lib/go-debug.js"></script>
+
+  <script src="../gojs-lib/go-debug.js"></script>
   <script src="libs/gojs-lib/Figures.js"></script>
+
 </head>
 
 <body onload="init()">
-  <a>node name</a>
-  <input id="name" type="text" />
-  category: <select name="category" id="category">
-    <option value="Database">Database</option>
-    <option value="Package">Application</option>
-    <option value="Component">Component</option>
-  </select>
-  <a>Description</a>
-  <input id="desc" type="text" />
-  <button onclick="readNodeProperties()">create node</button>
-  <div id="diagramDiv">
+  <div class="main">
+  <div class="header">
+
+      <div class="header_logo"><img src="pics/logo/logo_small.png" height="100"></div>
+      <div class="header_main"></div>
+      <div class="header_userlogin"></div>
   </div>
+    <div class="controlbar">
+      <div class="controlbar_nav">
+
+        <a>NODE NAME:</a>
+        <input id="name" type="text" />
+        CATEGORY: <select name="category" id="category">
+          <option value="Database">Database</option>
+          <option value="Package">Application</option>
+          <option value="Component">Component</option>
+        </select>
+        <a>DESCRIPTION:</a>
+        <input id="desc" type="text" />
+        <button onclick="readNodeProperties()">Create Node</button>
+      </div>
+    </div>
+    <div class="diagram_container">
+      <div class="diagram_container_main"><div id="diagramDiv">
+      </div></div>
+      <div class="diagram_container_sidebar">
+
+<div class="diagram_container_sidebar_showbox"></div>
+<div class="diagram_container_sidebar_showbox"></div>
+<div class="diagram_container_sidebar_showbox"></div>
+
+</div>
+    </div>
+    <div class="spacer_footer"></div>
+    <div class="footer_container"></div>
+
+
+
+
+
+</div>
+
 </body>
 <!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
 
