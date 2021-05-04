@@ -1,2 +1,0 @@
-In /gojs-lib/ werden die Files go.js und go-debug.js abgelegt. 
-Download: https://gojs.net/latest/download.html
