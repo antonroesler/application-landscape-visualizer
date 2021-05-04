@@ -10,8 +10,18 @@
 </head>
 
 <body onload="init()">
-  Hello
+  <a>node name</a>
+  <input id="name" type="text" />
+  category: <select name="category" id="category">
+    <option value="Database">Database</option>
+    <option value="Package">Application</option>
+    <option value="Component">Component</option>
+  </select>
+  <a>Description</a>
+  <input id="desc" type="text" />
+  <button onclick="readNodeProperties()">create node</button>
   <div id="diagramDiv">
+    <p id="toolTipParagraph">Tooltip</p>
   </div>
 </body>
 <!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
