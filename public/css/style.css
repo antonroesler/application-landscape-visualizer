@@ -15,10 +15,33 @@
 *
 */
 
+
+/* Color Theme Swatches in Hex */
+.Rale-Grotesk-Family-1-hex { color: #F2F2F2; }
+.Rale-Grotesk-Family-2-hex { color: #A6A6A6; }
+.Rale-Grotesk-Family-3-hex { color: #737373; }
+.Rale-Grotesk-Family-4-hex { color: #404040; }
+.Rale-Grotesk-Family-5-hex { color: #0D0D0D; }
+
+/* Color Theme Swatches in RGBA */
+.Rale-Grotesk-Family-1-rgba { color: rgba(242, 242, 242, 1); }
+.Rale-Grotesk-Family-2-rgba { color: rgba(165, 165, 165, 1); }
+.Rale-Grotesk-Family-3-rgba { color: rgba(114, 114, 114, 1); }
+.Rale-Grotesk-Family-4-rgba { color: rgba(63, 63, 63, 1); }
+.Rale-Grotesk-Family-5-rgba { color: rgba(12, 12, 12, 1); }
+
+/* Color Theme Swatches in HSLA */
+.Rale-Grotesk-Family-1-hsla { color: hsla(0, 0, 95, 1); }
+.Rale-Grotesk-Family-2-hsla { color: hsla(0, 0, 65, 1); }
+.Rale-Grotesk-Family-3-hsla { color: hsla(0, 0, 45, 1); }
+.Rale-Grotesk-Family-4-hsla { color: hsla(0, 0, 25, 1); }
+.Rale-Grotesk-Family-5-hsla { color: hsla(0, 0, 5, 1); }
+
 body {
   color: black;
-  background-color: grey;
+  background-color: #F2F2F2;
 }
+
 
 #diagramDiv {
   width: 900px; /* Set width only for developing purposes */
@@ -38,33 +61,36 @@ body {
 }
 
 .header_logo {
-  background-color: #8c6b2e;
-  
+  background-color: #737373;;
   align-self: stretch;
   height: auto;
   padding-left: 10px;
   padding-right: 10px;
+  border-radius: 10px 0px 0px 0px;
+  border: 0px solid #000000;
 
 }
 
 .header_main {
-  background-color: #8c6b2e;
+  background-color: #737373;;
   flex-grow: 2;
 
 }
 
 .header_userlogin {
-  background-color: #8c6b2e;
+  background-color: #737373;;
   color: white;
   padding-right: 15px;
   padding-top: 15px;
+  border-radius: 0px 10px 0px 0px;
+  border: 0px solid #000000;
 
 }
 
 .controlbar {
   display: flex;
   flex-direction: row;
-  background-color: lightgrey;
+  background-color: #A6A6A6;
   max-height: 50px;
   justify-content: center;
 
@@ -80,6 +106,7 @@ padding: 10px;
   flex-direction: row;
   background-color: white;
   width: 100%;
+  height: auto;
 
 }
 
@@ -89,29 +116,40 @@ padding: 10px;
 }
 
 .diagram_container_sidebar {
-  background-color: #d9cec1;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: white;
   width: 20%;
   padding: 10px;
+  border-radius: 0px 0px 0px 30px;
+  border: 1px solid #F2F2F2;
+  box-shadow: -6px 1px 7px -4px rgba(242, 242, 242, 0.92);
+  justify-content: space-evenly;
 
 }
 
 .diagram_container_sidebar_showbox {
-  background-color: #bfae99;
+  background-color: #F2F2F2;
   width: 99%;
-  height: 150px;
+  height: 250px;
   margin: 5px;
+  border-radius: 0px 0px 0px 30px;
+  border: 0px solid #000000;
+  box-shadow: -6px 1px 7px -4px rgba(242, 242, 242, 0.92);
 
 }
 
 .spacer_footer {
-  background-color: lightgrey;
+  background-color: #A6A6A6;
   width: 100%;
   height: 25px;
 
 }
 
 .footer_container {
-  background-color: #8c6b2e;
+  background-color: #737373;;
   width: 100%;
   height: 50px;
+  border-radius: 0px 0px 10px 10px;
+  border: 0px solid #000000;
 }
