@@ -21,6 +21,9 @@ Figures.js
 # npm modules
 node_modules
 
+#url-join
+url-join.js
+
 # jQuery
 jquery*
 

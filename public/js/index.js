@@ -89,7 +89,7 @@ function checkNodeName(name) {
 
 
 async function apiTest() {
-    const url = 'http://localhost:8000/mongo/node'
+    const url = urljoin(window.location.href, 'mongo/link');
     const data = {
         name: "Called from HTML",
         category: "Application",

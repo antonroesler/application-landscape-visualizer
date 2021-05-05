@@ -27,8 +27,14 @@ const AppNodeSchema = mongoose.Schema({
         default: "Application"
     },
     metadata : {
-        version: String,
-        license: String
+        version: {
+            type: String,
+            required: false
+        },
+        license: {
+            type: String,
+            required: false
+        },
     }
 })
 

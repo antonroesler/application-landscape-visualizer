@@ -18,6 +18,7 @@
 const express = require('express');
 const router = express.Router();
 const AppNode = require('../model/AppNode')
+const Link = require('../model/Link')
 
 /**
  * Route to GET pack all AppNodes in the DB.
@@ -105,6 +106,22 @@ router.delete('/node/name/:appName', async (req, res) => {
 router.delete('/node/id/:appId', async (req, res) => {
     const appNode = await AppNode.findByIdAndDelete(req.params.appId)
     res.json(appNode)
+})
+
+/**
+ * Test to POST a Link
+ */
+router.post('/link', async (req, res) => {
+    const link = new Link({
+        name: "hi",
+        len: 38,
+        attr: {
+            some: "thing",
+            and: "other"
+        }
+    })
+    const savedlink = await link.save()
+    res.json(savedlink);
 })
 
 module.exports = router;

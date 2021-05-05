@@ -23,6 +23,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require("cors");
 require('dotenv/config')
 
 /**
@@ -39,7 +40,7 @@ const port = process.env.PORT || '8000';
 
 app.use(express.static('public')) // set the static files location
 app.use(bodyParser.json())
-
+app.use(cors()) // Need to use cors to make API requests due to CORS-policy
 /**
  * Routes Definitions
  */
