@@ -87,3 +87,28 @@ function checkNodeName(name) {
     return false;
 }
 
+
+async function apiTest() {
+    const url = urljoin(window.location.href, 'mongo/link');
+    const data = {
+        name: "Called from HTML",
+        category: "Application",
+        metadata: {
+            version:"5.X",
+            license:"ABC"
+        }
+    };
+    const params = {
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: "same-origin",
+        body:JSON.stringify(data),
+    };
+    const res = await fetch(url, params);
+    console.log(res.json())
+
+
+
+}
