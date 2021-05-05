@@ -117,8 +117,8 @@ body {
   background-color: #737373;
   ;
   color: white;
-  padding-right: 15px;
-  padding-top: 15px;
+  padding-right: 0.5%;
+  padding-top: 0.5%;
   border-radius: 0px 10px 0px 0px;
   border: 0px solid #000000;
 }
@@ -127,12 +127,12 @@ body {
   display: flex;
   flex-direction: row;
   background-color: #F2F2F2;
-  max-height: 50px;
+
   justify-content: center;
 }
 
 .controlbar_nav {
-  padding: 10px;
+  padding: 0.1%;
 }
 
 .diagram_container {
@@ -163,8 +163,9 @@ body {
   background-color: #F2F2F2;
   width: 99%;
   height: 250px;
-  margin: 0.5%;
-  padding: 1%;
+  margin: 1.2%;
+  padding-left: 1%;
+  padding-top: 0.1%;
   border-radius: 0px 0px 0px 30px;
   border: 0px solid #000000;
   box-shadow: -6px 1px 7px -4px rgba(242, 242, 242, 0.92);
@@ -240,4 +241,12 @@ body {
   border-radius:0px 0px 0px 5px;
 	border:1px solid #404040;
   font-size: 15px;
+}
+
+.sidebarHeading {
+  background-color: white;
+	border-radius:0px 0px 0px 5px;
+	border:1px solid white;
+  box-shadow: -6px 10px 7px -4px #dfdfdf;
+  padding: 3%;
 }
