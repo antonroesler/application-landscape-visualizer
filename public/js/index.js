@@ -55,8 +55,16 @@ async function addAppNode() {
         };
         const res = await fetch(url, params);
         res.json().then(appNode => {
-            console.log(appNode)
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            if (Object.keys(appNode).length !== 0){
+                // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
+                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            }else {
+                // Inform user that database is unavailable
+                databaseNotAvailableAlert();
+                // Create AppNode with id being the current time in milliseconds
+                addNode(data.name, data.category, data.desc, Date.now());
+            }
+
         })
 
     }
@@ -67,6 +75,7 @@ async function addAppNode() {
  */
 function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
+    // Here we need to check if a node with key == id already exists, if yes -> dont add node, if no -> add node
     model.addNodeData({
         key: id,
         nameProperty: name,
@@ -74,9 +83,8 @@ function addNode(name, category, desc, id) {
         desc: desc
     });
     diagram.commitTransaction("update");
-
-
 }
+
 /**
  * Gets the input values from the user and calls the addNode() function to add
  * node to diagram.
@@ -127,23 +135,6 @@ function checkNodeName(name) {
 }
 
 
-async function apiTest() {
-    const url = urljoin(window.location.href, 'mongo/node');
-    const data = {
-        name: "Feng",
-        category: "Application"
-    };
-    const params = {
-        method:'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        mode: "same-origin",
-        body:JSON.stringify(data),
-    };
-    const res = await fetch(url, params);
-    console.log(res.json())
-
-
-
+function databaseNotAvailableAlert(){
+    alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
 }
