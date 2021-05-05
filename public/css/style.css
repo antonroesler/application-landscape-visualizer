@@ -39,7 +39,7 @@ body {
 
 .header_logo {
   background-color: #8c6b2e;
-  background-image: url("pics/logo/logo_small.png");
+  
   align-self: stretch;
   height: auto;
   padding-left: 10px;
