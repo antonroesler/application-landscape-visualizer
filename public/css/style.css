@@ -44,8 +44,8 @@ body {
 
 
 #diagramDiv {
-  width: 980px; /* Set width only for developing purposes */
-  height: 640px; /* Set width only for developing purposes */
+  width: 100%; /* Set width only for developing purposes */
+  height: 100%; /* Set width only for developing purposes */
 }
 
 
@@ -108,7 +108,7 @@ padding: 10px;
   flex-direction: row;
   background-color: white;
   width: 100%;
-  height: auto;
+  height: 100%;
 
 }
 
