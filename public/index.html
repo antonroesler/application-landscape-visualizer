@@ -30,13 +30,16 @@
 </head>
 
 <body onload="init()">
-  <div class="main">
-  <div class="header">
-
+    <!-- Header Section starts here -->
+    <div class="header">
+      <!-- divided into three sections, from left to right. First used is header_logo -->
       <div class="header_logo"><img src="img/logo/logo_small.png" height="100"></div>
+      <!-- middle section which can be used for additional content later -->
       <div class="header_main"></div>
+      <!-- last one is for login purpose. PLease add uses jscripthere -->
       <div class="header_userlogin"></div>
-  </div>
+    </div>
+    <!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
     <div class="controlbar">
       <div class="controlbar_nav">
 
@@ -52,16 +55,20 @@
         <button onclick="readNodeProperties()">Create Node</button>
       </div>
     </div>
+    <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
     <div class="diagram_container">
-      <div class="diagram_container_main"><div id="diagramDiv">
-      </div></div>
+      <div class="diagram_container_main">
+        <div id="diagramDiv">
+        </div>
+      </div>
+      <!-- Sidebar Container -->
       <div class="diagram_container_sidebar">
 
-<div class="diagram_container_sidebar_showbox"></div>
-<div class="diagram_container_sidebar_showbox"></div>
-<div class="diagram_container_sidebar_showbox"></div>
+        <div class="diagram_container_sidebar_showbox"></div>
+        <div class="diagram_container_sidebar_showbox"></div>
+        <div class="diagram_container_sidebar_showbox"></div>
 
-</div>
+      </div>
     </div>
     <div class="spacer_footer"></div>
     <div class="footer_container"></div>
@@ -70,7 +77,7 @@
 
 
 
-</div>
+
 
 </body>
 <!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
