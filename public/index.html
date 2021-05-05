@@ -37,22 +37,28 @@
       <!-- middle section which can be used for additional content later -->
       <div class="header_main"></div>
       <!-- last one is for login purpose. PLease add uses jscripthere -->
-      <div class="header_userlogin"></div>
+      <div class="header_userlogin"><button onclick="deleteInternet()" class="navButton2">Login</button></div>
     </div>
     <!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
     <div class="controlbar">
       <div class="controlbar_nav">
-
-        <a>NODE NAME:</a>
-        <input id="name" type="text" />
-        CATEGORY: <select name="category" id="category">
+        Category: <select name="category" id="category" class="navButton">
           <option value="Database">Database</option>
           <option value="Package">Application</option>
           <option value="Component">Component</option>
         </select>
-        <a>DESCRIPTION:</a>
-        <input id="desc" type="text" />
-        <button onclick="readNodeProperties()">Create Node</button>
+        <a>Node Name:</a>
+        <input id="name" type="text" class="inputField"/>
+
+        <a>Description:</a>
+        <input id="desc" type="text" class="inputField"/>
+        <button onclick="readNodeProperties()" class="navButton">Create Node</button>
+        <button onclick="readNodeProperties()" class="navButton">Undo</button>
+        <button onclick="readNodeProperties()" class="navButton">Redo</button>
+        <button onclick="readNodeProperties()" class="navButton">Filter</button>
+        <button onclick="readNodeProperties()" class="navButton">Create Group</button>
+        <button onclick="readNodeProperties()" class="navButton">Delete Group</button>
+        <button onclick="readNodeProperties()" class="navButton">Export</button>
       </div>
     </div>
     <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
@@ -64,9 +70,9 @@
       <!-- Sidebar Container -->
       <div class="diagram_container_sidebar">
 
-        <div class="diagram_container_sidebar_showbox"></div>
-        <div class="diagram_container_sidebar_showbox"></div>
-        <div class="diagram_container_sidebar_showbox"></div>
+        <div class="diagram_container_sidebar_showbox"><h4> Basic Functions</h4><hr></div>
+        <div class="diagram_container_sidebar_showbox"><h4> Statistics</h4><hr></div>
+        <div class="diagram_container_sidebar_showbox"><h4> Alter Node or Groups</h4><hr></div>
 
       </div>
     </div>

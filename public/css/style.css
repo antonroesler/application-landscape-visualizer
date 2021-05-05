@@ -79,6 +79,7 @@
 body {
   color: #404040;
   background-color: white;
+  font-family: sans-serif;
 }
 
 #diagramDiv {
@@ -151,7 +152,7 @@ body {
   flex-wrap: wrap;
   background-color: white;
   width: 20%;
-  padding: 10px;
+  padding: 0.5%;
   border-radius: 0px 0px 0px 30px;
   border: 1px solid #F2F2F2;
   box-shadow: -6px 1px 7px -4px rgba(242, 242, 242, 0.92);
@@ -162,7 +163,8 @@ body {
   background-color: #F2F2F2;
   width: 99%;
   height: 250px;
-  margin: 5px;
+  margin: 0.5%;
+  padding: 1%;
   border-radius: 0px 0px 0px 30px;
   border: 0px solid #000000;
   box-shadow: -6px 1px 7px -4px rgba(242, 242, 242, 0.92);
@@ -182,4 +184,60 @@ body {
   border-radius: 0px 0px 10px 10px;
   border: 0px solid #000000;
   color: #f2f2f2;
+}
+
+.navButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #f2f2f2 100%);
+	background-color:#f2f2f2;
+	border-radius:0px 0px 0px 5px;
+	border:1px solid #404040;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-size:15px;
+	padding:6px 24px;
+	text-decoration:none;
+
+}
+.navButton:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
+	background-color:#dfdfdf;
+  color: white;
+
+}
+.navButton:active {
+	position:relative;
+	top:1px;
+}
+
+.navButton2 {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #f2f2f2 100%);
+	background-color:#f2f2f2;
+	border-radius:0px 5px 0px 0px;
+	border:1px solid #404040;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-size:15px;
+	padding:6px 24px;
+	text-decoration:none;
+
+}
+.navButton2:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
+	background-color:#dfdfdf;
+  color: white;
+
+}
+.navButton2:active {
+	position:relative;
+	top:1px;
+}
+
+.inputField {
+  border-radius:0px 0px 0px 5px;
+	border:1px solid #404040;
+  font-size: 15px;
 }
