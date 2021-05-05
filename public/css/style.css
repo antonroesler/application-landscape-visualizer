@@ -1,6 +1,23 @@
+/*
+* Copyright (c) 2021 Ecore. All rights reserved.
+*
+* University:        Frankfurt University of Applied Sciences
+* Study program:     Engineering Business Information Systems
+* Module:            Advanced Programming 2021
+* Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
+* Date:              21.04.2021
+*
+*/
+
+/**
+* This file contains the whole Design of all Elements in the Frontend of the Webapp.
+* @author Patrick Frech
+*
+*/
+
 body {
   color: black;
-  background-color: lightgrey;
+  background-color: grey;
 }
 
 #diagramDiv {
