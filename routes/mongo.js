@@ -43,10 +43,7 @@ router.post('/node', async (req, res) => {
     const appNode = new AppNode({
         name: req.body.name,
         category: req.body.category,
-        metadata: {
-            version: req.body.metadata.version,
-            license: req.body.metadata.license
-        }
+        desc: req.body.desc
     });
     try {
         const savedAppNode = await appNode.save()

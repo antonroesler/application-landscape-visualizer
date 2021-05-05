@@ -22,21 +22,9 @@ const AppNodeSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        default: "Application"
-    },
-    metadata : {
-        version: {
-            type: String,
-            required: false
-        },
-        license: {
-            type: String,
-            required: false
-        },
-    }
-})
+    category: String,
+    desc: String
+});
 
 
 module.exports = mongoose.model('AppNode', AppNodeSchema)

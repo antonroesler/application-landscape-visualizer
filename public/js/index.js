@@ -11,7 +11,7 @@
 
 /**
  * A short description what this file/class is all about.
- * @author Leonard Hußke , Feng Yi Lu
+ * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  * this file contains several functions that are needed to display and interact
  * with the Diagram Canvas in the HTML File ()
  */
@@ -38,19 +38,37 @@ function init() {
 
 }
 
+/**
+ * Saves a AppNode in the database and adds it to the canvas.
+ *
+ */
+async function addAppNode() {
+    const data = readNodeProperties();
+    if (data !== undefined){
+        const url = urljoin(window.location.href, 'mongo/node');
+        const params = {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(data),
+        };
+        const res = await fetch(url, params);
+        res.json().then(appNode => {
+            console.log(appNode)
+            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+        })
+
+    }
+}
 
 /**
  * Adds a new node to our nodeDataArray.
  */
-function addNode(name, category, desc) {
-    if (model.nodeDataArray.length === 0) {
-        id = 0;
-    } else {
-        id = model.nodeDataArray[model.nodeDataArray.length - 1].key;
-    }
+function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
     model.addNodeData({
-        key: id + 1,
+        key: id,
         nameProperty: name,
         category: category,
         desc: desc
@@ -69,10 +87,31 @@ function readNodeProperties() {
     var desc = document.getElementById("desc").value;
     if (checkNodeName(name) === true) {
         window.alert("node name already exists");
-    } else {
-        addNode(name, category, desc);
+        return undefined
     }
+    return {name:name, category:category, desc:desc}
 
+}
+
+/**
+ * Loads all existing AppNodes from the Database and adds them to the diagram.
+ *
+ */
+async function loadAllAppNodes() {
+    const url = urljoin(window.location.href, 'mongo/node');
+    const params = {
+        method:'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    const res = await fetch(url, params);
+    res.json().then(appNodes => {
+        appNodes.forEach(appNode => {
+            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+        })
+
+    })
 }
 
 /**
@@ -89,14 +128,10 @@ function checkNodeName(name) {
 
 
 async function apiTest() {
-    const url = urljoin(window.location.href, 'mongo/link');
+    const url = urljoin(window.location.href, 'mongo/node');
     const data = {
-        name: "Called from HTML",
-        category: "Application",
-        metadata: {
-            version:"5.X",
-            license:"ABC"
-        }
+        name: "Feng",
+        category: "Application"
     };
     const params = {
         method:'POST',

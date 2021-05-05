@@ -26,6 +26,7 @@
     <!--<script src="libs/gojs-lib/go-debug.js"></script>-->
     <script src="libs/gojs-lib/go.js"></script>
     <script src="libs/gojs-lib/Figures.js"></script>
+    <script src="libs/url-join.js"></script>
 
 </head>
 
@@ -54,13 +55,13 @@
 
         <a>Description:</a>
         <input autocomplete="off" class="inputField" id="desc" type="text"/>
-        <button class="navButton" onclick="readNodeProperties()">Create Node</button>
-        <button class="navButton" onclick="readNodeProperties()">Undo</button>
+        <button class="navButton" onclick="addAppNode()">Create Node</button>
+        <button class="navButton" onclick="apiTest()">Undo</button>
         <button class="navButton" onclick="readNodeProperties()">Redo</button>
         <button class="navButton" onclick="readNodeProperties()">Filter</button>
         <button class="navButton" onclick="readNodeProperties()">Create Group</button>
         <button class="navButton" onclick="readNodeProperties()">Delete Group</button>
-        <button class="navButton" onclick="readNodeProperties()">Export</button>
+        <button class="navButton" onclick="loadAllAppNodes()">Load</button>
     </div>
 </div>
 <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
