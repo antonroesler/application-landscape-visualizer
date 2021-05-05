@@ -11,7 +11,7 @@
 
 /**
  * A short description what this file/class is all about.
- * @author Leonard Hußke , Feng Yi Lu
+ * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  * this file contains several functions that are needed to display and interact
  * with the Diagram Canvas in the HTML File ()
  */
@@ -38,27 +38,53 @@ function init() {
 
 }
 
+/**
+ * Saves a AppNode in the database and adds it to the canvas.
+ *
+ */
+async function addAppNode() {
+    const data = readNodeProperties();
+    if (data !== undefined){
+        const url = urljoin(window.location.href, 'mongo/node');
+        const params = {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(data),
+        };
+        const res = await fetch(url, params);
+        res.json().then(appNode => {
+            if (Object.keys(appNode).length !== 0){
+                // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
+                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            }else {
+                // Inform user that database is unavailable
+                databaseNotAvailableAlert();
+                // Create AppNode with id being the current time in milliseconds
+                addNode(data.name, data.category, data.desc, Date.now());
+            }
+
+        })
+
+    }
+}
 
 /**
  * Adds a new node to our nodeDataArray.
  */
-function addNode(name, category, desc) {
-    if (model.nodeDataArray.length === 0) {
-        id = 0;
-    } else {
-        id = model.nodeDataArray[model.nodeDataArray.length - 1].key;
-    }
+function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
+    // Here we need to check if a node with key == id already exists, if yes -> dont add node, if no -> add node
     model.addNodeData({
-        key: id + 1,
+        key: id,
         nameProperty: name,
         category: category,
         desc: desc
     });
     diagram.commitTransaction("update");
-
-
 }
+
 /**
  * Gets the input values from the user and calls the addNode() function to add
  * node to diagram.
@@ -69,10 +95,31 @@ function readNodeProperties() {
     var desc = document.getElementById("desc").value;
     if (checkNodeName(name) === true) {
         window.alert("node name already exists");
-    } else {
-        addNode(name, category, desc);
+        return undefined
     }
+    return {name:name, category:category, desc:desc}
 
+}
+
+/**
+ * Loads all existing AppNodes from the Database and adds them to the diagram.
+ *
+ */
+async function loadAllAppNodes() {
+    const url = urljoin(window.location.href, 'mongo/node');
+    const params = {
+        method:'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    const res = await fetch(url, params);
+    res.json().then(appNodes => {
+        appNodes.forEach(appNode => {
+            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+        })
+
+    })
 }
 
 /**
@@ -88,27 +135,6 @@ function checkNodeName(name) {
 }
 
 
-async function apiTest() {
-    const url = urljoin(window.location.href, 'mongo/link');
-    const data = {
-        name: "Called from HTML",
-        category: "Application",
-        metadata: {
-            version:"5.X",
-            license:"ABC"
-        }
-    };
-    const params = {
-        method:'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        mode: "same-origin",
-        body:JSON.stringify(data),
-    };
-    const res = await fetch(url, params);
-    console.log(res.json())
-
-
-
+function databaseNotAvailableAlert(){
+    alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
 }
