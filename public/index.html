@@ -60,8 +60,17 @@
         <button class="navButton" onclick="readNodeProperties()">Redo</button>
         <button class="navButton" onclick="readNodeProperties()">Filter</button>
         <button class="navButton" onclick="readNodeProperties()">Create Group</button>
-        <button class="navButton" onclick="readNodeProperties()">Delete Group</button>
+        <button class="navButton" onclick="readToogle()">Delete Group</button>
         <button class="navButton" onclick="loadAllAppNodes()">Load</button>
+        <div id="toogle-container">
+            <!-- Rounded switch -->
+            Use Database
+            <label class="switch">
+
+                <input type="checkbox" id="db-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
     </div>
 </div>
 <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->

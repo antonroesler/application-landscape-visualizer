@@ -44,29 +44,33 @@ function init() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
-    if (data !== undefined){
-        const url = urljoin(window.location.href, 'mongo/node');
-        const params = {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify(data),
-        };
-        const res = await fetch(url, params);
-        res.json().then(appNode => {
-            if (Object.keys(appNode).length !== 0){
-                // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-            }else {
-                // Inform user that database is unavailable
-                databaseNotAvailableAlert();
-                // Create AppNode with id being the current time in milliseconds
-                addNode(data.name, data.category, data.desc, Date.now());
-            }
+    if (useDatabase()) {
+        if (data !== undefined) {
+            const url = urljoin(window.location.href, 'mongo/node');
+            const params = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            };
+            const res = await fetch(url, params);
+            res.json().then(appNode => {
+                if (Object.keys(appNode).length !== 0) {
+                    // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
+                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+                } else {
+                    // Inform user that database is unavailable
+                    databaseNotAvailableAlert();
+                    // Create AppNode with id being the current time in milliseconds
+                    addNode(data.name, data.category, data.desc, Date.now());
+                }
 
-        })
+            })
 
+        }
+    } else{
+        addNode(data.name, data.category, data.desc, Date.now());
     }
 }
 
@@ -137,4 +141,9 @@ function checkNodeName(name) {
 
 function databaseNotAvailableAlert(){
     alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
+}
+
+
+function useDatabase(){
+    return document.getElementById("db-toggle").checked
 }
