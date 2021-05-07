@@ -69,7 +69,7 @@ async function addAppNode() {
             })
 
         }
-    } else{
+    } else {
         addNode(data.name, data.category, data.desc, Date.now());
     }
 }
@@ -79,7 +79,6 @@ async function addAppNode() {
  */
 function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
-    // Here we need to check if a node with key == id already exists, if yes -> dont add node, if no -> add node
     model.addNodeData({
         key: id,
         nameProperty: name,
@@ -87,6 +86,7 @@ function addNode(name, category, desc, id) {
         desc: desc
     });
     diagram.commitTransaction("update");
+
 }
 
 /**
@@ -95,14 +95,17 @@ function addNode(name, category, desc, id) {
  */
 function readNodeProperties() {
     var name = document.getElementById("name").value;
-    var category = document.getElementById("category").value;
-    var desc = document.getElementById("desc").value;
-    if (checkNodeName(name) === true) {
-        window.alert("node name already exists");
-        return undefined
+    if (name === "") {
+        window.alert("Please enter a name for the node");
+    } else {
+        var category = document.getElementById("category").value;
+        var desc = document.getElementById("desc").value;
+        if (checkNodeName(name) === true) {
+            window.alert("node name already exists");
+            return undefined
+        }
+        return { name: name, category: category, desc: desc }
     }
-    return {name:name, category:category, desc:desc}
-
 }
 
 /**
@@ -112,16 +115,20 @@ function readNodeProperties() {
 async function loadAllAppNodes() {
     const url = urljoin(window.location.href, 'mongo/node');
     const params = {
-        method:'GET',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
     };
     const res = await fetch(url, params);
     res.json().then(appNodes => {
-        appNodes.forEach(appNode => {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-        })
+        //check if node id already exists 
+        if (checkNodeId(appNodes._id) === true) {
+        } else {
+            appNodes.forEach(appNode => {
+                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            })
+        }
 
     })
 }
@@ -138,12 +145,20 @@ function checkNodeName(name) {
     return false;
 }
 
+function checkNodeId(id) {
+    for (i = 0; i < model.nodeDataArray.length; i++) {
+        if (id === model.nodeDataArray[i].id) {
+            return true;
+        }
+    }
+    return false;
+}
 
-function databaseNotAvailableAlert(){
+function databaseNotAvailableAlert() {
     alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
 }
 
 
-function useDatabase(){
+function useDatabase() {
     return document.getElementById("db-toggle").checked
 }
