@@ -27,15 +27,14 @@ model.nodeDataArray = [];
 
 model.linkDataArray = [];
 
-
+/**
+ * init function to create the model.
+ */
 function init() {
-
     diagram.model = model;
     // passing our TemplateMap into our diagram
     diagram.nodeTemplateMap = templmap;
-
     diagram.layout = $(go.LayeredDigraphLayout);
-
 }
 
 /**
@@ -44,7 +43,7 @@ function init() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
-    if (useDatabase()) {
+    if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
             const url = urljoin(window.location.href, 'mongo/node');
             const params = {
@@ -100,7 +99,7 @@ function readNodeProperties() {
     } else {
         var category = document.getElementById("category").value;
         var desc = document.getElementById("desc").value;
-        if (checkNodeName(name) === true) {
+        if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
         }
@@ -122,22 +121,19 @@ async function loadAllAppNodes() {
     };
     const res = await fetch(url, params);
     res.json().then(appNodes => {
-        //check if node id already exists 
-        if (checkNodeId(appNodes._id) === true) {
-        } else {
             appNodes.forEach(appNode => {
-                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+                if (appNodeIdExists(appNode._id) !== true) {
+                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+                }
             })
-        }
-
     })
 }
 
 /**
  * Checks if the given name for the new node is already existing or not
  */
-function checkNodeName(name) {
-    for (i = 0; i < model.nodeDataArray.length; i++) {
+function appNodeNameExists(name) {
+    for (let i = 0; i < model.nodeDataArray.length; i++) {
         if (name === model.nodeDataArray[i].nameProperty) {
             return true;
         }
@@ -145,20 +141,29 @@ function checkNodeName(name) {
     return false;
 }
 
-function checkNodeId(id) {
-    for (i = 0; i < model.nodeDataArray.length; i++) {
-        if (id === model.nodeDataArray[i].id) {
+/**
+ * Checks if an appNode with a given id exists in the models nodeDataArray.
+ * @param id
+ * @returns {boolean}
+ */
+function appNodeIdExists(id) {
+    for (let i = 0; i < model.nodeDataArray.length; i++) {
+        if (model.nodeDataArray[i].key === id) {
             return true;
         }
     }
     return false;
 }
 
-function databaseNotAvailableAlert() {
-    alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
+/**
+ * Returns the value (true/false) of the use Database switch. If true, changes should be send to the DB right away. If
+ * false, changes are only in the browser.
+ * @returns boolean
+ */
+function useDatabaseSwitchIsOn() {
+    return document.getElementById("db-toggle").checked
 }
 
-
-function useDatabase() {
-    return document.getElementById("db-toggle").checked
+function databaseNotAvailableAlert() {
+    alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
 }
