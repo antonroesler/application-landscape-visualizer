@@ -33,6 +33,7 @@ function init() {
     diagram.model = model;
     // passing our TemplateMap into our diagram
     diagram.nodeTemplateMap = templmap;
+    diagram.linkTemplate = linkTemplate;
 
     diagram.layout = $(go.LayeredDigraphLayout);
 
