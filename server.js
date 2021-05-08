@@ -62,7 +62,7 @@ mongoose.connect(
             console.log('Connected to DB')
         }
         else{
-            console.error('Failed to connect to DB. Check your credentials in .env')
+            console.error('Failed to connect to DB. Check your credentials in .env ')
         }
     }
 )
@@ -74,4 +74,7 @@ mongoose.connect(
 app.listen(port, () => {
   console.log(`Listening to requests on http://localhost:${port}`);
 });
+
+
+
 
