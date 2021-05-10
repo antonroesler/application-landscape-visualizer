@@ -22,8 +22,18 @@ const AppNodeSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    category: String,
-    desc: String
+    category: {
+        type: String,
+        required: true
+    },
+    desc: String,
+    tags: [String],
+    version: String,
+    department: [String],
+    allowedUsers: Number,
+    license: String,
+    language: [String],
+
 });
 
 
