@@ -24,72 +24,78 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!--<script src="libs/gojs-lib/go-debug.js"></script>-->
-    <script src="libs/gojs-lib/go.js"></script>
+    <script src="libs/gojs-lib/go-debug.js"></script>
     <script src="libs/gojs-lib/Figures.js"></script>
     <script src="libs/url-join.js"></script>
 
 </head>
 
 <body onload="init()">
-<!-- Header Section starts here -->
-<div class="header">
-    <!-- divided into three sections, from left to right. First used is header_logo -->
-    <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
-    <!-- middle section which can be used for additional content later -->
-    <div class="header_main"></div>
-    <!-- last one is for login purpose. PLease add uses jscripthere -->
-    <div class="header_userlogin">
-        <button class="navButton2" onclick="deleteInternet()">Login</button>
-    </div>
-</div>
-<!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
-<div class="controlbar">
-    <div class="controlbar_nav">
-        Category: <select class="navButton" id="category" name="category">
-        <option value="Database">Database</option>
-        <option value="Package">Application</option>
-        <option value="Component">Component</option>
-    </select>
-        <a>Node Name:</a>
-        <input autocomplete="off" class="inputField" id="name" type="text"/>
-
-        <a>Description:</a>
-        <input autocomplete="off" class="inputField" id="desc" type="text"/>
-        <button class="navButton" onclick="addAppNode()">Create Node</button>
-        <button class="navButton" onclick="apiTest()">Undo</button>
-        <button class="navButton" onclick="readNodeProperties()">Redo</button>
-        <button class="navButton" onclick="readNodeProperties()">Filter</button>
-        <button class="navButton" onclick="readNodeProperties()">Create Group</button>
-        <button class="navButton" onclick="readToogle()">Delete Group</button>
-        <button class="navButton" onclick="loadAllAppNodes()">Load</button>
-        <div id="toogle-container">
-            <!-- Rounded switch -->
-            Use Database
-            <label class="switch">
-
-                <input type="checkbox" id="db-toggle">
-                <span class="slider round"></span>
-            </label>
+    <!-- Header Section starts here -->
+    <div class="header">
+        <!-- divided into three sections, from left to right. First used is header_logo -->
+        <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
+        <!-- middle section which can be used for additional content later -->
+        <div class="header_main"></div>
+        <!-- last one is for login purpose. PLease add uses jscripthere -->
+        <div class="header_userlogin">
+            <button class="navButton2" onclick="deleteInternet()">Login</button>
         </div>
     </div>
-</div>
-<!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
-<div class="diagram_container">
-    <div class="diagram_container_main">
-        <div id="diagramDiv">
+    <!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
+    <div class="controlbar">
+        <div class="controlbar_nav">
+            Category: <select class="navButton" id="category" name="category">
+                <option value="Database">Database</option>
+                <option value="Package">Application</option>
+                <option value="Component">Component</option>
+            </select>
+            <a>Node Name:</a>
+            <input autocomplete="off" class="inputField" id="name" type="text" />
+
+            <a>Description:</a>
+            <input autocomplete="off" class="inputField" id="desc" type="text" />
+            <button class="navButton" onclick="addAppNode()">Create Node</button>
+            <button class="navButton" onclick="apiTest()">Undo</button>
+            <button class="navButton" onclick="readNodeProperties()">Redo</button>
+            <button class="navButton" onclick="readNodeProperties()">Filter</button>
+            <button class="navButton" onclick="readNodeProperties()">Create Group</button>
+            <button class="navButton" onclick="deleteNode()">Delete Group</button>
+            <button class="navButton" onclick="loadAllAppNodes()">Load</button>
+            <div id="toogle-container">
+                <!-- Rounded switch -->
+                Use Database
+                <label class="switch">
+
+                    <input type="checkbox" id="db-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </div>
     </div>
-    <!-- Sidebar Container -->
-    <div class="diagram_container_sidebar">
+    <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
+    <div class="diagram_container">
+        <div class="diagram_container_main">
+            <div id="diagramDiv">
+            </div>
+        </div>
+        <!-- Sidebar Container -->
+        <div class="diagram_container_sidebar">
 
-        <div class="diagram_container_sidebar_showbox"><h4 class="sidebarHeading"> - Basic Functions - </h4></div>
-        <div class="diagram_container_sidebar_showbox"><h4 class="sidebarHeading"> - Statistics - </h4></div>
-        <div class="diagram_container_sidebar_showbox"><h4 class="sidebarHeading"> - Alter Node or Groups - </h4></div>
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Basic Functions - </h4>
+            </div>
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Statistics - </h4>
+            </div>
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Alter Node or Groups - </h4>
+            </div>
 
+        </div>
     </div>
-</div>
-<div class="spacer_footer"></div>
-<div class="footer_container"></div>
+    <div class="spacer_footer"></div>
+    <div class="footer_container"></div>
 
 
 
