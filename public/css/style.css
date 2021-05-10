@@ -179,8 +179,9 @@ body {
 
 .footer_container {
   background-color: #737373;
-  ;
-  width: 100%;
+  padding-left: 1%;
+  padding-top: 0.2%;
+  width: 99%;
   height: 50px;
   border-radius: 0px 0px 10px 10px;
   border: 0px solid #000000;
@@ -192,7 +193,7 @@ body {
 	background:linear-gradient(to bottom, #ededed 5%, #f2f2f2 100%);
 	background-color:#f2f2f2;
 	border-radius:0px 0px 0px 5px;
-	border:1px solid #404040;
+	border:0px solid #404040;
 	display:inline-block;
 	cursor:pointer;
 	color:#777777;
@@ -205,6 +206,8 @@ body {
 	background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
 	background-color:#dfdfdf;
   color: white;
+  box-shadow: -6px 10px 7px -4px #dfdfdf;
+  border-radius:0px 0px 0px 5px;
 
 }
 .navButton:active {
@@ -213,14 +216,16 @@ body {
 }
 
 .navButton2 {
-	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	/*box-shadow:inset 0px 1px 0px 0px #ffffff;
 	background:linear-gradient(to bottom, #ededed 5%, #f2f2f2 100%);
-	background-color:#f2f2f2;
-	border-radius:0px 5px 0px 0px;
-	border:1px solid #404040;
+	background-color:#f2f2f2;*/
+  background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
+	background-color:#dfdfdf;
+	border-radius:5px 5px 0px 0px;
+	border:0px solid #404040;
 	display:inline-block;
 	cursor:pointer;
-	color:#777777;
+	color:white;
 	font-size:15px;
 	padding:6px 24px;
 	text-decoration:none;
@@ -229,7 +234,7 @@ body {
 .navButton2:hover {
 	background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
 	background-color:#dfdfdf;
-  color: white;
+  color: red;
 
 }
 .navButton2:active {
@@ -241,6 +246,13 @@ body {
   border-radius:0px 0px 0px 5px;
 	border:1px solid #404040;
   font-size: 15px;
+}
+
+.inputField2 {
+  border-radius:0px 0px 0px 5px;
+	border:1px solid #404040;
+  font-size: 15px;
+  height: 5em;
 }
 
 .sidebarHeading {
@@ -259,8 +271,8 @@ Toggle Slider for database
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 50px;
+    height: 28px;
 }
 
 /* Hide default HTML checkbox */
@@ -286,8 +298,8 @@ Toggle Slider for database
 .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 20px;
+    width: 20px;
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -317,3 +329,52 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.modalDialog { 
+  position: Fixed; 
+  font-family: Verdana, Sans-Serif; 
+  top: 0; 
+  right: 0; 
+  bottom: 0; 
+  left: 0; 
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 99999; 
+  opacity: 0; 
+  transition: opacity 400ms ease-in; 
+  pointer-events: None; 
+ } 
+ 
+ .modalDialog:target { 
+  opacity: 1; 
+  pointer-events: Auto; 
+ } 
+ 
+ .modalDialog > div { 
+  width: 30%; 
+  position: relative; 
+  margin: 10% Auto; 
+  padding: 5px 20px 13px 20px; 
+  border-radius: 0px 0px 0px 10px; 
+  background-color: #FFFFFF; 
+  /*background: linear-gradient(#FFFFFF, #999999); */
+  cursor: Default; 
+ } 
+ 
+ .close { 
+  background-color: #606061; 
+  color: #FFFFFF; 
+  line-height: 25px; 
+  position: Absolute; 
+  right: -12px; 
+  text-align: Center; 
+  top: -10px; 
+  width: 24px; 
+  text-decoration: None; 
+  font-weight: Bold; 
+  border-radius: 12px; 
+  box-shadow: 1px 1px 3px #000000; 
+ } 
+ 
+ .close:hover { 
+  background-color: #ff0000; 
+ } 
