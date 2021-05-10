@@ -20,64 +20,84 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Application Landscape Viz</title>
+    <title>Application Landscape Vizualizer - Webapp</title>
     <link href="css/style.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
     <!--<script src="libs/gojs-lib/go-debug.js"></script>-->
     <script src="libs/gojs-lib/go-debug.js"></script>
     <script src="libs/gojs-lib/Figures.js"></script>
     <script src="libs/url-join.js"></script>
+    
 
 </head>
 
 <body onload="init()">
-    <!-- Header Section starts here -->
-    <div class="header">
-        <!-- divided into three sections, from left to right. First used is header_logo -->
-        <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
-        <!-- middle section which can be used for additional content later -->
-        <div class="header_main"></div>
-        <!-- last one is for login purpose. PLease add uses jscripthere -->
-        <div class="header_userlogin">
-            <button class="navButton2" onclick="deleteInternet()">Login</button>
-        </div>
-    </div>
-    <!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
-    <div class="controlbar">
-        <div class="controlbar_nav">
-            Category: <select class="navButton" id="category" name="category">
-                <option value="Database">Database</option>
-                <option value="Package">Application</option>
-                <option value="Component">Component</option>
-            </select>
-            <a>Node Name:</a>
-            <input autocomplete="off" class="inputField" id="name" type="text" />
 
-            <a>Description:</a>
-            <input autocomplete="off" class="inputField" id="desc" type="text" />
-            <button class="navButton" onclick="addAppNode()">Create Node</button>
-            <button class="navButton" onclick="apiTest()">Undo</button>
-            <button class="navButton" onclick="readNodeProperties()">Redo</button>
-            <button class="navButton" onclick="readNodeProperties()">Filter</button>
-            <button class="navButton" onclick="readNodeProperties()">Create Group</button>
-            <button class="navButton" onclick="deleteNode()">Delete Group</button>
-            <button class="navButton" onclick="loadAllAppNodes()">Load</button>
-            <div id="toogle-container">
-                <!-- Rounded switch -->
-                Use Database
-                <label class="switch">
-
-                    <input type="checkbox" id="db-toggle">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-        </div>
+<!-- Header Section starts here -->
+<div class="header">
+    <!-- divided into three sections, from left to right. First used is header_logo -->
+    <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
+    <!-- middle section which can be used for additional content later -->
+    <div class="header_main"></div>
+    <!-- last one is for login purpose. Please add user jscript here -->
+    <div class="header_userlogin">
+        <button class="navButton2" onclick="deleteInternet()">Login</button>
     </div>
-    <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
-    <div class="diagram_container">
-        <div class="diagram_container_main">
-            <div id="diagramDiv">
-            </div>
+</div>
+<!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
+<div class="controlbar">
+    <div class="controlbar_nav">
+      
+        <a href="#openModal" class="navButton">New Node</a> 
+        
+        
+        
+       <!-- <button class="navButton" onclick="readNodeProperties()">Filter</button>
+        <button class="navButton" onclick="readNodeProperties()">Create Group</button>
+        <button class="navButton" onclick="readToogle()">Delete Group</button> -->
+        <button class="navButton" onclick="deleteNode()">Delete Group</button>
+        <button class="navButton" onclick="loadAllAppNodes()">Load</button>
+
+
+        <div id="openModal" class="modalDialog"> 
+            <div> 
+             <a href="#close" title="Schließen" class="close">X</a> 
+             <h4 class="sidebarHeading">Create New Node</h4> 
+             <hr>
+             Choose Category:
+               <select class="navButton" id="category" name="category" title="Please chosse correct Category">
+               <option value="Database">Database</option>
+               <option value="Package">Application</option>
+               <option value="Component">Component</option>
+               <option value="Database">Stuff</option>
+               <option value="Package">More Stuff</option>
+               <option value="Component">Epic Stuff</option>
+           </select> <hr>
+           <input autocomplete="off" class="inputField" id="name" type="text" placeholder="Node Name: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField2" id="desc" type="text" placeholder="Description: " title="Node Description is inserted here"/>
+           <p>Meta Field: </p><hr>
+           <input autocomplete="off" class="inputField" id="name" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="desc" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="name" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="desc" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="name" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="desc" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
+           <hr>
+           <button class="navButton" onclick="addAppNode()">Create</button>
+            </div> 
+           </div>
+
+    </div>
+</div>
+
+
+
+<!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
+<div class="diagram_container">
+    <div class="diagram_container_main">
+        <div id="diagramDiv">
+
         </div>
         <!-- Sidebar Container -->
         <div class="diagram_container_sidebar">
@@ -94,16 +114,29 @@
 
         </div>
     </div>
-    <div class="spacer_footer"></div>
-    <div class="footer_container"></div>
+
+</div>
+<div class="spacer_footer"></div>
+<div class="footer_container">
+  <div id="toogle-container">
+      <!-- Rounded switch -->
+      Use Database
+      <label class="switch">
+
+          <input type="checkbox" id="db-toggle">
+          <span class="slider round"></span>
+      </label>
+  </div>
+</div>
+
 
 
 
 </body>
 <!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
-
     <script src="js/index.js"></script>
     <script src="js/node_template.js"></script>
     <script src="js/link_template.js"></script>
     
 </html>
+
