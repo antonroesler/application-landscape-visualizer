@@ -27,15 +27,14 @@ model.nodeDataArray = [];
 
 model.linkDataArray = [];
 
-
+/**
+ * init function to create the model.
+ */
 function init() {
-
     diagram.model = model;
     // passing our TemplateMap into our diagram
     diagram.nodeTemplateMap = templmap;
-
     diagram.layout = $(go.LayeredDigraphLayout);
-
 }
 
 /**
@@ -44,7 +43,7 @@ function init() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
-    if (useDatabase()) {
+    if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
             const url = urljoin(window.location.href, 'mongo/node');
             const params = {
@@ -69,7 +68,7 @@ async function addAppNode() {
             })
 
         }
-    } else{
+    } else {
         addNode(data.name, data.category, data.desc, Date.now());
     }
 }
@@ -79,7 +78,6 @@ async function addAppNode() {
  */
 function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
-    // Here we need to check if a node with key == id already exists, if yes -> dont add node, if no -> add node
     model.addNodeData({
         key: id,
         nameProperty: name,
@@ -87,6 +85,18 @@ function addNode(name, category, desc, id) {
         desc: desc
     });
     diagram.commitTransaction("update");
+
+}
+/**
+ * Delet selected node from nodeDataArray.
+ */
+function deleteNode() {
+    var id = diagram.selection.toArray()[0].key;
+    var node = diagram.findNodeForKey(id);
+    diagram.startTransaction();
+    diagram.remove(node);
+    diagram.commitTransaction("deleted node");
+    deleteAppNode(id);
 }
 
 /**
@@ -95,14 +105,17 @@ function addNode(name, category, desc, id) {
  */
 function readNodeProperties() {
     var name = document.getElementById("name").value;
-    var category = document.getElementById("category").value;
-    var desc = document.getElementById("desc").value;
-    if (checkNodeName(name) === true) {
-        window.alert("node name already exists");
-        return undefined
+    if (name === "") {
+        window.alert("Please enter a name for the node");
+    } else {
+        var category = document.getElementById("category").value;
+        var desc = document.getElementById("desc").value;
+        if (appNodeNameExists(name) === true) {
+            window.alert("node name already exists");
+            return undefined
+        }
+        return { name: name, category: category, desc: desc }
     }
-    return {name:name, category:category, desc:desc}
-
 }
 
 /**
@@ -112,7 +125,7 @@ function readNodeProperties() {
 async function loadAllAppNodes() {
     const url = urljoin(window.location.href, 'mongo/node');
     const params = {
-        method:'GET',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
@@ -120,17 +133,32 @@ async function loadAllAppNodes() {
     const res = await fetch(url, params);
     res.json().then(appNodes => {
         appNodes.forEach(appNode => {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            if (appNodeIdExists(appNode._id) !== true) {
+                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            }
         })
-
     })
 }
 
 /**
+ * Delete selected node from database.
+ */
+async function deleteAppNode(id) {
+    const url = urljoin(window.location.href, 'mongo/node/id/' + id);
+    const params = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    const res = fetch(url, params);
+    res.json().then(appNode => {alert(appNode.name + "was deleted")})
+}
+/**
  * Checks if the given name for the new node is already existing or not
  */
-function checkNodeName(name) {
-    for (i = 0; i < model.nodeDataArray.length; i++) {
+function appNodeNameExists(name) {
+    for (let i = 0; i < model.nodeDataArray.length; i++) {
         if (name === model.nodeDataArray[i].nameProperty) {
             return true;
         }
@@ -138,12 +166,29 @@ function checkNodeName(name) {
     return false;
 }
 
-
-function databaseNotAvailableAlert(){
-    alert("Database ist not available. Please contact admin to get database acsses. \n YOUR WORK IS NOT SAVED.")
+/**
+ * Checks if an appNode with a given id exists in the models nodeDataArray.
+ * @param id
+ * @returns {boolean}
+ */
+function appNodeIdExists(id) {
+    for (let i = 0; i < model.nodeDataArray.length; i++) {
+        if (model.nodeDataArray[i].key === id) {
+            return true;
+        }
+    }
+    return false;
 }
 
-
-function useDatabase(){
+/**
+ * Returns the value (true/false) of the use Database switch. If true, changes should be send to the DB right away. If
+ * false, changes are only in the browser.
+ * @returns boolean
+ */
+function useDatabaseSwitchIsOn() {
     return document.getElementById("db-toggle").checked
+}
+
+function databaseNotAvailableAlert() {
+    alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
 }
