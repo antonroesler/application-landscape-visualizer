@@ -18,48 +18,22 @@
 const mongoose = require('mongoose')
 
 const AppNodeSchema = mongoose.Schema({
-  id: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  desc: {
-    type: String,
-    required: true
-  },
-  metadata: {
-    tags: {
-      type: String,
-      required: false
+    name: {
+        type: String,
+        required: true
     },
-    version: {
-      type: String,
-      required: true
+    category: {
+        type: String,
+        required: true
     },
-    department: {
-      type: list(),
-      required: true
-    },
-    allowedUsers: {
-      type: String,
-      required: true
-    },
-    license: {
-      type: String,
-      required: false
-    },
-    language: {
-      type: String,
-      required: false
-    }
-  }
+    desc: String,
+    tags: [String],
+    version: String,
+    department: [String],
+    allowedUsers: Number,
+    license: String,
+    language: [String],
+
 });
 
 
