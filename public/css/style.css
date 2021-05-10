@@ -193,7 +193,7 @@ body {
 	background:linear-gradient(to bottom, #ededed 5%, #f2f2f2 100%);
 	background-color:#f2f2f2;
 	border-radius:0px 0px 0px 5px;
-	border:0px solid #404040;
+	border:0px  #404040;
 	display:inline-block;
 	cursor:pointer;
 	color:#777777;
@@ -222,7 +222,7 @@ body {
   background:linear-gradient(to bottom, #dfdfdf 5%, #737373 100%);
 	background-color:#dfdfdf;
 	border-radius:5px 5px 0px 0px;
-	border:0px solid #404040;
+	border:0px  #404040;
 	display:inline-block;
 	cursor:pointer;
 	color:white;
