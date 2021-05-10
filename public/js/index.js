@@ -87,6 +87,17 @@ function addNode(name, category, desc, id) {
     diagram.commitTransaction("update");
 
 }
+/**
+ * Delet selected node from nodeDataArray.
+ */
+function deleteNode() {
+    var id = diagram.selection.toArray()[0].key;
+    var node = diagram.findNodeForKey(id);
+    diagram.startTransaction();
+    diagram.remove(node);
+    diagram.commitTransaction("deleted node");
+    deleteAppNode(id);
+}
 
 /**
  * Gets the input values from the user and calls the addNode() function to add
@@ -121,14 +132,28 @@ async function loadAllAppNodes() {
     };
     const res = await fetch(url, params);
     res.json().then(appNodes => {
-            appNodes.forEach(appNode => {
-                if (appNodeIdExists(appNode._id) !== true) {
-                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-                }
-            })
+        appNodes.forEach(appNode => {
+            if (appNodeIdExists(appNode._id) !== true) {
+                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            }
+        })
     })
 }
 
+/**
+ * Delete selected node from database.
+ */
+async function deleteAppNode(id) {
+    const url = urljoin(window.location.href, 'mongo/node/id/' + id);
+    const params = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    const res = fetch(url, params);
+    res.json().then(appNode => {alert(appNode.name + "was deleted")})
+}
 /**
  * Checks if the given name for the new node is already existing or not
  */

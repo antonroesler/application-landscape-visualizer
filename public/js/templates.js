@@ -48,9 +48,20 @@ var databaseTemplate =
                         $(go.TextBlock,
                             new go.Binding("text", "key"))
                     ))
-        }
+        }, {
+        contextMenu:     // define a context menu for each node
+            $("ContextMenu",  
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "delete"),
+                    { click: deleteNode })
+                // more ContextMenuButtons would go here
+            )  
+    }
     );
-
 /**
 * componentTemplate
 * is used for generating a "component" node and also showing Metadata and key of the node while hovering
@@ -72,7 +83,19 @@ var componentTemplate =
                         $(go.TextBlock,
                             new go.Binding("text", "key"))
                     ))
-        }
+        }, {
+            contextMenu:     // define a context menu for each node
+                $("ContextMenu",  
+                    $("ContextMenuButton",
+                        {
+                            "ButtonBorder.fill": "white",
+                            "_buttonFillOver": "skyblue"
+                        },
+                        $(go.TextBlock, "delete"),
+                        { click: deleteNode })
+                    // more ContextMenuButtons would go here
+                )  
+    }
     );
 
 /**
@@ -95,7 +118,19 @@ var packageTemplate =
                         $(go.TextBlock,
                             new go.Binding("text", "key"))
                     ))
-        },
+        }, {
+        contextMenu:     // define a context menu for each node
+            $("ContextMenu",  // that has one button
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "delete"),
+                    { click: deleteNode })
+                // more ContextMenuButtons would go here
+            )  
+    }
     );
 
 
