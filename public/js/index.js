@@ -85,7 +85,7 @@ function addNodeAndLink() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
-    const newNodeLocation = getDesiredCenter();
+    const newNodeLocation = getDesiredLocation();
     let newNode;
     if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
@@ -112,7 +112,7 @@ async function addAppNode() {
     } else {
         newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now(),newNodeLocation);
     }
-    handleContextMenuOptions(newNode);
+    await handleContextMenuOptions(newNode);
 }
 
 /**
@@ -123,7 +123,6 @@ async function handleContextMenuOptions(newNode){
     if (addNodeManager === "NodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         const link = await addLinkToDatabase(newLink);
-        console.log(link)
         addLinkToDiagram(link._id, link.from, link.to)
     }
     addNodeManager = "default";
@@ -134,16 +133,16 @@ async function handleContextMenuOptions(newNode){
  */
 function addNodeToDiagram(name, category, desc, id, pos) {
     diagram.startTransaction("make new node");
+    console.log(pos)
     const newNode = {
         key: id,
         nameProperty: name,
         category: category,
-        desc: desc
+        desc: desc,
     };
     model.addNodeData(newNode);
-    if (pos){
-        newNode.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
-    }
+    const part = diagram.findPartForData(newNode);
+    part.location = pos;
     diagram.commitTransaction("update");
     return newNode;
 }
@@ -300,8 +299,9 @@ function appNodeIdExists(id) {
  *
  * @returns location
  */
-function getDesiredCenter(){
+function getDesiredLocation(){
     if (addNodeManager === "DiagramCanvasContextMenu") {
+        addNodeManager = "default";
         return diagram.toolManager.contextMenuTool.mouseDownPoint;
     }
     else {
