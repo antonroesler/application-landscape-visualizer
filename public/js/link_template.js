@@ -32,7 +32,7 @@ var linkTemplate =
             curve: go.Link.JumpOver
         },
         $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
-        $(go.Shape, { toArrow: "Standard", scale: "1" }),
+        $(go.Shape, { toArrow: "Standard", scale: 1 }),
         
 
     );
@@ -63,3 +63,7 @@ var 10GB_linkTemplate =
     linkTemplate.add("", 1GB_linkTemplate);
     linkTemplate.add("10", 10GB_linkTemplate);
  */
+
+var linkTemplateMap = new go.Map();
+linkTemplateMap.add("", diagram.linkTemplate);
+linkTemplateMap.add("standard", linkTemplate);

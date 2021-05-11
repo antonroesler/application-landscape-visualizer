@@ -138,9 +138,9 @@ var packageTemplate =
 * templmap includes all templates, we can get access to with "category" inside
 * of an node object. 
 */
-var templmap = new go.Map();
-templmap.add("", diagram.nodeTemplate);
-templmap.add("Database", databaseTemplate);
-templmap.add("Component", componentTemplate)
-templmap.add("Package", packageTemplate);
+var nodeTemplateMap = new go.Map();
+nodeTemplateMap.add("", diagram.nodeTemplate);
+nodeTemplateMap.add("Database", databaseTemplate);
+nodeTemplateMap.add("Component", componentTemplate)
+nodeTemplateMap.add("Package", packageTemplate);
 
