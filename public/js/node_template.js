@@ -130,8 +130,48 @@ var packageTemplate =
                     { click: deleteNode })
                 // more ContextMenuButtons would go here
             )  
-    }
-    );
+    },
+    $(go.Panel, "Table",
+        $(go.RowColumnDefinition,
+            { column: 0, alignment: go.Spot.Left }),
+        $(go.RowColumnDefinition,
+            { column: 2, alignment: go.Spot.Right }),
+        $(go.TextBlock,  // the node title
+            {
+                column: 0, row: 0, columnSpan: 3, alignment: go.Spot.Center,
+                font: "bold 10pt sans-serif", margin: new go.Margin(4, 2)
+            },
+            new go.Binding("text", "key")),
+        $(go.Panel, "Horizontal",
+            { column: 0, row: 1 },
+            $(go.Shape,  // the "A" port
+                {
+                    width: 6, height: 6, portId: "A", toSpot: go.Spot.Left,
+                    toLinkable: true, toMaxLinks: 1
+                }),  // allow user-drawn links from here
+            $(go.TextBlock, "A")  // "A" port label
+        ),
+        $(go.Panel, "Horizontal",
+            { column: 0, row: 2 },
+            $(go.Shape,  // the "B" port
+                {
+                    width: 6, height: 6, portId: "B", toSpot: go.Spot.Left,
+                    toLinkable: true, toMaxLinks: 1
+                }),  // allow user-drawn links from here
+            $(go.TextBlock, "B")  // "B" port label
+        ),
+        $(go.Panel, "Horizontal",
+            { column: 2, row: 1, rowSpan: 2 },
+            $(go.TextBlock, "Out"),  // "Out" port label
+            $(go.Shape,  // the "Out" port
+                {
+                    width: 6, height: 6, portId: "Out", fromSpot: go.Spot.Right,
+                    fromLinkable: true
+                })  // allow user-drawn links to here
+        )
+    )
+
+);
 
 
 /**

@@ -24,6 +24,10 @@ const diagram = $(go.Diagram, "diagramDiv",
         "toolManager.hoverDelay": 100
     });
 const model = $(go.GraphLinksModel);
+
+model.linkFromPortIdProperty= "fromPort";  // required information:
+model.linkToPortIdProperty= "toPort";      // identifies data property names
+
 model.nodeDataArray = [];
 
 model.linkDataArray = [];
