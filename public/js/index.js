@@ -85,6 +85,7 @@ function addNodeAndLink() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
+    const newNodeLocation = getDesiredCenter();
     let newNode;
     if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
@@ -100,19 +101,17 @@ async function addAppNode() {
             const appNode = await res.json();
                 if (Object.keys(appNode).length !== 0) {
                     // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    newNode = addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id)
-                    console.log(newNode)
+                    newNode = addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id, newNodeLocation)
                 } else {
                     // Inform user that database is unavailable
                     databaseNotAvailableAlert();
                     // Create AppNode with id being the current time in milliseconds
-                    newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now());
+                    newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now(),newNodeLocation);
                 }
         }
     } else {
-        newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now());
+        newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now(),newNodeLocation);
     }
-    console.log(newNode)
     handleContextMenuOptions(newNode);
 }
 
@@ -121,26 +120,19 @@ async function addAppNode() {
  * @param newNode
  */
 async function handleContextMenuOptions(newNode){
-    console.log(newNode)
     if (addNodeManager === "NodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
-        console.log(newLink)
         const link = await addLinkToDatabase(newLink);
         console.log(link)
-        model.addLinkData(link);
-        addNodeManager = "default";
-    } else if (addNodeManager === "DiagramCanvasContextMenu") {
-        const part = diagram.findPartForData(newNode);  // must be same data reference, not a new {}
-        // set location to saved mouseDownPoint in ContextMenuTool
-        part.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
-        addNodeManager = "default";
+        addLinkToDiagram(link._id, link.from, link.to)
     }
+    addNodeManager = "default";
 }
 
 /**
  * Adds a new node to our nodeDataArray.
  */
-function addNodeToDiagram(name, category, desc, id) {
+function addNodeToDiagram(name, category, desc, id, pos) {
     diagram.startTransaction("make new node");
     const newNode = {
         key: id,
@@ -149,6 +141,9 @@ function addNodeToDiagram(name, category, desc, id) {
         desc: desc
     };
     model.addNodeData(newNode);
+    if (pos){
+        newNode.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
+    }
     diagram.commitTransaction("update");
     return newNode;
 }
@@ -157,7 +152,7 @@ function addNodeToDiagram(name, category, desc, id) {
  * Adds a link to the diagram.
  */
 function addLinkToDiagram(id, from, to){
-    diagram.startTransaction("add link");
+    diagram.startTransaction("make new link");
     const newLink = {
         key: id,
         from: from,
@@ -297,6 +292,21 @@ function appNodeIdExists(id) {
         }
     }
     return false;
+}
+
+/**
+ * Returns the desired point to locate a new AppNode app. It is either the center of the diagram or the click point from
+ * the context menu, if a new node was created using the context menu (right click).
+ *
+ * @returns location
+ */
+function getDesiredCenter(){
+    if (addNodeManager === "DiagramCanvasContextMenu") {
+        return diagram.toolManager.contextMenuTool.mouseDownPoint;
+    }
+    else {
+        return diagram.documentBounds.center;
+    }
 }
 
 /**
