@@ -50,16 +50,24 @@ var databaseTemplate =
                     ))
         }, {
         contextMenu:     // define a context menu for each node
-            $("ContextMenu",  
+            $("ContextMenu",
                 $("ContextMenuButton",
                     {
                         "ButtonBorder.fill": "white",
                         "_buttonFillOver": "skyblue"
                     },
                     $(go.TextBlock, "delete"),
-                    { click: deleteNode })
+                    { click: deleteNode }),
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "add"),
+                    { click: addNodeAndLink })
+
                 // more ContextMenuButtons would go here
-            )  
+            )
     }
     );
 /**
@@ -84,17 +92,24 @@ var componentTemplate =
                             new go.Binding("text", "key"))
                     ))
         }, {
-            contextMenu:     // define a context menu for each node
-                $("ContextMenu",  
-                    $("ContextMenuButton",
-                        {
-                            "ButtonBorder.fill": "white",
-                            "_buttonFillOver": "skyblue"
-                        },
-                        $(go.TextBlock, "delete"),
-                        { click: deleteNode })
-                    // more ContextMenuButtons would go here
-                )  
+        contextMenu:     // define a context menu for each node
+            $("ContextMenu",
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "delete"),
+                    { click: deleteNode }),
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "add"),
+                    { click: addNodeAndLink })
+                // more ContextMenuButtons would go here
+            )
     }
     );
 
@@ -127,9 +142,16 @@ var packageTemplate =
                         "_buttonFillOver": "skyblue"
                     },
                     $(go.TextBlock, "delete"),
-                    { click: deleteNode })
+                    { click: deleteNode }),
+                $("ContextMenuButton",
+                    {
+                        "ButtonBorder.fill": "white",
+                        "_buttonFillOver": "skyblue"
+                    },
+                    $(go.TextBlock, "add"),
+                    { click: addNodeAndLink })
                 // more ContextMenuButtons would go here
-            )  
+            )
     }
     );
 
