@@ -28,6 +28,37 @@ model.nodeDataArray = [];
 
 model.linkDataArray = [];
 
+//need this variable to be able to add nodes in different ways (used in addNode()) !! if possible better solution
+var addNodeManager = "default";
+
+/* this menu pops up with right click into the diagram Canvas (undo, redo, add) Option*/
+diagram.contextMenu =
+    $("ContextMenu",
+        $("ContextMenuButton",
+            $(go.TextBlock, "Undo"),
+            { click: function (e, obj) { e.diagram.commandHandler.undo(); } },
+            new go.Binding("visible", "", function (o) {
+                return o.diagram.commandHandler.canUndo();
+            }).ofObject()),
+        $("ContextMenuButton",
+            $(go.TextBlock, "Redo"),
+            { click: function (e, obj) { e.diagram.commandHandler.redo(); } },
+            new go.Binding("visible", "", function (o) {
+                return o.diagram.commandHandler.canRedo();
+            }).ofObject()),
+        $("ContextMenuButton",
+            $(go.TextBlock, "New Node"),
+            {
+                click: function (e, obj) {
+                    e.diagram.commit(function (d) {
+                        var openModal = document.getElementById("modal");
+                        addNodeManager = "DiagramCanvasContextMenu";
+                        openModal.click();
+                    });
+                }
+            }
+        ));
+
 /**
  * init function to create the model.
  */
@@ -36,8 +67,16 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplateMap = nodeTemplateMap;
     diagram.linkTemplateMap = linkTemplateMap;
+    diagram.layout = new go.ForceDirectedLayout();
+}
 
-    diagram.layout = $(go.LayeredDigraphLayout);
+/**
+ * changes var addNodeManager so that addNode() knows that it should create a link.
+ */
+function addNodeAndLink() {
+    var openModal = document.getElementById("modal");
+    addNodeManager = "NodeContextMenuAdd";
+    openModal.click();
 }
 
 /**
@@ -81,12 +120,24 @@ async function addAppNode() {
  */
 function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
-    model.addNodeData({
+    const newNode = {
         key: id,
         nameProperty: name,
         category: category,
         desc: desc
-    });
+    };
+    model.addNodeData(newNode);
+    //
+    if (addNodeManager === "NodeContextMenuAdd") {
+        var newlink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
+        model.addLinkData(newlink);
+        addNodeManager = "default";
+    } else if (addNodeManager === "DiagramCanvasContextMenu") {
+        part = diagram.findPartForData(newNode);  // must be same data reference, not a new {}
+        // set location to saved mouseDownPoint in ContextMenuTool
+        part.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
+        addNodeManager = "default";
+    }
     diagram.commitTransaction("update");
 
 }
@@ -138,15 +189,15 @@ async function loadAllAppNodes() {
     appNodes.forEach(appNode => {
         if (appNodeIdExists(appNode._id) !== true) {
             addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-            }
-        })
+        }
+    })
 }
 
 /**
  * Delete selected node from database.
  */
 async function deleteAppNode(id) {
-    const url = urljoin(URL, 'mongo/node/' , id);
+    const url = urljoin(URL, 'mongo/node/', id);
     const params = {
         method: 'DELETE',
         headers: {
@@ -154,7 +205,7 @@ async function deleteAppNode(id) {
         }
     };
     const res = await fetch(url, params);
-    res.json().then(appNode => {alert(appNode.name + "was deleted")})
+    res.json().then(appNode => { alert(appNode.name + "was deleted") })
 }
 /**
  * Checks if the given name for the new node is already existing or not
