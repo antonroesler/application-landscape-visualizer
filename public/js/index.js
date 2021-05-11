@@ -126,9 +126,7 @@ function readNodeProperties() {
  *
  */
 async function loadAllAppNodes() {
-    console.log("OK")
     const url = urljoin(URL, 'mongo/node');
-    console.log(url)
     const params = {
         method: 'GET',
         headers: {
@@ -138,7 +136,6 @@ async function loadAllAppNodes() {
     const res = await fetch(url, params);
     const appNodes = await res.json()
     appNodes.forEach(appNode => {
-        console.log(appNode)
         if (appNodeIdExists(appNode._id) !== true) {
             addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
             }
