@@ -76,8 +76,8 @@ router.post('/node', async (req, res) => {
  */
 router.post('/link', async (req, res) => {
     const link = new Link({
-        from: req.body.name,
-        to: req.body.category
+        from: req.body.from,
+        to: req.body.to
     });
     try {
         const savedLink = await link.save()

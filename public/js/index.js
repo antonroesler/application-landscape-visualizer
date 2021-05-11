@@ -99,26 +99,26 @@ async function addAppNode() {
             res.json().then(appNode => {
                 if (Object.keys(appNode).length !== 0) {
                     // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+                    addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id)
                 } else {
                     // Inform user that database is unavailable
                     databaseNotAvailableAlert();
                     // Create AppNode with id being the current time in milliseconds
-                    addNode(data.name, data.category, data.desc, Date.now());
+                    addNodeToDiagram(data.name, data.category, data.desc, Date.now());
                 }
 
             })
 
         }
     } else {
-        addNode(data.name, data.category, data.desc, Date.now());
+        addNodeToDiagram(data.name, data.category, data.desc, Date.now());
     }
 }
 
 /**
  * Adds a new node to our nodeDataArray.
  */
-function addNode(name, category, desc, id) {
+async function addNodeToDiagram(name, category, desc, id) {
     diagram.startTransaction("make new node");
     const newNode = {
         key: id,
@@ -129,17 +129,52 @@ function addNode(name, category, desc, id) {
     model.addNodeData(newNode);
     //
     if (addNodeManager === "NodeContextMenuAdd") {
-        var newlink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
-        model.addLinkData(newlink);
+        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
+        console.log(newLink)
+        const link = await addLinkToDatabase(newLink);
+        console.log(link)
+        model.addLinkData(link);
         addNodeManager = "default";
     } else if (addNodeManager === "DiagramCanvasContextMenu") {
-        part = diagram.findPartForData(newNode);  // must be same data reference, not a new {}
+        const part = diagram.findPartForData(newNode);  // must be same data reference, not a new {}
         // set location to saved mouseDownPoint in ContextMenuTool
         part.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
         addNodeManager = "default";
     }
     diagram.commitTransaction("update");
+}
 
+/**
+ * Adds a link to the diagram.
+ */
+function addLinkToDiagram(id, from, to){
+    diagram.startTransaction("add link");
+    const newLink = {
+        key: id,
+        from: from,
+        to: to
+    };
+    model.addLinkData(newLink);
+    diagram.commitTransaction("update");
+}
+
+/**
+ * Adds a Link-Object to the database and returns the object as it is stored in the DB, including the _id Attribute.
+ * @param link
+ */
+async function addLinkToDatabase(link){
+    if (link !== undefined) {
+        const url = urljoin(URL, 'mongo/link');
+        const params = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(link),
+        };
+        const res = await fetch(url, params);
+        return await res.json();
+    }
 }
 /**
  * Delete selected node from nodeDataArray.
@@ -174,21 +209,30 @@ function readNodeProperties() {
 
 /**
  * Loads all existing AppNodes from the Database and adds them to the diagram.
- *
  */
-async function loadAllAppNodes() {
-    const url = urljoin(URL, 'mongo/node');
+async function loadAllAppNodesAndLinks() {
+    const urlNodes = urljoin(URL, 'mongo/node');
+    const urlLinks = urljoin(URL, 'mongo/link');
     const params = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
     };
-    const res = await fetch(url, params);
-    const appNodes = await res.json()
+    // Add AppNodes to diagram
+    const resNodes = await fetch(urlNodes, params);
+    const appNodes = await resNodes.json()
     appNodes.forEach(appNode => {
         if (appNodeIdExists(appNode._id) !== true) {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id)
+        }
+    })
+    //Add Links to diagram
+    const resLinks = await fetch(urlLinks, params);
+    const links = await resLinks.json()
+    links.forEach(link => {
+        if (linkIdExists(link._id) !== true) {
+            addLinkToDiagram(link._id, link.from, link.to)
         }
     })
 }
@@ -219,6 +263,19 @@ function appNodeNameExists(name) {
     return false;
 }
 
+/**
+ * Checks if a link with a given id exists in the models linkDataArray.
+ * @param id
+ * @returns {boolean}
+ */
+function linkIdExists(id){
+    for (let i = 0; i < model.linkDataArray.length; i++) {
+        if (model.linkDataArray[i].key === id) {
+            return true;
+        }
+    }
+    return false;
+}
 /**
  * Checks if an appNode with a given id exists in the models nodeDataArray.
  * @param id
