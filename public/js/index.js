@@ -85,6 +85,7 @@ function addNodeAndLink() {
  */
 async function addAppNode() {
     const data = readNodeProperties();
+    let newNode;
     if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
             const url = urljoin(URL, 'mongo/node');
@@ -96,38 +97,31 @@ async function addAppNode() {
                 body: JSON.stringify(data),
             };
             const res = await fetch(url, params);
-            res.json().then(appNode => {
+            const appNode = await res.json();
                 if (Object.keys(appNode).length !== 0) {
                     // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id)
+                    newNode = addNodeToDiagram(appNode.name, appNode.category, appNode.desc, appNode._id)
+                    console.log(newNode)
                 } else {
                     // Inform user that database is unavailable
                     databaseNotAvailableAlert();
                     // Create AppNode with id being the current time in milliseconds
-                    addNodeToDiagram(data.name, data.category, data.desc, Date.now());
+                    newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now());
                 }
-
-            })
-
         }
     } else {
-        addNodeToDiagram(data.name, data.category, data.desc, Date.now());
+        newNode = addNodeToDiagram(data.name, data.category, data.desc, Date.now());
     }
+    console.log(newNode)
+    handleContextMenuOptions(newNode);
 }
 
 /**
- * Adds a new node to our nodeDataArray.
+ * Handles options that were specified via the context menu for a new created AppNode.
+ * @param newNode
  */
-async function addNodeToDiagram(name, category, desc, id) {
-    diagram.startTransaction("make new node");
-    const newNode = {
-        key: id,
-        nameProperty: name,
-        category: category,
-        desc: desc
-    };
-    model.addNodeData(newNode);
-    //
+async function handleContextMenuOptions(newNode){
+    console.log(newNode)
     if (addNodeManager === "NodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         console.log(newLink)
@@ -141,7 +135,22 @@ async function addNodeToDiagram(name, category, desc, id) {
         part.location = diagram.toolManager.contextMenuTool.mouseDownPoint;
         addNodeManager = "default";
     }
+}
+
+/**
+ * Adds a new node to our nodeDataArray.
+ */
+function addNodeToDiagram(name, category, desc, id) {
+    diagram.startTransaction("make new node");
+    const newNode = {
+        key: id,
+        nameProperty: name,
+        category: category,
+        desc: desc
+    };
+    model.addNodeData(newNode);
     diagram.commitTransaction("update");
+    return newNode;
 }
 
 /**
