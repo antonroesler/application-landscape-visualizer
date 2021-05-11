@@ -18,8 +18,16 @@
 const mongoose = require('mongoose')
 
 const AppNodeSchema = mongoose.Schema({
-
-})
+    from: {
+        type: String,
+        required: true
+    },
+    to: {
+        type: String,
+        required: true
+    },
+    category: String,
+});
 
 
 module.exports = mongoose.model('Link', AppNodeSchema)

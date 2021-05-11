@@ -16,6 +16,7 @@
  * with the Diagram Canvas in the HTML File ()
  */
 
+const URL = 'http://localhost:8000'
 const $ = go.GraphObject.make;
 const diagram = $(go.Diagram, "diagramDiv",
     { // enable Ctrl-Z to undo and Ctrl-Y to redo
@@ -32,8 +33,10 @@ model.linkDataArray = [];
  */
 function init() {
     diagram.model = model;
-    // passing our TemplateMap into our diagram
-    diagram.nodeTemplateMap = templmap;
+    // passing our Template Maps into our diagram
+    diagram.nodeTemplateMap = nodeTemplateMap;
+    diagram.linkTemplateMap = linkTemplateMap;
+
     diagram.layout = $(go.LayeredDigraphLayout);
 }
 
@@ -45,7 +48,7 @@ async function addAppNode() {
     const data = readNodeProperties();
     if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
-            const url = urljoin(window.location.href, 'mongo/node');
+            const url = urljoin(URL, 'mongo/node');
             const params = {
                 method: 'POST',
                 headers: {
@@ -88,7 +91,7 @@ function addNode(name, category, desc, id) {
 
 }
 /**
- * Delet selected node from nodeDataArray.
+ * Delete selected node from nodeDataArray.
  */
 function deleteNode() {
     var id = diagram.selection.toArray()[0].key;
@@ -123,7 +126,7 @@ function readNodeProperties() {
  *
  */
 async function loadAllAppNodes() {
-    const url = urljoin(window.location.href, 'mongo/node');
+    const url = urljoin(URL, 'mongo/node');
     const params = {
         method: 'GET',
         headers: {
@@ -131,27 +134,26 @@ async function loadAllAppNodes() {
         }
     };
     const res = await fetch(url, params);
-    res.json().then(appNodes => {
-        appNodes.forEach(appNode => {
-            if (appNodeIdExists(appNode._id) !== true) {
-                addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+    const appNodes = await res.json()
+    appNodes.forEach(appNode => {
+        if (appNodeIdExists(appNode._id) !== true) {
+            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
             }
         })
-    })
 }
 
 /**
  * Delete selected node from database.
  */
 async function deleteAppNode(id) {
-    const url = urljoin(window.location.href, 'mongo/node/id/' + id);
+    const url = urljoin(URL, 'mongo/node/' , id);
     const params = {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         }
     };
-    const res = fetch(url, params);
+    const res = await fetch(url, params);
     res.json().then(appNode => {alert(appNode.name + "was deleted")})
 }
 /**
