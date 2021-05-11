@@ -26,7 +26,7 @@ const diagram = $(go.Diagram, "diagramDiv",
 const model = $(go.GraphLinksModel);
 
 model.linkFromPortIdProperty= "fromPort";  // required information:
-model.linkToPortIdProperty= "toPort";      // identifies data property names
+model.linkToPortIdProperty= "toPort";   
 
 model.nodeDataArray = [];
 

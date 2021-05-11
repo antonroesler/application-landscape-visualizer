@@ -31,8 +31,30 @@ var linkTemplate =
             corner: 10,
             curve: go.Link.JumpOver
         },
+        new go.Binding("points").makeTwoWay(),
+        $(go.Shape,  // the highlight shape, normally transparent
+          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+        $(go.Shape,  // the link path shape
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "dodgerblue" : "gray"; }).ofObject()),
+        $(go.Shape,  // the arrowhead
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
+        $(go.Panel, "Auto",  // the link label, normally not visible
+          { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
+          new go.Binding("visible", "visible").makeTwoWay(),
+          $(go.Shape, "RoundedRectangle",  // the label shape
+            { fill: "#F8F8F8", strokeWidth: 0 }),
+          $(go.TextBlock, "Yes",  // the label
+            {
+              textAlign: "center",
+              font: "10pt helvetica, arial, sans-serif",
+              stroke: "#333333",
+              editable: true
+            },
+            new go.Binding("text").makeTwoWay())
+        ),
         $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
-        $(go.Shape, { toArrow: "Standard", scale: 1 }),
+        $(go.Shape, { toArrow: "Standard", scale: 1 })
         
 
     );

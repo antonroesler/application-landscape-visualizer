@@ -147,26 +147,30 @@ var packageTemplate =
             $(go.Shape,  // the "A" port
                 {
                     width: 6, height: 6, portId: "A", toSpot: go.Spot.Left,
-                    toLinkable: true, toMaxLinks: 1
+                    toLinkable: true, toMaxLinks: 1,
+                    toLinkableDuplicates: true
                 }),  // allow user-drawn links from here
-            $(go.TextBlock, "A")  // "A" port label
-        ),
-        $(go.Panel, "Horizontal",
-            { column: 0, row: 2 },
-            $(go.Shape,  // the "B" port
+                $(go.TextBlock, "A")  // "A" port label
+                ),
+                $(go.Panel, "Horizontal",
+                { column: 0, row: 2 },
+                $(go.Shape,  // the "B" port
                 {
                     width: 6, height: 6, portId: "B", toSpot: go.Spot.Left,
-                    toLinkable: true, toMaxLinks: 1
+                    toLinkable: true, toMaxLinks: 1,
+                    toLinkableDuplicates: true
                 }),  // allow user-drawn links from here
-            $(go.TextBlock, "B")  // "B" port label
-        ),
-        $(go.Panel, "Horizontal",
-            { column: 2, row: 1, rowSpan: 2 },
-            $(go.TextBlock, "Out"),  // "Out" port label
-            $(go.Shape,  // the "Out" port
+                $(go.TextBlock, "B")  // "B" port label
+                ),
+                $(go.Panel, "Horizontal",
+                { column: 2, row: 1, rowSpan: 2 },
+                $(go.TextBlock, "Out"),  // "Out" port label
+                $(go.Shape,  // the "Out" port
                 {
                     width: 6, height: 6, portId: "Out", fromSpot: go.Spot.Right,
-                    fromLinkable: true
+                    fromLinkable: true,
+                    toLinkableDuplicates: true,
+                    fromLinkableDuplicates: true
                 })  // allow user-drawn links to here
         )
     )
