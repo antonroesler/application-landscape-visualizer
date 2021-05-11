@@ -51,7 +51,7 @@ diagram.contextMenu =
             {
                 click: function (e, obj) {
                     e.diagram.commit(function (d) {
-                        var openModal = document.getElementById("modal");
+                        var openModal = document.getElementById("create-modal-btn");
                         addNodeManager = "DiagramCanvasContextMenu";
                         openModal.click();
                     });
@@ -74,7 +74,7 @@ function init() {
  * changes var addNodeManager so that addNode() knows that it should create a link.
  */
 function addNodeAndLink() {
-    var openModal = document.getElementById("modal");
+    var openModal = document.getElementById("create-modal-btn");
     addNodeManager = "NodeContextMenuAdd";
     openModal.click();
 }
