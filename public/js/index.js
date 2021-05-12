@@ -37,6 +37,8 @@ function init() {
     diagram.nodeTemplateMap = nodeTemplateMap;
     diagram.linkTemplateMap = linkTemplateMap;
 
+    diagram.contextMenu = contextMenu;
+
     diagram.layout = $(go.LayeredDigraphLayout);
 }
 
