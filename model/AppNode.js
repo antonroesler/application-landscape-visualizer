@@ -16,8 +16,9 @@
  */
 
 const mongoose = require('mongoose')
+var Schema = mongoose.Schema;
 
-const AppNodeSchema = mongoose.Schema({
+const AppNode = new Schema({
     name: {
         type: String,
         required: true
@@ -37,4 +38,4 @@ const AppNodeSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('AppNode', AppNodeSchema)
+module.exports = mongoose.model('AppNode', AppNode)

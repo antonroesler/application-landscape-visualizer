@@ -16,8 +16,9 @@
  */
 
 const mongoose = require('mongoose')
+var Schema = mongoose.Schema;
 
-const AppNodeSchema = mongoose.Schema({
+const Link = new Schema({
     from: {
         type: String,
         required: true
@@ -30,4 +31,4 @@ const AppNodeSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Link', AppNodeSchema)
+module.exports = mongoose.model('Link', Link)
