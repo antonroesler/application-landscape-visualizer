@@ -23,7 +23,8 @@
  * Opens the modal for adding a node.
  */
 function openModal() {
-    const url = window.location.href.split('#')[0] + "#createModal"
+    const loc = diagram.toolManager.contextMenuTool.mouseDownPoint
+    const url = window.location.href.split('#')[0] + "#createModal";
     location.href = url;
 }
 

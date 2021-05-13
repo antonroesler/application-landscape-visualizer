@@ -32,6 +32,7 @@
 var databaseTemplate =
     // "vertical" determine the order of the go.objects 
     $(go.Node, "Vertical",
+        new go.Binding("location", "loc"),
         //per default color and size is setted, can be customised through e.g. "go.Binding()" 
         $(go.Shape, "Database", { height: 70, width: 70, fill: "blue" },
             new go.Binding("fill", "color")),
@@ -57,7 +58,7 @@ var databaseTemplate =
                         "_buttonFillOver": "skyblue"
                     },
                     $(go.TextBlock, "delete"),
-                    { click: deleteNode })
+                    { click: deleteNodeFromNodeDataArray })
                 // more ContextMenuButtons would go here
             )  
     }
@@ -92,7 +93,7 @@ var componentTemplate =
                             "_buttonFillOver": "skyblue"
                         },
                         $(go.TextBlock, "delete"),
-                        { click: deleteNode })
+                        { click: deleteNodeFromNodeDataArray })
                     // more ContextMenuButtons would go here
                 )  
     }
@@ -127,7 +128,7 @@ var packageTemplate =
                         "_buttonFillOver": "skyblue"
                     },
                     $(go.TextBlock, "delete"),
-                    { click: deleteNode })
+                    { click: deleteNodeFromNodeDataArray })
                 // more ContextMenuButtons would go here
             )  
     }

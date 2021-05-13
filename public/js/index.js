@@ -16,7 +16,7 @@
  * with the Diagram Canvas in the HTML File ()
  */
 
-const URL = 'http://localhost:8000'
+const pathURL = 'http://localhost:8000'
 const $ = go.GraphObject.make;
 const diagram = $(go.Diagram, "diagramDiv",
     { // enable Ctrl-Z to undo and Ctrl-Y to redo
@@ -47,10 +47,15 @@ function init() {
  *
  */
 async function addAppNode() {
-    const data = readNodeProperties();
+    const data = readNodePropertiesFromModal();
+
+    const newNodeLocation = getDesiredLocation();
+    console.log(newNodeLocation);
+
+    let newNode;
     if (useDatabaseSwitchIsOn()) {
         if (data !== undefined) {
-            const url = urljoin(URL, 'mongo/node');
+            const url = urljoin(pathURL, 'mongo/node');
             const params = {
                 method: 'POST',
                 headers: {
@@ -59,56 +64,58 @@ async function addAppNode() {
                 body: JSON.stringify(data),
             };
             const res = await fetch(url, params);
-            res.json().then(appNode => {
-                if (Object.keys(appNode).length !== 0) {
-                    // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-                } else {
-                    // Inform user that database is unavailable
-                    databaseNotAvailableAlert();
-                    // Create AppNode with id being the current time in milliseconds
-                    addNode(data.name, data.category, data.desc, Date.now());
-                }
-
-            })
-
+            const appNode = await res.json();
+            if (Object.keys(appNode).length !== 0) {
+                // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
+                newNode = addNodeToNodeDataArray(appNode.name, appNode.category, appNode.desc, appNode._id, newNodeLocation)
+            } else {
+                // Inform user that database is unavailable
+                databaseNotAvailableAlert();
+                // Create AppNode with id being the current time in milliseconds
+                newNode = addNodeToNodeDataArray(data.name, data.category, data.desc, Date.now(), newNodeLocation);
+            }
         }
     } else {
-        addNode(data.name, data.category, data.desc, Date.now());
+        newNode = addNodeToNodeDataArray(data.name, data.category, data.desc, Date.now(), newNodeLocation);
     }
+    console.log(model.nodeDataArray);
 }
 
 /**
  * Adds a new node to our nodeDataArray.
  */
-function addNode(name, category, desc, id) {
+function addNodeToNodeDataArray(name, category, desc, id, pos) {
     diagram.startTransaction("make new node");
-    model.addNodeData({
+    console.log(pos)
+    const newNode = {
         key: id,
         nameProperty: name,
         category: category,
-        desc: desc
-    });
+        desc: desc,
+    };
+    model.addNodeData(newNode);
+    const part = diagram.findPartForData(newNode);
+    part.location = pos;
     diagram.commitTransaction("update");
-
+    return newNode;
 }
+
 /**
  * Delete selected node from nodeDataArray.
  */
-function deleteNode() {
+function deleteNodeFromNodeDataArray() {
     var id = diagram.selection.toArray()[0].key;
     var node = diagram.findNodeForKey(id);
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
-    deleteAppNode(id);
+    deleteAppNodeFromDB(id);
 }
 
 /**
- * Gets the input values from the user and calls the addNode() function to add
- * node to diagram.
+ * Gets the input values from the modal and returns a json object
  */
-function readNodeProperties() {
+function readNodePropertiesFromModal() {
     var name = document.getElementById("name").value;
     if (name === "") {
         window.alert("Please enter a name for the node");
@@ -128,7 +135,7 @@ function readNodeProperties() {
  *
  */
 async function loadAllAppNodes() {
-    const url = urljoin(URL, 'mongo/node');
+    const url = urljoin(pathURL, 'mongo/node');
     const params = {
         method: 'GET',
         headers: {
@@ -139,7 +146,7 @@ async function loadAllAppNodes() {
     const appNodes = await res.json()
     appNodes.forEach(appNode => {
         if (appNodeIdExists(appNode._id) !== true) {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
+            addNodeToNodeDataArray(appNode.name, appNode.category, appNode.desc, appNode._id)
             }
         })
 }
@@ -147,8 +154,8 @@ async function loadAllAppNodes() {
 /**
  * Delete selected node from database.
  */
-async function deleteAppNode(id) {
-    const url = urljoin(URL, 'mongo/node/' , id);
+async function deleteAppNodeFromDB(id) {
+    const url = urljoin(pathURL, 'mongo/node/' , id);
     const params = {
         method: 'DELETE',
         headers: {
@@ -195,4 +202,19 @@ function useDatabaseSwitchIsOn() {
 
 function databaseNotAvailableAlert() {
     alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
+}
+
+/**
+ * Returns the desired point to locate a new AppNode app. It is either the center of the diagram or the click point from
+ * the context menu, if a new node was created using the context menu (right click).
+ *
+ * @returns location
+ */
+function getDesiredLocation(){
+    /*if (diagram.toolManager.contextMenuTool.canStart()) { */
+        return diagram.toolManager.contextMenuTool.mouseDownPoint;
+   /* }
+    else {
+        return diagram.documentBounds.center;
+    } */
 }
