@@ -20,10 +20,10 @@
  *---------
  * It is also possible to set a base color, the other colors will be complimentary to that color. The color may be specified in any format
  *
- *http://localhost:8000/color?n=4&color=red
- *returns => ["#ff0000","#80ff00","#00ffff","#7f00ff"]
+ * localhost:8000/color?n=4&color=red
+ * returns => ["#ff0000","#80ff00","#00ffff","#7f00ff"]
  *
- * http://localhost:8000/color?n=4&color=A50901
+ * localhost:8000/color?n=4&color=A50901
  * returns => ["#a50901","#4ba501","#019da5","#5b01a5"]
  *
  * @author Anton Roesler
@@ -40,7 +40,7 @@ const tinycolor = require("tinycolor2");
 router.get('/', async (req, res) => {
     let n = Number(req.query.n);
     let base = req.query.color;
-    if (!n){
+    if (!n || n<1){
         n=1;
     };
     if (!base){
@@ -49,7 +49,6 @@ router.get('/', async (req, res) => {
     const colors = [];
     const step = 360/n;
     for (let i = 0; i < 360; i+=step) {
-        console.log(i)
         colors.push(tinycolor(base).spin(i).toHexString())
     }
     res.json(colors);
