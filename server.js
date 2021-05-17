@@ -49,9 +49,14 @@ app.get('/', (req, res) => {
   res.sendFile('./public/index.html');
 });
 
-// Import routes
+// MongoDB Route
 const mongoRoute = require('./routes/mongo')
 app.use('/mongo', mongoRoute)
+
+// Tinycolor2 Route
+// Import routes
+const tinycolorRoute = require('./routes/color')
+app.use('/color', tinycolorRoute)
 
 /**
  * Database
