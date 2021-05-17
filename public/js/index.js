@@ -25,7 +25,6 @@ const diagram = $(go.Diagram, "diagramDiv",
     });
 const model = $(go.GraphLinksModel);
 model.nodeDataArray = [];
-
 model.linkDataArray = [];
 
 /**
