@@ -34,10 +34,8 @@ model.linkDataArray = [];
 function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
-    diagram.nodeTemplateMap = nodeTemplateMap;
+    diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
-
-    diagram.layout = $(go.LayeredDigraphLayout);
 }
 
 /**
@@ -81,11 +79,14 @@ async function addAppNode() {
  */
 function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
+    //if (category ==="Application"){var color = "blue"}
+    //custom color setting for user
     model.addNodeData({
         key: id,
         nameProperty: name,
         category: category,
         desc: desc
+        //color: color
     });
     diagram.commitTransaction("update");
 
@@ -138,15 +139,15 @@ async function loadAllAppNodes() {
     appNodes.forEach(appNode => {
         if (appNodeIdExists(appNode._id) !== true) {
             addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-            }
-        })
+        }
+    })
 }
 
 /**
  * Delete selected node from database.
  */
 async function deleteAppNode(id) {
-    const url = urljoin(URL, 'mongo/node/' , id);
+    const url = urljoin(URL, 'mongo/node/', id);
     const params = {
         method: 'DELETE',
         headers: {
@@ -154,7 +155,7 @@ async function deleteAppNode(id) {
         }
     };
     const res = await fetch(url, params);
-    res.json().then(appNode => {alert(appNode.name + "was deleted")})
+    res.json().then(appNode => { alert(appNode.name + "was deleted") })
 }
 /**
  * Checks if the given name for the new node is already existing or not
