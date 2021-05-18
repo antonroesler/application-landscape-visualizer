@@ -45,7 +45,7 @@ var mainTemplate =
         $(go.Shape,
             { background: "transparent", fill: "black", strokeWidth: 0, width: 65, height: 70 },
             new go.Binding("geometry", "category", geoFunc), new go.Binding("background", "color")), $(go.TextBlock, { font: "bold 12pt sans-serif" },
-                new go.Binding("text", "nameProperty")), new go.Binding("text", "tags"), new go.Binding("text", "tags"), new go.Binding("text", "version"),
+                new go.Binding("text", "nameProperty")), new go.Binding("text", "tags"), new go.Binding("text", "version"),
         new go.Binding("text", "department"),
         new go.Binding("text", "allowedUsers"), new go.Binding("text", "license"),
         {

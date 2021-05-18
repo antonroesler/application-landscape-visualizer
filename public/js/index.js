@@ -54,7 +54,7 @@ function addAppNode() {
         tags: data.tags,
         version: data.version,
         department: data.department,
-        allowedUser: data.allowedUser,
+        allowedUsers: data.allowedUsers,
         license: data.license,
         //color: color
     });
@@ -84,11 +84,16 @@ function readNodeProperties() {
     } else {
         var category = document.getElementById("createCategory").value;
         var desc = document.getElementById("createDesc").value;
+        var tags = document.getElementById("tags").value;
+        var version = document.getElementById("version").value;
+        var department = document.getElementById("department").value;
+        var allowedUsers = document.getElementById("allowedUsers").value;
+        var license = document.getElementById("license").value;
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
         }
-        return { name: name, category: category, desc: desc }
+        return { name: name, category: category, desc: desc, tags: tags, version: version, department: department, allowedUsers: allowedUsers, license: license }
     }
 }
 
@@ -97,13 +102,13 @@ function readNodeProperties() {
  *
  */
 async function loadDiagram() {
-    let name; // hier muss der name hin der der user eingibt
-    const url = urljoin(URL, 'mongo/' + name);
+    const url = urljoin(URL, 'mongo');
     const params = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
+        body: { name: "XYZ" }
     };
     const res = await fetch(url, params);
     const diagram = await res.json()
