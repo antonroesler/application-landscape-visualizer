@@ -108,13 +108,11 @@ async function loadDiagram() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: { name: document.getElementById("saveName").value }
     };
     const res = await fetch(url, params);
     const loadDiagram = await res.json();
     model.nodeDataArray = loadDiagram.nodeDataArray;
     model.linkDataArray = loadDiagram.linkDataArray;
-
 }
 
 /**
@@ -129,7 +127,12 @@ function appNodeNameExists(name) {
     return false;
 }
 
+async function loadDiagramNames() {
+    const url = urljoin(URL, 'mongo/diagram/names');
+    const res = await fetch(url);
+    res.json().then(diagrams => console.log(diagrams));
 
+}
 
 async function saveDiagram() {
     const url = urljoin(URL, 'mongo');
