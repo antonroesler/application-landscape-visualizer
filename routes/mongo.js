@@ -58,7 +58,11 @@ router.post('/', async (req, res) => {
 })
 
 /**
+ * Get a diagram form the database. Must be specified by name.
  *
+ * mongo/ABC
+ *
+ * to get diagram called ABC
  */
 router.get('/:name', async (req, res) => {
     const name = req.params.name
