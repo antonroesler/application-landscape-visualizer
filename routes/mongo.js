@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
 /**
  *
  */
-router.post('/:name', async (req, res) => {
+router.get('/:name', async (req, res) => {
     try {
         const diagram = await Diagram.find({name:req.body.name});
         res.json(diagram);
