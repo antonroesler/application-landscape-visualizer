@@ -26,7 +26,7 @@ const diagram = $(go.Diagram, "diagramDiv",
 const model = $(go.GraphLinksModel);
 model.nodeDataArray = [];
 model.linkDataArray = [];
-
+var diagramNames = [];
 /**
  * init function to create the model.
  */
@@ -102,7 +102,8 @@ function readNodeProperties() {
  *
  */
 async function loadDiagram() {
-    const url = urljoin(URL, 'mongo');
+    const name = document.getElementById("loadCategory").value;
+    const url = urljoin(URL, 'mongo/' + name);
     const params = {
         method: 'GET',
         headers: {
@@ -111,8 +112,10 @@ async function loadDiagram() {
     };
     const res = await fetch(url, params);
     const loadDiagram = await res.json();
+    diagram.startTransaction();
     model.nodeDataArray = loadDiagram.nodeDataArray;
     model.linkDataArray = loadDiagram.linkDataArray;
+    diagram.commitTransaction("Diagram loaded");
 }
 
 /**
@@ -130,7 +133,21 @@ function appNodeNameExists(name) {
 async function loadDiagramNames() {
     const url = urljoin(URL, 'mongo/diagram/names');
     const res = await fetch(url);
-    res.json().then(diagrams => console.log(diagrams));
+    res.json().then(diagrams => {
+        var select = document.getElementById("loadCategory");
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
+        }
+        var select = document.getElementById("loadCategory");
+        for (var i = 0; i < diagrams.length; i++) {
+            var opt = diagrams[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+    });
 
 }
 
