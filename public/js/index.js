@@ -84,7 +84,6 @@ function readNodeProperties() {
     } else {
         var category = document.getElementById("createCategory").value;
         var desc = document.getElementById("createDesc").value;
-        var
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
