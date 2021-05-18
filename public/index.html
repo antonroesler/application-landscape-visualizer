@@ -54,6 +54,7 @@
         <button class="navButton" onclick="deleteNode()">Delete Group</button>
         <a href="#loadModal" class="navButton">Load</a>
         <!--<button class="navButton" onclick="loadAllAppNodes()">Load</button>-->
+        <a href="#saveModal" class="navButton">Save</a>
         <a href="#filterModal" class="navButton">Filter</a> 
 
 
@@ -75,11 +76,11 @@
            <input autocomplete="off" class="inputField2" id="createDesc" type="text" placeholder="Description: " title="Node Description is inserted here"/>
            <p>Meta Field: </p><hr>
 
-           <input autocomplete="off" class="inputField" id="meta7" type="text" placeholder="Tags: " title="Please insert Name of new Node here"/>
-           <input autocomplete="off" class="inputField" id="meta8" type="text" placeholder="Version: " title="Node Description is inserted here"/>
-           <input autocomplete="off" class="inputField" id="meta9" type="text" placeholder="Department: " title="Please insert Name of new Node here"/>
-           <input autocomplete="off" class="inputField" id="meta10" type="text" placeholder="Allowed Users: " title="Node Description is inserted here"/>
-           <input autocomplete="off" class="inputField" id="meta11" type="text" placeholder="License: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="tags" type="text" placeholder="Tags: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="version" type="text" placeholder="Version: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="department" type="text" placeholder="Department: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="allowedUsers" type="text" placeholder="Allowed Users: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="license" type="text" placeholder="License: " title="Please insert Name of new Node here"/>
            
 
            <hr>
@@ -108,7 +109,21 @@
             </div> 
            </div>
 
-           <!--<div id="filterModal" class="modalDialog"> 
+           <div id="saveModal" class="modalDialog"> 
+            <div> 
+             <a href="#close" title="Schließen" class="close">X</a> 
+             <h4 class="sidebarHeading">Save present Diagram</h4> 
+             <hr>
+             <input autocomplete="off" class="inputField" id="saveName" type="text" placeholder="Diagram Name: " title="Please insert Name of new Diagram here"/>
+             <input autocomplete="off" class="inputField2" id="saveDesc" type="text" placeholder="Description: " title="Node Description is inserted here"/>
+           
+           
+           <hr>
+           <button class="navButton" onclick="saveDiagram()">Save</button>
+            </div> 
+           </div>
+
+           <div id="filterModal" class="modalDialog"> 
             <div> 
              <a href="#close" title="Schließen" class="close">X</a> 
              <h4 class="sidebarHeading">Filter Options</h4> 
@@ -125,16 +140,15 @@
            <input autocomplete="off" class="inputField" id="filterName" type="text" placeholder="Search term: " title="Please insert Name of new Node here"/>
            <input autocomplete="off" class="inputField2" id="filterDesc" type="text" placeholder="Description: " title="Node Description is inserted here"/>
            <p>Meta Field: </p><hr>
-           <input autocomplete="off" class="inputField" id="meta1" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
-           <input autocomplete="off" class="inputField" id="meta2" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
-           <input autocomplete="off" class="inputField" id="meta3" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
-           <input autocomplete="off" class="inputField" id="meta4" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
-           <input autocomplete="off" class="inputField" id="meta5" type="text" placeholder="Meta: " title="Please insert Name of new Node here"/>
-           <input autocomplete="off" class="inputField" id="meta6" type="text" placeholder="Meta: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="filterTags" type="text" placeholder="Tags: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="filterVersion" type="text" placeholder="Version: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="filterDepartment" type="text" placeholder="Department: " title="Please insert Name of new Node here"/>
+           <input autocomplete="off" class="inputField" id="filterUsers" type="text" placeholder="Allowed Users: " title="Node Description is inserted here"/>
+           <input autocomplete="off" class="inputField" id="filterLicense" type="text" placeholder="License: " title="Please insert Name of new Node here"/>
            <hr>
-           <button class="navButton" onclick="addAppNode()">Filter</button>
+           <button class="navButton" onclick="filterAppNode()">Filter</button>
             </div> 
-           </div>-->
+           </div>
 
     </div>
 </div>
