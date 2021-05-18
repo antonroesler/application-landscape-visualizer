@@ -26,7 +26,7 @@ const diagram = $(go.Diagram, "diagramDiv",
 const model = $(go.GraphLinksModel);
 model.nodeDataArray = [];
 model.linkDataArray = [];
-
+var diagramNames = [];
 /**
  * init function to create the model.
  */
@@ -41,12 +41,17 @@ function init() {
  * Saves a AppNode in the database and adds it to the canvas.v0.js
  */
 function addAppNode() {
+
     const data = readNodeProperties();
+    data._id = Date.now();
+    addNodeToDiagram(data);
+}
+function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
     model.addNodeData({
-        key: Date.now(),
+        key: data._id,
         nameProperty: data.name,
         category: data.category,
         desc: data.desc,
@@ -100,7 +105,12 @@ function readNodeProperties() {
  *
  */
 async function loadDiagram() {
-    const url = urljoin(URL, 'mongo');
+    diagram.startTransaction();
+    model.nodeDataArray = [];
+    model.linkDataArray = [];
+    diagram.commitTransaction("empty array");
+    const name = document.getElementById("loadCategory").value;
+    const url = urljoin(URL, 'mongo/' + name);
     const params = {
         method: 'GET',
         headers: {
@@ -109,8 +119,9 @@ async function loadDiagram() {
     };
     const res = await fetch(url, params);
     const loadDiagram = await res.json();
-    model.nodeDataArray = loadDiagram.nodeDataArray;
-    model.linkDataArray = loadDiagram.linkDataArray;
+    loadDiagram.nodeDataArray.forEach(node => {
+        addNodeToDiagram(node);
+    });
 }
 
 /**
@@ -131,7 +142,21 @@ function appNodeNameExists(name) {
 async function loadDiagramNames() {
     const url = urljoin(URL, 'mongo/diagram/names');
     const res = await fetch(url);
-    res.json().then(diagrams => console.log(diagrams));
+    res.json().then(diagrams => {
+        var select = document.getElementById("loadCategory");
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
+        }
+        var select = document.getElementById("loadCategory");
+        for (var i = 0; i < diagrams.length; i++) {
+            var opt = diagrams[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+    });
 
 }
 
