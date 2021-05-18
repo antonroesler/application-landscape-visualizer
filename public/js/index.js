@@ -132,6 +132,7 @@ async function loadDiagram() {
         headers: {
             'Content-Type': 'application/json',
         }
+        body: {name:"XYZ"}
     };
     const res = await fetch(url, params);
     const diagram = await res.json()
