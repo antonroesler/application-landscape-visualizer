@@ -108,14 +108,13 @@ async function loadDiagram() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: { name: "XYZ" }
+        body: { name: document.getElementById("saveName").value }
     };
     const res = await fetch(url, params);
-    const diagram = await res.json()
-    /*
-    model.nodaData= diagram.nodeDataArray
+    const loadDiagram = await res.json();
+    model.nodeDataArray = loadDiagram.nodeDataArray;
+    model.linkDataArray = loadDiagram.linkDataArray;
 
-     */
 }
 
 /**
@@ -143,7 +142,7 @@ async function saveDiagram() {
         body: JSON.stringify({
             nodeDataArray: model.nodeDataArray,
             linkDataArray: model.linkDataArray,
-            name: "ABC"
+            name: document.getElementById("saveName").value
         })
     };
     const res = await fetch(url, params);
