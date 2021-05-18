@@ -19,6 +19,43 @@ const express = require('express');
 const router = express.Router();
 const AppNode = require('../model/AppNode')
 const Link = require('../model/Link')
+const Diagram = require('../model/Diagram')
+
+/**
+ * Saves the whole model. model must be passed in the request's body.
+ */
+router.post('/', async (req, res) => {
+    const nodeDataArray = [];
+    const linkDataArray = [];
+    req.body.nodeDataArray.forEach(node => {
+        const appNode = new AppNode({
+            _id: node.key,
+            name: node.nameProperty,
+            category: node.category,
+            desc: node.desc
+        });
+        nodeDataArray.push(appNode)
+    });
+    req.body.linkDataArray.forEach(link => {
+        linkDataArray.push(new Link({
+            from: link.from,
+            to: link.to,
+            category: link.category
+        }))
+    });
+    const diagram = new Diagram({
+        name: req.body.name,
+        nodeDataArray: nodeDataArray,
+        linkDataArray: linkDataArray
+    });
+    try {
+        const savedDiagram = await diagram.save()
+        res.json(savedDiagram);
+
+    }catch (err){
+        res.json(err)
+    }
+})
 
 /**
  * Route to GET all AppNodes in the DB.

@@ -194,3 +194,18 @@ function useDatabaseSwitchIsOn() {
 function databaseNotAvailableAlert() {
     alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
 }
+
+
+async function saveDiagram(){
+    const url = urljoin(URL, 'mongo');
+    console.log(model.nodeDataArray)
+    const params = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({nodeDataArray: model.nodeDataArray, linkDataArray: model.linkDataArray, name: "XYZ"})
+    };
+    const res = await fetch(url, params);
+    res.json().then(msg => console.log(msg))
+}
