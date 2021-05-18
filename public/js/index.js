@@ -38,7 +38,7 @@ function init() {
 }
 
 /**
- * Saves a AppNode in the database and adds it to the canvas.
+ * Saves a AppNode in the database and adds it to the canvas.v0.js
  */
 function addAppNode() {
     const data = readNodeProperties();
@@ -69,7 +69,6 @@ function deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
-    deleteAppNode(id);
 }
 
 /**
