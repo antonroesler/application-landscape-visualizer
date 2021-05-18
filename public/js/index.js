@@ -50,7 +50,12 @@ function addAppNode() {
         key: Date.now(),
         nameProperty: data.name,
         category: data.category,
-        desc: data.desc
+        desc: data.desc,
+        tags: data.tags,
+        version: data.version,
+        department: data.department,
+        allowedUser: data.allowedUser,
+        license: data.license,
         //color: color
     });
     diagram.commitTransaction("update");
@@ -79,6 +84,7 @@ function readNodeProperties() {
     } else {
         var category = document.getElementById("createCategory").value;
         var desc = document.getElementById("createDesc").value;
+        var
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
@@ -122,7 +128,7 @@ function appNodeNameExists(name) {
 
 
 
-async function saveDiagram(){
+async function saveDiagram() {
     const url = urljoin(URL, 'mongo');
     console.log(model)
     const params = {
