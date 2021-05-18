@@ -39,7 +39,6 @@ function init() {
 
 /**
  * Saves a AppNode in the database and adds it to the canvas.
- *
  */
 function addAppNode() {
     const data = readNodeProperties();
@@ -98,7 +97,7 @@ function readNodeProperties() {
 }
 
 /**
- * Loads all existing AppNodes from the Database and adds them to the diagram.
+ * Loads a diagram from the database. The diagram must be specified by name.
  *
  */
 async function loadDiagram() {
@@ -127,6 +126,9 @@ function appNodeNameExists(name) {
     return false;
 }
 
+/**
+ * Loads all diagram names that exist in the database as an array.
+ */
 async function loadDiagramNames() {
     const url = urljoin(URL, 'mongo/diagram/names');
     const res = await fetch(url);
@@ -134,6 +136,10 @@ async function loadDiagramNames() {
 
 }
 
+/**
+ * Saves the model
+ * @returns {Promise<void>}
+ */
 async function saveDiagram() {
     const url = urljoin(URL, 'mongo');
     console.log(model)
