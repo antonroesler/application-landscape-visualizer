@@ -125,8 +125,8 @@ function readNodeProperties() {
  * Loads all existing AppNodes from the Database and adds them to the diagram.
  *
  */
-async function loadAllAppNodes() {
-    const url = urljoin(URL, 'mongo/node');
+async function loadDiagram() {
+    const url = urljoin(URL, 'mongo');
     const params = {
         method: 'GET',
         headers: {
@@ -134,12 +134,11 @@ async function loadAllAppNodes() {
         }
     };
     const res = await fetch(url, params);
-    const appNodes = await res.json()
-    appNodes.forEach(appNode => {
-        if (appNodeIdExists(appNode._id) !== true) {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-        }
-    })
+    const diagram = await res.json()
+    /*
+    model.nodaData= diagram.nodeDataArray
+
+     */
 }
 
 /**
@@ -198,13 +197,17 @@ function databaseNotAvailableAlert() {
 
 async function saveDiagram(){
     const url = urljoin(URL, 'mongo');
-    console.log(model.nodeDataArray)
+    console.log(model)
     const params = {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({nodeDataArray: model.nodeDataArray, linkDataArray: model.linkDataArray, name: "XYZ"})
+        body: JSON.stringify({
+            nodeDataArray: model.nodeDataArray,
+            linkDataArray: model.linkDataArray,
+            name: "ABC"
+        })
     };
     const res = await fetch(url, params);
     res.json().then(msg => console.log(msg))

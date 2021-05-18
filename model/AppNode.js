@@ -33,8 +33,6 @@ const AppNodeSchema = mongoose.Schema({
     department: [String],
     allowedUsers: Number,
     license: String,
-    language: [String],
-
 });
 
 

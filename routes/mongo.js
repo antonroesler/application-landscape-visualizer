@@ -58,6 +58,19 @@ router.post('/', async (req, res) => {
 })
 
 /**
+ *
+ */
+router.post('/:name', async (req, res) => {
+    try {
+        const diagram = await Diagram.find({name:req.body.name});
+        res.json(diagram);
+
+    }catch (err){
+        res.json(err)
+    }
+})
+
+/**
  * Route to GET all AppNodes in the DB.
  * Sends a list of JSON objects: [{},{}...] in the body of the http response.
  */
