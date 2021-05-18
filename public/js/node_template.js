@@ -47,7 +47,7 @@ var mainTemplate =
             new go.Binding("geometry", "category", geoFunc), new go.Binding("background", "color")), $(go.TextBlock, { font: "bold 12pt sans-serif" },
                 new go.Binding("text", "nameProperty")), new go.Binding("text", "tags"), new go.Binding("text", "tags"), new go.Binding("text", "version"),
         new go.Binding("text", "department"),
-        new go.Binding("text", "allowedUser"), new go.Binding("text", "licence"),
+        new go.Binding("text", "allowedUsers"), new go.Binding("text", "license"),
         {
             //toolTip is used for the hover function 
             toolTip:
