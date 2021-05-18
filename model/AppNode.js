@@ -18,6 +18,7 @@
 const mongoose = require('mongoose')
 
 const AppNodeSchema = mongoose.Schema({
+    _id: String,
     name: {
         type: String,
         required: true
@@ -32,8 +33,6 @@ const AppNodeSchema = mongoose.Schema({
     department: [String],
     allowedUsers: Number,
     license: String,
-    language: [String],
-
 });
 
 

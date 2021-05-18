@@ -26,17 +26,28 @@
 
 
 /**
-* databaseTemplate
-* is used for generating a "database" node and also showing Metadata and key of the node while hovering
+* function is needed to use the icons in icons.js
 */
-var databaseTemplate =
-    // "vertical" determine the order of the go.objects 
+function geoFunc(geoname) {
+    var geo = icons[geoname];
+    if (typeof geo === "string") {
+        geo = icons[geoname] = go.Geometry.parse(geo, true);  // fill each geometry
+    }
+    return geo;
+}
+
+/**
+* Template
+* is used for generating a node and also showing Metadata and key of the node while hovering
+*/
+var mainTemplate =
     $(go.Node, "Vertical",
-        //per default color and size is setted, can be customised through e.g. "go.Binding()" 
-        $(go.Shape, "Database", { height: 70, width: 70, fill: "blue" },
-            new go.Binding("fill", "color")),
-        $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "nameProperty")),
+        $(go.Shape,
+            { background: "transparent", fill: "black", strokeWidth: 0, width: 65, height: 70 },
+            new go.Binding("geometry", "category", geoFunc), new go.Binding("background", "color")), $(go.TextBlock, { font: "bold 12pt sans-serif" },
+                new go.Binding("text", "nameProperty")), new go.Binding("text", "tags"), new go.Binding("text", "version"),
+        new go.Binding("text", "department"),
+        new go.Binding("text", "allowedUsers"), new go.Binding("text", "license"),
         {
             //toolTip is used for the hover function 
             toolTip:
@@ -50,7 +61,7 @@ var databaseTemplate =
                     ))
         }, {
         contextMenu:     // define a context menu for each node
-            $("ContextMenu",  
+            $("ContextMenu",
                 $("ContextMenuButton",
                     {
                         "ButtonBorder.fill": "white",
@@ -59,88 +70,5 @@ var databaseTemplate =
                     $(go.TextBlock, "delete"),
                     { click: deleteNode })
                 // more ContextMenuButtons would go here
-            )  
-    }
-    );
-/**
-* componentTemplate
-* is used for generating a "component" node and also showing Metadata and key of the node while hovering
-*/
-var componentTemplate =
-    $(go.Node, "Vertical",
-        $(go.Shape, "Component", { height: 70, width: 70, fill: "red" },
-            new go.Binding("fill", "color")),
-
-        $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "nameProperty")),
-        {
-            toolTip:
-                $(go.Adornment, "Auto",
-                    $(go.Shape, { fill: "white" }), $(go.Panel, "Vertical",
-                        $(go.TextBlock, "Description:"),
-                        $(go.TextBlock,
-                            new go.Binding("text", "desc")), $(go.TextBlock, "key_id:"),
-                        $(go.TextBlock,
-                            new go.Binding("text", "key"))
-                    ))
-        }, {
-            contextMenu:     // define a context menu for each node
-                $("ContextMenu",  
-                    $("ContextMenuButton",
-                        {
-                            "ButtonBorder.fill": "white",
-                            "_buttonFillOver": "skyblue"
-                        },
-                        $(go.TextBlock, "delete"),
-                        { click: deleteNode })
-                    // more ContextMenuButtons would go here
-                )  
-    }
-    );
-
-/**
-* packageTemplate
-* is used for generating a "application" node and also showing Metadata and key of the node while hovering
-*/
-var packageTemplate =
-    $(go.Node, "Vertical", $(go.Shape, "Package", {
-        height: 70, width: 70, fill: "green"
-    }, new go.Binding("fill", "color")),
-        $(go.TextBlock, { font: "bold 12pt sans-serif" },
-            new go.Binding("text", "nameProperty")),
-        {
-            toolTip:
-                $(go.Adornment, "Auto",
-                    $(go.Shape, { fill: "white" }), $(go.Panel, "Vertical",
-                        $(go.TextBlock, "Description:"),
-                        $(go.TextBlock,
-                            new go.Binding("text", "desc")), $(go.TextBlock, "key_id:"),
-                        $(go.TextBlock,
-                            new go.Binding("text", "key"))
-                    ))
-        }, {
-        contextMenu:     // define a context menu for each node
-            $("ContextMenu",  // that has one button
-                $("ContextMenuButton",
-                    {
-                        "ButtonBorder.fill": "white",
-                        "_buttonFillOver": "skyblue"
-                    },
-                    $(go.TextBlock, "delete"),
-                    { click: deleteNode })
-                // more ContextMenuButtons would go here
-            )  
-    }
-    );
-
-
-/**
-* templmap includes all templates, we can get access to with "category" inside
-* of an node object. 
-*/
-var nodeTemplateMap = new go.Map();
-nodeTemplateMap.add("", diagram.nodeTemplate);
-nodeTemplateMap.add("Database", databaseTemplate);
-nodeTemplateMap.add("Component", componentTemplate)
-nodeTemplateMap.add("Package", packageTemplate);
-
+            )
+    });
