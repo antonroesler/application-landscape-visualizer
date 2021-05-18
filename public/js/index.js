@@ -42,11 +42,11 @@ function init() {
  *
  */
 function addAppNode() {
-
     const data = readNodeProperties();
     data._id = Date.now();
     addNodeToDiagram(data);
 }
+
 function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
@@ -75,7 +75,6 @@ function deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
-    deleteAppNode(id);
 }
 
 /**
@@ -113,13 +112,7 @@ async function loadDiagram() {
     diagram.commitTransaction("empty array");
     const name = document.getElementById("loadCategory").value;
     const url = urljoin(URL, 'mongo/' + name);
-    const params = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    const res = await fetch(url, params);
+    const res = await fetch(url);
     const loadDiagram = await res.json();
     loadDiagram.nodeDataArray.forEach(node => {
         addNodeToDiagram(node);
@@ -147,7 +140,6 @@ async function loadDiagramNames() {
         for (i = length - 1; i >= 0; i--) {
             select.options[i] = null;
         }
-        var select = document.getElementById("loadCategory");
         for (var i = 0; i < diagrams.length; i++) {
             var opt = diagrams[i];
             var el = document.createElement("option");
