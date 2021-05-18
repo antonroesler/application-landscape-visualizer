@@ -92,13 +92,13 @@ function readNodeProperties() {
  *
  */
 async function loadDiagram() {
-    const url = urljoin(URL, 'mongo');
+    let name; // hier muss der name hin der der user eingibt
+    const url = urljoin(URL, 'mongo/' + name);
     const params = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        },
-        body: {name:"XYZ"}
+        }
     };
     const res = await fetch(url, params);
     const diagram = await res.json()

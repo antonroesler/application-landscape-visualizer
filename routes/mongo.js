@@ -61,8 +61,9 @@ router.post('/', async (req, res) => {
  *
  */
 router.get('/:name', async (req, res) => {
+    const name = req.params.name
     try {
-        const diagram = await Diagram.find({name:req.body.name});
+        const diagram = await Diagram.find({name:name});
         res.json(diagram);
 
     }catch (err){
