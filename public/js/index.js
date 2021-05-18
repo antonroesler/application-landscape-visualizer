@@ -35,6 +35,7 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
+    diagram.layout = $(go.LayeredDigraphLayout);
 }
 
 /**
