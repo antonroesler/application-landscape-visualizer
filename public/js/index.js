@@ -41,50 +41,16 @@ function init() {
  * Saves a AppNode in the database and adds it to the canvas.
  *
  */
-async function addAppNode() {
+function addAppNode() {
     const data = readNodeProperties();
-    if (useDatabaseSwitchIsOn()) {
-        if (data !== undefined) {
-            const url = urljoin(URL, 'mongo/node');
-            const params = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            };
-            const res = await fetch(url, params);
-            res.json().then(appNode => {
-                if (Object.keys(appNode).length !== 0) {
-                    // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-                } else {
-                    // Inform user that database is unavailable
-                    databaseNotAvailableAlert();
-                    // Create AppNode with id being the current time in milliseconds
-                    addNode(data.name, data.category, data.desc, Date.now());
-                }
-
-            })
-
-        }
-    } else {
-        addNode(data.name, data.category, data.desc, Date.now());
-    }
-}
-
-/**
- * Adds a new node to our nodeDataArray.
- */
-function addNode(name, category, desc, id) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
     model.addNodeData({
-        key: id,
-        nameProperty: name,
-        category: category,
-        desc: desc
+        key: Date.now(),
+        nameProperty: data.name,
+        category: data.category,
+        desc: data.desc
         //color: color
     });
     diagram.commitTransaction("update");
@@ -107,12 +73,12 @@ function deleteNode() {
  * node to diagram.
  */
 function readNodeProperties() {
-    var name = document.getElementById("name").value;
+    var name = document.getElementById("createName").value;
     if (name === "") {
         window.alert("Please enter a name for the node");
     } else {
-        var category = document.getElementById("category").value;
-        var desc = document.getElementById("desc").value;
+        var category = document.getElementById("createCategory").value;
+        var desc = document.getElementById("createDesc").value;
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
@@ -131,7 +97,7 @@ async function loadDiagram() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
         body: {name:"XYZ"}
     };
     const res = await fetch(url, params);
