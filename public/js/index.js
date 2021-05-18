@@ -109,20 +109,6 @@ async function loadDiagram() {
 }
 
 /**
- * Delete selected node from database.
- */
-async function deleteAppNode(id) {
-    const url = urljoin(URL, 'mongo/node/', id);
-    const params = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    const res = await fetch(url, params);
-    res.json().then(appNode => { alert(appNode.name + "was deleted") })
-}
-/**
  * Checks if the given name for the new node is already existing or not
  */
 function appNodeNameExists(name) {
@@ -134,32 +120,6 @@ function appNodeNameExists(name) {
     return false;
 }
 
-/**
- * Checks if an appNode with a given id exists in the models nodeDataArray.
- * @param id
- * @returns {boolean}
- */
-function appNodeIdExists(id) {
-    for (let i = 0; i < model.nodeDataArray.length; i++) {
-        if (model.nodeDataArray[i].key === id) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * Returns the value (true/false) of the use Database switch. If true, changes should be send to the DB right away. If
- * false, changes are only in the browser.
- * @returns boolean
- */
-function useDatabaseSwitchIsOn() {
-    return document.getElementById("db-toggle").checked
-}
-
-function databaseNotAvailableAlert() {
-    alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
-}
 
 
 async function saveDiagram(){
