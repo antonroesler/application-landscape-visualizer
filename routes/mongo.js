@@ -32,7 +32,12 @@ router.post('/', async (req, res) => {
             _id: node.key,
             name: node.nameProperty,
             category: node.category,
-            desc: node.desc
+            desc: node.desc,
+            tags: node.tags,
+            version: node.version,
+            department: node.department,
+            allowedUsers: node.allowedUsers,
+            license: node.license,
         });
         nodeDataArray.push(appNode)
     });
@@ -67,9 +72,22 @@ router.post('/', async (req, res) => {
 router.get('/:name', async (req, res) => {
     const name = req.params.name
     try {
-        const diagram = await Diagram.find({name:name});
+        const diagram = await Diagram.findOne({name:name});
         res.json(diagram);
 
+    }catch (err){
+        res.json(err)
+    }
+})
+
+router.get('/diagram/names', async (req, res) => {
+    try {
+        const names = [];
+        const diagrams = await Diagram.find();
+        diagrams.forEach(diagram => {
+            names.push(diagram.name)
+        })
+        res.json(names);
     }catch (err){
         res.json(err)
     }

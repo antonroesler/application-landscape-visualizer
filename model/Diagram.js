@@ -20,7 +20,10 @@ const Link = require('./Link').schema
 var Schema = mongoose.Schema;
 
 const Diagram = new Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true
+    },
     nodeDataArray: [AppNode],
     linkDataArray: [Link]
 });
