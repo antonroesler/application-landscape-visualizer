@@ -18,6 +18,7 @@
 const mongoose = require('mongoose')
 
 const AppNodeSchema = mongoose.Schema({
+    _id: Number,
     name: {
         type: String,
         required: true
