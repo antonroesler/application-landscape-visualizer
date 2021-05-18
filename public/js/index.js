@@ -42,12 +42,17 @@ function init() {
  *
  */
 function addAppNode() {
+
     const data = readNodeProperties();
+    data._id = Date.now();
+    addNodeToDiagram(data);
+}
+function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
     model.addNodeData({
-        key: Date.now(),
+        key: data._id,
         nameProperty: data.name,
         category: data.category,
         desc: data.desc,
@@ -102,6 +107,10 @@ function readNodeProperties() {
  *
  */
 async function loadDiagram() {
+    diagram.startTransaction();
+    model.nodeDataArray = [];
+    model.linkDataArray = [];
+    diagram.commitTransaction("empty array");
     const name = document.getElementById("loadCategory").value;
     const url = urljoin(URL, 'mongo/' + name);
     const params = {
@@ -112,10 +121,9 @@ async function loadDiagram() {
     };
     const res = await fetch(url, params);
     const loadDiagram = await res.json();
-    diagram.startTransaction();
-    model.nodeDataArray = loadDiagram.nodeDataArray;
-    model.linkDataArray = loadDiagram.linkDataArray;
-    diagram.commitTransaction("Diagram loaded");
+    loadDiagram.nodeDataArray.forEach(node => {
+        addNodeToDiagram(node);
+    });
 }
 
 /**
