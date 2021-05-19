@@ -97,6 +97,29 @@ router.get('/diagram/names', async (req, res) => {
     }
 })
 
+/**
+ * Get names of all departments of all nodes stored in the database
+ *
+ * /mongo/XYZDiagram/departments
+ *
+ * to get all departments that are part of any AppNode in the diagram called 'XYZDiagram'.
+ */
+router.get('/:diagramName/departments', async (req, res) => {
+    const name = req.params.diagramName
+    try {
+        const departments = new Set();
+        const diagram = await Diagram.findOne({name:name});
+        diagram.nodeDataArray.forEach(node => {
+            if (node.department){
+                node.department.forEach(dep => departments.add(dep))
+            }
+        })
+        res.json(Array.from(departments));
+    }catch (err){
+        res.json(err)
+    }
+})
+
 /*
  * UTIL FUNCTIONS
  */
