@@ -27,7 +27,7 @@ const model = $(go.GraphLinksModel);
 model.nodeDataArray = [];
 model.linkDataArray = [];
 const diagramNames = [];
-
+var modelWithoutFilter = [];
 /**
  * init function to create the model.
  */
@@ -65,7 +65,7 @@ function addNodeToDiagram(data) {
         //color: color
     });
     diagram.commitTransaction("update");
-
+    modelWithoutFilter = model.nodeDataArray;
 }
 /**
  * Delete selected node from nodeDataArray.
@@ -76,6 +76,65 @@ function deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
+}
+
+
+/** function to rerange model.nodeDataArray according to the filter properties */
+function filterAppNodes() {
+    const filter = readFilterProperties()
+    filterArray = model.nodeDataArray.filter(function (currentElement) {
+        for (var key in filter) {
+            if (currentElement[key] === undefined || currentElement[key] != filter[key])
+                return false;
+        }
+        return true;
+    });
+
+    if (filterArray.length === 0) {
+        window.alert("there are no Nodes with this setting");
+    } else {
+        diagram.startTransaction();
+        model.nodeDataArray = filterArray;
+        diagram.commitTransaction("filter applied");
+    }
+}
+
+
+
+/** function to remove filter */
+function filterOff() {
+    diagram.startTransaction();
+    model.nodeDataArray = modelWithoutFilter;
+    diagram.commitTransaction("filter removed");
+
+}
+
+/** function to read filter properties*/
+function readFilterProperties() {
+    const category = document.getElementById("filterCategory").value;
+    const tags = document.getElementById("filterTags").value;
+    const version = document.getElementById("filterVersion").value;
+    const department = document.getElementById("filterDepartment").value;
+    const allowedUsers = document.getElementById("filterUsers").value;
+    const license = document.getElementById("filterLicense").value;
+    deleteEmtyField = [category, tags, version, department, allowedUsers, license];
+    properties = {};
+    deleteEmtyField.forEach(function (property, i) {
+        if (property != "" && i === 0) {
+            properties.category = property;
+        } else if (property != "" && i === 1) {
+            properties.tags = property;
+        } else if (property != "" && i === 2) {
+            properties.version = property;
+        } else if (property != "" && i === 3) {
+            properties.department = property;
+        } else if (property != "" && i === 4) {
+            properties.allowedUsers = property;
+        } else if (property != "" && i === 5) {
+            properties.license = property;
+        }
+    });
+    return properties;
 }
 
 /**
