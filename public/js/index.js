@@ -26,7 +26,8 @@ const diagram = $(go.Diagram, "diagramDiv",
 const model = $(go.GraphLinksModel);
 model.nodeDataArray = [];
 model.linkDataArray = [];
-var diagramNames = [];
+const diagramNames = [];
+
 /**
  * init function to create the model.
  */
@@ -35,17 +36,18 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
+    diagram.layout = $(go.GridLayout);
 }
 
 /**
  * Saves a AppNode in the database and adds it to the canvas.v0.js
  */
 function addAppNode() {
-
     const data = readNodeProperties();
     data._id = Date.now();
     addNodeToDiagram(data);
 }
+
 function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
@@ -69,8 +71,8 @@ function addNodeToDiagram(data) {
  * Delete selected node from nodeDataArray.
  */
 function deleteNode() {
-    var id = diagram.selection.toArray()[0].key;
-    var node = diagram.findNodeForKey(id);
+    const id = diagram.selection.toArray()[0].key;
+    const node = diagram.findNodeForKey(id);
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
@@ -81,17 +83,17 @@ function deleteNode() {
  * node to diagram.
  */
 function readNodeProperties() {
-    var name = document.getElementById("createName").value;
+    const name = document.getElementById("createName").value;
     if (name === "") {
         window.alert("Please enter a name for the node");
     } else {
-        var category = document.getElementById("createCategory").value;
-        var desc = document.getElementById("createDesc").value;
-        var tags = document.getElementById("tags").value;
-        var version = document.getElementById("version").value;
-        var department = document.getElementById("department").value;
-        var allowedUsers = document.getElementById("allowedUsers").value;
-        var license = document.getElementById("license").value;
+        const category = document.getElementById("createCategory").value;
+        const desc = document.getElementById("createDesc").value;
+        const tags = document.getElementById("tags").value;
+        const version = document.getElementById("version").value;
+        const department = document.getElementById("department").value;
+        const allowedUsers = document.getElementById("allowedUsers").value;
+        const license = document.getElementById("license").value;
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
@@ -111,13 +113,7 @@ async function loadDiagram() {
     diagram.commitTransaction("empty array");
     const name = document.getElementById("loadCategory").value;
     const url = urljoin(URL, 'mongo/' + name);
-    const params = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    const res = await fetch(url, params);
+    const res = await fetch(url);
     const loadDiagram = await res.json();
     loadDiagram.nodeDataArray.forEach(node => {
         addNodeToDiagram(node);
@@ -143,15 +139,15 @@ async function loadDiagramNames() {
     const url = urljoin(URL, 'mongo/diagram/names');
     const res = await fetch(url);
     res.json().then(diagrams => {
-        var select = document.getElementById("loadCategory");
-        var length = select.options.length;
+        let i;
+        const select = document.getElementById("loadCategory");
+        const length = select.options.length;
         for (i = length - 1; i >= 0; i--) {
             select.options[i] = null;
         }
-        var select = document.getElementById("loadCategory");
-        for (var i = 0; i < diagrams.length; i++) {
-            var opt = diagrams[i];
-            var el = document.createElement("option");
+        for (i = 0; i < diagrams.length; i++) {
+            const opt = diagrams[i];
+            const el = document.createElement("option");
             el.textContent = opt;
             el.value = opt;
             select.appendChild(el);
