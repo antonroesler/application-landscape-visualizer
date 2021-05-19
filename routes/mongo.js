@@ -21,33 +21,16 @@ const AppNode = require('../model/AppNode')
 const Link = require('../model/Link')
 const Diagram = require('../model/Diagram')
 
+
+
 /**
  * Saves the whole model. model must be passed in the request's body.
  */
 router.post('/', async (req, res) => {
     const nodeDataArray = [];
     const linkDataArray = [];
-    req.body.nodeDataArray.forEach(node => {
-        const appNode = new AppNode({
-            _id: node.key,
-            name: node.nameProperty,
-            category: node.category,
-            desc: node.desc,
-            tags: node.tags,
-            version: node.version,
-            department: node.department,
-            allowedUsers: node.allowedUsers,
-            license: node.license,
-        });
-        nodeDataArray.push(appNode)
-    });
-    req.body.linkDataArray.forEach(link => {
-        linkDataArray.push(new Link({
-            from: link.from,
-            to: link.to,
-            category: link.category
-        }))
-    });
+    formatNodeDataArray(req, nodeDataArray);
+    formatLinkDataArray(req, linkDataArray);
     const diagram = new Diagram({
         name: req.body.name,
         nodeDataArray: nodeDataArray,
@@ -80,6 +63,27 @@ router.get('/:name', async (req, res) => {
     }
 })
 
+/**
+ * Deletes a diagram form the database. Must be specified by name.
+ *
+ * mongo/ABC
+ *
+ * to delete the diagram called ABC
+ */
+router.delete('/:name', async (req, res) => {
+    const name = req.params.name
+    try {
+        const diagram = await Diagram.deleteMany({name:name});
+        res.json(diagram);
+
+    }catch (err){
+        res.json(err)
+    }
+})
+
+/**
+ * Get names of all diagrams stored in the database.
+ */
 router.get('/diagram/names', async (req, res) => {
     try {
         const names = [];
@@ -93,6 +97,39 @@ router.get('/diagram/names', async (req, res) => {
     }
 })
 
+/*
+ * UTIL FUNCTIONS
+ */
+function formatNodeDataArray(req, nodeDataArray) {
+    req.body.nodeDataArray.forEach(node => {
+        const appNode = new AppNode({
+            _id: node.key,
+            name: node.nameProperty,
+            category: node.category,
+            desc: node.desc,
+            tags: node.tags,
+            version: node.version,
+            department: node.department,
+            allowedUsers: node.allowedUsers,
+            license: node.license,
+        });
+        nodeDataArray.push(appNode)
+    });
+}
+
+function formatLinkDataArray(req, linkDataArray) {
+    req.body.linkDataArray.forEach(link => {
+        linkDataArray.push(new Link({
+            from: link.from,
+            to: link.to,
+            category: link.category
+        }))
+    });
+}
 
 
+
+/**
+ * Export Routes.
+ */
 module.exports = router;
