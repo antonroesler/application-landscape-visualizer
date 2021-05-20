@@ -28,6 +28,7 @@ model.nodeDataArray = [];
 model.linkDataArray = [];
 const diagramNames = [];
 var modelWithoutFilter = [];
+var allFilter = [];
 /**
  * init function to create the model.
  */
