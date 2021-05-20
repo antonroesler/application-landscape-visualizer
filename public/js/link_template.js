@@ -65,5 +65,5 @@ var 10GB_linkTemplate =
  */
 
 var linkTemplateMap = new go.Map();
-linkTemplateMap.add("", diagram.linkTemplate);
+linkTemplateMap.add("", linkTemplate);
 linkTemplateMap.add("standard", linkTemplate);
