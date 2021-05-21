@@ -52,8 +52,7 @@
 
             <a href="#createModal" class="navButton">New Node</a>
             <button class="navButton" onclick="deleteNode()">Delete Group</button>
-            <button class="navButton" onclick="layout_diagram()">Auto Layout</button>
-
+            <a href="#layoutModal" class="navButton">Auto Layout</a>
             <a href="#loadModal" onclick="loadDiagramNames()" class="navButton">Load</a>
             <!--<button class="navButton" onclick="loadAllAppNodes()">Load</button>-->
             <a href="#saveModal" class="navButton">Save</a>
@@ -99,6 +98,32 @@
                     <button class="navButton" onclick="addAppNode()">Create</button>
                 </div>
             </div>
+
+
+
+
+
+            <div id="layoutModal" class="modalDialog">
+                <div>
+                    <a href="#close" title="Schließen" class="close">X</a>
+                    <h4 class="sidebarHeading">Choose a Auto Layout</h4>
+                    <hr>
+                    Choose Diagram Name:
+                    <select class="navButton" id="layoutOptions" name="category" title="Please choose correct Category">
+                        <option>Tree</option>
+                        <option>Circle</option>
+                        <option>Diagraph</option>
+                        <option>Grid</option>
+                    </select>
+
+
+                    <hr>
+                    <button class="navButton" onclick="layoutModalDialogHandler()">Apply Layout</button>
+                </div>
+            </div>
+
+
+
 
             <div id="loadModal" class="modalDialog">
                 <div>

@@ -18,11 +18,7 @@
 
 const URL = 'http://localhost:8000'
 const $ = go.GraphObject.make;
-const diagram = $(go.Diagram, "diagramDiv",
-    { // enable Ctrl-Z to undo and Ctrl-Y to redo
-        "undoManager.isEnabled": true,
-        "toolManager.hoverDelay": 100
-    });
+const diagram = makeDiagram()
 const model = $(go.GraphLinksModel);
 
 model.linkFromPortIdProperty= "fromPort";  // required information:
@@ -33,6 +29,17 @@ model.linkDataArray = [];
 const diagramNames = [];
 var modelWithoutFilter = [];
 var allFilter = [];
+
+const initialLayout = diagram.layout;
+
+function makeDiagram(){
+    return $(go.Diagram, "diagramDiv",
+        { // enable Ctrl-Z to undo and Ctrl-Y to redo
+            "undoManager.isEnabled": true,
+            "toolManager.hoverDelay": 100
+        });
+}
+
 /**
  * init function to create the model.
  */
@@ -44,7 +51,7 @@ function init() {
 }
 
 /**
- * Saves a AppNode in the database and adds it to the canvas.v0.js
+ * Reads user inputs and creates a new Node from the users data.
  */
 function addAppNode() {
     const data = readNodeProperties();
@@ -52,6 +59,9 @@ function addAppNode() {
     addNodeToDiagram(data);
 }
 
+/**
+ * Saves an AppNode object to the model.
+ */
 function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
@@ -245,14 +255,52 @@ async function saveDiagram() {
     res.json().then(msg => console.log(msg))
 }
 
+/**
+ * Handles the layout when the Auto Layout Modal is used.
+ */
+function layoutModalDialogHandler(){
+    const layout = document.getElementById("layoutOptions").value
+    appendLayoutToDiagram(layout)
+    disableAutomaticLayout()
+}
 
-function layout_diagram(){
-    const layout = go.GridLayout;
+/**
+ * Automatically arranges the diagram according to a given layout.
+ * Options are:
+ * - Tree
+ * - Grid
+ * - Circle
+ * - Diagraph
+ */
+function appendLayoutToDiagram(layout){
+    const layouts = {
+        "Tree": go.TreeLayout,
+        "Grid": go.GridLayout,
+        "Circle": go.CircularLayout,
+        "Diagraph": go.LayeredDigraphLayout
+    };
     diagram.startTransaction();
-    diagram.layout = $(layout);
+    diagram.layout = $(layouts[layout]);
     diagram.commitTransaction();
 }
 
+
+/**
+ * Disables the gojs behavior of automatically reorganizing the diagram's layout.
+ */
+function disableAutomaticLayout(){
+    diagram.startTransaction()
+    diagram.layout = initialLayout;
+    diagram.commitTransaction()
+}
+
+
+/**
+ * Adds a link object to the diagram. Required fields are:
+ * - _id
+ * - from (_id of the from node)
+ * - to (_id of the to node)
+ */
 function addLinkToDiagram(link) {
     diagram.startTransaction();
     model.addLinkData({
