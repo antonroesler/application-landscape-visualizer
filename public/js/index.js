@@ -29,8 +29,8 @@ model.linkFromPortIdProperty= "fromPort";  // required information:
 model.linkToPortIdProperty= "toPort";   
 
 model.nodeDataArray = [];
-
 model.linkDataArray = [];
+const diagramNames = [];
 
 /**
  * init function to create the model.
@@ -38,58 +38,36 @@ model.linkDataArray = [];
 function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
-    diagram.nodeTemplateMap = nodeTemplateMap;
+    diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
-
-    diagram.layout = $(go.LayeredDigraphLayout);
+    diagram.layout = $(go.GridLayout);
 }
 
 /**
  * Saves a AppNode in the database and adds it to the canvas.
  *
  */
-async function addAppNode() {
+function addAppNode() {
     const data = readNodeProperties();
-    if (useDatabaseSwitchIsOn()) {
-        if (data !== undefined) {
-            const url = urljoin(URL, 'mongo/node');
-            const params = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            };
-            const res = await fetch(url, params);
-            res.json().then(appNode => {
-                if (Object.keys(appNode).length !== 0) {
-                    // If AppNode was stored successfully in Database use data returned from mongo to create AppNode
-                    addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-                } else {
-                    // Inform user that database is unavailable
-                    databaseNotAvailableAlert();
-                    // Create AppNode with id being the current time in milliseconds
-                    addNode(data.name, data.category, data.desc, Date.now());
-                }
-
-            })
-
-        }
-    } else {
-        addNode(data.name, data.category, data.desc, Date.now());
-    }
+    data._id = Date.now();
+    addNodeToDiagram(data);
 }
 
-/**
- * Adds a new node to our nodeDataArray.
- */
-function addNode(name, category, desc, id) {
+function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
+    //if (category ==="Application"){var color = "blue"}
+    //custom color setting for user
     model.addNodeData({
-        key: id,
-        nameProperty: name,
-        category: category,
-        desc: desc
+        key: data._id,
+        nameProperty: data.name,
+        category: data.category,
+        desc: data.desc,
+        tags: data.tags,
+        version: data.version,
+        department: data.department,
+        allowedUsers: data.allowedUsers,
+        license: data.license,
+        //color: color
     });
     diagram.commitTransaction("update");
 
@@ -98,12 +76,11 @@ function addNode(name, category, desc, id) {
  * Delete selected node from nodeDataArray.
  */
 function deleteNode() {
-    var id = diagram.selection.toArray()[0].key;
-    var node = diagram.findNodeForKey(id);
+    const id = diagram.selection.toArray()[0].key;
+    const node = diagram.findNodeForKey(id);
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
-    deleteAppNode(id);
 }
 
 /**
@@ -111,17 +88,22 @@ function deleteNode() {
  * node to diagram.
  */
 function readNodeProperties() {
-    var name = document.getElementById("name").value;
+    const name = document.getElementById("createName").value;
     if (name === "") {
         window.alert("Please enter a name for the node");
     } else {
-        var category = document.getElementById("category").value;
-        var desc = document.getElementById("desc").value;
+        const category = document.getElementById("createCategory").value;
+        const desc = document.getElementById("createDesc").value;
+        const tags = document.getElementById("tags").value;
+        const version = document.getElementById("version").value;
+        const department = document.getElementById("department").value;
+        const allowedUsers = document.getElementById("allowedUsers").value;
+        const license = document.getElementById("license").value;
         if (appNodeNameExists(name) === true) {
             window.alert("node name already exists");
             return undefined
         }
-        return { name: name, category: category, desc: desc }
+        return { name: name, category: category, desc: desc, tags: tags, version: version, department: department, allowedUsers: allowedUsers, license: license }
     }
 }
 
@@ -129,37 +111,20 @@ function readNodeProperties() {
  * Loads all existing AppNodes from the Database and adds them to the diagram.
  *
  */
-async function loadAllAppNodes() {
-    const url = urljoin(URL, 'mongo/node');
-    const params = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    const res = await fetch(url, params);
-    const appNodes = await res.json()
-    appNodes.forEach(appNode => {
-        if (appNodeIdExists(appNode._id) !== true) {
-            addNode(appNode.name, appNode.category, appNode.desc, appNode._id)
-            }
-        })
+async function loadDiagram() {
+    diagram.startTransaction();
+    model.nodeDataArray = [];
+    model.linkDataArray = [];
+    diagram.commitTransaction("empty array");
+    const name = document.getElementById("loadCategory").value;
+    const url = urljoin(URL, 'mongo/' + name);
+    const res = await fetch(url);
+    const loadDiagram = await res.json();
+    loadDiagram.nodeDataArray.forEach(node => {
+        addNodeToDiagram(node);
+    });
 }
 
-/**
- * Delete selected node from database.
- */
-async function deleteAppNode(id) {
-    const url = urljoin(URL, 'mongo/node/' , id);
-    const params = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    };
-    const res = await fetch(url, params);
-    res.json().then(appNode => {alert(appNode.name + "was deleted")})
-}
 /**
  * Checks if the given name for the new node is already existing or not
  */
@@ -172,29 +137,41 @@ function appNodeNameExists(name) {
     return false;
 }
 
-/**
- * Checks if an appNode with a given id exists in the models nodeDataArray.
- * @param id
- * @returns {boolean}
- */
-function appNodeIdExists(id) {
-    for (let i = 0; i < model.nodeDataArray.length; i++) {
-        if (model.nodeDataArray[i].key === id) {
-            return true;
+async function loadDiagramNames() {
+    const url = urljoin(URL, 'mongo/diagram/names');
+    const res = await fetch(url);
+    res.json().then(diagrams => {
+        let i;
+        const select = document.getElementById("loadCategory");
+        const length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
         }
-    }
-    return false;
+        for (i = 0; i < diagrams.length; i++) {
+            const opt = diagrams[i];
+            const el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+    });
+
 }
 
-/**
- * Returns the value (true/false) of the use Database switch. If true, changes should be send to the DB right away. If
- * false, changes are only in the browser.
- * @returns boolean
- */
-function useDatabaseSwitchIsOn() {
-    return document.getElementById("db-toggle").checked
-}
-
-function databaseNotAvailableAlert() {
-    alert("Database ist not available. Please contact admin to get database access. \n YOUR WORK IS NOT SAVED.")
+async function saveDiagram() {
+    const url = urljoin(URL, 'mongo');
+    console.log(model)
+    const params = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            nodeDataArray: model.nodeDataArray,
+            linkDataArray: model.linkDataArray,
+            name: document.getElementById("saveName").value
+        })
+    };
+    const res = await fetch(url, params);
+    res.json().then(msg => console.log(msg))
 }
