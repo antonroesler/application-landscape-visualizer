@@ -166,6 +166,7 @@ function readNodeProperties() {
     }
 }
 
+
 /**
  * Loads a diagram from the database. The diagram must be specified by name.
  *
@@ -181,6 +182,9 @@ async function loadDiagram() {
     const loadDiagram = await res.json();
     loadDiagram.nodeDataArray.forEach(node => {
         addNodeToDiagram(node);
+    });
+    loadDiagram.linkDataArray.forEach(link => {
+        addLinkToDiagram(link);
     });
 }
 
@@ -241,6 +245,7 @@ async function saveDiagram() {
     res.json().then(msg => console.log(msg))
 }
 
+
 function layout_diagram(){
     const layout = go.GridLayout;
     diagram.startTransaction();
@@ -248,7 +253,15 @@ function layout_diagram(){
     diagram.commitTransaction();
 }
 
-
+function addLinkToDiagram(link) {
+    diagram.startTransaction();
+    model.addLinkData({
+        key: link._id,
+        from: link.from,
+        to: link.to,
+    });
+    diagram.commitTransaction("update");
+}
 
 
 
