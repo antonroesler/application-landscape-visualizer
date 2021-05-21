@@ -21,33 +21,16 @@ const AppNode = require('../model/AppNode')
 const Link = require('../model/Link')
 const Diagram = require('../model/Diagram')
 
+
+
 /**
  * Saves the whole model. model must be passed in the request's body.
  */
 router.post('/', async (req, res) => {
     const nodeDataArray = [];
     const linkDataArray = [];
-    req.body.nodeDataArray.forEach(node => {
-        const appNode = new AppNode({
-            _id: node.key,
-            name: node.nameProperty,
-            category: node.category,
-            desc: node.desc,
-            tags: node.tags,
-            version: node.version,
-            department: node.department,
-            allowedUsers: node.allowedUsers,
-            license: node.license,
-        });
-        nodeDataArray.push(appNode)
-    });
-    req.body.linkDataArray.forEach(link => {
-        linkDataArray.push(new Link({
-            from: link.from,
-            to: link.to,
-            category: link.category
-        }))
-    });
+    formatNodeDataArray(req, nodeDataArray);
+    formatLinkDataArray(req, linkDataArray);
     const diagram = new Diagram({
         name: req.body.name,
         nodeDataArray: nodeDataArray,
@@ -80,6 +63,27 @@ router.get('/:name', async (req, res) => {
     }
 })
 
+/**
+ * Deletes a diagram form the database. Must be specified by name.
+ *
+ * mongo/ABC
+ *
+ * to delete the diagram called ABC
+ */
+router.delete('/:name', async (req, res) => {
+    const name = req.params.name
+    try {
+        const diagram = await Diagram.deleteMany({name:name});
+        res.json(diagram);
+
+    }catch (err){
+        res.json(err)
+    }
+})
+
+/**
+ * Get names of all diagrams stored in the database.
+ */
 router.get('/diagram/names', async (req, res) => {
     try {
         const names = [];
@@ -94,105 +98,62 @@ router.get('/diagram/names', async (req, res) => {
 })
 
 /**
- * Route to GET all AppNodes in the DB.
- * Sends a list of JSON objects: [{},{}...] in the body of the http response.
- */
-router.get('/node', async (req, res) => {
-    try {
-        const appNodes = await AppNode.find();
-        res.json(appNodes);
-    }catch (err){
-        res.json(err);
-    }
-});
-
-/**
- * Route to GET all Links in the DB.
- * Sends a list of JSON objects: [{},{}...] in the body of the http response.
- */
-router.get('/link', async (req, res) => {
-    try {
-        const links = await Link.find();
-        res.json(links);
-    }catch (err){
-        res.json(err);
-    }
-});
-
-
-/**
- * Route to POST a new AppNode to the DB.
- * Requires a AppNode as JSON object where at least the name is specified.
+ * Get names of all departments of all nodes stored in the database
  *
- * Sends the JSON object as it is stored in the mongoDb including the _id attribute in the body of the http response.
+ * /mongo/XYZDiagram/departments
+ *
+ * to get all departments that are part of any AppNode in the diagram called 'XYZDiagram'.
  */
-router.post('/node', async (req, res) => {
-    const appNode = new AppNode({
-        name: req.body.name,
-        category: req.body.category,
-        desc: req.body.desc
-    });
+router.get('/:diagramName/departments', async (req, res) => {
+    const name = req.params.diagramName
     try {
-        const savedAppNode = await appNode.save()
-        res.json(savedAppNode);
-
+        const departments = new Set();
+        const diagram = await Diagram.findOne({name:name});
+        diagram.nodeDataArray.forEach(node => {
+            if (node.department){
+                node.department.forEach(dep => departments.add(dep))
+            }
+        })
+        res.json(Array.from(departments));
     }catch (err){
         res.json(err)
     }
 })
 
-/**
- * Route to POST a new Link to the DB.
- * Requires a Link as JSON object where at least from and to attributes are specified.
- *
- * Sends the JSON object as it is stored in the mongoDb including the _id attribute in the body of the http response.
+/*
+ * UTIL FUNCTIONS
  */
-router.post('/link', async (req, res) => {
-    const link = new Link({
-        from: req.body.name,
-        to: req.body.category
+function formatNodeDataArray(req, nodeDataArray) {
+    req.body.nodeDataArray.forEach(node => {
+        const appNode = new AppNode({
+            _id: node.key,
+            name: node.nameProperty,
+            category: node.category,
+            desc: node.desc,
+            tags: node.tags,
+            version: node.version,
+            department: node.department,
+            allowedUsers: node.allowedUsers,
+            license: node.license,
+            loc: node.loc,
+        });
+        nodeDataArray.push(appNode)
     });
-    try {
-        const savedLink = await link.save()
-        res.json(savedLink);
-    }catch (err){
-        res.json(err)
-    }
-})
+}
 
-/**
- * Route to GET a specific AppNode.
- *
- * Sends AppNodes as (a List of) JSON objects in the body of the response.
- */
-router.get('/node/:id', async (req, res) => {
-    const appNode = await AppNode.findById({name:req.params.id})
-    res.json(appNode)
-})
+function formatLinkDataArray(req, linkDataArray) {
+    req.body.linkDataArray.forEach(link => {
+        linkDataArray.push(new Link({
+            from: link.from,
+            to: link.to,
+            category: link.category
+        }))
+    });
+}
+
 
 
 /**
- * Route to DELETE a specific AppNode from the DB ny its _id attribute.
- * /mongo/node/id/6091a
- * to delete the AppNodes where _id: 6091a
- *
- * Sends the deleted AppNode as JSON object in response body.
+ * Export Routes.
  */
-router.delete('/node/:id', async (req, res) => {
-    const deletedAppNode = await AppNode.findByIdAndDelete(req.params.id)
-    res.json(deletedAppNode)
-})
-
-/**
- * Route to DELETE a specific AppNode from the DB ny its _id attribute.
- * /mongo/node/id/6091a
- * to delete the AppNodes where _id: 6091a
- *
- * Sends the deleted AppNode as JSON object in response body.
- */
-router.delete('/link/:id', async (req, res) => {
-    const deletedLink = await Link.findByIdAndDelete(req.params.id)
-    res.json(deletedLink)
-})
-
 module.exports = router;

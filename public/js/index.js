@@ -18,15 +18,27 @@
 
 const URL = 'http://localhost:8000'
 const $ = go.GraphObject.make;
-const diagram = $(go.Diagram, "diagramDiv",
-    { // enable Ctrl-Z to undo and Ctrl-Y to redo
-        "undoManager.isEnabled": true,
-        "toolManager.hoverDelay": 100
-    });
+const diagram = makeDiagram()
 const model = $(go.GraphLinksModel);
+
+model.linkFromPortIdProperty= "fromPort";  // required information:
+model.linkToPortIdProperty= "toPort";   
+
 model.nodeDataArray = [];
 model.linkDataArray = [];
 const diagramNames = [];
+var modelWithoutFilter = [];
+var allFilter = [];
+
+const initialLayout = diagram.layout;
+
+function makeDiagram(){
+    return $(go.Diagram, "diagramDiv",
+        { // enable Ctrl-Z to undo and Ctrl-Y to redo
+            "undoManager.isEnabled": true,
+            "toolManager.hoverDelay": 100
+        });
+}
 
 /**
  * init function to create the model.
@@ -36,12 +48,10 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
-    diagram.layout = $(go.GridLayout);
 }
 
 /**
- * Saves a AppNode in the database and adds it to the canvas.
- *
+ * Reads user inputs and creates a new Node from the users data.
  */
 function addAppNode() {
     const data = readNodeProperties();
@@ -49,6 +59,9 @@ function addAppNode() {
     addNodeToDiagram(data);
 }
 
+/**
+ * Saves an AppNode object to the model.
+ */
 function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
@@ -63,10 +76,11 @@ function addNodeToDiagram(data) {
         department: data.department,
         allowedUsers: data.allowedUsers,
         license: data.license,
+        loc: data.loc,
         //color: color
     });
     diagram.commitTransaction("update");
-
+    modelWithoutFilter = model.nodeDataArray;
 }
 /**
  * Delete selected node from nodeDataArray.
@@ -77,6 +91,65 @@ function deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
+}
+
+
+/** function to rerange model.nodeDataArray according to the filter properties */
+function filterAppNodes() {
+    const filter = readFilterProperties()
+    filterArray = model.nodeDataArray.filter(function (currentElement) {
+        for (var key in filter) {
+            if (currentElement[key] === undefined || currentElement[key] != filter[key])
+                return false;
+        }
+        return true;
+    });
+
+    if (filterArray.length === 0) {
+        window.alert("there are no Nodes with this setting");
+    } else {
+        diagram.startTransaction();
+        model.nodeDataArray = filterArray;
+        diagram.commitTransaction("filter applied");
+    }
+}
+
+
+
+/** function to remove filter */
+function filterOff() {
+    diagram.startTransaction();
+    model.nodeDataArray = modelWithoutFilter;
+    diagram.commitTransaction("filter removed");
+
+}
+
+/** function to read filter properties*/
+function readFilterProperties() {
+    const category = document.getElementById("filterCategory").value;
+    const tags = document.getElementById("filterTags").value;
+    const version = document.getElementById("filterVersion").value;
+    const department = document.getElementById("filterDepartment").value;
+    const allowedUsers = document.getElementById("filterUsers").value;
+    const license = document.getElementById("filterLicense").value;
+    deleteEmtyField = [category, tags, version, department, allowedUsers, license];
+    properties = {};
+    deleteEmtyField.forEach(function (property, i) {
+        if (property != "" && i === 0) {
+            properties.category = property;
+        } else if (property != "" && i === 1) {
+            properties.tags = property;
+        } else if (property != "" && i === 2) {
+            properties.version = property;
+        } else if (property != "" && i === 3) {
+            properties.department = property;
+        } else if (property != "" && i === 4) {
+            properties.allowedUsers = property;
+        } else if (property != "" && i === 5) {
+            properties.license = property;
+        }
+    });
+    return properties;
 }
 
 /**
@@ -103,8 +176,9 @@ function readNodeProperties() {
     }
 }
 
+
 /**
- * Loads all existing AppNodes from the Database and adds them to the diagram.
+ * Loads a diagram from the database. The diagram must be specified by name.
  *
  */
 async function loadDiagram() {
@@ -118,6 +192,9 @@ async function loadDiagram() {
     const loadDiagram = await res.json();
     loadDiagram.nodeDataArray.forEach(node => {
         addNodeToDiagram(node);
+    });
+    loadDiagram.linkDataArray.forEach(link => {
+        addLinkToDiagram(link);
     });
 }
 
@@ -133,6 +210,9 @@ function appNodeNameExists(name) {
     return false;
 }
 
+/**
+ * Loads all diagram names that exist in the database as an array.
+ */
 async function loadDiagramNames() {
     const url = urljoin(URL, 'mongo/diagram/names');
     const res = await fetch(url);
@@ -154,9 +234,12 @@ async function loadDiagramNames() {
 
 }
 
+/**
+ * Saves the model
+ * @returns {Promise<void>}
+ */
 async function saveDiagram() {
     const url = urljoin(URL, 'mongo');
-    console.log(model)
     const params = {
         headers: {
             'Content-Type': 'application/json'
@@ -171,3 +254,63 @@ async function saveDiagram() {
     const res = await fetch(url, params);
     res.json().then(msg => console.log(msg))
 }
+
+/**
+ * Handles the layout when the Auto Layout Modal is used.
+ */
+function layoutModalDialogHandler(){
+    const layout = document.getElementById("layoutOptions").value
+    appendLayoutToDiagram(layout)
+    disableAutomaticLayout()
+}
+
+/**
+ * Automatically arranges the diagram according to a given layout.
+ * Options are:
+ * - Tree
+ * - Grid
+ * - Circle
+ * - Diagraph
+ */
+function appendLayoutToDiagram(layout){
+    const layouts = {
+        "Tree": go.TreeLayout,
+        "Grid": go.GridLayout,
+        "Circle": go.CircularLayout,
+        "Diagraph": go.LayeredDigraphLayout
+    };
+    diagram.startTransaction();
+    diagram.layout = $(layouts[layout]);
+    diagram.commitTransaction();
+}
+
+
+/**
+ * Disables the gojs behavior of automatically reorganizing the diagram's layout.
+ */
+function disableAutomaticLayout(){
+    diagram.startTransaction()
+    diagram.layout = initialLayout;
+    diagram.commitTransaction()
+}
+
+
+/**
+ * Adds a link object to the diagram. Required fields are:
+ * - _id
+ * - from (_id of the from node)
+ * - to (_id of the to node)
+ */
+function addLinkToDiagram(link) {
+    diagram.startTransaction();
+    model.addLinkData({
+        key: link._id,
+        from: link.from,
+        to: link.to,
+    });
+    diagram.commitTransaction("update");
+}
+
+
+
+
