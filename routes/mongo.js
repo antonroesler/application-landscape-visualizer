@@ -135,6 +135,7 @@ function formatNodeDataArray(req, nodeDataArray) {
             department: node.department,
             allowedUsers: node.allowedUsers,
             license: node.license,
+            loc: node.loc,
         });
         nodeDataArray.push(appNode)
     });

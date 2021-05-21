@@ -69,6 +69,7 @@ function makePort(name, align, spot, output, input) {
 var mainTemplate = $(
   go.Node,
   "Vertical",
+    new go.Binding("location", "loc",go.Point.parse).makeTwoWay(go.Point.stringify),
   $(
     go.Panel,
     "Auto",
@@ -81,8 +82,8 @@ var mainTemplate = $(
         width: 65,
         height: 70,
       },
-      new go.Binding("geometry", "category", geoFunc),
-      new go.Binding("background", "color")
+        new go.Binding("geometry", "category", geoFunc),
+        new go.Binding("background", "color"),
     ),
     // four named ports, one on each side:
     makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),

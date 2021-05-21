@@ -41,7 +41,6 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
-    diagram.layout = $(go.GridLayout);
 }
 
 /**
@@ -67,6 +66,7 @@ function addNodeToDiagram(data) {
         department: data.department,
         allowedUsers: data.allowedUsers,
         license: data.license,
+        loc: data.loc,
         //color: color
     });
     diagram.commitTransaction("update");
@@ -226,7 +226,6 @@ async function loadDiagramNames() {
  */
 async function saveDiagram() {
     const url = urljoin(URL, 'mongo');
-    console.log(model)
     const params = {
         headers: {
             'Content-Type': 'application/json'
@@ -241,3 +240,16 @@ async function saveDiagram() {
     const res = await fetch(url, params);
     res.json().then(msg => console.log(msg))
 }
+
+function layout_diagram(){
+    const layout = go.GridLayout;
+    diagram.startTransaction();
+    diagram.layout = $(layout);
+    diagram.commitTransaction();
+}
+
+
+
+
+
+
