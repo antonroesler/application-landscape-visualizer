@@ -20,7 +20,7 @@
  * these templates.
  * (the attribute "category" inside of the AppNode object declares which template it uses)
  *
- * @author Feng Yi Lu
+ * @author Feng Yi Lu, Benedikt Möller
  *
  */
 
@@ -54,7 +54,7 @@ function makePort(name, align, spot, output, input) {
     cursor: "pointer", // show a different cursor to indicate potential link point
     mouseEnter: function (e, port) {
       // the PORT argument will be this Shape
-      if (!e.diagram.isReadOnly) port.fill = "rgba(255,0,255,0.5)";
+      if (!e.diagram.isReadOnly) port.fill = "rgba(217, 190, 108,0.7)";
     },
     mouseLeave: function (e, port) {
       port.fill = "transparent";

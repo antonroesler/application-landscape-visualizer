@@ -28,33 +28,38 @@ var linkTemplate =
     $(go.Link,
         {
             routing: go.Link.AvoidsNodes,
-            corner: 10,
-            curve: go.Link.JumpOver
+            corner: 5,
+            curve: go.Link.JumpOver,
+
+            mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(217, 190, 108,0.3)"; },
+            mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+            selectionAdorned: false
+         
         },
         new go.Binding("points").makeTwoWay(),
         $(go.Shape,  // the highlight shape, normally transparent
           { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
         $(go.Shape,  // the link path shape
           { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "dodgerblue" : "gray"; }).ofObject()),
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(217, 190, 108)" : "gray"; }).ofObject()),
         $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
-        $(go.Panel, "Auto",  // the link label, normally not visible
-          { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
-          new go.Binding("visible", "visible").makeTwoWay(),
-          $(go.Shape, "RoundedRectangle",  // the label shape
-            { fill: "#F8F8F8", strokeWidth: 0 }),
-          $(go.TextBlock, "Yes",  // the label
-            {
-              textAlign: "center",
-              font: "10pt helvetica, arial, sans-serif",
-              stroke: "#333333",
-              editable: true
-            },
-            new go.Binding("text").makeTwoWay())
-        ),
-        $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
-        $(go.Shape, { toArrow: "Standard", scale: 1 })
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" })
+        // $(go.Panel, "Auto",  // the link label, normally not visible
+        //   { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
+        //   new go.Binding("visible", "visible").makeTwoWay(),
+        //   $(go.Shape, "RoundedRectangle",  // the label shape
+        //     { fill: "#F8F8F8", strokeWidth: 0 }),
+        //   $(go.TextBlock, "Yes",  // the label
+        //     {
+        //       textAlign: "center",
+        //       font: "10pt helvetica, arial, sans-serif",
+        //       stroke: "#333333",
+        //       editable: true
+        //     },
+        //     new go.Binding("text").makeTwoWay())
+        // ),
+        // $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
+        // $(go.Shape, { toArrow: "Standard", scale: 1 })
         
 
     );
@@ -86,6 +91,6 @@ var 10GB_linkTemplate =
     linkTemplate.add("10", 10GB_linkTemplate);
  */
 
-var linkTemplateMap = new go.Map();
-linkTemplateMap.add("", linkTemplate);
-linkTemplateMap.add("standard", linkTemplate);
+// var linkTemplateMap = new go.Map();
+// linkTemplateMap.add("", linkTemplate);
+// linkTemplateMap.add("standard", linkTemplate);

@@ -11,7 +11,7 @@
 
 /**
  * A short description what this file/class is all about.
- * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
+ * @author Leonard Hußke , Feng Yi Lu, Anton Roesler, Benedikt Möller
  * this file contains several functions that are needed to display and interact
  * with the Diagram Canvas in the HTML File ()
  */
@@ -47,7 +47,7 @@ function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
-    diagram.linkTemplateMap = linkTemplateMap;
+    diagram.linkTemplate = linkTemplate;
 }
 
 /**
