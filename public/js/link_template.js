@@ -28,6 +28,7 @@ var linkTemplate =
     $(go.Link,
         {
             routing: go.Link.AvoidsNodes,
+            toShortLength: 3,
             corner: 5,
             curve: go.Link.JumpOver,
 
@@ -43,7 +44,8 @@ var linkTemplate =
           { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
           new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(217, 190, 108)" : "gray"; }).ofObject()),
         $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" })
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(217, 190, 108)" : "gray"; }).ofObject())
         // $(go.Panel, "Auto",  // the link label, normally not visible
         //   { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
         //   new go.Binding("visible", "visible").makeTwoWay(),
