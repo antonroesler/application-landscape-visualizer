@@ -26,14 +26,15 @@ const diagram = $(go.Diagram, "diagramDiv",
 
 const model = $(go.GraphLinksModel);
 
-model.linkFromPortIdProperty= "fromPort";  // required information:
-model.linkToPortIdProperty= "toPort";   
+model.linkFromPortIdProperty = "fromPort";  // required information:
+model.linkToPortIdProperty = "toPort";
 
 model.nodeDataArray = [];
 model.linkDataArray = [];
 
 const diagramNames = [];
-let modelWithoutFilter = [];
+let modelNodeWithoutFilter = [];
+let modelLinkWithoutFilter = [];
 let allFilter = [];
 
 const initialLayout = diagram.layout;
