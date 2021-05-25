@@ -1,3 +1,4 @@
+/**main contextMenu of the diagram*/
 diagram.contextMenu =
     $("ContextMenu",
         $("ContextMenuButton",
@@ -18,7 +19,6 @@ diagram.contextMenu =
                 click: function (e, obj) {
                     e.diagram.commit(function (d) {
                         var openModal = document.getElementById("create-modal-btn");
-                        addNodeManager = "DiagramCanvasContextMenu";
                         document.getElementById("contextMenu").value = "diagramContextMenu";
                         openModal.click();
                     });
@@ -26,13 +26,15 @@ diagram.contextMenu =
             }
         ));
 
+/**function to add a node with link*/
 function addNodeAndLink() {
     var openModal = document.getElementById("create-modal-btn");
-    addNodeManager = "DiagramCanvasContextMenu";
     document.getElementById("contextMenu").value = "nodeContextMenuAdd";
     openModal.click();
 }
 
+/**function to handle diffrent node adding possibilities depending 
+  on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
     if (contextMenuValue === "nodeContextMenuAdd") {
