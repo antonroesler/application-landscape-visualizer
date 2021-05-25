@@ -38,7 +38,7 @@ body {
     min-height: 100vh;
 }
 
-li, a, p, button {
+li, a, p, h1, h2, h3, button {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -99,7 +99,7 @@ li, a, p, button {
     color: var(--focus-blue);
 }
 
-button {
+.nav-btn {
     margin-left: 20px;
     padding: 7px 15px;
     background-color: var(--unfocus-blue);
@@ -109,7 +109,7 @@ button {
     transition: all 0.3s ease 0s;
 }
 
-button:hover {
+.nav-btn:hover {
     background-color: var(--focus-blue);
 }
 
@@ -174,23 +174,121 @@ footer p {
 
 
 
-.modalDialog {
-    position: Fixed;
-    font-family: Verdana, Sans-Serif;
+
+
+.modal-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    z-index: 9999;
+}
+
+.modal-popup {
+    width: 30%;
+/*    height: ; */
+    background-color: var(--off-white);
+    border-radius: 18px;
+    padding: 80px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    color: var(--dark-grey);
+    opacity: 0.7;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content h2 {
+    color: var(--dark-grey);
+    font-size: 40px;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.modal-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+}
+
+.input-text {
+    font-size: 17px;
+    border-radius: 12px;
+    border: 1px solid var(--silver);
+    text-align: left;
+    height: 3.3rem;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+    padding: 0.5rem 0.95rem 0;
+    appearance: none;
+}
+
+.modal-btn {
+    font-size: 17px;
+    border-radius: 12px;
+    border: 1px solid var(--silver);
+    height: 3.3rem;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+    padding: 0rem 0.95rem 0;
+    appearance: none;
+    background-color: var(--focus-blue);
+    cursor: pointer;
+}
+
+.modal-btn:hover {
+    background-color: var(--unfocus-blue);
+}
+
+.modal-btn-cancel {
+    border: none;
+    background-color: transparent;
+    color: var(--focus-blue);
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.modal-btn-cancel:hover {
+    color: var(--unfocus-blue);
+    text-decoration: underline;
+
+}
+
+
+.modalDialog {
+    width: 100%;
+    height: 100%;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 99999;
     opacity: 0;
-    transition: opacity 400ms ease-in;
+    transition: all 0.2s ease 0s;
     pointer-events: None;
 }
 
 .modalDialog:target {
     opacity: 1;
     pointer-events: Auto;
+    border-radius: 18px;
 }
 
 .modalDialog > div {
@@ -203,7 +301,7 @@ footer p {
 
     cursor: Default;
 }
-
+ /*
 .close {
     background-color: #606061;
     color: #FFFFFF;
@@ -221,4 +319,25 @@ footer p {
 
 .close:hover {
     background-color: #ff0000;
+}
+*/
+
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--silver);
+    border-radius: 15px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #8F8F8F;
+}
+::-webkit-scrollbar-track{
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: inset 7px 10px 12px #f0f0f0;
 }
