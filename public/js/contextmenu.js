@@ -44,7 +44,6 @@ function handleContextMenuOptions(newNode) {
     }
     if (contextMenuValue === "diagramContextMenu") {
         const part = diagram.findPartForData(newNode);
-        console.log(part);
         pos = diagram.toolManager.contextMenuTool.mouseDownPoint;
         part.location = pos;
         document.getElementById("contextMenu").value = "default";
