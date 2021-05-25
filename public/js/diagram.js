@@ -42,7 +42,7 @@ function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
-    model.addNodeData({
+    newNode = {
         key: data._id,
         nameProperty: data.name,
         category: data.category,
@@ -54,9 +54,11 @@ function addNodeToDiagram(data) {
         license: data.license,
         loc: data.loc,
         //color: color
-    });
+    };
+    
+    handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
-    handleContextMenuOptions(data);
+    pos = diagram.toolManager.contextMenuTool.mouseDownPoint;
     modelNodeWithoutFilter = model.nodeDataArray;
 }
 
