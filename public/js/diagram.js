@@ -56,7 +56,7 @@ function addNodeToDiagram(data) {
         loc: data.loc,
         //color: color
     });
-    
+
     diagram.commitTransaction("update");
     modelNodeWithoutFilter = model.nodeDataArray;
 }
@@ -89,5 +89,7 @@ function addLinkToDiagram(link) {
     diagram.commitTransaction("update");
     modelLinkWithoutFilter = model.linkDataArray;
 }
+
+
 
 
