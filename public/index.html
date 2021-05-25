@@ -39,12 +39,12 @@
             <img class="logo" src="img/logo/ecore_logo.png">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#layoutModal">Auto Layout</a></li>
-                    <li><a href="#loadModal" onclick="loadDiagramNames()">Load</a></li>
+                    <li><a href="#" onclick="openLayoutModal()">Auto Layout</a></li>
+                    <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#"><button class="nav-btn">Create Diagram</button></a>
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create Diagram</button></a>
         </div>
         <div class="sub-nav">
             <nav>
@@ -61,7 +61,7 @@
 
 
 
-
+    <!-- Needs to be updated -->
     <div class="modalDialog" id="createModal">
         <div>
             <a class="close" href="#close" title="Close">X</a>
@@ -95,61 +95,60 @@
                    title="Node Description is inserted here" type="text"/>
             <input autocomplete="off" class="inputField" id="license" placeholder="License: " title="Please insert Name of new Node here"
                    type="text"/>
-
-
             <hr>
             <button class="navButton" onclick="addAppNode()">Create</button>
         </div>
     </div>
 
 
-    <div class="modalDialog" id="layoutModal">
-        <div>
-            <a class="close" href="#close" title="Schließen">X</a>
-            <h4 class="sidebarHeading">Choose a Auto Layout</h4>
-            <hr>
-            Choose Diagram Name:
-            <select class="navButton" id="layoutOptions" name="category" title="Please choose correct Category">
-                <option>Tree</option>
-                <option>Circle</option>
-                <option>Diagraph</option>
-                <option>Grid</option>
-            </select>
 
-
-            <hr>
-            <button class="navButton" onclick="layoutModalDialogHandler()">Apply Layout</button>
+    <!-- Layout Modal -->
+    <div class="modal-bg" id="layoutModal">
+        <div class="modal-popup">
+            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Choose a Layout.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <select class="input-dropdown" id="layoutOptions">
+                        <option>Tree</option>
+                        <option>Circle</option>
+                        <option>Diagraph</option>
+                        <option>Grid</option>
+                    </select>
+                    <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Apply</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 
 
-    <div class="modalDialog" id="loadModal">
-        <div>
-            <a class="close" href="#close" title="Schließen">X</a>
-            <h4 class="sidebarHeading">Load specific Diagrams</h4>
-            <hr>
-            Choose Diagram Name:
-            <select class="navButton" id="loadCategory" name="category" title="Please chosse correct Category">
-
-            </select>
-
-
-            <hr>
-            <button class="navButton" onclick="loadDiagram()">Load</button>
+    <!-- Load Diagram Modal -->
+    <div class="modal-bg" id="loadDiagramModal">
+        <div class="modal-popup">
+            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Load your Diagram.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <select class="input-dropdown" id="loadCategory"></select>
+                    <button class="modal-btn" onclick="loadDiagram(); closeModal();">Load</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 
 
-
+    <!-- Save Diagram Modal -->
     <div class="modal-bg" id="saveDiagramModal">
         <div class="modal-popup">
             <div class="close" onclick="closeModal()">+</div>
         <div class="modal-content">
             <h2>Save your Diagram.</h2>
-            <form class="modal-form" action="">
+            <form class="modal-form" action="" onsubmit="return false">
                 <input class="input-text" type="text" id="saveName" placeholder="Name">
                 <input class="input-text" type="text" id="saveDesc" placeholder="Description">
-                <button class="modal-btn" onclick="saveDiagram()">Save</button>
+                <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
                 <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
             </form>
         </div>
@@ -157,7 +156,7 @@
     </div>
 
 
-
+    <!-- Needs to be updated -->
     <div class="modalDialog" id="filterModal">
         <div>
             <a class="close" href="#close" title="Schließen">X</a>
@@ -207,7 +206,6 @@
         <div id="diagramDiv"></div>
         <div class="sidebar-right"></div>
     </div>
-
 
     <footer>
         <div class="footer-content">
