@@ -38,7 +38,7 @@ body {
     min-height: 100vh;
 }
 
-li, a, p, h1, h2, h3, button {
+li, a, p, h1, h2, h3, button, select, input {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -182,7 +182,6 @@ footer p {
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
     top: 0;
-    display: flex;
     justify-content: center;
     align-items: center;
     display: none;
@@ -196,6 +195,7 @@ footer p {
     border-radius: 18px;
     padding: 80px;
     position: relative;
+    min-width: 300px;
 }
 
 .close {
@@ -232,14 +232,69 @@ footer p {
 
 .input-text {
     font-size: 17px;
+    color: var(--dark-grey);
     border-radius: 12px;
     border: 1px solid var(--silver);
     text-align: left;
     height: 3.3rem;
     line-height: 1.25;
     margin-bottom: 0.85rem;
-    padding: 0.5rem 0.95rem 0;
+    padding: 0.5rem 0.95rem;
     appearance: none;
+}
+
+.input-text:focus {
+    border: 2px solid var(--focus-blue);
+    border-radius: 12px;
+    outline: none;
+}
+
+.input-dropdown {
+    font-size: 17px;
+    color: var(--dark-grey);
+    border-radius: 12px;
+    border: 1px solid var(--silver);
+    text-align: left;
+    height: 3.3rem;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+    padding: 0.5rem 0.95rem;
+    appearance: none;
+    /* Dropdown Arrow */
+    background-image:
+            linear-gradient(45deg, transparent 50%, gray 50%),
+            linear-gradient(135deg, gray 50%, transparent 50%);
+    background-position:
+            calc(100% - 20px) calc(1em + 2px),
+            calc(100% - 15px) calc(1em + 2px),
+            calc(100% - 2.5em) 1px;
+    background-size:
+            5px 5px,
+            5px 5px,
+            1px 1px;
+    background-repeat: no-repeat;
+}
+
+.input-dropdown:focus {
+    /* Switch arrow upside down */
+    background-image:
+            linear-gradient(45deg, green 50%, transparent 50%),
+            linear-gradient(135deg, transparent 50%, green 50%);
+    background-position:
+            calc(100% - 15px) 1em,
+            calc(100% - 20px) 1em,
+            calc(100% - 2.5em) 0.5em;
+    background-size:
+            5px 5px,
+            5px 5px,
+            1px 1.5em;
+    background-repeat: no-repeat;
+}
+
+.input-dropdown:focus {
+    border: 2px solid var(--focus-blue);
+    border-radius: 12px;
+    outline: none;
 }
 
 .modal-btn {
@@ -259,6 +314,12 @@ footer p {
     background-color: var(--unfocus-blue);
 }
 
+.modal-btn:focus {
+    border: 2px solid var(--focus-blue);
+    border-radius: 12px;
+    outline: none;
+}
+
 .modal-btn-cancel {
     border: none;
     background-color: transparent;
@@ -273,7 +334,7 @@ footer p {
 
 }
 
-
+/* All three following styles can be deleted if all modals are changed */
 .modalDialog {
     width: 100%;
     height: 100%;
@@ -301,28 +362,6 @@ footer p {
 
     cursor: Default;
 }
- /*
-.close {
-    background-color: #606061;
-    color: #FFFFFF;
-    line-height: 25px;
-    position: Absolute;
-    right: -12px;
-    text-align: Center;
-    top: -10px;
-    width: 24px;
-    text-decoration: None;
-    font-weight: Bold;
-    border-radius: 12px;
-    box-shadow: 1px 1px 3px #000000;
-}
-
-.close:hover {
-    background-color: #ff0000;
-}
-*/
-
-
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
