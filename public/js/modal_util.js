@@ -10,21 +10,34 @@
 */
 
 /**
- * Contains functions to open modals.
+ * This file contains functions to open and close modals.
  *
  * @author Leonard Husske
  */
 
-/*
- * Opens the saveDiagram modal.
- */
 function openSaveDiagramModal() {
     document.getElementById("saveDiagramModal").style.display = "flex";
-};
+}
+
+function openLoadDiagramModal() {
+    document.getElementById("loadDiagramModal").style.display = "flex";
+}
+
+function openLayoutModal() {
+    document.getElementById("layoutModal").style.display = "flex";
+}
 
 /*
- * Closes a modal.
+ * Closes all modals which are displayed.
  */
 function closeModal() {
-    document.querySelector(".modal-bg").style.display = "none";
-    };
+    /* Get all modals */
+    const modals = document.querySelectorAll(".modal-bg");
+
+    /* Check if modal is active and deactivate it */
+    for (let modal of modals) {
+        if(modal.style.display === "flex") {
+            modal.style.display = "none";
+        }
+    }
+}
