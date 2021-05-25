@@ -19,8 +19,16 @@ diagram.contextMenu =
                     e.diagram.commit(function (d) {
                         var openModal = document.getElementById("create-modal-btn");
                         addNodeManager = "DiagramCanvasContextMenu";
+                        document.getElementById("contextMenu").value = "diagramContextMenu";
                         openModal.click();
                     });
                 }
             }
         ));
+
+function addNodeAndLink(){
+    var openModal = document.getElementById("create-modal-btn");
+                        addNodeManager = "DiagramCanvasContextMenu";
+                        document.getElementById("contextMenu").value = "nodeContextMenu";
+                        openModal.click();
+}

@@ -39,6 +39,7 @@ function addAppNode() {
  * Saves an AppNode object to the model.
  */
 function addNodeToDiagram(data) {
+    var contextMenu = document.getElementById("contextMenu");
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
@@ -55,6 +56,7 @@ function addNodeToDiagram(data) {
         loc: data.loc,
         //color: color
     });
+    
     diagram.commitTransaction("update");
     modelNodeWithoutFilter = model.nodeDataArray;
 }
