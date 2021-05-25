@@ -39,5 +39,7 @@ function handleContextMenuOptions(newNode) {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode._id };
         addLinkToDiagram(newLink);
     }
+    if (contextMenuValue === "diagramContextMenu") {
+    }
     document.getElementById("contextMenu").value = "default";
 }
