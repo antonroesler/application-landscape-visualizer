@@ -35,192 +35,198 @@
 
 <body onload="init()">
 
-<!-- Header Section starts here -->
-<div class="header">
-    <!-- divided into three sections, from left to right. First used is header_logo -->
-    <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
-    <!-- middle section which can be used for additional content later -->
-    <div class="header_main"></div>
-    <!-- last one is for login purpose. Please add user jscript here -->
-    <div class="header_userlogin">
-        <button class="navButton2" onclick="saveDiagram()">Login</button>
+    <!-- Header Section starts here -->
+    <div class="header">
+        <!-- divided into three sections, from left to right. First used is header_logo -->
+        <div class="header_logo"><img height="100" src="img/logo/logo_small.png"></div>
+        <!-- middle section which can be used for additional content later -->
+        <div class="header_main"></div>
+        <!-- last one is for login purpose. Please add user jscript here -->
+        <div class="header_userlogin">
+            <button class="navButton2" onclick="saveDiagram()">Login</button>
+        </div>
     </div>
-</div>
-<!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
-<div class="controlbar">
-    <div class="controlbar_nav">
+    <!-- controllbar is used for the main Navigation/Toolbar. Controllbar is uses as main container for this section-->
+    <div class="controlbar">
+        <div class="controlbar_nav">
 
-        <a class="navButton" href="#createModal">New Node</a>
-        <button class="navButton" onclick="deleteNode()">Delete Group</button>
-        <a class="navButton" href="#layoutModal">Auto Layout</a>
-        <a class="navButton" href="#loadModal" onclick="loadDiagramNames()">Load</a>
-        <!--<button class="navButton" onclick="loadAllAppNodes()">Load</button>-->
-        <a class="navButton" href="#saveModal">Save</a>
-        <a class="navButton" href="#filterModal">Filter</a>
+            <a class="navButton" href="#createModal">New Node</a>
+            <button class="navButton" onclick="deleteNode()">Delete Group</button>
+            <a class="navButton" href="#layoutModal">Auto Layout</a>
+            <a class="navButton" href="#loadModal" onclick="loadDiagramNames()">Load</a>
+            <!--<button class="navButton" onclick="loadAllAppNodes()">Load</button>-->
+            <a class="navButton" href="#saveModal">Save</a>
+            <a class="navButton" href="#filterModal">Filter</a>
 
 
-        <div class="modalDialog" id="createModal">
-            <div>
-                <a class="close" href="#close" title="Schließen">X</a>
-                <h4 class="sidebarHeading">Create New Node</h4>
-                <hr>
-                Choose Category:
-                <select class="navButton" id="createCategory" name="category"
+            <div class="modalDialog" id="createModal">
+                <div>
+                    <a class="close" href="#close" title="Schließen">X</a>
+                    <h4 class="sidebarHeading">Create New Node</h4>
+                    <hr>
+                    Choose Category:
+                    <select class="navButton" id="createCategory" name="category"
                         title="Please chosse correct Category">
-                    <option value="Database">Database</option>
-                    <option value="Application">Application</option>
-                    <option value="Component">Component</option>
-                    <option value="Stuff">Stuff</option>
-                    <option value="More Stuff">More Stuff</option>
-                    <option value="Epic Stuff">Epic Stuff</option>
-                </select>
-                <hr>
-                <input autocomplete="off" class="inputField" id="createName" placeholder="Node Name: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField2" id="createDesc" placeholder="Description: "
-                       title="Node Description is inserted here" type="text"/>
-                <p>Meta Field: </p>
-                <hr>
+                        <option value="Database">Database</option>
+                        <option value="Application">Application</option>
+                        <option value="Component">Component</option>
+                        <option value="Stuff">Stuff</option>
+                        <option value="More Stuff">More Stuff</option>
+                        <option value="Epic Stuff">Epic Stuff</option>
+                    </select>
+                    <hr>
+                    <input autocomplete="off" class="inputField" id="createName" placeholder="Node Name: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField2" id="createDesc" placeholder="Description: "
+                        title="Node Description is inserted here" type="text" />
+                    <p>Meta Field: </p>
+                    <hr>
 
-                <input autocomplete="off" class="inputField" id="tags" placeholder="Tags: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField" id="version" placeholder="Version: " title="Node Description is inserted here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField" id="department" placeholder="Department: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField" id="allowedUsers" placeholder="Allowed Users: "
-                       title="Node Description is inserted here" type="text"/>
-                <input autocomplete="off" class="inputField" id="license" placeholder="License: " title="Please insert Name of new Node here"
-                       type="text"/>
+                    <input autocomplete="off" class="inputField" id="tags" placeholder="Tags: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField" id="version" placeholder="Version: "
+                        title="Node Description is inserted here" type="text" />
+                    <input autocomplete="off" class="inputField" id="department" placeholder="Department: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField" id="allowedUsers" placeholder="Allowed Users: "
+                        title="Node Description is inserted here" type="text" />
+                    <input autocomplete="off" class="inputField" id="license" placeholder="License: "
+                        title="Please insert Name of new Node here" type="text" />
 
 
-                <hr>
-                <button class="navButton" onclick="addAppNode()">Create</button>
+                    <hr>
+                    <button class="navButton" onclick="addAppNode()">Create</button>
+                </div>
             </div>
-        </div>
 
 
-        <div class="modalDialog" id="layoutModal">
-            <div>
-                <a class="close" href="#close" title="Schließen">X</a>
-                <h4 class="sidebarHeading">Choose a Auto Layout</h4>
-                <hr>
-                Choose Diagram Name:
-                <select class="navButton" id="layoutOptions" name="category" title="Please choose correct Category">
-                    <option>Tree</option>
-                    <option>Circle</option>
-                    <option>Diagraph</option>
-                    <option>Grid</option>
-                </select>
+            <div class="modalDialog" id="layoutModal">
+                <div>
+                    <a class="close" href="#close" title="Schließen">X</a>
+                    <h4 class="sidebarHeading">Choose a Auto Layout</h4>
+                    <hr>
+                    Choose Diagram Name:
+                    <select class="navButton" id="layoutOptions" name="category" title="Please choose correct Category">
+                        <option>Tree</option>
+                        <option>Circle</option>
+                        <option>Diagraph</option>
+                        <option>Grid</option>
+                    </select>
 
 
-                <hr>
-                <button class="navButton" onclick="layoutModalDialogHandler()">Apply Layout</button>
+                    <hr>
+                    <button class="navButton" onclick="layoutModalDialogHandler()">Apply Layout</button>
+                </div>
             </div>
-        </div>
 
 
-        <div class="modalDialog" id="loadModal">
-            <div>
-                <a class="close" href="#close" title="Schließen">X</a>
-                <h4 class="sidebarHeading">Load specific Diagrams</h4>
-                <hr>
-                Choose Diagram Name:
-                <select class="navButton" id="loadCategory" name="category" title="Please chosse correct Category">
+            <div class="modalDialog" id="loadModal">
+                <div>
+                    <a class="close" href="#close" title="Schließen">X</a>
+                    <h4 class="sidebarHeading">Load specific Diagrams</h4>
+                    <hr>
+                    Choose Diagram Name:
+                    <select class="navButton" id="loadCategory" name="category" title="Please chosse correct Category">
 
-                </select>
+                    </select>
 
 
-                <hr>
-                <button class="navButton" onclick="loadDiagram()">Load</button>
+                    <hr>
+                    <button class="navButton" onclick="loadDiagram()">Load</button>
+                </div>
             </div>
-        </div>
 
-        <div class="modalDialog" id="saveModal">
-            <div>
-                <a class="close" href="#close" title="Schließen">X</a>
-                <h4 class="sidebarHeading">Save present Diagram</h4>
-                <hr>
-                <input autocomplete="off" class="inputField" id="saveName" placeholder="Diagram Name: " title="Please insert Name of new Diagram here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField2" id="saveDesc" placeholder="Description: " title="Node Description is inserted here"
-                       type="text"/>
+            <div class="modalDialog" id="saveModal">
+                <div>
+                    <a class="close" href="#close" title="Schließen">X</a>
+                    <h4 class="sidebarHeading">Save present Diagram</h4>
+                    <hr>
+                    <input autocomplete="off" class="inputField" id="saveName" placeholder="Diagram Name: "
+                        title="Please insert Name of new Diagram here" type="text" />
+                    <input autocomplete="off" class="inputField2" id="saveDesc" placeholder="Description: "
+                        title="Node Description is inserted here" type="text" />
 
 
-                <hr>
-                <button class="navButton" onclick="saveDiagram()">Save</button>
+                    <hr>
+                    <button class="navButton" onclick="saveDiagram()">Save</button>
+                </div>
             </div>
-        </div>
 
-        <div class="modalDialog" id="filterModal">
-            <div>
-                <a class="close" href="#close" title="Schließen">X</a>
-                <h4 class="sidebarHeading">Filter Options</h4>
-                <hr>
+            <div class="modalDialog" id="filterModal">
+                <div>
+                    <a class="close" href="#close" title="Schließen">X</a>
+                    <h4 class="sidebarHeading">Filter Options</h4>
+                    <hr>
+                    Create Filter:
+                    <hr>
+                    <input autocomplete="off" class="inputField" id="filterName" placeholder="name: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField2" id="filterDesc" placeholder="Description: "
+                        title="Node Description is inserted here" type="text" />
+                    <p>Meta Field: </p>
+                    <hr>
+                    <input autocomplete="off" class="inputField" id="filterTags" placeholder="Tags: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField" id="filterVersion" placeholder="Version: "
+                        title="Node Description is inserted here" type="text" />
+                    <input autocomplete="off" class="inputField" id="filterDepartment" placeholder="Department: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <input autocomplete="off" class="inputField" id="filterUsers" placeholder="Allowed Users: "
+                        title="Node Description is inserted here" type="text" />
+                    <input autocomplete="off" class="inputField" id="filterLicense" placeholder="License: "
+                        title="Please insert Name of new Node here" type="text" />
+                    <p>Category: </p>
+                    <select class="navButton" id="filterCategory" name="category"
+                        title="Please chosse correct Category">
+                        <option value=""></option>
+                        <option value="Database">Database</option>
+                        <option value="Package">Package</option>
+                        <option value="Component">Component</option>
+                        <option value="Application">Application</option>
+                    </select>
+                    <hr>
+                    <button class="navButton" onclick="filterDiagram()">Filter</button>
+                    <button class="navButton" onclick="filterOff()">Filter OFF</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
+    <div class="diagram_container">
+
+        <div class="diagram_container_main">
+            <div id="diagramDiv">
+
+            </div>
+            <!-- Sidebar Container -->
+
+        </div>
+        <div class="diagram_container_sidebar">
+
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Basic Functions - </h4>
+            </div>
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Statistics - </h4>
+            </div>
+            <div class="diagram_container_sidebar_showbox">
+                <h4 class="sidebarHeading"> - Filters - </h4>
                 Choose Filter:
-                <hr>
-                <input autocomplete="off" class="inputField" id="filterName" placeholder="Search term: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField2" id="filterDesc" placeholder="Description: "
-                       title="Node Description is inserted here" type="text"/>
-                <p>Meta Field: </p>
-                <hr>
-                <input autocomplete="off" class="inputField" id="filterTags" placeholder="Tags: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField" id="filterVersion" placeholder="Version: " title="Node Description is inserted here"
-                       type="text"/>
-                <input autocomplete="off" class="inputField" id="filterDepartment" placeholder="Department: "
-                       title="Please insert Name of new Node here" type="text"/>
-                <input autocomplete="off" class="inputField" id="filterUsers" placeholder="Allowed Users: "
-                       title="Node Description is inserted here" type="text"/>
-                <input autocomplete="off" class="inputField" id="filterLicense" placeholder="License: " title="Please insert Name of new Node here"
-                       type="text"/>
-                <p>Category: </p>
-                <select class="navButton" id="filterCategory" name="category" title="Please chosse correct Category">
-                    <option value=""></option>
-                    <option value="Database">Database</option>
-                    <option value="Package">Package</option>
-                    <option value="Component">Component</option>
-                    <option value="Application">Application</option>
+                <select class="navButton" id="filterSelect" title="Please chosse filter">
                 </select>
-                <hr>
-                <button class="navButton" onclick="filterDiagram()">Filter</button>
+                <button class="navButton" onclick="filterDiagramSelect()">Filter</button>
                 <button class="navButton" onclick="filterOff()">Filter OFF</button>
             </div>
+
         </div>
 
     </div>
-</div>
-
-
-<!-- diagram_container is uses as main class for the whole go.js visual part. All Magic is done here, so be carefull-->
-<div class="diagram_container">
-
-    <div class="diagram_container_main">
-        <div id="diagramDiv">
-
-        </div>
-        <!-- Sidebar Container -->
-
+    <div class="spacer_footer"></div>
+    <div class="footer_container">
     </div>
-    <div class="diagram_container_sidebar">
-
-        <div class="diagram_container_sidebar_showbox">
-            <h4 class="sidebarHeading"> - Basic Functions - </h4>
-        </div>
-        <div class="diagram_container_sidebar_showbox">
-            <h4 class="sidebarHeading"> - Statistics - </h4>
-        </div>
-        <div class="diagram_container_sidebar_showbox">
-            <h4 class="sidebarHeading"> - Alter Node or Groups - </h4>
-        </div>
-
-    </div>
-
-</div>
-<div class="spacer_footer"></div>
-<div class="footer_container">
-</div>
 
 
 </body>
@@ -233,4 +239,5 @@
 <script src="js/static_util.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
+
 </html>

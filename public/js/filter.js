@@ -24,18 +24,40 @@ function filterOff() {
 
 }
 
+/* function to create a filter**/
 function filterDiagram() {
-    filterAppLinks(filterAppNodes());
+    filter = readFilterProperties();
+    allFilter.push(filter);
+    showFilterNames();
+    filterAppLinks(filterAppNodes(filter));
+
+}
+
+/* function to use a created filter**/
+function filterDiagramSelect() {
+    selectedFilter = document.getElementById("filterSelect").value;
+    filter = {};
+    allFilter.forEach(sfilter => {
+        if (sfilter.filterName === selectedFilter) {
+            filter = sfilter;
+        }
+    })
+    filterAppLinks(filterAppNodes(filter));
+
 }
 
 
 /** function to rerange model.nodeDataArray according to the filter properties */
-function filterAppNodes() {
-    const filter = readFilterProperties()
+function filterAppNodes(filter) {
     filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (var key in filter) {
-            if (currentElement[key] === undefined || currentElement[key] != filter[key])
+            if (key === "filterName") {
+                continue;
+            }
+            if (currentElement[key] === undefined || currentElement[key] != filter[key]) {
                 return false;
+            }
+
         }
         return true;
     });
@@ -80,4 +102,21 @@ function checkLinks(link, filterNodeArray) {
         }
     })
     return fromExists;
+}
+
+
+/* function to display created filters **/
+function showFilterNames() {
+    const select = document.getElementById("filterSelect");
+    const length = select.options.length;
+    for (let i = length - 1; i >= 0; i--) {
+        select.options[i] = null;
+    }
+    for (i = 0; i < allFilter.length; i++) {
+        const opt = allFilter[i].filterName;
+        const el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+    }
 }

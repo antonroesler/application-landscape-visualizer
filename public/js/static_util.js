@@ -57,6 +57,7 @@ function appNodeNameExists(name) {
 
 /** function to read filter properties*/
 function readFilterProperties() {
+    const filterName = document.getElementById("filterName").value;
     const category = document.getElementById("filterCategory").value;
     const tags = document.getElementById("filterTags").value;
     const version = document.getElementById("filterVersion").value;
@@ -65,6 +66,7 @@ function readFilterProperties() {
     const license = document.getElementById("filterLicense").value;
     deleteEmtyField = [category, tags, version, department, allowedUsers, license];
     properties = {};
+    properties.filterName = filterName;
     deleteEmtyField.forEach(function (property, i) {
         if (property != "" && i === 0) {
             properties.category = property;
