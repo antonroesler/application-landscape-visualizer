@@ -36,10 +36,15 @@ function addNodeAndLink() {
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
     if (contextMenuValue === "nodeContextMenuAdd") {
-        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode._id };
+        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         addLinkToDiagram(newLink);
+        document.getElementById("contextMenu").value = "default";
     }
     if (contextMenuValue === "diagramContextMenu") {
+        const part = diagram.findPartForData(newNode);
+        console.log(part);
+        pos = diagram.toolManager.contextMenuTool.mouseDownPoint;
+        part.location = pos;
+        document.getElementById("contextMenu").value = "default";
     }
-    document.getElementById("contextMenu").value = "default";
 }
