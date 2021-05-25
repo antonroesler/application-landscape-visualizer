@@ -39,12 +39,12 @@ function handleContextMenuOptions(newNode) {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode._id };
         addLinkToDiagram(newLink);
         document.getElementById("contextMenu").value = "default";
-        return newNode.loc;
     }
     if (contextMenuValue === "diagramContextMenu") {
-        console.log(newNode.loc);
-        newNode.loc = diagram.toolManager.contextMenuTool.mouseDownPoint;
+        const part = diagram.findPartForData(newNode);
+        pos = diagram.toolManager.contextMenuTool.mouseDownPoint;
+        console.log(pos);
+        part.location = pos;
         document.getElementById("contextMenu").value = "default";
-        return newNode.loc;
     }
 }
