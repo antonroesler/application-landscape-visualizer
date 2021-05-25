@@ -50,7 +50,7 @@
     <div class="controlbar">
         <div class="controlbar_nav">
 
-            <a class="navButton" href="#createModal">New Node</a>
+            <a class="navButton" id="create-modal-btn" href="#createModal">New Node</a>
             <button class="navButton" onclick="deleteNode()">Delete Group</button>
             <a class="navButton" href="#layoutModal">Auto Layout</a>
             <a class="navButton" href="#loadModal" onclick="loadDiagramNames()">Load</a>
@@ -75,7 +75,7 @@
                         <option value="Epic Stuff">Epic Stuff</option>
                     </select>
                     <hr>
-                    <input type="hidden" id="contextMenu">
+                    <input type="hidden" id="contextMenu"/>
                     <input autocomplete="off" class="inputField" id="createName" placeholder="Node Name: "
                         title="Please insert Name of new Node here" type="text" />
                     <input autocomplete="off" class="inputField2" id="createDesc" placeholder="Description: "

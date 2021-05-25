@@ -26,9 +26,18 @@ diagram.contextMenu =
             }
         ));
 
-function addNodeAndLink(){
+function addNodeAndLink() {
     var openModal = document.getElementById("create-modal-btn");
-                        addNodeManager = "DiagramCanvasContextMenu";
-                        document.getElementById("contextMenu").value = "nodeContextMenu";
-                        openModal.click();
+    addNodeManager = "DiagramCanvasContextMenu";
+    document.getElementById("contextMenu").value = "nodeContextMenuAdd";
+    openModal.click();
+}
+
+function handleContextMenuOptions(newNode) {
+    var contextMenuValue = document.getElementById("contextMenu").value;
+    if (contextMenuValue === "nodeContextMenuAdd") {
+        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode._id };
+        addLinkToDiagram(newLink);
+    }
+    document.getElementById("contextMenu").value = "default";
 }
