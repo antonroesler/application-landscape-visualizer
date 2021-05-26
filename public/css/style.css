@@ -38,7 +38,7 @@ body {
     min-height: 100vh;
 }
 
-li, a, p, h1, h2, h3, button, select, input {
+li, a, p, h1, h2, h3, button, select, input, span {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -189,7 +189,6 @@ footer p {
 }
 
 .modal-popup {
-    width: 30%;
 /*    height: ; */
     background-color: var(--off-white);
     border-radius: 18px;
@@ -243,8 +242,18 @@ footer p {
     appearance: none;
 }
 
+.form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-row > .input-text {
+    width: 49%;
+}
+
 .input-text:focus {
-    border: 2px solid var(--focus-blue);
+    border: 1px solid var(--focus-blue);
     border-radius: 12px;
     outline: none;
 }
@@ -292,9 +301,17 @@ footer p {
 }
 
 .input-dropdown:focus {
-    border: 2px solid var(--focus-blue);
+    border: 1px solid var(--focus-blue);
     border-radius: 12px;
     outline: none;
+}
+
+.dropdown-description {
+    color: var(--dark-grey);
+    padding-left: 10px;
+    padding-bottom: 2px;
+    font-size: 12px;
+
 }
 
 .modal-btn {
