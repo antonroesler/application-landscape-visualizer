@@ -42,6 +42,14 @@ function closeModal() {
     for (let modal of modals) {
         if(modal.style.display === "flex") {
             modal.style.display = "none";
+            resetFirstFormAfterHTMLTag(modal);
         }
     }
+}
+
+/*
+ * Resets the first form which occurs as child of the given HTML-Tag.
+ */
+function resetFirstFormAfterHTMLTag(htmlTag) {
+    htmlTag.getElementsByTagName('form')[0].reset();
 }
