@@ -19,7 +19,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Application Landscape Visualizer</title>
@@ -73,13 +73,17 @@
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
                     <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
-                    <input autocomplete="off" class="input-text" id="inputDescription" placeholder="Description: " type="text"/>
-                    <input autocomplete="off" class="input-text" id="inputDepartment" placeholder="Department: " type="text"/>
+                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"/></textarea>
                     <div class="form-row">
                         <input autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
                         <input autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
                     </div>
+                    <input autocomplete="off" class="input-text" id="inputDepartment" placeholder="Department: " type="text"/>
                     <input autocomplete="off" class="input-text" id="inputTags" placeholder="Tags: " type="text"/>
+                    <div class="form-row">
+                        <span class="dropdown-description"> Start Date:</span>
+                        <span class="dropdown-description"> Shutdown Date:</span>
+                    </div>
                     <div class="form-row">
                         <input type="date" id="inputStartDate" class="input-text">
                         <input type="date" id="inputShutdownDate" class="input-text">

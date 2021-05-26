@@ -38,7 +38,7 @@ body {
     min-height: 100vh;
 }
 
-li, a, p, h1, h2, h3, button, select, input, span {
+li, a, p, h1, h2, h3, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -260,6 +260,11 @@ footer p {
     outline: none;
 }
 
+.input-textarea {
+    resize: none;
+    height: 6.6rem;
+}
+
 .input-dropdown {
     font-size: 17px;
     color: var(--dark-grey);
@@ -314,7 +319,6 @@ footer p {
     padding-right: 10px;
     padding-bottom: 2px;
     font-size: 12px;
-
 }
 
 .modal-btn {
