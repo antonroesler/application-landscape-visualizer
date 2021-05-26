@@ -189,12 +189,12 @@ footer p {
 }
 
 .modal-popup {
-/*    height: ; */
     background-color: var(--off-white);
     border-radius: 18px;
     padding: 80px;
     position: relative;
     min-width: 300px;
+    max-height: 95%;
 }
 
 .close {
@@ -212,6 +212,8 @@ footer p {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-height: calc(100vh - 150px);
+    overflow: auto;
 }
 
 .modal-content h2 {
@@ -309,6 +311,7 @@ footer p {
 .dropdown-description {
     color: var(--dark-grey);
     padding-left: 10px;
+    padding-right: 10px;
     padding-bottom: 2px;
     font-size: 12px;
 
