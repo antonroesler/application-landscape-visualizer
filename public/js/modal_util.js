@@ -27,6 +27,10 @@ function openLayoutModal() {
     document.getElementById("layoutModal").style.display = "flex";
 }
 
+function openCreateNodeModal() {
+    document.getElementById("createNodeModal").style.display = "flex";
+}
+
 /*
  * Closes all modals which are displayed.
  */
