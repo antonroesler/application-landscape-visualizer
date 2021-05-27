@@ -40,10 +40,14 @@ body {
 
 li, a, p, h1, h2, h3, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
+    color: var(--off-white);
     font-weight: 500;
     font-size: 14px;
-    color: var(--off-white);
     text-decoration: none;
+}
+
+span {
+    color: var(--dark-grey);
 }
 
 
@@ -197,7 +201,7 @@ footer p {
     max-height: 95%;
 }
 
-.close {
+.modal-close {
     position: absolute;
     top: 0;
     right: 14px;
@@ -221,7 +225,7 @@ footer p {
     font-size: 40px;
     font-weight: 600;
     text-align: center;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .modal-form {
@@ -262,7 +266,7 @@ footer p {
 
 .input-textarea {
     resize: none;
-    height: 6.6rem;
+    height: 4rem;
 }
 
 .input-dropdown {
@@ -403,4 +407,139 @@ footer p {
     background: var(--white);
     border-radius: 15px;
     box-shadow: inset 7px 10px 12px #f0f0f0;
+}
+
+
+
+
+
+
+
+
+
+.chip {
+    display: inline-block;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    line-height: 32px;
+    padding: 0 12px;
+    border-radius: 8px;
+    background-color: var(--silver);
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.chip:focus {
+    outline: none;
+    background-color: var(--focus-blue);
+    color: var(--white);
+}
+
+.chip .close {
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 32px;
+    padding-left: 8px;
+}
+
+.chips {
+    font-size: 17px;
+    color: var(--dark-grey);
+    border-radius: 12px;
+    border: 1px solid var(--silver);
+    text-align: left;
+    line-height: 1.25;
+    margin-bottom: 0.85rem;
+    padding: 0.5rem 0.95rem;
+    appearance: none;
+    background-color: var(--white);
+    max-width: 392px;
+}
+
+.chips.focus {
+    border: 1px solid var(--focus-blue);
+    border-radius: 12px;
+    outline: none;
+}
+
+.chips:hover {
+    cursor: text;
+}
+
+.chips .input {
+    background: none;
+    border: 0;
+    color: rgba(0, 0, 0, 0.8);
+    display: inline-block;
+    font-size: 16px;
+    height: 3rem;
+    line-height: 32px;
+    outline: 0;
+    margin: 0;
+    padding: 0 !important;
+    width: 120px !important;
+}
+
+.chips .input:focus {
+    border: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.chips .autocomplete-content {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.chips:empty ~ label {
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-140%);
+    transform: translateY(-140%);
+}
+
+
+.input-field {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.dropdown-content {
+    background-color: var(--white);
+    margin: 0;
+    display: none;
+    min-width: 100px;
+    overflow-y: auto;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    cursor: default;
+
+    border: 1px solid var(--focus-blue);
+    border-radius: 4px;
+}
+
+.dropdown-content li {
+    padding: 5px;
+}
+
+
+.dropdown-content > li:hover {
+    background-color: var(--unfocus-blue);
+}
+
+.dropdown-content > li:hover span {
+    color: var(--white);
+}
+
+/* Autocomplete */
+.autocomplete-content li .highlight {
+    color: var(--focus-blue);
 }
