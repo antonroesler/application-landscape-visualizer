@@ -83,12 +83,13 @@ var mainTemplate = $(
             {
                 background: "transparent",
                 fill: "black",
-                strokeWidth: 0,
+                strokeWidth: 3,
+                stroke: "red",
                 width: 65,
                 height: 70,
             },
             new go.Binding("geometry", "category", geoFunc),
-            new go.Binding("background", "color", getColor),
+            new go.Binding("stroke", "stroke"),
         ),
         // four named ports, one on each side:
         makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),
