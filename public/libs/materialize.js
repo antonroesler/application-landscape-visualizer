@@ -3015,7 +3015,7 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_handleModalCloseClick",
       value: function _handleModalCloseClick(e) {
-        var $closeTrigger = $(e.target).closest('.modal-close');
+        var $closeTrigger = $(e.target).closest('.close');
         if ($closeTrigger.length) {
           this.close();
         }
