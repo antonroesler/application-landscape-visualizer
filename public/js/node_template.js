@@ -102,8 +102,7 @@ var mainTemplate = $(
   makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
   new go.Binding("text", "tags"),
   new go.Binding("text", "version"),
-  new go.Binding("text", "department"),
-  new go.Binding("text", "allowedUsers"),
+  new go.Binding("text", "departments"),
   new go.Binding("text", "license"),
   {
     //toolTip is used for the hover function
@@ -130,11 +129,8 @@ var mainTemplate = $(
                     $(go.TextBlock, new go.Binding("text", "version"),
                         { row: 5, column: 1, margin: 5 }),
                     $(go.TextBlock, "Department: ", { row: 6, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "department"),
+                    $(go.TextBlock, new go.Binding("text", "departments"),
                         { row: 6, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Allowed Users: ", { row: 7, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "allowedUsers"),
-                        { row: 7, column: 1, margin: 5 }),
                     $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5 }),
                     $(go.TextBlock, new go.Binding("text", "license"),
                         { row: 8, column: 1, margin: 5 }),

@@ -34,8 +34,10 @@ diagram.addDiagramListener("ObjectSingleClicked",
         let str = "ID: " + part.data.key + "\nName: " + part.data.nameProperty + "\nCategory: "
             + part.data.category + "\nDescription: " + part.data.desc + "\nTags: "
             + part.data.tags + "\nVersion: " + part.data.version + "\nDepartment: "
-            + part.data.department + "\nAllowed Users: " + part.data.allowedUsers
-            + "\nLicense: " + part.data.license + "\nLocation: " + part.data.loc;
+            + part.data.departments + "\nAllowed Users: " + "\nLicense: " + part.data.license
+            + "\nLocation: " + part.data.loc + "\nStart Date: " + part.data.startDate
+            + "\nShutdown Date: " + part.data.shutdownDate + "\nProf. Owner: " + part.data.profOwner
+            + "\nTech. Owner: " + part.data.techOwner;
         if (!(part instanceof go.Link)) showMessage(str);
     });
 
