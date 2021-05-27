@@ -26,7 +26,6 @@
 
     <link href="css/style.css" rel="stylesheet">
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
-    <!-- <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/> -->
     <!-- Important Google Icon Font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -63,23 +62,23 @@
     </header>
 
 
-
-
     <!-- Create Node Modal -->
     <div class="modal-bg" id="createNodeModal">
         <div class="modal-popup">
-            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-close" onclick="closeModal()">+</div>
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
                     <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
-                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"/></textarea>
+                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
                         <input autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
                         <input autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
                     </div>
-                    <input autocomplete="off" class="input-text" id="inputDepartment" placeholder="Department: " type="text"/>
-                    <input autocomplete="off" class="input-text" id="inputTags" placeholder="Tags: " type="text"/>
+                    <span class="dropdown-description">Departments:</span>
+                    <div id="inputDepartments" class="chips"></div>
+                    <span class="dropdown-description">Tags:</span>
+                    <div id="inputTags" class="chips"></div>
                     <div class="form-row">
                         <span class="dropdown-description"> Start Date:</span>
                         <span class="dropdown-description"> Shutdown Date:</span>
@@ -112,7 +111,7 @@
     <!-- Layout Modal -->
     <div class="modal-bg" id="layoutModal">
         <div class="modal-popup">
-            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-close" onclick="closeModal()">+</div>
             <div class="modal-content">
                 <h2>Choose Layout.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
@@ -133,7 +132,7 @@
     <!-- Load Diagram Modal -->
     <div class="modal-bg" id="loadDiagramModal">
         <div class="modal-popup">
-            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-close" onclick="closeModal()">+</div>
             <div class="modal-content">
                 <h2>Load your Diagram.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
@@ -149,7 +148,7 @@
     <!-- Save Diagram Modal -->
     <div class="modal-bg" id="saveDiagramModal">
         <div class="modal-popup">
-            <div class="close" onclick="closeModal()">+</div>
+            <div class="modal-close" onclick="closeModal()">+</div>
         <div class="modal-content">
             <h2>Save your Diagram.</h2>
             <form class="modal-form" action="" onsubmit="return false">
@@ -224,7 +223,7 @@
     </footer>
 </body>
 
-<!-- index.js needs to be loaded after the <body>, because <div id="diagramDiv"> needs to be generated first -->
+<script src="libs/materialize.js"></script>
 <script src="js/index.js"></script>
 <script src="js/modal_util.js"></script>
 <script src="js/database_util.js"></script>
@@ -234,6 +233,4 @@
 <script src="js/static_util.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
-
-<script src="libs/materialize.js"></script>
 </html>
