@@ -39,7 +39,7 @@ function readNodeProperties() {
     } else {
         const category = document.getElementById("inputCategory").value;
         const desc = document.getElementById("inputDescription").value;
-        const tags = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputDepartments")).chipsData);
+        const tags = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputTags")).chipsData);
         const departments = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputDepartments")).chipsData);
         const version = document.getElementById("inputVersion").value;
         const license = document.getElementById("inputLicense").value;
@@ -47,7 +47,6 @@ function readNodeProperties() {
         const techOwner = document.getElementById("inputTechnicalOwner").value;
         const startDate = document.getElementById("inputStartDate").value;
         const shutdownDate = document.getElementById("inputShutdownDate").value;
-//      const allowedUsers = document.getElementById("allowedUsers").value;
         if (appNodeNameExists(name) === true) {
             window.alert("Node name already exists.");
             return undefined

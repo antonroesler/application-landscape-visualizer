@@ -69,7 +69,7 @@ M.Chips.init(departmentChips, {
         limit: Infinity,
         minlength: 1
     },
-    placeholder: "Your tag",
+    placeholder: "Department",
     secondaryPlaceholder: "+department",
 });
 
