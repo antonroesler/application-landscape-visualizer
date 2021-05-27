@@ -52,3 +52,35 @@ let modelWithoutFilter = [];
 let allFilter = [];
 
 const initialLayout = diagram.layout;
+
+
+/**
+ * Initialise chips for the createNodeModal.
+ */
+const departmentChips = document.querySelectorAll("#inputDepartments");
+M.Chips.init(departmentChips, {
+    autocompleteOptions: {
+        data: {
+            'Youtube':null, // Dummy data
+            'Google':null // Dummy data
+        },
+        limit: Infinity,
+        minlength: 1
+    },
+    placeholder: "Your tag",
+    secondaryPlaceholder: "+department",
+});
+
+const tagChips = document.querySelectorAll("#inputTags");
+M.Chips.init(tagChips, {
+    autocompleteOptions: {
+        data: {
+            'Youtube':null, // Dummy data
+            'Google':null // Dummy data
+        },
+        limit: Infinity,
+        minlength: 1
+    },
+    placeholder: "Your tag",
+    secondaryPlaceholder: "+tag",
+});
