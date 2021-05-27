@@ -30,7 +30,7 @@ const AppNodeSchema = mongoose.Schema({
     desc: String,
     tags: [String],
     version: String,
-    department: [String],
+    departments: [String],
     license: String,
     startDate: String,
     shutdownDate: String,
