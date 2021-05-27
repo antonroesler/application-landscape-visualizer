@@ -31,7 +31,7 @@ function openCreateNodeModal() {
     document.getElementById("createNodeModal").style.display = "flex";
 }
 
-/*
+/**
  * Closes all modals which are displayed.
  */
 function closeModal() {
@@ -47,7 +47,7 @@ function closeModal() {
     }
 }
 
-/*
+/**
  * Resets the first form which occurs as child of the given HTML-Tag.
  */
 function resetFirstFormAfterHTMLTag(htmlTag) {
