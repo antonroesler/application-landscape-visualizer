@@ -116,10 +116,11 @@
                 <h2>Choose Layout.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
                     <select class="input-dropdown" id="layoutOptions">
-                        <option>Tree</option>
-                        <option>Circle</option>
-                        <option>Diagraph</option>
-                        <option>Grid</option>
+                        <option value="tree">Tree</option>
+                        <option value="forcedir">Force Directed</option>
+                        <option value="laydi">Layered Digraph</option>
+                        <option value="grid">Grid</option>
+                        <option value="cir">Circle</option>
                     </select>
                     <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Apply</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>

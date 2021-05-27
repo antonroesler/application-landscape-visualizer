@@ -30,16 +30,18 @@ function layoutModalDialogHandler() {
  * Automatically arranges the diagram according to a given layout.
  * Options are:
  * - Tree
+ * - Force Directed
  * - Grid
  * - Circle
- * - Diagraph
+ * - Digraph
  */
 function appendLayoutToDiagram(layout) {
     const layouts = {
-        "Tree": go.TreeLayout,
-        "Grid": go.GridLayout,
-        "Circle": go.CircularLayout,
-        "Diagraph": go.LayeredDigraphLayout
+        "tree": go.TreeLayout,
+        "grid": go.GridLayout,
+        "cir": go.CircularLayout,
+        "laydi": go.LayeredDigraphLayout,
+        "forcedir": go.ForceDirectedLayout,
     };
     diagram.startTransaction();
     diagram.layout = $(layouts[layout]);
