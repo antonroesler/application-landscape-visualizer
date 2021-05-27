@@ -132,9 +132,12 @@ function formatNodeDataArray(req, nodeDataArray) {
             desc: node.desc,
             tags: node.tags,
             version: node.version,
-            department: node.department,
-            allowedUsers: node.allowedUsers,
+            department: node.departments,
             license: node.license,
+            startDate: node.startDate,
+            shutdownDate: node.shutdownDate,
+            profOwner: node.profOwner,
+            techOwner: node.techOwner,
             loc: node.loc,
         });
         nodeDataArray.push(appNode)
