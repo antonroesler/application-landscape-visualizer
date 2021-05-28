@@ -45,6 +45,7 @@ function closeModal() {
             resetFirstFormAfterHTMLTag(modal);
         }
     }
+    resetTags();
 }
 
 /**
@@ -52,4 +53,22 @@ function closeModal() {
  */
 function resetFirstFormAfterHTMLTag(htmlTag) {
     htmlTag.getElementsByTagName('form')[0].reset();
+}
+
+
+/**
+ * Delete all chips inside the chips div.
+ */
+function resetTags() {
+    let elements = document.getElementsByClassName("chips");
+
+    for (const element of elements) {
+        instance = M.Chips.getInstance(element);
+
+        // Chips need to be deleted from the end, because they would move up.
+        let i = instance.chipsData.length - 1;
+        for ( i; i >= 0; i--) {
+            instance.deleteChip(i);
+        }
+    }
 }
