@@ -71,16 +71,16 @@ function filterAppNodes(filter) {
 
 /** function to rearrange model.linkDataArray according to the filter  */
 function filterAppLinks(filterNodeArray) {
+    console.log(filterNodeArray);
     const filterLinkArray = [];
-    filterNodeArray.forEach(node => {
-        model.linkDataArray.forEach(link => {
-            if (link.to === node.key) {
-                if (nodeWithKeyExists(link.from, filterNodeArray) === true) {
-                    filterLinkArray.push(link);
-                }
-            }
-        });
+    model.linkDataArray.forEach(link => {
+        if (isValidLink(link, filterNodeArray)){
+            console.log("X")
+            filterLinkArray.push(link);
+        }
     });
+
+    console.log(filterLinkArray)
     diagram.startTransaction();
     model.linkDataArray = filterLinkArray;
     diagram.commitTransaction("filter link applied");
@@ -88,10 +88,24 @@ function filterAppLinks(filterNodeArray) {
 }
 
 /**
- * Checks if a node with a given key exists.
+ * Checks if a Link is valid - thus has a from and a to node that exists within the given node array.
  */
-function nodeWithKeyExists(key, filterNodeArray) {
-    return filterNodeArray.some(node => node.key == key).length > 0;
+function isValidLink(link, nodeArray){
+    console.log(link)
+    return nodeWithKeyExists(link.from, nodeArray) && nodeWithKeyExists(link.to, nodeArray)
+}
+
+/**
+ * Checks if a node with a given key exists in a given node array.
+ */
+function nodeWithKeyExists(key, nodeArray) {
+    let len = 0;
+    nodeArray.forEach(node => {
+        if (node.key === key){
+            len++;
+        }
+    });
+    return len > 0;
 }
 
 
