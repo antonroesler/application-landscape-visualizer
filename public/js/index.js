@@ -61,28 +61,20 @@ const initialLayout = diagram.layout;
  */
 const departmentChips = document.querySelectorAll("#inputDepartments");
 M.Chips.init(departmentChips, {
-    autocompleteOptions: {
+ /*   autocompleteOptions: {
         data: {
             'Youtube':null, // Dummy data
             'Google':null // Dummy data
         },
         limit: Infinity,
         minlength: 1
-    },
+    }, */
     placeholder: "Department",
-    secondaryPlaceholder: "+department",
+    secondaryPlaceholder: "+tag",
 });
 
 const tagChips = document.querySelectorAll("#inputTags");
 M.Chips.init(tagChips, {
-    autocompleteOptions: {
-        data: {
-            'Youtube':null, // Dummy data
-            'Google':null // Dummy data
-        },
-        limit: Infinity,
-        minlength: 1
-    },
     placeholder: "Your tag",
     secondaryPlaceholder: "+tag",
 });
