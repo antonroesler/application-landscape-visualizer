@@ -28,6 +28,7 @@ function openLayoutModal() {
 }
 
 function openCreateNodeModal() {
+    loadDropdownMenusForCreateNodeModal();
     document.getElementById("createNodeModal").style.display = "flex";
 }
 
@@ -132,7 +133,6 @@ function addDropdownMenuOptions(id, nodeAttribute) {
     // Create a new html option for every value in the set.
     values.forEach(function(value) {
         const el = document.createElement("option");
-        el.textContent = value;
         el.value = value;
         autoDropdown.appendChild(el)
     })
