@@ -32,10 +32,15 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100%;
 }
 
 li, a, p, h1, h2, h3, button, select, input, span, textarea {
@@ -48,6 +53,10 @@ li, a, p, h1, h2, h3, button, select, input, span, textarea {
 
 span {
     color: var(--dark-grey);
+}
+
+hr {
+    margin: 0.85rem;
 }
 
 
@@ -75,7 +84,7 @@ span {
     align-items: center;
     padding: 10px 10% 10px 25px;
     width: 100%;
-    max-height: 40px;
+    height: 40px;
     background-color: var(--off-white);
     border-bottom: 1px solid var(--silver);
 }
@@ -134,8 +143,23 @@ span {
 
 
 .sidebar-right {
+    display: flex;
+    flex-direction: column;
     background-color: var(--off-white);
     width: 20%;
+    max-height: calc(100vh - 150px);
+}
+
+.sidebar-box {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.sidebar-box-resizable {
+    height: 50%;
+    resize: vertical;
+    overflow: auto;
+    max-height: 80%;
 }
 
 footer {
