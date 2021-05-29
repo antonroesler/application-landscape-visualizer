@@ -24,6 +24,7 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
+    modelLinkWithoutFilter = model.linkDataArray;
 }
 
 /**
@@ -42,7 +43,7 @@ function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
-    model.addNodeData({
+    const newNode = {
         key: data._id,
         nameProperty: data.name,
         category: data.category,
@@ -58,9 +59,11 @@ function addNodeToDiagram(data) {
         loc: data.loc,
         //allowedUsers: data.allowedUsers,
         //color: color
-    });
+    };
+    model.addNodeData(newNode);
+    handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
-    modelWithoutFilter = model.nodeDataArray;
+    modelNodeWithoutFilter = model.nodeDataArray;
 }
 
 /**
@@ -89,6 +92,11 @@ function addLinkToDiagram(link) {
         to: link.to,
     });
     diagram.commitTransaction("update");
+    modelLinkWithoutFilter = model.linkDataArray;
 }
+
+
+
+
 
 

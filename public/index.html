@@ -36,6 +36,7 @@
 </head>
 
 <body onload="init()">
+
     <header>
         <div class="main-nav">
             <img class="logo" src="img/logo/ecore_logo.png">
@@ -93,6 +94,7 @@
                     </div>
                     <span class="dropdown-description"> Application Type:</span>
                     <select class="input-dropdown" id="inputCategory" name="category">
+
                         <option value="Database">Database</option>
                         <option value="Application">Application</option>
                         <option value="Component">Component</option>
@@ -100,6 +102,7 @@
                         <option value="More Stuff">More Stuff</option>
                         <option value="Epic Stuff">Epic Stuff</option>
                     </select>
+
                     <button class="modal-btn" onclick="addAppNode(); closeModal();">Create</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
@@ -205,15 +208,16 @@
 
 
 
-               
-
-
-
 
     <div class="main-content">
         <div id="diagramDiv"></div>
         <div class="sidebar-right">
           <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
+          <h4 class="sidebarHeading"> - Filters - </h4>
+          Choose Filter:
+          <select class="navButton" id="filterSelect" title="Please chosse filter"></select>
+          <button class="navButton" onclick="filterDiagramSelect()">Filter</button>
+          <button class="navButton" onclick="filterOff()">Filter OFF</button>
       </div>
       
     </div>
@@ -233,9 +237,12 @@
 <script src="js/modal_util.js"></script>
 <script src="js/database_util.js"></script>
 <script src="js/diagram.js"></script>
+<script src="js/contextmenu.js"></script>
 <script src="js/filter.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/static_util.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
+
 </html>
+
