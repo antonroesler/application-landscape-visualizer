@@ -18,25 +18,21 @@ diagram.contextMenu =
             {
                 click: function (e, obj) {
                     e.diagram.commit(function (d) {
-                        var openModal = document.getElementById("create-modal-btn");
+                        openCreateNodeModal()
                         document.getElementById("contextMenu").value = "diagramContextMenu";
-                        openModal.click();
+
                     });
                 }
             }
-        ));
+        )
+    );
 
-/**function to add a node with link*/
-function addNodeAndLink() {
-    var openModal = document.getElementById("create-modal-btn");
-    document.getElementById("contextMenu").value = "nodeContextMenuAdd";
-    openModal.click();
-}
 
 /**function to handle diffrent node adding possibilities depending 
   on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
+    console.log(contextMenuValue === "diagramContextMenu")
     if (contextMenuValue === "nodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         addLinkToDiagram(newLink);

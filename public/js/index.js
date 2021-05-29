@@ -50,7 +50,6 @@ model.linkToPortIdProperty= "toPort";
 model.nodeDataArray = [];
 model.linkDataArray = [];
 
-const diagramNames = [];
 let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
 let allFilter = [];

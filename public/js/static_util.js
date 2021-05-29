@@ -81,10 +81,10 @@ function readFilterProperties() {
     const department = document.getElementById("filterDepartment").value;
     const allowedUsers = document.getElementById("filterUsers").value;
     const license = document.getElementById("filterLicense").value;
-    deleteEmtyField = [category, tags, version, department, allowedUsers, license];
-    properties = {};
+    const deleteEmptyField = [category, tags, version, department, allowedUsers, license];
+    const properties = {};
     properties.filterName = filterName;
-    deleteEmtyField.forEach(function (property, i) {
+    deleteEmptyField.forEach(function (property, i) {
         if (property != "" && i === 0) {
             properties.category = property;
         } else if (property != "" && i === 1) {

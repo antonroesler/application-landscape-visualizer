@@ -26,7 +26,7 @@ function filterOff() {
 
 /* function to create a filter**/
 function filterDiagram() {
-    filter = readFilterProperties();
+    const filter = readFilterProperties();
     allFilter.push(filter);
     showFilterNames();
     filterAppLinks(filterAppNodes(filter));
@@ -35,8 +35,8 @@ function filterDiagram() {
 
 /* function to use a created filter**/
 function filterDiagramSelect() {
-    selectedFilter = document.getElementById("filterSelect").value;
-    filter = {};
+    const selectedFilter = document.getElementById("filterSelect").value;
+    let filter = {};
     allFilter.forEach(sfilter => {
         if (sfilter.filterName === selectedFilter) {
             filter = sfilter;
@@ -47,10 +47,10 @@ function filterDiagramSelect() {
 }
 
 
-/** function to rerange model.nodeDataArray according to the filter properties */
+/** function to rearrange model.nodeDataArray according to the filter properties */
 function filterAppNodes(filter) {
-    filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
-        for (var key in filter) {
+    const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
+        for (let key in filter) {
             if (key === "filterName") {
                 continue;
             }
@@ -76,7 +76,7 @@ function filterAppNodes(filter) {
 
 /** function to rerange model.linkDataArray according to the filter  */
 function filterAppLinks(filterNodeArray) {
-    filterLinkArray = [];
+    const filterLinkArray = [];
     filterNodeArray.forEach(node => {
         model.linkDataArray.forEach(link => {
             if (link.to === node.key) {
@@ -112,7 +112,7 @@ function showFilterNames() {
     for (let i = length - 1; i >= 0; i--) {
         select.options[i] = null;
     }
-    for (i = 0; i < allFilter.length; i++) {
+    for (let i = 0; i < allFilter.length; i++) {
         const opt = allFilter[i].filterName;
         const el = document.createElement("option");
         el.textContent = opt;
