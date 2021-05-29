@@ -49,10 +49,6 @@ function filterAppNodes(filter) {
     console.log("XXXX")
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
-            console.log(key)
-            console.log(filter.properties[key])
-            console.log(currentElement)
-            console.log(currentElement[key])
             if (currentElement[key] === undefined || currentElement[key] != filter.properties[key]) {
                 return false;
             }
