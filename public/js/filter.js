@@ -44,7 +44,9 @@ function filterDiagramSelect() {
 }
 
 
-/** function to rearrange model.nodeDataArray according to the filter properties */
+/**
+ * Rearranges nodeDataArray according to the filter properties
+ */
 function filterAppNodes(filter) {
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
@@ -73,7 +75,7 @@ function filterAppLinks(filterNodeArray) {
     filterNodeArray.forEach(node => {
         model.linkDataArray.forEach(link => {
             if (link.to === node.key) {
-                if (checkLinks(link, filterNodeArray) === true) {
+                if (nodeWithKeyExists(link.from, filterNodeArray) === true) {
                     filterLinkArray.push(link);
                 }
             }
@@ -85,20 +87,17 @@ function filterAppLinks(filterNodeArray) {
 
 }
 
-/** function to check if every link.to that is pointing to a filtered node 
- * has a link.from that exists in the filtered nodes */
-function checkLinks(link, filterNodeArray) {
-    let fromExists = false;
-    filterNodeArray.forEach(node => {
-        if (link.from === node.key) {
-            return fromExists = true;
-        }
-    })
-    return fromExists;
+/**
+ * Checks if a node with a given key exists.
+ */
+function nodeWithKeyExists(key, filterNodeArray) {
+    return filterNodeArray.some(node => node.key == key).length > 0;
 }
 
 
-/* function to display created filters **/
+/**
+ * Adds every filter's name to the 'choose filter'-dropdown select menu.
+ */
 function showFilterNames() {
     const select = document.getElementById("filterSelect");
     const length = select.options.length;
@@ -106,7 +105,7 @@ function showFilterNames() {
         select.options[i] = null;
     }
     for (let i = 0; i < allFilter.length; i++) {
-        const opt = allFilter[i].filterName;
+        const opt = allFilter[i].name;
         const el = document.createElement("option");
         el.textContent = opt;
         el.value = opt;
