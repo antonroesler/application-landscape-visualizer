@@ -72,3 +72,80 @@ function resetTags() {
         }
     }
 }
+
+/**
+ * Load all dropdown menus for createModal.
+ */
+function loadDropdownMenusForCreateNodeModal() {
+    addDropdownMenuOptions("inputLicense", "license");
+    addDropdownMenuOptions("inputVersion", "version");
+    addDropdownMenuOptions("inputProfessionalOwner", "profOwner");
+    addDropdownMenuOptions("inputTechnicalOwner", "techOwner");
+    addDropdownMenuOptions(setListAttributeForInput("inputDepartments"), "departments");
+    addDropdownMenuOptions(setListAttributeForInput("inputTags"), "tags");
+}
+
+/**
+ * Delete dropdown menu options from all datalists.
+ */
+function deleteDropdownMenuOptions() {
+
+    const dataLists = document.getElementsByTagName("datalist")
+    console.log(dataLists)
+
+    for (const dataList of dataLists) {
+        const length = dataList.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            dataList.children[i].remove();
+        }
+    }
+
+}
+
+/**
+ * Adds attributes from nodes in diagram to fitting dropdown menu in modal.
+ */
+function addDropdownMenuOptions(id, nodeAttribute) {
+    const inputTag = document.getElementById(id);
+    const listId = inputTag.getAttribute("list");
+    const values = new Set([]);
+    console.log(listId);
+
+
+    const autoDropdown = document.getElementById(listId);
+
+    console.log(model.nodeDataArray);
+
+    // Add every value of the specific node attribute to the set.
+    for (const node of model.nodeDataArray) {
+
+        // If value is an array, the values need to be extracted.
+        if(Array.isArray(node[nodeAttribute])) {
+            for (const value of node[nodeAttribute]) {
+                values.add(value);
+            }
+        } else {
+            values.add(node[nodeAttribute]);
+        }
+    }
+
+    // Create a new html option for every value in the set.
+    values.forEach(function(value) {
+        const el = document.createElement("option");
+        el.textContent = value;
+        el.value = value;
+        autoDropdown.appendChild(el)
+    })
+}
+
+/**
+ * Helper function to get correct input field from chips.
+ */
+function setListAttributeForInput(parentId) {
+    const parent = document.getElementById(parentId);
+    const input = parent.firstChild;
+    input.setAttribute("list", `${parentId}Dropdown`)
+    console.log(input);
+
+    return input.getAttribute("id");
+}
