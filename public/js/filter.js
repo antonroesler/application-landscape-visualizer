@@ -46,7 +46,6 @@ function filterDiagramSelect() {
 
 /** function to rearrange model.nodeDataArray according to the filter properties */
 function filterAppNodes(filter) {
-    console.log("XXXX")
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
             if (currentElement[key] === undefined || currentElement[key] != filter.properties[key]) {
