@@ -36,11 +36,8 @@ function filterDiagram() {
 /* function to use a created filter**/
 function filterDiagramSelect() {
     const selectedFilter = document.getElementById("filterSelect").value;
-    let filter = {};
-    allFilter.forEach(sfilter => {
-        if (sfilter.filterName === selectedFilter) {
-            filter = sfilter;
-        }
+    let filter = allFilter.find(obj => {
+        return obj.name = selectedFilter;
     })
     filterAppLinks(filterAppNodes(filter));
 
@@ -49,15 +46,16 @@ function filterDiagramSelect() {
 
 /** function to rearrange model.nodeDataArray according to the filter properties */
 function filterAppNodes(filter) {
+    console.log("XXXX")
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
-        for (let key in filter) {
-            if (key === "filterName") {
-                continue;
-            }
-            if (currentElement[key] === undefined || currentElement[key] != filter[key]) {
+        for (let key in filter.properties) {
+            console.log(key)
+            console.log(filter.properties[key])
+            console.log(currentElement)
+            console.log(currentElement[key])
+            if (currentElement[key] === undefined || currentElement[key] != filter.properties[key]) {
                 return false;
             }
-
         }
         return true;
     });
@@ -74,7 +72,7 @@ function filterAppNodes(filter) {
 }
 
 
-/** function to rerange model.linkDataArray according to the filter  */
+/** function to rearrange model.linkDataArray according to the filter  */
 function filterAppLinks(filterNodeArray) {
     const filterLinkArray = [];
     filterNodeArray.forEach(node => {
@@ -95,7 +93,7 @@ function filterAppLinks(filterNodeArray) {
 /** function to check if every link.to that is pointing to a filtered node 
  * has a link.from that exists in the filtered nodes */
 function checkLinks(link, filterNodeArray) {
-    fromExists = false;
+    let fromExists = false;
     filterNodeArray.forEach(node => {
         if (link.from === node.key) {
             return fromExists = true;
