@@ -39,6 +39,7 @@ var linkTemplate =
           new go.Binding("stroke", "isSelected", function(sel) { return sel ? "dodgerblue" : "gray"; }).ofObject()),
         $(go.Shape,  // the arrowhead
           { toArrow: "standard", strokeWidth: 0, fill: "gray" }),
+        new go.Binding("opacity", "opacity"), // To make link transparent
         $(go.Panel, "Auto",  // the link label, normally not visible
           { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
           new go.Binding("visible", "visible").makeTwoWay(),

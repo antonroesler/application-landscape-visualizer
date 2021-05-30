@@ -35,6 +35,11 @@ function geoFunc(geoname) {
     return geo;
 }
 
+function getColor(x){
+    console.log(x);
+    return "red"
+}
+
 function makePort(name, align, spot, output, input) {
     var horizontal = align.equals(go.Spot.Top) || align.equals(go.Spot.Bottom);
     // the port is basically just a transparent rectangle that stretches along the side of the node,
@@ -81,9 +86,12 @@ var mainTemplate = $(
                 strokeWidth: 0,
                 width: 65,
                 height: 70,
+                opacity: 1.0,
             },
             new go.Binding("geometry", "category", geoFunc),
-            new go.Binding("background", "color"),
+            new go.Binding("opacity", "opacity"),
+            new go.Binding("stroke", "stroke"),
+            new go.Binding("strokeWidth", "strokeWidth"),
         ),
         // four named ports, one on each side:
         makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),
@@ -96,8 +104,10 @@ var mainTemplate = $(
         go.TextBlock,
         {
             font: "bold 12pt sans-serif",
+            opacity: 1.0,
         },
-        new go.Binding("text", "nameProperty")
+        new go.Binding("text", "nameProperty"),
+        new go.Binding("opacity", "opacityText"),
 
         ),
   makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
