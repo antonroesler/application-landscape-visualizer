@@ -104,8 +104,10 @@ var mainTemplate = $(
         go.TextBlock,
         {
             font: "bold 12pt sans-serif",
+            opacity: 1.0,
         },
-        new go.Binding("text", "nameProperty")
+        new go.Binding("text", "nameProperty"),
+        new go.Binding("opacity", "opacityText"),
 
         ),
   makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),

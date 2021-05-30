@@ -25,7 +25,7 @@
  */
 function addStrokeToAll(nodes, color="red", width=3){
     nodes.forEach(node => {
-        addStroke(node.key, color, width);
+        addStroke(node, color, width);
     })
 }
 
@@ -34,29 +34,42 @@ function addStrokeToAll(nodes, color="red", width=3){
  */
 function removeStrokeFromAllNodesInDiagram(){
     model.nodeDataArray.forEach(node => {
-        removeStroke(node.key)
+        removeStroke(node)
     })
 }
 
 /**
  * Adds a stroke to a node.
- * @param node_id The key of the node
+ * @param node
  * @param color Color of the stroke (default is red)
  * @param width Width of the stroke (default is 3)
  */
-function addStroke(node_id, color="red", width=3){
-    const node = diagram.findNodeForKey(node_id);
+function addStroke(node, color="red", width=3){
     diagram.model.commit(function (m){
-        m.set(node.data, "stroke", color)
-        m.set(node.data, "strokeWidth", width)
+        m.set(node, "stroke", color)
+        m.set(node, "strokeWidth", width)
     }, "add stroke");
 }
 
 /**
  * Removes stroke from a node.
- * @param node_id The key of the node
+ * @param node
  */
-function removeStroke(node_id){
-    addStroke(node_id, undefined, 0)
+function removeStroke(node){
+    addStroke(node, undefined, 0)
 }
 
+/* ------- Transparency ------- */
+
+
+/**
+ * Makes a node or a link transparent. The opacity can be defined, default is 0.2
+ * @param obj The Node or Link
+ * @param opacity Range 0.0 - 1.0
+ */
+function setOpacity(obj,opacity=0.2){
+    diagram.model.commit(function (m){
+        m.set(obj, "opacity", opacity)
+        m.set(obj, "opacityText", opacity)
+    }, "changed opacity");
+}
