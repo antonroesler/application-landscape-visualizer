@@ -15,34 +15,46 @@
  * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  */
 
-/** function to remove filter */
+const allFilter = [];
+
+/**
+ * Removes all filters from model.
+ */
 function filterOff() {
     diagram.startTransaction();
     model.nodeDataArray = modelNodeWithoutFilter;
     model.linkDataArray = modelLinkWithoutFilter;
     diagram.commitTransaction("filter removed");
-
 }
 
-/* function to create a filter**/
-function filterDiagram() {
+/**
+ * Reads user input from modal and creates a filter.
+ */
+function filterDiagramFromModal() {
     const filter = readFilterProperties();
     allFilter.push(filter);
     showFilterNames();
-    filterAppLinks(filterAppNodes(filter));
-
+    applyFilter(filter);
 }
 
-/* function to use a created filter**/
-function filterDiagramSelect() {
+/**
+ * Reads the selected value from filter dropdown and applies that filter to the model.
+ */
+function filterDiagramFromSelect() {
     const selectedFilter = document.getElementById("filterSelect").value;
-    let filter = allFilter.find(obj => {
-        return obj.name = selectedFilter;
-    })
-    filterAppLinks(filterAppNodes(filter));
-
+    const filters = allFilter.filter(obj => {
+        return obj.name == selectedFilter
+    });
+    applyFilter(filters[0]);
 }
 
+/**
+ * Applies a filter to the model.
+ */
+function applyFilter(f){
+    filterAppLinks(filterAppNodes(f));
+    return f;
+}
 
 /**
  * Rearranges nodeDataArray according to the filter properties
@@ -50,13 +62,12 @@ function filterDiagramSelect() {
 function filterAppNodes(filter) {
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
-            if (currentElement[key] === undefined || currentElement[key] != filter.properties[key]) {
+            if (currentElement[key.toString()] === undefined || currentElement[key] != filter.properties[key]) {
                 return false;
             }
         }
         return true;
     });
-
     if (filterNodeArray.length === 0) {
         window.alert("there are no Nodes with this setting");
         return null;
@@ -69,29 +80,25 @@ function filterAppNodes(filter) {
 }
 
 
-/** function to rearrange model.linkDataArray according to the filter  */
+/**
+ * Removes all links from the linkDataArray that aren't valid.
+ */
 function filterAppLinks(filterNodeArray) {
-    console.log(filterNodeArray);
     const filterLinkArray = [];
     model.linkDataArray.forEach(link => {
-        if (isValidLink(link, filterNodeArray)){
-            console.log("X")
+        if (isValidLink(link, filterNodeArray)) {
             filterLinkArray.push(link);
         }
     });
-
-    console.log(filterLinkArray)
     diagram.startTransaction();
     model.linkDataArray = filterLinkArray;
     diagram.commitTransaction("filter link applied");
-
 }
 
 /**
  * Checks if a Link is valid - thus has a from and a to node that exists within the given node array.
  */
-function isValidLink(link, nodeArray){
-    console.log(link)
+function isValidLink(link, nodeArray) {
     return nodeWithKeyExists(link.from, nodeArray) && nodeWithKeyExists(link.to, nodeArray)
 }
 
@@ -101,11 +108,11 @@ function isValidLink(link, nodeArray){
 function nodeWithKeyExists(key, nodeArray) {
     let len = 0;
     nodeArray.forEach(node => {
-        if (node.key === key){
+        if (node.key === key) {
             len++;
         }
     });
-    return len > 0;
+    return len>0;
 }
 
 
