@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
+ * @author Leonard Husske , Feng Yi Lu, Anton Roesler
  */
 
 /**
@@ -24,7 +24,10 @@ function init() {
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
     diagram.linkTemplateMap = linkTemplateMap;
+    modelLinkWithoutFilter = model.linkDataArray;
 }
+
+
 
 /**
  * Reads user inputs and creates a new Node from the users data.
@@ -49,10 +52,14 @@ function addNodeToDiagram(data) {
         desc: data.desc,
         tags: data.tags,
         version: data.version,
-        department: data.department,
-        allowedUsers: data.allowedUsers,
+        departments: data.departments,
         license: data.license,
+        profOwner: data.profOwner,
+        techOwner: data.techOwner,
+        startDate: data.startDate,
+        shutdownDate: data.shutdownDate,
         loc: data.loc,
+        //allowedUsers: data.allowedUsers,
         //color: color
     };
     model.addNodeData(newNode);

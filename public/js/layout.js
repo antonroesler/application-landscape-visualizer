@@ -30,9 +30,10 @@ function layoutModalDialogHandler() {
  * Automatically arranges the diagram according to a given layout.
  * Options are:
  * - Tree
+ * - Force Directed
  * - Grid
  * - Circle
- * - Diagraph
+ * - Digraph
  */
 function appendLayoutToDiagram(layout) {
     const layouts = {

@@ -104,126 +104,64 @@ var mainTemplate = $(
             font: "bold 12pt sans-serif",
         },
         new go.Binding("text", "nameProperty")
+
+        ),
+  makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
+  new go.Binding("text", "tags"),
+  new go.Binding("text", "version"),
+  new go.Binding("text", "departments"),
+  new go.Binding("text", "license"),
+  {
+    //toolTip is used for the hover function
+    toolTip:
+            $("ToolTip",
+                $(go.Panel, "Table",
+                    { defaultAlignment: go.Spot.Left },
+                    $(go.TextBlock, "ID: ", { row: 0, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "key"),
+                        { row: 0, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "nameProperty"),
+                        { row: 1, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Category: ", { row: 2, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "category"),
+                        { row: 2, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "desc"),
+                        { row: 3, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "tags"),
+                        { row: 4, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5  }),
+                    $(go.TextBlock, new go.Binding("text", "version"),
+                        { row: 5, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Department: ", { row: 6, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "departments"),
+                        { row: 6, column: 1, margin: 5 }),
+                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "license"),
+                        { row: 8, column: 1, margin: 5 }),
+                    $(go.TextBlock, "Location: ", { row: 9, column: 0, margin: 5 }),
+                    $(go.TextBlock, new go.Binding("text", "loc"),
+                        { row: 9, column: 1, margin: 5 }),
+                )
+            )
+  },
+  {
+    // define a context menu for each node
+    contextMenu: $(
+      "ContextMenu",
+      $(
+        "ContextMenuButton",
+        {
+          "ButtonBorder.fill": "white",
+          _buttonFillOver: "skyblue",
+        },
+        $(go.TextBlock, "delete"),
+        {
+          click: deleteNode,
+        }
+      )
     ),
-    makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
-    new go.Binding("text", "tags"),
-    new go.Binding("text", "version"),
-    new go.Binding("text", "department"),
-    new go.Binding("text", "allowedUsers"),
-    new go.Binding("text", "license"),
-    {
-        //toolTip is used for the hover function
-        toolTip: $(
-            go.Adornment,
-            //   "Auto",
-            $(go.Shape, {
-                fill: "white",
-            }),
-            $(
-                go.Panel,
-                "Vertical",
-                $(go.TextBlock, "Description:"),
-                $(go.TextBlock, new go.Binding("text", "desc")),
-                $(go.TextBlock, "key_id:"),
-                $(go.TextBlock, new go.Binding("text", "key"))
-            )
-        ),
-    },
-    //   $(
-    //     go.Panel,
-    //     "Table",
-    //     $(go.RowColumnDefinition, { column: 0, alignment: go.Spot.Left }),
-    //     $(go.RowColumnDefinition, { column: 2, alignment: go.Spot.Right }),
-    //     $(
-    //       go.TextBlock, // the node title
-    //       {
-    //         column: 0,
-    //         row: 0,
-    //         columnSpan: 3,
-    //         alignment: go.Spot.Center,
-    //         font: "bold 10pt sans-serif",
-    //         margin: new go.Margin(4, 2),
-    //       },
-    //       new go.Binding("text", "key")
-    //     ),
-    //     $(
-    //       go.Panel,
-    //       "Horizontal",
-    //       { column: 0, row: 1 },
-    //       $(
-    //         go.Shape, // the "A" port
-    //         {
-    //           width: 6,
-    //           height: 6,
-    //           portId: "A",
-    //           toSpot: go.Spot.Left,
-    //           toLinkable: true,
-    //           toMaxLinks: 1,
-    //           toLinkableDuplicates: true,
-    //         }
-    //       ), // allow user-drawn links from here
-    //       $(go.TextBlock, "A") // "A" port label
-    //     ),
-    //     $(
-    //       go.Panel,
-    //       "Horizontal",
-    //       { column: 0, row: 2 },
-    //       $(
-    //         go.Shape, // the "B" port
-    //         {
-    //           width: 6,
-    //           height: 6,
-    //           portId: "B",
-    //           toSpot: go.Spot.Left,
-    //           toLinkable: true,
-    //           toMaxLinks: 1,
-    //           toLinkableDuplicates: true,
-    //         }
-    //       ), // allow user-drawn links from here
-    //       $(go.TextBlock, "B") // "B" port label
-    //     ),
-    //     $(
-    //       go.Panel,
-    //       "Horizontal",
-    //       { column: 2, row: 1, rowSpan: 2 },
-    //       $(go.TextBlock, "Out"), // "Out" port label
-    //       $(
-    //         go.Shape, // the "Out" port
-    //         {
-    //           width: 6,
-    //           height: 6,
-    //           portId: "Out",
-    //           fromSpot: go.Spot.Right,
-    //           fromLinkable: true,
-    //           toLinkableDuplicates: true,
-    //           fromLinkableDuplicates: true,
-    //         }
-    //       ) // allow user-drawn links to here
-    //     )
-    //   ),
-    {
-        // define a context menu for each node
-        contextMenu: $(
-            "ContextMenu",
-            $(
-                "ContextMenuButton",
-                {
-                    "ButtonBorder.fill": "white",
-                    _buttonFillOver: "skyblue",
-                },
-                $(go.TextBlock, "delete"),
-                {
-                    click: deleteNode,
-                }
-            )
-            , $("ContextMenuButton",
-                {
-                    "ButtonBorder.fill": "white",
-                    "_buttonFillOver": "skyblue"
-                },
-                $(go.TextBlock, "add"),
-                { click: addNodeAndLink })
-            // more ContextMenuButtons would go here
-        ),
-    }
+  }
 );
