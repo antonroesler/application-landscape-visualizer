@@ -52,7 +52,6 @@ model.linkDataArray = [];
 
 let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
-let allFilter = [];
 
 const initialLayout = diagram.layout;
 
