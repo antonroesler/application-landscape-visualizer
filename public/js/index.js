@@ -87,3 +87,13 @@ M.Chips.init(tagChips, {
     placeholder: "Your tag",
     secondaryPlaceholder: "+tag",
 });
+
+/**
+ * Initialize Tabs
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    const myTabs = document.querySelector(".tabs");
+    M.Tabs.init(myTabs, {
+        swipeable: true
+    });
+})

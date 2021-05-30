@@ -25,6 +25,7 @@
     <title>Application Landscape Visualizer</title>
 
     <link href="css/style.css" rel="stylesheet">
+    <!--<link href="css/materialize.css" rel="stylesheet">-->
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <!-- Important Google Icon Font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -212,13 +213,28 @@
 
     <div class="main-content">
         <div id="diagramDiv"></div>
+
         <div class="sidebar-right">
-          <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
-          <h4 class="sidebarHeading"> - Filters - </h4>
-          Choose Filter:
-          <select class="navButton" id="filterSelect" title="Please chosse filter"></select>
-          <button class="navButton" onclick="filterDiagramSelect()">Filter</button>
-          <button class="navButton" onclick="filterOff()">Filter OFF</button>
+          <div class="sidebar-box-resizable" id="diagramEventsMsg" style="white-space: pre-wrap"></div>
+            <div class="sidebar-box">
+                <hr>
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s3"><a href="#filterTab">Filter</a></li>
+                            <li class="tab col s3"><a href="#visualizationTab">Visualize</a></li>
+                        </ul>
+                    </div>
+                    <div id="filterTab" class="col s12">
+                        <h4 class="sidebarHeading"> - Filters - </h4>
+                        Choose Filter:
+                        <select class="navButton" id="filterSelect"></select>
+                        <button class="navButton" onclick="filterDiagramSelect()">Filter</button>
+                        <button class="navButton" onclick="filterOff()">Filter OFF</button>
+                    </div>
+                    <div id="visualizationTab" class="col s12">Test 2</div>
+                </div>
+            </div>
       </div>
       
     </div>
