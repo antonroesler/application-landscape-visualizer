@@ -22,16 +22,10 @@
  * @param color Color of the stroke (default is red)
  * @param width Width of the stroke (default is 3)
  */
-function addStroke(node, color) {
+function addColorSetting(node, color) {
     diagram.model.commit(function (m) {
         m.set(node, "color", color)
-    }, "add stroke");
-}
-
-function addStrokeToAll(nodes, color = "red") {
-    nodes.forEach(node => {
-        addStroke(node, color, width);
-    })
+    }, "add setting");
 }
 
 function settingFromSideBar() {
@@ -40,27 +34,30 @@ function settingFromSideBar() {
 }
 
 function applySetting(setting) {
-    createSettingArray(setting);
     settingAppNodes(setting);
 }
 
-function createSettingArray(setting) {
-    const settingSection = model.nodeDataArray.filter(function (currentElement) {
-        for (let key in filter.properties) {
-            if (currentElement[key.toString()] === undefined || currentElement[key] != filter.properties[key]) {
-                return false;
+function settingAppNodes(setting) {
+    var settingProperty = Object.keys(setting);
+    settingProperty.forEach(property => {
+        model.nodeDataArray.forEach(node => {
+            if (node.category === property) {
+                addColorSetting(node, setting[property]);
             }
         }
-        return true;
-    });
-    if (filterNodeArray.length === 0) {
-        window.alert("there are no Nodes with this setting");
-        return null;
-    } else {
-        diagram.startTransaction();
-        model.nodeDataArray = filterNodeArray;
-        diagram.commitTransaction("filter node applied");
-        return filterNodeArray;
-    }
+        )
+    })
+}
 
+function applyColorWhenNodeCreated(node) {
+    if (settings.length != 0) {
+        var settingProperty = Object.keys(settings[0]);
+        settingProperty.forEach(property => {
+            if (property === node.category) {
+                addColorSetting(node, settings[0][property]);
+            } else {
+            }
+        });
+    } else {
+    }
 }
