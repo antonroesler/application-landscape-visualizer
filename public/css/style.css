@@ -130,6 +130,7 @@ hr {
 .main-content {
     display: flex;
     flex: 1; /* The div grows as much as it can: body height 100vh */
+    height: 100vh;
 }
 
 #diagramDiv {
@@ -174,6 +175,7 @@ footer {
     width: 100%;
     max-height: 60px;
     background-color: var(--off-white);
+    z-index: 99;
 }
 
 .footer-content {
@@ -692,4 +694,124 @@ ul:not(.browser-default) {
     .tabs .tab a {
         padding: 0 12px;
     }
+}
+
+/* Slide menu */
+
+.sidenav {
+    position: fixed;
+    width: 250px;
+    left: 0;
+    margin: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    height: 100%;
+    padding-bottom: 60px;
+    background-color: var(--off-white);
+    z-index: 9;
+    overflow-y: auto;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);
+}
+
+.sidenav.right-aligned {
+    right: 0;
+    -webkit-transform: translateX(105%);
+    transform: translateX(105%);
+    left: auto;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.sidenav .collapsible {
+    margin: 0;
+}
+
+.sidenav li {
+    float: none;
+    line-height: 48px;
+}
+
+/* Highlights the active li element */
+.sidenav li.active {
+
+}
+
+/* Styles li a elements */
+.sidenav li > a {
+    color: var(--dark-grey);
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 0.85rem;
+}
+
+/* Important: Can highlight all li elements (header and body) */
+.sidenav li > a:hover {
+
+}
+
+
+/* Arrow Icon Sytling */
+.sidenav li > a > i,
+.sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"],
+.sidenav li > a > i.material-icons {
+    float: right;
+    height: 48px;
+    line-height: 48px;
+    width: 24px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* Maybe for ident of li elements */
+.sidenav .collapsible-body {
+    padding: 0;
+}
+
+/* Dark overlay should not be visible */
+.sidenav-overlay {
+    height: 0px;
+    width: 0px;
+}
+
+
+/* Collapsible */
+
+.no-padding {
+    padding: 0 !important;
+}
+
+/* Needed for materialize.js */
+.collapsible {
+
+}
+
+.collapsible-header {
+    cursor: pointer;
+}
+
+.collapsible-header:focus {
+    outline: 0;
+}
+
+.collapsible-body {
+    display: none;
+    box-sizing: border-box;
+}
+
+/* Highlight collapsible header */
+.collapsible-header:hover {
+}
+
+.radio-input-collapsible {
+
+}
+
+.hr-collapse {
+    margin: 0 0.85rem;
 }

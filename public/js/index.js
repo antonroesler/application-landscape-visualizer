@@ -96,4 +96,36 @@ document.addEventListener("DOMContentLoaded", function() {
     M.Tabs.init(myTabs, {
         swipeable: true
     });
-})
+});
+
+/**
+ * Initialize left slide menu
+ */
+let sidenav;
+
+document.addEventListener('DOMContentLoaded', function() {
+    let elem = document.querySelector('.sidenav');
+    M.Sidenav.init(elem, {
+        draggable: true
+    });
+    sidenav = M.Sidenav.getInstance(elem);
+});
+
+function openSidenav() {
+    if(!sidenav.isOpen) {
+        sidenav.open();
+    }
+    else {
+        sidenav.close();
+    }
+}
+
+/**
+ * Initialize collapsible
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    let elems = document.querySelectorAll('.collapsible');
+    M.Collapsible.init(elems, {
+        accordion: false
+    });
+});
