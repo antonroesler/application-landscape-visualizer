@@ -52,7 +52,7 @@
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="openCreateNodeModal()">Create Node</a></li>
+                    <li><a href="#" onclick="openCreateNodeModal();">Create Node</a></li>
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
                     <li><a href="#">Undo</a></li>
                     <li><a href="#">Redo</a></li>
@@ -66,7 +66,7 @@
     <!-- Create Node Modal -->
     <div class="modal-bg" id="createNodeModal">
         <div class="modal-popup">
-            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-close" onclick="deleteDropdownMenuOptions(); closeModal();">+</div>
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
@@ -74,13 +74,17 @@
                     <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
-                        <input autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
-                        <input autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
+                        <input list="inputLicenceDropdown" autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
+                        <datalist id="inputLicenceDropdown"></datalist>
+                        <input list="inputVersionDropdown" autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
+                        <datalist id="inputVersionDropdown"></datalist>
                     </div>
                     <span class="dropdown-description">Departments:</span>
                     <div id="inputDepartments" class="chips"></div>
+                    <datalist id="inputDepartmentsDropdown"></datalist>
                     <span class="dropdown-description">Tags:</span>
                     <div id="inputTags" class="chips"></div>
+                    <datalist id="inputTagsDropdown"></datalist>
                     <div class="form-row">
                         <span class="dropdown-description"> Start Date:</span>
                         <span class="dropdown-description"> Shutdown Date:</span>
@@ -90,12 +94,13 @@
                         <input type="date" id="inputShutdownDate" class="input-text">
                     </div>
                     <div class="form-row">
-                        <input autocomplete="off" class="input-text" id="inputProfessionalOwner" placeholder="Prof. Owner: " type="text"/>
-                        <input autocomplete="off" class="input-text" id="inputTechnicalOwner" placeholder="Tech. Owner: " type="text"/>
+                        <input list="inputProfessionalOwnerDropdown" autocomplete="off" class="input-text" id="inputProfessionalOwner" placeholder="Prof. Owner: " type="text"/>
+                        <datalist id="inputProfessionalOwnerDropdown"></datalist>
+                        <input list="inputTechnicalOwnerDropdown" autocomplete="off" class="input-text" id="inputTechnicalOwner" placeholder="Tech. Owner: " type="text"/>
+                        <datalist id="inputTechnicalOwnerDropdown"></datalist>
                     </div>
-                    <span class="dropdown-description"> Application Type:</span>
-                    <select class="input-dropdown" id="inputCategory" name="category">
-
+                    <span class="dropdown-description">Application Type:</span>
+                    <select class="input-dropdown" id="inputCategory" placeholder="Application Type: " type="text">
                         <option value="Database">Database</option>
                         <option value="Application">Application</option>
                         <option value="Component">Component</option>
@@ -103,9 +108,8 @@
                         <option value="More Stuff">More Stuff</option>
                         <option value="Epic Stuff">Epic Stuff</option>
                     </select>
-
-                    <button class="modal-btn" onclick="addAppNode(); closeModal();">Create</button>
-                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="modal-btn" onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
+                    <button class="modal-btn-cancel" onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
                 </form>
             </div>
         </div>
@@ -157,8 +161,8 @@
         <div class="modal-content">
             <h2>Save your Diagram.</h2>
             <form class="modal-form" action="" onsubmit="return false">
-                <input class="input-text" type="text" id="saveName" placeholder="Name">
-                <input class="input-text" type="text" id="saveDesc" placeholder="Description">
+                <input autocomplete="off" class="input-text" type="text" id="saveName" placeholder="Name">
+                <input autocomplete="off" class="input-text" type="text" id="saveDesc" placeholder="Description">
                 <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
                 <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
             </form>
