@@ -45,13 +45,7 @@ diagram.contextMenu =
         )
     );
 
-function topBarHandler(action) {
-    if (action === "undo") {
-        diagram.undo();
-    } else if (action === "redo") {
-        diagram.redo();
-    }
-}
+
 function addNodeAndLink() {
     document.getElementById("contextMenu").value = "nodeContextMenuAdd";
     openCreateNodeModal()

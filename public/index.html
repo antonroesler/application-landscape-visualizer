@@ -20,6 +20,7 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="UTF-8">
     <title>Application Landscape Visualizer</title>
@@ -47,15 +48,16 @@
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create Diagram</button></a>
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
+                    Diagram</button></a>
         </div>
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
                     <li><a href="#" onclick="openCreateNodeModal()">Create Node</a></li>
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
-                    <li><a href="#">Undo</a></li>
-                    <li><a href="#">Redo</a></li>
+                    <li><a href="#" onclick="diagram.undo()">Undo</a></li>
+                    <li><a href="#" onclick="diagram.redo()">Redo</a></li>
                     <li><a href="#filterModal">Add Filter</a></li>
                 </ul>
             </nav>
@@ -70,12 +72,15 @@
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
-                    <input type="hidden" id="contextMenu"/>
-                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
-                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
+                    <input type="hidden" id="contextMenu" />
+                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text" />
+                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
+                        placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
-                        <input autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
-                        <input autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
+                        <input autocomplete="off" class="input-text" id="inputLicense" placeholder="License: "
+                            type="text" />
+                        <input autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: "
+                            type="text" />
                     </div>
                     <span class="dropdown-description">Departments:</span>
                     <div id="inputDepartments" class="chips"></div>
@@ -90,8 +95,10 @@
                         <input type="date" id="inputShutdownDate" class="input-text">
                     </div>
                     <div class="form-row">
-                        <input autocomplete="off" class="input-text" id="inputProfessionalOwner" placeholder="Prof. Owner: " type="text"/>
-                        <input autocomplete="off" class="input-text" id="inputTechnicalOwner" placeholder="Tech. Owner: " type="text"/>
+                        <input autocomplete="off" class="input-text" id="inputProfessionalOwner"
+                            placeholder="Prof. Owner: " type="text" />
+                        <input autocomplete="off" class="input-text" id="inputTechnicalOwner"
+                            placeholder="Tech. Owner: " type="text" />
                     </div>
                     <span class="dropdown-description"> Application Type:</span>
                     <select class="input-dropdown" id="inputCategory" name="category">
@@ -154,15 +161,15 @@
     <div class="modal-bg" id="saveDiagramModal">
         <div class="modal-popup">
             <div class="modal-close" onclick="closeModal()">+</div>
-        <div class="modal-content">
-            <h2>Save your Diagram.</h2>
-            <form class="modal-form" action="" onsubmit="return false">
-                <input class="input-text" type="text" id="saveName" placeholder="Name">
-                <input class="input-text" type="text" id="saveDesc" placeholder="Description">
-                <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
-                <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
-            </form>
-        </div>
+            <div class="modal-content">
+                <h2>Save your Diagram.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <input class="input-text" type="text" id="saveName" placeholder="Name">
+                    <input class="input-text" type="text" id="saveDesc" placeholder="Description">
+                    <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -175,22 +182,22 @@
             <hr>
             Choose Filter:
             <hr>
-            <input autocomplete="off" class="inputField" id="filterName" placeholder="Search term: " title="Please insert Name of new Node here"
-                   type="text"/>
+            <input autocomplete="off" class="inputField" id="filterName" placeholder="Search term: "
+                title="Please insert Name of new Node here" type="text" />
             <input autocomplete="off" class="inputField2" id="filterDesc" placeholder="Description: "
-                   title="Node Description is inserted here" type="text"/>
+                title="Node Description is inserted here" type="text" />
             <p>Meta Field: </p>
             <hr>
-            <input autocomplete="off" class="inputField" id="filterTags" placeholder="Tags: " title="Please insert Name of new Node here"
-                   type="text"/>
-            <input autocomplete="off" class="inputField" id="filterVersion" placeholder="Version: " title="Node Description is inserted here"
-                   type="text"/>
+            <input autocomplete="off" class="inputField" id="filterTags" placeholder="Tags: "
+                title="Please insert Name of new Node here" type="text" />
+            <input autocomplete="off" class="inputField" id="filterVersion" placeholder="Version: "
+                title="Node Description is inserted here" type="text" />
             <input autocomplete="off" class="inputField" id="filterDepartment" placeholder="Department: "
-                   title="Please insert Name of new Node here" type="text"/>
+                title="Please insert Name of new Node here" type="text" />
             <input autocomplete="off" class="inputField" id="filterUsers" placeholder="Allowed Users: "
-                   title="Node Description is inserted here" type="text"/>
-            <input autocomplete="off" class="inputField" id="filterLicense" placeholder="License: " title="Please insert Name of new Node here"
-                   type="text"/>
+                title="Node Description is inserted here" type="text" />
+            <input autocomplete="off" class="inputField" id="filterLicense" placeholder="License: "
+                title="Please insert Name of new Node here" type="text" />
             <p>Category: </p>
             <select class="navButton" id="filterCategory" name="category" title="Please chosse correct Category">
                 <option value=""></option>
@@ -213,14 +220,14 @@
     <div class="main-content">
         <div id="diagramDiv"></div>
         <div class="sidebar-right">
-          <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
-          <h4 class="sidebarHeading"> - Filters - </h4>
-          Choose Filter:
-          <select class="navButton" id="filterSelect" title="Please choose filter"></select>
-          <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
-          <button class="navButton" onclick="filterOff()">Filter OFF</button>
-      </div>
-      
+            <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
+            <h4 class="sidebarHeading"> - Filters - </h4>
+            Choose Filter:
+            <select class="navButton" id="filterSelect" title="Please choose filter"></select>
+            <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
+            <button class="navButton" onclick="filterOff()">Filter OFF</button>
+        </div>
+
     </div>
 
     <footer>
@@ -247,4 +254,3 @@
 <script src="js/link_template.js"></script>
 
 </html>
-
