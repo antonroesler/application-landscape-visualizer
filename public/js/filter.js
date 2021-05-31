@@ -79,7 +79,6 @@ function filterAppNodes(filter) {
     }
 }
 
-
 /**
  * Removes all links from the linkDataArray that aren't valid.
  */
