@@ -43,15 +43,15 @@ diagram.addDiagramListener("ObjectSingleClicked",
 
 const model = $(go.GraphLinksModel);
 
+
 model.linkFromPortIdProperty= "fromPort";  // required information:
 model.linkToPortIdProperty= "toPort";
 
 model.nodeDataArray = [];
 model.linkDataArray = [];
 
-const diagramNames = [];
-let modelWithoutFilter = [];
-let allFilter = [];
+let modelNodeWithoutFilter = [];
+let modelLinkWithoutFilter = [];
 
 const initialLayout = diagram.layout;
 

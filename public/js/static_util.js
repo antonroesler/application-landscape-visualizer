@@ -74,28 +74,17 @@ function appNodeNameExists(name) {
 
 /** function to read filter properties*/
 function readFilterProperties() {
-    const category = document.getElementById("filterCategory").value;
-    const tags = document.getElementById("filterTags").value;
-    const version = document.getElementById("filterVersion").value;
-    const department = document.getElementById("filterDepartment").value;
-    const allowedUsers = document.getElementById("filterUsers").value;
-    const license = document.getElementById("filterLicense").value;
-    deleteEmtyField = [category, tags, version, department, allowedUsers, license];
-    properties = {};
-    deleteEmtyField.forEach(function (property, i) {
-        if (property != "" && i === 0) {
-            properties.category = property;
-        } else if (property != "" && i === 1) {
-            properties.tags = property;
-        } else if (property != "" && i === 2) {
-            properties.version = property;
-        } else if (property != "" && i === 3) {
-            properties.department = property;
-        } else if (property != "" && i === 4) {
-            properties.allowedUsers = property;
-        } else if (property != "" && i === 5) {
-            properties.license = property;
+    const filterName = document.getElementById("filterName").value;
+    const filterInputFields = ["filterCategory", "filterTags", "filterVersion", "filterDepartment", "filterUsers", "filterLicense"];
+    const filter = {};
+    filter.name = filterName;
+    filter.properties = {};
+    filterInputFields.forEach(function (property) {
+        const value = document.getElementById(property).value;
+        if (value){
+            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+            filter.properties[property.replace("filter","").toLowerCase()] = value;
         }
     });
-    return properties;
+    return filter;
 }

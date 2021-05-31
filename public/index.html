@@ -36,6 +36,7 @@
 </head>
 
 <body onload="init()">
+
     <header>
         <div class="main-nav">
             <img class="logo" src="img/logo/ecore_logo.png">
@@ -69,6 +70,7 @@
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
+                    <input type="hidden" id="contextMenu"/>
                     <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
@@ -202,7 +204,7 @@
                 <option value="Application">Application</option>
             </select>
             <hr>
-            <button class="navButton" onclick="filterAppNodes()">Filter</button>
+            <button class="navButton" onclick="filterDiagramFromModal()">Filter</button>
             <button class="navButton" onclick="filterOff()">Filter OFF</button>
         </div>
     </div>
@@ -211,15 +213,16 @@
 
 
 
-               
-
-
-
 
     <div class="main-content">
         <div id="diagramDiv"></div>
         <div class="sidebar-right">
           <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
+          <h4 class="sidebarHeading"> - Filters - </h4>
+          Choose Filter:
+          <select class="navButton" id="filterSelect" title="Please choose filter"></select>
+          <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
+          <button class="navButton" onclick="filterOff()">Filter OFF</button>
       </div>
       
     </div>
@@ -239,9 +242,13 @@
 <script src="js/modal_util.js"></script>
 <script src="js/database_util.js"></script>
 <script src="js/diagram.js"></script>
+<script src="js/contextmenu.js"></script>
 <script src="js/filter.js"></script>
 <script src="js/layout.js"></script>
+<script src="js/highlight.js"></script>
 <script src="js/static_util.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
+
 </html>
+
