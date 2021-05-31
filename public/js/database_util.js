@@ -38,10 +38,10 @@ async function loadDiagram() {
 }
 
 /**
- * Saves the model
+ * Saves model to the database.
  * @returns {Promise<void>}
  */
-async function saveDiagram() {
+async function saveDiagramToMongo(diagramName) {
     const url = urljoin(URL, 'mongo');
     const params = {
         headers: {
@@ -51,11 +51,31 @@ async function saveDiagram() {
         body: JSON.stringify({
             nodeDataArray: model.nodeDataArray,
             linkDataArray: model.linkDataArray,
-            name: document.getElementById("saveName").value
+            name: diagramName
         })
     };
     const res = await fetch(url, params);
     res.json().then(msg => console.log(msg))
+}
+
+/**
+ * Starts user dialog to save/overwrite diagram.
+ * @returns {Promise<void>}
+ */
+async function saveDiagram() {
+    const diagramName = document.getElementById("saveName").value;
+    const x = await fetch(urljoin(URL, 'mongo/diagram/names'));
+    const names = await x.json();
+    if (names.includes(diagramName)){
+        const r = confirm("A diagram with that name already exists. Do you wan tto overwrite it?");
+        if (r === true) { // True if user wants to overwrite diagram.
+            const delurl = urljoin(URL, "mongo", diagramName);
+            await fetch(delurl, {method:'DELETE'})
+            await saveDiagramToMongo(diagramName)
+        }
+    } else { // If name doesnt yet exists in DB, the diagram is simply saved.
+        await saveDiagramToMongo(diagramName);
+    }
 }
 
 /**
