@@ -35,7 +35,7 @@ function geoFunc(geoname) {
     return geo;
 }
 
-function getColor(x){
+function getColor(x) {
     console.log(x);
     return "red"
 }
@@ -109,15 +109,15 @@ var mainTemplate = $(
         new go.Binding("text", "nameProperty"),
         new go.Binding("opacity", "opacityText"),
 
-        ),
-  makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
-  new go.Binding("text", "tags"),
-  new go.Binding("text", "version"),
-  new go.Binding("text", "departments"),
-  new go.Binding("text", "license"),
-  {
-    //toolTip is used for the hover function
-    toolTip:
+    ),
+    makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
+    new go.Binding("text", "tags"),
+    new go.Binding("text", "version"),
+    new go.Binding("text", "departments"),
+    new go.Binding("text", "license"),
+    {
+        //toolTip is used for the hover function
+        toolTip:
             $("ToolTip",
                 $(go.Panel, "Table",
                     { defaultAlignment: go.Spot.Left },
@@ -136,7 +136,7 @@ var mainTemplate = $(
                     $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5 }),
                     $(go.TextBlock, new go.Binding("text", "tags"),
                         { row: 4, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5  }),
+                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5 }),
                     $(go.TextBlock, new go.Binding("text", "version"),
                         { row: 5, column: 1, margin: 5 }),
                     $(go.TextBlock, "Department: ", { row: 6, column: 0, margin: 5 }),
@@ -150,22 +150,30 @@ var mainTemplate = $(
                         { row: 9, column: 1, margin: 5 }),
                 )
             )
-  },
-  {
-    // define a context menu for each node
-    contextMenu: $(
-      "ContextMenu",
-      $(
-        "ContextMenuButton",
-        {
-          "ButtonBorder.fill": "white",
-          _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "delete"),
-        {
-          click: deleteNode,
-        }
-      )
-    ),
-  }
+    },
+    {
+        // define a context menu for each node
+        contextMenu: $(
+            "ContextMenu",
+            $(
+                "ContextMenuButton",
+                {
+                    "ButtonBorder.fill": "white",
+                    _buttonFillOver: "skyblue",
+                },
+                $(go.TextBlock, "delete"),
+                {
+                    click: deleteNode,
+                }
+            ), $("ContextMenuButton", {
+                "ButtonBorder.fill": "white",
+                _buttonFillOver: "skyblue",
+            },
+                $(go.TextBlock, "add"),
+                {
+                    click: addNodeAndLink,
+                }
+            ),
+        ),
+    }
 );
