@@ -52,8 +52,10 @@ function readNodeProperties() {
             return undefined
         }
 
-        return { name: name, category: category, desc: desc, tags: tags, version: version, departments: departments, license: license,
-            profOwner: profOwner, techOwner: techOwner, startDate: startDate, shutdownDate:shutdownDate}
+        return {
+            name: name, category: category, desc: desc, tags: tags, version: version, departments: departments, license: license,
+            profOwner: profOwner, techOwner: techOwner, startDate: startDate, shutdownDate: shutdownDate
+        }
     }
 }
 
@@ -81,10 +83,23 @@ function readFilterProperties() {
     filter.properties = {};
     filterInputFields.forEach(function (property) {
         const value = document.getElementById(property).value;
-        if (value){
+        if (value) {
             // replace: "filterCategory" => "category", "filterTag" => "tag" ...
-            filter.properties[property.replace("filter","").toLowerCase()] = value;
+            filter.properties[property.replace("filter", "").toLowerCase()] = value;
         }
     });
     return filter;
+}
+
+function readSettingProperties() {
+    const settingInputFields = ["DatabaseColor", "ComponentColor" , "ApplicationColor"];
+    const setting = {};
+    settingInputFields.forEach(function (property) {
+        const value = document.getElementById(property).value;
+        if (value) {
+            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+            setting.property = value;
+        }
+    });
+    return setting;
 }

@@ -56,8 +56,8 @@
                 <ul class="nav-links">
                     <li><a href="#" onclick="openCreateNodeModal()">Create Node</a></li>
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
-                    <li><a href="#" onclick="diagram.undo()">Undo</a></li>
-                    <li><a href="#" onclick="diagram.redo()">Redo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
                     <li><a href="#filterModal">Add Filter</a></li>
                 </ul>
             </nav>
@@ -226,6 +226,17 @@
             <select class="navButton" id="filterSelect" title="Please choose filter"></select>
             <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
             <button class="navButton" onclick="filterOff()">Filter OFF</button>
+        </div>
+        <div class="sidebar-right">
+            <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
+            <h4 class="sidebarHeading"> - Setting Color - </h4>
+            Database
+            <input type="text" id="DatabaseColor" class="input-text">
+            Component
+            <input type="text" id="ComponentColor" class="input-text">
+            Application
+            <input type="text" id="ApplicationColor" class="input-text">
+            <button class="navButton" onclick="">save</button>
         </div>
 
     </div>
