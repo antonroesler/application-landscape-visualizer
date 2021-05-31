@@ -32,7 +32,7 @@ var linkTemplate =
             corner: 5,
             curve: go.Link.JumpOver,
 
-            mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(217, 190, 108,0.3)"; },
+            mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
             mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
             selectionAdorned: false
          
@@ -42,10 +42,29 @@ var linkTemplate =
           { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
         $(go.Shape,  // the link path shape
           { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(217, 190, 108)" : "gray"; }).ofObject()),
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
         $(go.Shape,  // the arrowhead
           { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(217, 190, 108)" : "gray"; }).ofObject())
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+
+          {
+            // define a context menu for each node
+            contextMenu: $(
+              "ContextMenu",
+              $(
+                "ContextMenuButton",
+                {
+                  "ButtonBorder.fill": "white",
+                  _buttonFillOver: "skyblue",
+                },
+                $(go.TextBlock, "change Behaviour"),
+                {
+                  click: deleteNode,
+                }
+              )
+              // more ContextMenuButtons would go here
+            ),
+          }
         // $(go.Panel, "Auto",  // the link label, normally not visible
         //   { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
         //   new go.Binding("visible", "visible").makeTwoWay(),
