@@ -15,3 +15,5 @@
  *
  * @author Feng Yi Lu
  */
+
+const settings = [];
