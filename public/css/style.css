@@ -490,6 +490,10 @@ footer p {
     width: 120px !important;
 }
 
+.chips .input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
 .chips .input:focus {
     border: 0 !important;
     -webkit-box-shadow: none !important;
