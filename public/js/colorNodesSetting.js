@@ -16,12 +16,7 @@
  * @author Feng Yi Lu
  */
 
-/**
- * Adds a stroke to a node.
- * @param node
- * @param color Color of the stroke (default is red)
- * @param width Width of the stroke (default is 3)
- */
+
 function addColorSetting(node, color) {
     diagram.model.commit(function (m) {
         m.set(node, "color", color)
