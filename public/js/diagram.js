@@ -66,6 +66,7 @@ function addNodeToDiagram(data) {
     applyColorWhenNodeCreated(newNode);
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
+    console.log(newNode);
     modelNodeWithoutFilter = model.nodeDataArray;
 }
 

@@ -88,6 +88,7 @@ function readFilterProperties() {
             filter.properties[property.replace("filter", "").toLowerCase()] = value;
         }
     });
+    console.log(filter);
     return filter;
 }
 

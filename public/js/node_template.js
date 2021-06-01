@@ -91,7 +91,7 @@ var mainTemplate = $(
             new go.Binding("geometry", "category", geoFunc),
             new go.Binding("opacity", "opacity"),
             new go.Binding("stroke", "stroke"),
-            new go.Binding("fill", "color"),
+            new go.Binding("background", "color"),
             new go.Binding("strokeWidth", "strokeWidth"),
         ),
         // four named ports, one on each side:
