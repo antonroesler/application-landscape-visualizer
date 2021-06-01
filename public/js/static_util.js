@@ -77,18 +77,25 @@ function appNodeNameExists(name) {
 /** function to read filter properties*/
 function readFilterProperties() {
     const filterName = document.getElementById("filterName").value;
-    const filterInputFields = ["filterCategory", "filterTags", "filterVersion", "filterDepartment", "filterUsers", "filterLicense"];
+    const filterInputFields = ["filterCategory", "inputTags", "filterVersion", "inputDepartments", "filterUsers", "filterLicense"];
     const filter = {};
     filter.name = filterName;
     filter.properties = {};
     filterInputFields.forEach(function (property) {
         const value = document.getElementById(property).value;
+        if (property === "inputTags" || property === "inputDepartments") {
+            const chipValue = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById(property)).chipsData);
+            if (chipValue) {
+                filter.properties[property] = chipValue;
+            }
+        }
         if (value) {
             // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+
             filter.properties[property.replace("filter", "").toLowerCase()] = value;
         }
     });
-    console.log(filter);
+    console.log(filter.properties);
     return filter;
 }
 
