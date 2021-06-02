@@ -84,7 +84,7 @@ var mainTemplate = $(
                 background: "transparent",
                 fill: "black",
                 strokeWidth: 0,
-                width: 65,
+                width: nodeWidth,
                 height: 70,
                 opacity: 1.0,
             },

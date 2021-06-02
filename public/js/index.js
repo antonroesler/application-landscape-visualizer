@@ -53,6 +53,7 @@ model.linkDataArray = [];
 let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
 
+const nodeWidth = 80;
 const initialLayout = diagram.layout;
 
 
