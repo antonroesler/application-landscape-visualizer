@@ -72,6 +72,7 @@ function appNodeNameExists(name) {
     return false;
 }
 
+
 /** function to read filter properties*/
 function readFilterProperties() {
     const filterName = document.getElementById("filterName").value;
