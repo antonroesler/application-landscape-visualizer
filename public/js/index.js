@@ -55,20 +55,26 @@ let modelLinkWithoutFilter = [];
 
 const initialLayout = diagram.layout;
 
+const nodeSelectableAttributes = new Map([
+    ["name", "Name"],
+    ["desc", "Description"],
+    ["license", "License"],
+    ["version", "Version"],
+    ["departments", "Departments"],
+    ["tags", "Tags"],
+    ["startDate", "Start Date"],
+    ["shutdownDate", "Shutdown Date"],
+    ["profOwner", "Professional Owner"],
+    ["techOwner", "Technical Owner"],
+    ["category", "Application Type"]
+]);
+
 
 /**
  * Initialise chips for the createNodeModal.
  */
 const departmentChips = document.querySelectorAll("#inputDepartments");
 M.Chips.init(departmentChips, {
- /*   autocompleteOptions: {
-        data: {
-            'Youtube':null, // Dummy data
-            'Google':null // Dummy data
-        },
-        limit: Infinity,
-        minlength: 1
-    }, */
     placeholder: "Department",
     secondaryPlaceholder: "+tag",
 });
@@ -104,9 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function openSidenav() {
     if(!sidenav.isOpen) {
+        generateCollapsible();
         sidenav.open();
     }
     else {
+        document.getElementById("sidenavForm").reset();
         sidenav.close();
     }
 }
