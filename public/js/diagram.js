@@ -47,7 +47,7 @@ function addNodeToDiagram(data) {
     //custom color setting for user
     const newNode = {
         key: data._id,
-        nameProperty: data.name,
+        name: data.name,
         category: data.category,
         desc: data.desc,
         tags: data.tags,
