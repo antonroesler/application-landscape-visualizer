@@ -16,7 +16,7 @@
  */
 
 /**
- * Convert the values of a JSON object into an array
+ * Convert the values of a simple JSON object into an array
  */
 function ChipJsonValuesToArray(json) {
     let valueArray = [];
@@ -63,6 +63,12 @@ function readNodeProperties() {
 /**
  * Checks if the given name for the new node is already existing or not
  */
+
+/**
+ * Checks if the given name for the new node is already existing or not
+ * @param {String} name
+ * @return {boolean}
+ */
 function appNodeNameExists(name) {
     for (let i = 0; i < model.nodeDataArray.length; i++) {
         if (name === model.nodeDataArray[i].nameProperty) {
@@ -72,19 +78,63 @@ function appNodeNameExists(name) {
     return false;
 }
 
-/** function to read filter properties*/
-function readFilterProperties() {
-    const filterName = document.getElementById("filterName").value;
-    const filterInputFields = ["filterCategory", "filterTags", "filterVersion", "filterDepartment", "filterUsers", "filterLicense"];
-    const filter = {};
-    filter.name = filterName;
-    filter.properties = {};
-    filterInputFields.forEach(function (property) {
-        const value = document.getElementById(property).value;
-        if (value){
-            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
-            filter.properties[property.replace("filter","").toLowerCase()] = value;
+
+/**
+ * Function gets all values for a specific node attribute from all nodes in
+ * in the diagram (nodeDataArray)
+ * @param {String} nodeAttribute Like name, desc, license, ...
+ * @return {Set<String>} Values for the specific attribute.
+ */
+function getAllValuesForOneNodeAttribute(nodeAttribute) {
+    const values = new Set([]);
+
+    // Add every value of the specific node attribute to the set.
+    for (const node of model.nodeDataArray) {
+
+        // If value is an array, the values need to be extracted.
+        if(Array.isArray(node[nodeAttribute])) {
+            for (const value of node[nodeAttribute]) {
+                values.add(value);
+            }
+        } else {
+            values.add(node[nodeAttribute]);
         }
-    });
-    return filter;
+    }
+    return values;
 }
+
+
+/**
+ * Filter the nodeSelectableAttributes array, to exclude specific values.
+ * @param {String[]}excludedNodeAttributes Node attributes like like name, desc, license, ...
+ * @param {boolean} containsEmptySets Excludes attributes which does not contain any values in diagram.
+ * @return {Map<string, string>} Returns a map like the NodeSelectableAttributes but without the excludes attributes.
+ */
+function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySets = true) {
+    let filteredNodeSelectableAttributes = new Map(nodeSelectableAttributes);
+
+    for (let attributeKey of filteredNodeSelectableAttributes.keys()) {
+        if(excludedNodeAttributes.includes(attributeKey)) {
+            filteredNodeSelectableAttributes.delete(attributeKey);
+        }
+        else if(!containsEmptySets) {
+            const nodeAttributeValues = getAllValuesForOneNodeAttribute(attributeKey);
+            if(nodeAttributeValues.size == 0) {
+                filteredNodeSelectableAttributes.delete(attributeKey);
+            }
+            else if(nodeAttributeValues.size == 1 && nodeAttributeValues.has("")) {
+                filteredNodeSelectableAttributes.delete(attributeKey);
+            }
+        }
+    }
+    return filteredNodeSelectableAttributes;
+}
+
+/**
+ * Generates a random number which imitates to be unique.
+ * @return {number}
+ */
+function uniqueID() {
+    return Math.floor(Math.random() * Date.now())
+}
+
