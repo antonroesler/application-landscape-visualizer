@@ -33,6 +33,7 @@
 const express = require('express');
 const router = express.Router();
 const tinycolor = require("tinycolor2");
+const tinygrad = require("tinygradient")
 
 
 
@@ -42,7 +43,7 @@ router.get('/', async (req, res) => {
     let base = req.query.color;
     if (!n || n<1){
         n=1;
-    };
+    }
     if (!base){
         base = '#ED553B';
     }
@@ -54,5 +55,61 @@ router.get('/', async (req, res) => {
     res.json(colors);
 });
 
+/**
+ * color/grad/ is used to return a gradient with n steps between two colors.
+ *
+ * http://localhost:8000/color/grad?n=6&a=ffffff&b=ff3333
+ *
+ * Returns an Array of length 6 startign with white (ffffff) to red (ff3333)
+ *
+ * If a or be is empty, a default gradient from red to light blue is used.
+ */
+router.get('/grad/', async (req, res) => {
+    let n = Number(req.query.n);
+    let c1 = "#" + req.query.a;
+    let c2 = "#" + req.query.b;
+    console.log(n)
+    console.log(c1)
+    console.log(c2)
+    if (!n || n<1){
+        n=3;
+    }
+    if (c1.length !== 7 || c2.length !== 7){
+        c1 = '#ED553B';
+        c2 = '#3bd3ed';
+    }
+    const gradient = tinygrad(c1, c2).rgb(n)
+    const colors = []
+    gradient.forEach(color => {
+        let rgb = color._originalInput;
+        if (!String(rgb).startsWith("#")){
+            rgb = rgbToHex(Math.round(rgb.r), Math.round(rgb.g), Math.round(rgb.b));
+        }
+        colors.push(rgb)
+    })
+
+    res.json(colors);
+});
+
+
+/**
+ * Converts an rgb value to a #hex string.
+ * @returns {string}
+ */
+function rgbToHex(r,g,b) {
+    r = r.toString(16);
+    g = g.toString(16);
+    b = b.toString(16);
+
+    if (r.length == 1)
+        r = "0" + r;
+    if (g.length == 1)
+        g = "0" + g;
+    if (b.length == 1)
+        b = "0" + b;
+
+    return "#" + r + g + b;
+}
 
 module.exports = router;
+
