@@ -21,10 +21,11 @@
  * @return {HTMLElement}
  */
 function generateCollapsible() {
-    deleteCollapsible();
 
     const collapsible = document.getElementById("collapsible");
     const nodeSelectableAttributesFiltered = filterNodeSelectableAttributes(["name", "desc"], false);
+
+    deleteHtmlChilds(collapsible);
 
     nodeSelectableAttributesFiltered.forEach((uiAttributeValue, nodeAttribute, map) => {
 
@@ -42,6 +43,7 @@ function generateCollapsible() {
     })
     return collapsible;
 }
+
 
 /**
  * This function generates the header for a given node attribute which is filterable in the diagram.
@@ -62,6 +64,7 @@ function generateCollapsibleHeader(nodeAttribute) {
 
     return a;
 }
+
 
 /**
  *
@@ -104,18 +107,6 @@ function generateCollapsibleBody(nodeAttribute) {
 
 
 /**
- * This functions deletes all child elements from the collapsible in the sidenav.
- */
-function deleteCollapsible() {
-    let collapsible = document.getElementById("collapsible");
-
-    while(collapsible.childNodes.length > 1) {
-        collapsible.removeChild(collapsible.lastChild);
-    }
-}
-
-
-/**
  *
  * @return {{name, properties: {}}} FilterObject which contains the name of the filter and all filterable attributes
  * and its values.
@@ -137,6 +128,20 @@ function readFilterPropertiesFromSideNav() {
             filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
         }
     }
-
     return filterObject;
+}
+
+
+/**
+ * Function which generates the content of the sidenav, opens and closes the sidenav.
+ */
+function openSidenav() {
+    if(!sidenav.isOpen) {
+        generateCollapsible();
+        sidenav.open();
+    }
+    else {
+        document.getElementById("sidenavForm").reset();
+        sidenav.close();
+    }
 }
