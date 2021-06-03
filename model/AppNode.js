@@ -30,9 +30,12 @@ const AppNodeSchema = mongoose.Schema({
     desc: String,
     tags: [String],
     version: String,
-    department: [String],
-    allowedUsers: Number,
+    departments: [String],
     license: String,
+    startDate: String,
+    shutdownDate: String,
+    profOwner: String,
+    techOwner: String,
     loc: String,
 });
 

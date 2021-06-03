@@ -24,6 +24,9 @@ node_modules
 #url-join
 url-join.js
 
+#materialize
+materialize.js
+
 # jQuery
 jquery*
 

@@ -81,7 +81,6 @@ var linkTemplate =
         // ),
         // $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
         // $(go.Shape, { toArrow: "Standard", scale: 1 })
-        
 
     );
 
