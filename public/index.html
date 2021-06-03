@@ -172,9 +172,7 @@
     </div>
 
 
-
     <div class="main-content">
-
 
         <!-- Slide Menu -->
         <ul id="slide-out" class="sidenav">
@@ -194,42 +192,18 @@
         </ul>
 
 
-
         <div id="diagramDiv"></div>
-
-
 
 
         <!-- Sidebar Right -->
         <div class="sidebar-right">
+            <!-- Upper 50% of sidebar -->
           <div class="sidebar-box-resizable" >
               <h2>Node Information</h2>
-              <div class="node-info-container">
-                  <!-- Static Data which could be generated -->
-                  <div class="box-row">
-                      <p class="node-info-text bold-text">Name:</p>
-                      <p class="node-info-text">VS Code</p>
-                  </div>
-                  <div>
-                      <p class="node-info-text bold-text">Description:</p>
-                      <p class="node-info-text text-align-justify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
-                  </div>
-                  <div class="box-row">
-                      <p class="node-info-text bold-text">Name:</p>
-                      <p class="node-info-text">VS Code</p>
-                  </div>
-                  <div class="box-row">
-                      <p class="node-info-text bold-text">License:</p>
-                      <p class="node-info-text">AWS 111</p>
-                  </div>
-                  <div class="box-row">
-                      <p class="node-info-text bold-text">Version:</p>
-                      <p class="node-info-text">1.0</p>
-                  </div>
+              <div id="nodeInfoContainer" class="node-info-container">
               </div>
-
-              <div id="diagramEventsMsg" style="white-space: pre-wrap"></div>
           </div>
+            <!-- Lower 50% of sidebar -->
             <div class="sidebar-box">
                 <hr>
                 <div class="row">
@@ -250,8 +224,9 @@
                 </div>
             </div>
       </div>
-      
+
     </div>
+
 
     <footer>
         <div class="footer-content">
@@ -261,10 +236,13 @@
             <p> Copyright © 2021 ECORE. All rights reserved. </p>
         </div>
     </footer>
+
 </body>
 
 <script src="libs/materialize.js"></script>
 <script src="js/index.js"></script>
+<script src="js/diagramListener.js"></script>
+<script src="js/materializeElements.js"></script>
 <script src="js/sidenav.js"></script>
 <script src="js/modal_util.js"></script>
 <script src="js/database_util.js"></script>
@@ -274,6 +252,7 @@
 <script src="js/layout.js"></script>
 <script src="js/highlight.js"></script>
 <script src="js/static_util.js"></script>
+<script src="js/sidebar.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
 
