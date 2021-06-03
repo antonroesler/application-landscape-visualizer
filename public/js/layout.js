@@ -12,7 +12,7 @@
 /**
  * Contains all functions that are used to change the layout of the diagram.
  *
- * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
+ * @author Leonard Hußke , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
 
@@ -48,6 +48,23 @@ function appendLayoutToDiagram(layout) {
     diagram.commitTransaction();
 }
 
+function linkLayoutModalDialogHandler() {
+    const layout = document.getElementById("linkLayoutOptions").value
+    appendLayoutToDiagram(layout)
+    disableAutomaticLayout()
+}
+function appendLinkLayoutToDiagram(layout) {
+    const layouts = {
+        "tree": go.TreeLayout,
+        "grid": go.GridLayout,
+        "cir": go.CircularLayout,
+        "laydi": go.LayeredDigraphLayout,
+        "forcedir": go.ForceDirectedLayout,
+    };
+    diagram.startTransaction();
+    diagram.layout = $(layouts[layout]);
+    diagram.commitTransaction();
+}
 
 /**
  * Disables the gojs behavior of automatically reorganizing the diagram's layout.

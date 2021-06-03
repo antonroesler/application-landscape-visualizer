@@ -26,6 +26,9 @@ function openLoadDiagramModal() {
 function openLayoutModal() {
     document.getElementById("layoutModal").style.display = "flex";
 }
+function openLinkLayoutModal() {
+    document.getElementById("linkLayoutModal").style.display = "flex";
+}
 
 function openCreateNodeModal() {
     loadDropdownMenusForCreateNodeModal();

@@ -45,6 +45,7 @@
             </form>
             <nav>
                 <ul class="nav-links">
+                    <li><a href="#" onclick="openLinkLayoutModal()">Link Layout</a></li>
                     <li><a href="#" onclick="openLayoutModal()">Auto Layout</a></li>
                     <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
@@ -134,6 +135,26 @@
                         <option value="cir">Circle</option>
                     </select>
                     <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Apply</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Layout Modal -->
+    <div class="modal-bg" id="linkLayoutModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Choose Layout.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <select class="input-dropdown" id="linkLayoutOptions">
+                        <option value="normal">Normal</option>
+                        <option value="orthogonal">Orthogonal</option>
+                        <option value="avoid nodes">Avoid nodes</option>
+                        <option value="bezier">Round normal</option>
+                    </select>
+                    <button class="modal-btn" onclick="linkLayoutModalDialogHandler(); closeModal();">Apply</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
