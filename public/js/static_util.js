@@ -58,12 +58,6 @@ function readNodeProperties() {
 }
 
 
-
-
-/**
- * Checks if the given name for the new node is already existing or not
- */
-
 /**
  * Checks if the given name for the new node is already existing or not
  * @param {String} name
@@ -71,7 +65,7 @@ function readNodeProperties() {
  */
 function appNodeNameExists(name) {
     for (let i = 0; i < model.nodeDataArray.length; i++) {
-        if (name === model.nodeDataArray[i].nameProperty) {
+        if (name === model.nodeDataArray[i].name) {
             return true;
         }
     }
@@ -119,10 +113,10 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
         }
         else if(!containsEmptySets) {
             const nodeAttributeValues = getAllValuesForOneNodeAttribute(attributeKey);
-            if(nodeAttributeValues.size == 0) {
+            if(nodeAttributeValues.size === 0) {
                 filteredNodeSelectableAttributes.delete(attributeKey);
             }
-            else if(nodeAttributeValues.size == 1 && nodeAttributeValues.has("")) {
+            else if(nodeAttributeValues.size === 1 && nodeAttributeValues.has("")) {
                 filteredNodeSelectableAttributes.delete(attributeKey);
             }
         }
@@ -136,5 +130,15 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
  */
 function uniqueID() {
     return Math.floor(Math.random() * Date.now())
+}
+
+/**
+ * This functions deletes all child elements of the given HTML element.
+ * @param {HTMLElement} HTMLElement Is an HTML element from the html file.
+ */
+function deleteHtmlChilds(HTMLElement) {
+    while(HTMLElement.childNodes.length > 1) {
+        HTMLElement.removeChild(HTMLElement.lastChild);
+    }
 }
 
