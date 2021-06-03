@@ -109,26 +109,8 @@ function deleteDropdownMenuOptions() {
 function addDropdownMenuOptions(id, nodeAttribute) {
     const inputTag = document.getElementById(id);
     const listId = inputTag.getAttribute("list");
-    const values = new Set([]);
-    console.log(listId);
-
-
     const autoDropdown = document.getElementById(listId);
-
-    console.log(model.nodeDataArray);
-
-    // Add every value of the specific node attribute to the set.
-    for (const node of model.nodeDataArray) {
-
-        // If value is an array, the values need to be extracted.
-        if(Array.isArray(node[nodeAttribute])) {
-            for (const value of node[nodeAttribute]) {
-                values.add(value);
-            }
-        } else {
-            values.add(node[nodeAttribute]);
-        }
-    }
+    const values = getAllValuesForOneNodeAttribute(nodeAttribute)
 
     // Create a new html option for every value in the set.
     values.forEach(function(value) {
