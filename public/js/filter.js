@@ -31,7 +31,7 @@ function filterOff() {
  * Reads user input from modal and creates a filter.
  */
 function filterDiagramFromModal() {
-    const filter = readFilterProperties();
+    const filter = readFilterPropertiesFromSideNav();
     allFilter.push(filter);
     showFilterNames();
     applyFilter(filter);
