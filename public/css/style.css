@@ -45,12 +45,22 @@ body {
     height: 100%;
 }
 
-li, a, p, h1, h2, h3, button, select, input, span, textarea {
+li, a, p, h1, h3, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
     font-size: 14px;
     text-decoration: none;
+}
+
+h2 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 22px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
+
 }
 
 span {
@@ -171,12 +181,6 @@ hr {
 }
 
 /* Node Information */
-.node-headline {
-    color: var(--dark-grey);
-    font-size: 22px;
-    font-weight: 500;
-    padding: 0.85rem 0;
-}
 
 .node-info-container {
     display: flex;
@@ -740,8 +744,7 @@ ul:not(.browser-default) {
     margin: 0;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
-    height: 100%;
-    padding-bottom: 60px;
+    height: calc(100% - 150px);
     background-color: var(--off-white);
     z-index: 9;
     overflow-y: auto;
@@ -831,6 +834,20 @@ ul:not(.browser-default) {
     width: 0px;
 }
 
+.sidenav-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidenav-margin {
+    margin: 0 0.85rem 0.85rem 0.85rem;
+}
 
 /* Collapsible */
 
@@ -876,4 +893,8 @@ ul:not(.browser-default) {
 
 .text-align-justify {
     text-align: justify;
+}
+
+.margin-top {
+    margin-top: 0.85rem;
 }
