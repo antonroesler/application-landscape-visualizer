@@ -52,8 +52,19 @@ function readNodeProperties() {
             return undefined
         }
 
-        return { name: name, category: category, desc: desc, tags: tags, version: version, departments: departments, license: license,
-            profOwner: profOwner, techOwner: techOwner, startDate: startDate, shutdownDate:shutdownDate}
+        return {
+            name: name,
+            category: category,
+            desc: desc,
+            tags: tags,
+            version: version,
+            departments: departments,
+            license: license,
+            profOwner: profOwner,
+            techOwner: techOwner,
+            startDate: startDate,
+            shutdownDate: shutdownDate
+        }
     }
 }
 
@@ -73,7 +84,6 @@ function appNodeNameExists(name) {
 }
 
 
-
 /**
  * Function gets all values for a specific node attribute from all nodes in
  * in the diagram (nodeDataArray)
@@ -87,7 +97,7 @@ function getAllValuesForOneNodeAttribute(nodeAttribute) {
     for (const node of model.nodeDataArray) {
 
         // If value is an array, the values need to be extracted.
-        if(Array.isArray(node[nodeAttribute])) {
+        if (Array.isArray(node[nodeAttribute])) {
             for (const value of node[nodeAttribute]) {
                 values.add(value);
             }
@@ -109,17 +119,19 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
     let filteredNodeSelectableAttributes = new Map(nodeSelectableAttributes);
 
     for (let attributeKey of filteredNodeSelectableAttributes.keys()) {
-        if(excludedNodeAttributes.includes(attributeKey)) {
+        if (excludedNodeAttributes.includes(attributeKey)) {
             filteredNodeSelectableAttributes.delete(attributeKey);
-        }
-        else if(!containsEmptySets) {
+        } else if (!containsEmptySets) {
             const nodeAttributeValues = getAllValuesForOneNodeAttribute(attributeKey);
-            if(nodeAttributeValues.size === 0) {
+            if (nodeAttributeValues.size === 0) {
+                filteredNodeSelectableAttributes.delete(attributeKey);
+            } else if (nodeAttributeValues.size === 1 && nodeAttributeValues.has("")) {
                 filteredNodeSelectableAttributes.delete(attributeKey);
             }
-            else if(nodeAttributeValues.size === 1 && nodeAttributeValues.has("")) {
-                filteredNodeSelectableAttributes.delete(attributeKey);
-            }
+        }
+    }
+    return filteredNodeSelectableAttributes;
+}
 
 /** function to read filter properties*/
 function readFilterProperties() {
@@ -130,13 +142,12 @@ function readFilterProperties() {
     filter.properties = {};
     filterInputFields.forEach(function (property) {
         const value = document.getElementById(property).value;
-        if (value){
+        if (value) {
             // replace: "filterCategory" => "category", "filterTag" => "tag" ...
-            filter.properties[property.replace("filter","").toLowerCase()] = value;
-
+            filter.properties[property.replace("filter", "").toLowerCase()] = value;
         }
-    }
-    return filteredNodeSelectableAttributes;
+    });
+    return filter;
 }
 
 /**
@@ -152,7 +163,7 @@ function uniqueID() {
  * @param {HTMLElement} HTMLElement Is an HTML element from the html file.
  */
 function deleteHtmlChilds(HTMLElement) {
-    while(HTMLElement.childNodes.length > 1) {
+    while (HTMLElement.childNodes.length > 1) {
         HTMLElement.removeChild(HTMLElement.lastChild);
     }
 }
