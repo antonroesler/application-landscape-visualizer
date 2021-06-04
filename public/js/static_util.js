@@ -73,6 +73,7 @@ function appNodeNameExists(name) {
 }
 
 
+
 /**
  * Function gets all values for a specific node attribute from all nodes in
  * in the diagram (nodeDataArray)
@@ -119,6 +120,20 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
             else if(nodeAttributeValues.size === 1 && nodeAttributeValues.has("")) {
                 filteredNodeSelectableAttributes.delete(attributeKey);
             }
+
+/** function to read filter properties*/
+function readFilterProperties() {
+    const filterName = document.getElementById("filterName").value;
+    const filterInputFields = ["filterCategory", "filterTags", "filterVersion", "filterDepartment", "filterUsers", "filterLicense"];
+    const filter = {};
+    filter.name = filterName;
+    filter.properties = {};
+    filterInputFields.forEach(function (property) {
+        const value = document.getElementById(property).value;
+        if (value){
+            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+            filter.properties[property.replace("filter","").toLowerCase()] = value;
+
         }
     }
     return filteredNodeSelectableAttributes;
