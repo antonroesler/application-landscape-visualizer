@@ -6,7 +6,7 @@ function searchbarInput(){
         removeStrokeFromAllNodesInDiagram()
     } else {
         model.nodeDataArray.forEach(node => {
-            if (node.nameProperty.toLowerCase().startsWith(searchtext.toLowerCase())) {
+            if (node.name.toLowerCase().startsWith(searchtext.toLowerCase())) {
                 addStroke(node)
             }
             else {
