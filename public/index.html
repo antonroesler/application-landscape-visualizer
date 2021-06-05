@@ -225,7 +225,19 @@
                         <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
                         <button class="navButton" onclick="filterOff()">Filter OFF</button>
                     </div>
-                    <div id="visualizationTab" class="col s12">Test 2</div>
+                    <div id="visualizationTab" class="col s12">
+                        <select name="color-attribute" id="color-attribute" style="color: black">
+                            <option value="category">Category</option>
+                            <option value="license">License</option>
+                            <option value="version">Version</option>
+                            <option value="name">Name</option>
+                            <option value="tag">Tag</option>
+                            <option value="department">Department</option>
+                        </select>
+                        <button id="apply-color" onclick="applyUserColorSetting()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply Color</button>
+                        <button id="remove-color" onclick="removeColorFromAllNodes()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove Color</button>
+
+                    </div>
                 </div>
             </div>
       </div>

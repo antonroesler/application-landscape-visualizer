@@ -73,6 +73,16 @@ async function colorAllNodesByAttribute(attributeName){
     })
 }
 
+function applyUserColorSetting(){
+    const dataField = readColorMetaDataField()
+    colorAllNodesByAttribute(dataField)
+}
+
+function readColorMetaDataField(){
+    return document.getElementById("color-attribute").value;
+}
+
+
 function settingFromSideBar() {
     const setting = readSettingProperties();
     applySetting(setting);
