@@ -217,11 +217,28 @@
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
+                        <!--
                         <h4 class="sidebarHeading"> - Filters - </h4>
                         Choose Filter:
                         <select class="navButton" id="filterSelect"></select>
                         <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
                         <button class="navButton" onclick="filterOff()">Filter OFF</button>
+                        -->
+                        <ul id="filterCollection" class="collection">
+                            <li class="collection-item active">
+                                <div>Filter 1
+                                <a href="#!" class="secondary-content">
+                                    <span class="new badge">Active</span>
+                                    <i class="material-icons">delete</i>
+                                </a>
+                                </div>
+                            </li>
+                            <li class="collection-item" onclick="alert('activate/deactivate filter')"><div>Filter 2<a href="#!" class="secondary-content"><i class="material-icons" onclick="alert('delete here')">delete</i></a></div></li>
+                            <li class="collection-item"><div>Filter 3<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
+                            <li class="collection-item"><div>Filter 4<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
+                            <li class="collection-item"><div>Filter 5<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
+                        </ul>
+
                     </div>
                     <div id="visualizationTab" class="col s12">Test 2</div>
                 </div>
