@@ -60,7 +60,7 @@
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
                     <li><a href="#">Undo</a></li>
                     <li><a href="#">Redo</a></li>
-                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Apply Filter</a></li>
+                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
                 </ul>
             </nav>
         </div>
@@ -134,7 +134,7 @@
                         <option value="grid">Grid</option>
                         <option value="cir">Circle</option>
                     </select>
-                    <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Apply</button>
+                    <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Add</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
@@ -225,18 +225,14 @@
                         <button class="navButton" onclick="filterOff()">Filter OFF</button>
                         -->
                         <ul id="filterCollection" class="collection">
-                            <li class="collection-item active">
-                                <div>Filter 1
-                                <a href="#!" class="secondary-content">
-                                    <span class="new badge">Active</span>
-                                    <i class="material-icons">delete</i>
-                                </a>
+                            <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
+                                <div>Add filter
+                                    <i class="material-icons left">add_circle_outline</i>
+                                    <a href="" class="secondary-content">
+                                        <i class="material-icons">info_outline</i>
+                                    </a>
                                 </div>
                             </li>
-                            <li class="collection-item" onclick="alert('activate/deactivate filter')"><div>Filter 2<a href="#!" class="secondary-content"><i class="material-icons" onclick="alert('delete here')">delete</i></a></div></li>
-                            <li class="collection-item"><div>Filter 3<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
-                            <li class="collection-item"><div>Filter 4<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
-                            <li class="collection-item"><div>Filter 5<a href="#" class="secondary-content"><i class="material-icons">delete</i></a></div></li>
                         </ul>
 
                     </div>
