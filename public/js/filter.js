@@ -62,11 +62,13 @@ function applyFilter(f){
 function filterAppNodes(filter) {
     const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
-            if (currentElement[key.toString()] === undefined || currentElement[key] != filter.properties[key]) {
-                return false;
+            var currentElementProp = currentElement[key];
+            var currentFilterProps = filter.properties[key];
+            if (currentFilterProps.includes(currentElementProp)) {
+                return true;
             }
         }
-        return true;
+        return false;
     });
     if (filterNodeArray.length === 0) {
         window.alert("there are no Nodes with this setting");
