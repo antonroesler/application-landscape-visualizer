@@ -16,7 +16,7 @@
  */
 
 var allFilter = [];
-var oneFilterActive = false;
+var appliedFilters = [];
 
 /**
  * Removes all filters from model.
@@ -60,12 +60,15 @@ function applyFilter(f) {
         window.alert("there are no Nodes with this setting");
         return null;
     } else {
-        if (oneFilterActive === false) {
-            oneFilterActive = true;
+        console.log(appliedFilters);
+        if (appliedFilters.length === 0) {
+            appliedFilters.push(f.name);
             activateFilter(filterNodeArray);
             filterAppLinks(filterNodeArray);
         } else {
-            andFilterArray = applyAdditionalFilter(f, filterNodeArray);
+            previousFilter = findFilter(appliedFilters[appliedFilters.length - 1]);
+            previousFilterNodeArray = filterAppNodes(previousFilter[0]);
+            andFilterArray = applyAdditionalFilter(f, previousFilterNodeArray);
             activateFilter(andFilterArray);
             filterAppLinks(andFilterArray);
         }
@@ -236,7 +239,7 @@ function changeFilterActivation(filterName) {
     if (activeBadge != null) {
         filterElement.classList.remove("active");
         activeBadge.remove();
-        oneFilterActive = false;
+        appliedFilters = [];
         filterOff();
         // Function to disable filter needs to be added
     }
