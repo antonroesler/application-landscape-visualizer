@@ -107,7 +107,7 @@ var mainTemplate = $(
             font: "bold 12pt sans-serif",
             opacity: 1.0,
         },
-        new go.Binding("text", "nameProperty"),
+        new go.Binding("text", "name"),
         new go.Binding("opacity", "opacityText"),
 
     ),
@@ -126,7 +126,7 @@ var mainTemplate = $(
                     $(go.TextBlock, new go.Binding("text", "key"),
                         { row: 0, column: 1, margin: 5 }),
                     $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "nameProperty"),
+                    $(go.TextBlock, new go.Binding("text", "name"),
                         { row: 1, column: 1, margin: 5 }),
                     $(go.TextBlock, "Category: ", { row: 2, column: 0, margin: 5 }),
                     $(go.TextBlock, new go.Binding("text", "category"),

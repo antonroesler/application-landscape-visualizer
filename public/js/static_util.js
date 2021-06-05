@@ -16,7 +16,7 @@
  */
 
 /**
- * Convert the values of a JSON object into an array
+ * Convert the values of a simple JSON object into an array
  */
 function ChipJsonValuesToArray(json) {
     let valueArray = [];
@@ -53,27 +53,89 @@ function readNodeProperties() {
         }
 
         return {
-            name: name, category: category, desc: desc, tags: tags, version: version, departments: departments, license: license,
-            profOwner: profOwner, techOwner: techOwner, startDate: startDate, shutdownDate: shutdownDate
+            name: name,
+            category: category,
+            desc: desc,
+            tags: tags,
+            version: version,
+            departments: departments,
+            license: license,
+            profOwner: profOwner,
+            techOwner: techOwner,
+            startDate: startDate,
+            shutdownDate: shutdownDate
         }
     }
 }
 
 
-
-
 /**
  * Checks if the given name for the new node is already existing or not
+ * @param {String} name
+ * @return {boolean}
  */
 function appNodeNameExists(name) {
     for (let i = 0; i < model.nodeDataArray.length; i++) {
-        if (name === model.nodeDataArray[i].nameProperty) {
+        if (name === model.nodeDataArray[i].name) {
             return true;
         }
     }
     return false;
 }
 
+
+/**
+ * Function gets all values for a specific node attribute from all nodes in
+ * in the diagram (nodeDataArray)
+ * @param {String} nodeAttribute Like name, desc, license, ...
+ * @return {Set<String>} Values for the specific attribute.
+ */
+function getAllValuesForOneNodeAttribute(nodeAttribute) {
+    const values = new Set([]);
+
+    // Add every value of the specific node attribute to the set.
+    for (const node of model.nodeDataArray) {
+
+        // If value is an array, the values need to be extracted.
+        if (Array.isArray(node[nodeAttribute])) {
+            for (const value of node[nodeAttribute]) {
+                values.add(value);
+            }
+        } else {
+            values.add(node[nodeAttribute]);
+        }
+    }
+    return values;
+}
+
+
+/**
+ * Filter the nodeSelectableAttributes array, to exclude specific values.
+ * @param {String[]}excludedNodeAttributes Node attributes like like name, desc, license, ...
+ * @param {boolean} containsEmptySets Excludes attributes which does not contain any values in diagram.
+ * @return {Map<string, string>} Returns a map like the NodeSelectableAttributes but without the excludes attributes.
+ */
+function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySets = true) {
+    let filteredNodeSelectableAttributes = new Map(nodeSelectableAttributes);
+
+    for (let attributeKey of filteredNodeSelectableAttributes.keys()) {
+        if (excludedNodeAttributes.includes(attributeKey)) {
+            filteredNodeSelectableAttributes.delete(attributeKey);
+        } else if (!containsEmptySets) {
+            const nodeAttributeValues = getAllValuesForOneNodeAttribute(attributeKey);
+            if (nodeAttributeValues.size === 0) {
+                filteredNodeSelectableAttributes.delete(attributeKey);
+            } else if (nodeAttributeValues.size === 1 && nodeAttributeValues.has("")) {
+                filteredNodeSelectableAttributes.delete(attributeKey);
+            }
+        }
+    }
+    return filteredNodeSelectableAttributes;
+}
+
+/**
+* Not in use. DELETE.
+*/
 /** function to read filter properties*/
 function readFilterProperties() {
     const filterName = document.getElementById("filterName").value;
@@ -99,6 +161,28 @@ function readFilterProperties() {
     return filter;
 }
 
+
+/**
+ * Generates a random number which imitates to be unique.
+ * @return {number}
+ */
+function uniqueID() {
+    return Math.floor(Math.random() * Date.now())
+}
+
+/**
+ * This functions deletes all child elements of the given HTML element.
+ * @param {HTMLElement} HTMLElement Is an HTML element from the html file.
+ */
+function deleteHtmlChilds(HTMLElement) {
+    while (HTMLElement.childNodes.length > 1) {
+        HTMLElement.removeChild(HTMLElement.lastChild);
+    }
+}
+
+/**
+* Not in use. DELETE.
+*/
 function readSettingProperties() {
     const settingInputFields = ["DatabaseColor", "ComponentColor", "ApplicationColor", "StuffColor", "More StuffColor", "Epic StuffColor"];
     const setting = {};
@@ -113,3 +197,4 @@ function readSettingProperties() {
     settings[0] = setting;
     return setting;
 }
+
