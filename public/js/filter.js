@@ -33,9 +33,13 @@ function filterOff() {
  */
 function filterDiagramFromModal() {
     const filter = readFilterPropertiesFromSideNav();
-    allFilter.push(filter);
-    appendFilterCollection(generateFilterElement(filter));
-    applyFilter(filter);
+    if (filter === null) {
+
+    } else {
+        allFilter.push(filter);
+        appendFilterCollection(generateFilterElement(filter));
+        applyFilter(filter);
+    }
 }
 
 /**
@@ -51,7 +55,6 @@ function filterDiagramFromSelect() {
  * Applies a filter to the model.
  */
 function applyFilter(f) {
-    console.log(oneFilterActive);
     filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
         window.alert("there are no Nodes with this setting");
@@ -154,6 +157,15 @@ function nodeWithKeyExists(key, nodeArray) {
     return len > 0;
 }
 
+function checkFilterNameExists(enteredName) {
+    for (element of allFilter) {
+        if (element.name === enteredName) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 /**
  * Removes filter from already created filters inside of array "allFilters"
  */

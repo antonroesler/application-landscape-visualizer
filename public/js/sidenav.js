@@ -116,6 +116,10 @@ function readFilterPropertiesFromSideNav() {
     const filterName = document.getElementById("filterName").value;
     if (filterName === "") {
         alert("Please enter a name for the filter");
+        return null;
+    } else if (checkFilterNameExists(filterName)) {
+        alert("Name already exists");
+        return null;
     } else {
 
 
