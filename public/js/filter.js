@@ -134,3 +134,73 @@ function showFilterNames() {
         select.appendChild(el);
     }
 }
+
+function generateFilterElement(filter) {
+    let li = document.createElement("li");
+    let div = document.createElement("div");
+    let a = document.createElement("a");
+    let span = document.createElement("span");
+    let i = document.createElement("i");
+
+    li.setAttribute("class", "collection-item active");
+    li.setAttribute("id", filter.name);
+    a.setAttribute("class", "secondary-content");
+    span.setAttribute("class", "new badge");
+    i.setAttribute("class", "material-icons");
+
+    li.onclick = function() {changeFilterActivation(filter.name)};
+    i.onclick = function() {
+        alert("Function to delete specific filter needs to be added");
+        deleteFilterElementFromFilterCollection(filter.name)
+    }
+
+    div.innerHTML = filter.name;
+    span.innerHTML = "Active";
+    i.innerHTML = "delete";
+
+    li.appendChild(div);
+    div.appendChild(a);
+    a.appendChild(span);
+    a.appendChild(i);
+
+    return li;
+}
+
+function appendFilterCollection(filterElement) {
+    document.getElementById("zeroFilterElement").style.display = "none";
+    const collection = document.getElementById("filterCollection");
+    collection.appendChild(filterElement);
+}
+
+function changeFilterActivation(filterName) {
+    const filterElement = document.getElementById(filterName);
+    const activeBadge = filterElement.querySelector("span");
+    // Disable filter
+    if(activeBadge != null) {
+        filterElement.classList.remove("active");
+        activeBadge.remove();
+       // Function to disable filter needs to be added
+    }
+    // Enable filter
+    else {
+        // Function to activate filter needs to be added
+
+        let span = document.createElement("span");
+        span.setAttribute("class", "new badge");
+        span.innerHTML = "Active";
+
+        filterElement.querySelector("a").appendChild(span);
+        filterElement.classList.add("active");
+    }
+
+}
+
+function deleteFilterElementFromFilterCollection(filterName) {
+    const collection = document.getElementById("filterCollection");
+    const filterElement = document.getElementById(filterName);
+    collection.removeChild(filterElement);
+
+    if(collection.childElementCount === 1) {
+        document.getElementById("zeroFilterElement").style.display = "list-item";
+    }
+}
