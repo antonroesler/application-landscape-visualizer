@@ -62,7 +62,7 @@ function removeColorFromAllNodes(){
  * @param attributeName e.g. category, license, tag...
  */
 async function colorAllNodesByAttribute(attributeName){
-
+    const nodes = {};
     model.nodeDataArray.forEach(node => {
         if (nodes[node[attributeName]]) {
             nodes[node[attributeName]].push(node)
@@ -70,12 +70,7 @@ async function colorAllNodesByAttribute(attributeName){
             nodes[node[attributeName]] = [node]
         }
     })
-    const n = Object.keys(nodes).length;
-    const res = await fetch("color?n="+n);
-    const colors = await res.json();
-    Object.keys(nodes).forEach((key, i) => {
-        colorAllNodes(nodes[key], colors[i]);
-    })
+    await colorCategorizedNodeMap(nodes);
 }
 
 /**
@@ -102,13 +97,22 @@ async function colorNodeByShutDownDate(nCat=3){
             nodes[cat] = [node]
         }
     })
+    await colorCategorizedNodeMap(nodes, true)
+}
+
+async function colorCategorizedNodeMap(nodes, grad=false){
+    let url;
     const n = Object.keys(nodes).length;
-    const res = await fetch("color/grad?a=ff0022&b=ffffff&n="+n);
+    if (grad) {
+        url = "color/grad?a=ff0022&b=ffffff&n=";
+    } else {
+        url = "color?n=";
+    }
+    const res = await fetch(url+n);
     const colors = await res.json();
     Object.keys(nodes).forEach((key, i) => {
         colorAllNodes(nodes[key], colors[i]);
     })
-
 }
 
 function applyUserColorSetting(){
