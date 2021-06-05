@@ -45,7 +45,7 @@ body {
     height: 100%;
 }
 
-li, a, p, h1, h3, button, select, input, span, textarea {
+li, a, p, h1, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
@@ -60,7 +60,15 @@ h2 {
     font-weight: 500;
     align-self: center;
     padding: 0.85rem 0;
+}
 
+h3 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 16px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
 }
 
 span {
@@ -954,7 +962,7 @@ span.badge {
     min-width: 3rem;
     padding: 0 6px;
     margin-left: 14px;
-    margin-right: 175px;
+    margin-right: 180px;
     text-align: center;
     font-size: 1rem;
     line-height: 22px;
@@ -971,4 +979,9 @@ span.badge.new {
     color: #fff;
     background-color: var(--focus-blue);
     border-radius: 2px;
+}
+
+.left {
+    float: left;
+    margin-right: 6px;
 }
