@@ -10,13 +10,16 @@
 */
 
 /**
- * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
- * array.
+ * Contains all functions to color nodes.
  *
- * @author Feng Yi Lu
+ * @author Feng Yi Lu, Anton Roesler
  */
 
-
+/**
+ * Adds a color to a given node.
+ * @param node
+ * @param color
+ */
 function addColorSetting(node, color) {
     diagram.model.commit(function (m) {
         m.set(node, "color", color)
