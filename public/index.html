@@ -20,6 +20,7 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="UTF-8">
     <title>Application Landscape Visualizer</title>
@@ -51,16 +52,18 @@
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create Diagram</button></a>
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
+                    Diagram</button></a>
         </div>
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
                     <li><a href="#" onclick="openCreateNodeModal();">Create Node</a></li>
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
-                    <li><a href="#">Undo</a></li>
-                    <li><a href="#">Redo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
                     <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Apply Filter</a></li>
+
                 </ul>
             </nav>
         </div>
@@ -74,9 +77,10 @@
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
-                    <input type="hidden" id="contextMenu"/>
-                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
-                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
+                    <input type="hidden" id="contextMenu" />
+                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text" />
+                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
+                        placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
                         <input list="inputLicenceDropdown" autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
                         <datalist id="inputLicenceDropdown"></datalist>
@@ -161,6 +165,7 @@
     <div class="modal-bg" id="saveDiagramModal">
         <div class="modal-popup">
             <div class="modal-close" onclick="closeModal()">+</div>
+
         <div class="modal-content">
             <h2>Save your Diagram.</h2>
             <form class="modal-form" action="" onsubmit="return false">
@@ -170,12 +175,12 @@
                 <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
             </form>
         </div>
+
         </div>
     </div>
-
-
+  
     <div class="main-content">
-
+      
         <!-- Slide Menu -->
         <ul id="slide-out" class="sidenav">
             <div class="sidenav-box">
@@ -192,13 +197,11 @@
                 </form>
             </div>
         </ul>
-
-
         <div id="diagramDiv"></div>
-
 
         <!-- Sidebar Right -->
         <div class="sidebar-right">
+
             <!-- Upper 50% of sidebar -->
           <div class="sidebar-box-resizable" >
               <h2>Node Information</h2>
@@ -226,7 +229,6 @@
                 </div>
             </div>
       </div>
-
     </div>
 
 
@@ -258,6 +260,7 @@
 <script src="js/searchbar.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
+<script src="js/colorNodesSetting.js"></script>
+<script src="js/visualisation.js"></script>
 
 </html>
-
