@@ -20,7 +20,7 @@
 /**
  * Adds a color to a given node.
  * @param node
- * @param color
+ * @param color in any valid css format
  */
 function addColorToNode(node, color) {
     diagram.model.commit(function (m) {
@@ -36,12 +36,20 @@ function removeColorFromNode(node){
     addColorToNode(node, "transparent")
 }
 
+/**
+ * Colors all nodes in the given node array with the specified color.
+ * @param nodeArray an array of nodes
+ * @param color in any valid css format
+ */
 function colorAllNodes(nodeArray, color){
     nodeArray.forEach(node => {
         addColorToNode(node, color);
     })
 }
 
+/**
+ * Removes color from all nodes in the nodeDataArray
+ */
 function removeColorFromAllNodes(){
     model.nodeDataArray.forEach(node => {
         removeColorFromNode(node);
@@ -62,12 +70,9 @@ async function colorAllNodesByAttribute(attributeName){
             nodes[node[attributeName]] = [node]
         }
     })
-    console.log(nodes)
     const n = Object.keys(nodes).length;
-    console.log(n)
     const res = await fetch("color?n="+n);
     const colors = await res.json();
-    let i = 0;
     Object.keys(nodes).forEach((key, i) => {
         colorAllNodes(nodes[key], colors[i]);
     })
