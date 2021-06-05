@@ -62,7 +62,7 @@ function removeColorFromAllNodes(){
  * @param attributeName e.g. category, license, tag...
  */
 async function colorAllNodesByAttribute(attributeName){
-    const nodes = {};
+
     model.nodeDataArray.forEach(node => {
         if (nodes[node[attributeName]]) {
             nodes[node[attributeName]].push(node)
@@ -76,6 +76,39 @@ async function colorAllNodesByAttribute(attributeName){
     Object.keys(nodes).forEach((key, i) => {
         colorAllNodes(nodes[key], colors[i]);
     })
+}
+
+/**
+ * Colors all nodes by their shutdown date.
+ * @param nCat
+ * @returns {Promise<void>}
+ */
+async function colorNodeByShutDownDate(nCat=3){
+    const dates = [];
+    model.nodeDataArray.forEach(node => {
+        const d = Date.parse(node['shutdownDate']);
+        if (!isNaN(d)){
+            dates.push(d);
+        }
+    })
+    const diff = Math.max.apply(null, dates) - Math.min.apply(null, dates)
+    const binSize = diff/nCat;
+    const nodes = {};
+    model.nodeDataArray.forEach(node => {
+        const cat = Math.round(Date.parse(node['shutdownDate'])/binSize);
+        if (nodes[cat]) {
+            nodes[cat].push(node)
+        } else {
+            nodes[cat] = [node]
+        }
+    })
+    const n = Object.keys(nodes).length;
+    const res = await fetch("color/grad?a=ff0022&b=ffffff&n="+n);
+    const colors = await res.json();
+    Object.keys(nodes).forEach((key, i) => {
+        colorAllNodes(nodes[key], colors[i]);
+    })
+
 }
 
 function applyUserColorSetting(){
