@@ -15,15 +15,62 @@
  * @author Feng Yi Lu, Anton Roesler
  */
 
+
+
 /**
  * Adds a color to a given node.
  * @param node
  * @param color
  */
-function addColorSetting(node, color) {
+function addColorToNode(node, color) {
     diagram.model.commit(function (m) {
         m.set(node, "color", color)
     }, "add setting");
+}
+
+/**
+ * Remove color from node. (Makes background color transparent)
+ * @param node
+ */
+function removeColorFromNode(node){
+    addColorToNode(node, "transparent")
+}
+
+function colorAllNodes(nodeArray, color){
+    nodeArray.forEach(node => {
+        addColorToNode(node, color);
+    })
+}
+
+function removeColorFromAllNodes(){
+    model.nodeDataArray.forEach(node => {
+        removeColorFromNode(node);
+    })
+}
+
+/**
+ * Colors all nodes that have the same value for the same specified metadata filed in the same color.
+ *
+ * @param attributeName e.g. category, license, tag...
+ */
+async function colorAllNodesByAttribute(attributeName){
+    const nodes = {};
+    model.nodeDataArray.forEach(node => {
+        if (nodes[node[attributeName]]) {
+            nodes[node[attributeName]].push(node)
+        } else {
+            nodes[node[attributeName]] = [node]
+        }
+    })
+    console.log(nodes)
+    const n = Object.keys(nodes).length;
+    console.log(n)
+    const res = await fetch("color?n="+n);
+    const colors = await res.json();
+    let i = 0;
+    Object.keys(nodes).forEach((key, i) => {
+        colorAllNodes(nodes[key], colors[i]);
+    })
 }
 
 function settingFromSideBar() {
@@ -40,7 +87,7 @@ function settingAppNodes(setting) {
     settingProperty.forEach(property => {
         model.nodeDataArray.forEach(node => {
             if (node.category === property) {
-                addColorSetting(node, setting[property]);
+                addColorToNode(node, setting[property]);
             }
         }
         )
@@ -52,7 +99,7 @@ function applyColorWhenNodeCreated(node) {
         var settingProperty = Object.keys(settings[0]);
         settingProperty.forEach(property => {
             if (property === node.category) {
-                addColorSetting(node, settings[0][property]);
+                addColorToNode(node, settings[0][property]);
             } else {
             }
         });
