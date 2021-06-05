@@ -127,7 +127,7 @@ function formatNodeDataArray(req, nodeDataArray) {
     req.body.nodeDataArray.forEach(node => {
         const appNode = new AppNode({
             _id: node.key,
-            name: node.nameProperty,
+            name: node.name,
             category: node.category,
             desc: node.desc,
             tags: node.tags,

@@ -20,8 +20,10 @@
 :root {
     --white: #FFFFFF;
     --off-white: #E8E8E8;
-    --silver: #d2d2d7;
-    --dark-grey: #303030;
+    --silver: rgba(210, 210, 215, 1);
+    --silver-transparent: rgba(210, 210, 215, 0.4);
+    --focus-dark-grey: rgba(48, 48, 48, 0.6);
+    --dark-grey: rgba(48, 48, 48, 1);
     --focus-blue: rgba(20, 124, 229, 1);
     --unfocus-blue: rgba(20, 124, 229, 0.8);
 }
@@ -32,13 +34,18 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100%;
 }
 
-li, a, p, h1, h2, h3, button, select, input, span, textarea {
+li, a, p, h1, h3, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
@@ -46,8 +53,22 @@ li, a, p, h1, h2, h3, button, select, input, span, textarea {
     text-decoration: none;
 }
 
+h2 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 22px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
+
+}
+
 span {
     color: var(--dark-grey);
+}
+
+hr {
+    margin: 0 0.85rem 0.85rem 0.85rem;
 }
 
 
@@ -75,7 +96,7 @@ span {
     align-items: center;
     padding: 10px 10% 10px 25px;
     width: 100%;
-    max-height: 40px;
+    height: 40px;
     background-color: var(--off-white);
     border-bottom: 1px solid var(--silver);
 }
@@ -120,6 +141,7 @@ span {
 .main-content {
     display: flex;
     flex: 1; /* The div grows as much as it can: body height 100vh */
+    height: 100vh;
 }
 
 #diagramDiv {
@@ -132,10 +154,51 @@ span {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 }
 
-
+/* Sidebar Right */
 .sidebar-right {
+    display: flex;
+    flex-direction: column;
     background-color: var(--off-white);
-    width: 20%;
+    width: 384px;
+    max-height: calc(100vh - 150px); /* 150px = 50px main-nav + 40px sub-nav + 60px footer */
+}
+
+.sidebar-box {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar-box-resizable {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 50%;
+    resize: vertical;
+    overflow: auto;
+    max-height: 80%;
+    padding: 0 0.85rem;
+}
+
+/* Node Information */
+
+.node-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.box-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.node-info-text {
+    color: var(--dark-grey);
+    padding: 0 1.85rem 0.45rem 1.85rem;
 }
 
 footer {
@@ -148,6 +211,7 @@ footer {
     width: 100%;
     max-height: 60px;
     background-color: var(--off-white);
+    z-index: 99;
 }
 
 .footer-content {
@@ -164,22 +228,7 @@ footer p {
     font-size: 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Modal classes */
 .modal-bg {
     width: 100%;
     height: 100%;
@@ -409,14 +458,7 @@ footer p {
     box-shadow: inset 7px 10px 12px #f0f0f0;
 }
 
-
-
-
-
-
-
-
-
+/* Styling for tags */
 .chip {
     display: inline-block;
     height: 30px;
@@ -484,6 +526,10 @@ footer p {
     width: 120px !important;
 }
 
+.chips .input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
 .chips .input:focus {
     border: 0 !important;
     -webkit-box-shadow: none !important;
@@ -530,7 +576,6 @@ footer p {
     padding: 5px;
 }
 
-
 .dropdown-content > li:hover {
     background-color: var(--unfocus-blue);
 }
@@ -539,7 +584,317 @@ footer p {
     color: var(--white);
 }
 
-/* Autocomplete */
 .autocomplete-content li .highlight {
     color: var(--focus-blue);
+}
+
+/* Row */
+.row {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.row .col.s12 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+.row .col {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0.85rem;
+    min-height: 1px;
+}
+
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.row .col.s3 {
+    width: 50%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+/* Tabs */
+.tabs {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    background-color: var(--off-white);
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+.tabs.tabs-transparent {
+    background-color: transparent;
+}
+
+.tabs.tabs-transparent .tab a,
+.tabs.tabs-transparent .tab.disabled a,
+.tabs.tabs-transparent .tab.disabled a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs.tabs-transparent .tab a:hover,
+.tabs.tabs-transparent .tab a.active {
+    color: #fff;
+}
+
+.tabs.tabs-transparent .indicator {
+    background-color: #fff;
+}
+
+.tabs.tabs-fixed-width {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.tabs.tabs-fixed-width .tab {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.tabs .tab {
+    display: inline-block;
+    text-align: center;
+    line-height: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.tabs .tab a {
+    color: var(--dark-grey);
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-transition: color .28s ease, background-color .28s ease;
+    transition: color .28s ease, background-color .28s ease;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: var(--silver-transparent);
+    outline: none;
+}
+
+.tabs, .tabs .tab a.active {
+    background-color: transparent;
+    color: var(--dark-grey);
+}
+
+.tab a:hover {
+    color: var(--focus-blue);
+}
+
+.tabs .tab.disabled a,
+.tabs .tab.disabled a:hover {
+    color: rgba(238, 110, 115, 0.4);
+    cursor: default;
+}
+
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--silver);
+    will-change: left, right;
+}
+
+@media only screen and (max-width: 992px) {
+    .tabs {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    .tabs .tab {
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+    }
+    .tabs .tab a {
+        padding: 0 12px;
+    }
+}
+
+/* Slide menu */
+.sidenav {
+    position: fixed;
+    width: 250px;
+    left: 0;
+    margin: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    height: calc(100% - 150px);
+    background-color: var(--off-white);
+    z-index: 9;
+    overflow-y: auto;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);
+}
+
+.sidenav.right-aligned {
+    right: 0;
+    -webkit-transform: translateX(105%);
+    transform: translateX(105%);
+    left: auto;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.sidenav .collapsible {
+    margin: 0;
+}
+
+
+
+/* Highlights the active li element */
+.sidenav li.active {
+
+}
+
+/* Styles li a elements */
+.sidenav li > a, label {
+    color: var(--dark-grey);
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    height: 48px;
+    padding: 0 0.85rem;
+}
+
+.sidenav li > a {
+    line-height: 48px;
+}
+
+.sidenav li > label {
+    cursor: pointer;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+/* Height of last dropdown element before hr */
+.sidenav li:last-child {
+    line-height: 48px;
+    height: 48px;
+}
+
+.sidenav li > label:hover {
+    color: var(--focus-dark-grey);
+}
+
+/* Important: Can highlight all li elements (header and body) */
+.sidenav li > a:hover {
+
+}
+
+
+/* Arrow Icon Sytling */
+.sidenav li > a > i,
+.sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"],
+.sidenav li > a > i.material-icons {
+    float: right;
+    height: 48px;
+    line-height: 48px;
+    width: 24px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* Maybe for ident of li elements */
+.sidenav .collapsible-body {
+    padding: 0;
+}
+
+/* Dark overlay should not be visible */
+.sidenav-overlay {
+    height: 0px;
+    width: 0px;
+}
+
+.sidenav-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidenav-margin {
+    margin: 0 0.85rem 0.85rem 0.85rem;
+}
+
+/* Collapsible */
+
+.no-padding {
+    padding: 0 !important;
+}
+
+/* Needed for materialize.js */
+.collapsible {
+}
+
+.collapsible-header {
+    cursor: pointer;
+}
+
+.collapsible-header:focus {
+    outline: 0;
+}
+
+.collapsible-body {
+    display: none;
+    box-sizing: border-box;
+}
+
+.checkbox-collapsible {
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+}
+
+.checkbox-text {
+    padding-left: 0.85rem;
+}
+
+.hr-collapse {
+    margin: 0 0.85rem;
+}
+
+/* Helper Classes */
+.bold-text {
+    font-weight: bold;
+}
+
+.text-align-justify {
+    text-align: justify;
+}
+
+.margin-top {
+    margin-top: 0.85rem;
 }
