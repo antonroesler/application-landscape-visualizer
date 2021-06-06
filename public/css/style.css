@@ -45,7 +45,7 @@ body {
     height: 100%;
 }
 
-li, a, p, h1, h3, button, select, input, span, textarea {
+li, a, p, h1, button, select, input, span, textarea {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
@@ -60,7 +60,15 @@ h2 {
     font-weight: 500;
     align-self: center;
     padding: 0.85rem 0;
+}
 
+h3 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 16px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
 }
 
 span {
@@ -849,7 +857,9 @@ ul:not(.browser-default) {
     margin: 0 0.85rem 0.85rem 0.85rem;
 }
 
-/* Collapsible */
+
+/* Collapsible
+   ========================================================================== */
 
 .no-padding {
     padding: 0 !important;
@@ -898,6 +908,84 @@ ul:not(.browser-default) {
 .margin-top {
     margin-top: 0.85rem;
 }
+
+
+/* Collection
+   ========================================================================== */
+
+.collection {
+    margin: 1rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.collection .collection-item {
+    background-color: var(--white);
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: var(--dark-grey);
+    cursor: pointer;
+}
+
+.collection-item:not(.active):hover {
+    background-color: #f3f3f3 !important;
+}
+
+.collection-item:hover {
+    color: var(--unfocus-blue) !important;
+}
+
+
+.collection .collection-item.active {
+    background-color: var(--silver);
+    color: var(--dark-grey);
+}
+
+.secondary-content {
+    float: right;
+    color: var(--focus-dark-grey);
+}
+
+.secondary-content i:hover {
+    color: var(--unfocus-blue);
+}
+
+
+/* Badge
+   ========================================================================== */
+
+span.badge {
+    min-width: 3rem;
+    padding: 0 6px;
+    margin-left: 14px;
+    margin-right: 180px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 22px;
+    height: 22px;
+    color: #757575;
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+span.badge.new {
+    font-weight: 300;
+    font-size: 0.6rem;
+    color: #fff;
+    background-color: var(--focus-blue);
+    border-radius: 2px;
+}
+
+.left {
+    float: left;
+    margin-right: 6px;
+}
+
 
 /* Material Icon */
 .material-icons {
