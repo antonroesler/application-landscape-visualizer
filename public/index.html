@@ -183,7 +183,7 @@
         <!-- Slide Menu -->
         <ul id="slide-out" class="sidenav">
             <div class="sidenav-box">
-                <h2>Filter<i class="material-icons tooltipped" data-position="right" data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all nodes when there is a match in<br> one of the selected checkboxes.">info_outline</i></h2>
+                <h2>Filter<i class="material-icons material-icons-small tooltipped" data-position="right" data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all nodes which have a matching<br>value in one of the selected checkboxes.">info_outline</i></h2>
                 <form id="sidenavForm" class="sidenav-form" action="" onsubmit="return false">
                 <input autocomplete="off" class="input-text sidenav-margin" id="filterName" placeholder="Filter Name: " type="text"/>
                 <hr class="hr-collapse">
@@ -218,19 +218,12 @@
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
-                        <!--
-                        <h4 class="sidebarHeading"> - Filters - </h4>
-                        Choose Filter:
-                        <select class="navButton" id="filterSelect"></select>
-                        <button class="navButton" onclick="filterDiagramFromSelect()">Filter</button>
-                        <button class="navButton" onclick="filterOff()">Filter OFF</button>
-                        -->
                         <ul id="filterCollection" class="collection">
                             <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
                                 <div>Add filter
                                     <i class="material-icons left">add_circle_outline</i>
                                     <a href="" class="secondary-content">
-                                        <i class="material-icons">info_outline</i>
+                                        <i class="material-icons tooltipped" data-position="left" data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like a <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
                                     </a>
                                 </div>
                             </li>
