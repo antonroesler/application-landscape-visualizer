@@ -28,6 +28,7 @@ function filterOff() {
     diagram.commitTransaction("filter removed");
 }
 
+
 /**
  * Reads user input from modal and creates a filter.
  */
@@ -42,6 +43,7 @@ function filterDiagramFromModal() {
     }
 }
 
+
 /**
  * Reads the selected value from filter dropdown and applies that filter to the model.
  */
@@ -50,6 +52,7 @@ function filterDiagramFromSelect() {
     filters = findFilter(selectedFilter);
     applyFilter(filters[0]);
 }
+
 
 /**
  * Applies a filter to the model.
@@ -75,8 +78,9 @@ function applyFilter(f) {
     }
 }
 
+
 /**
- * Applies a and filter when there is more than one chosen 
+ * Applies a and filter when there is more than one chosen
  */
 function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
     nextFilterArray = filterAppNodes(nextFilter);
@@ -89,6 +93,7 @@ function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
     }
 
 }
+
 
 /**
  * Rearranges nodeDataArray according to the filter properties
@@ -115,8 +120,9 @@ function filterAppNodes(filter) {
     return filterNodeArray;
 }
 
+
 /**
- * updates the diagram model 
+ * updates the diagram model
  */
 function activateFilter(filterNodeArray) {
     diagram.startTransaction();
@@ -124,6 +130,7 @@ function activateFilter(filterNodeArray) {
     diagram.commitTransaction("filter node applied");
     return filterNodeArray;
 }
+
 
 /**
  * Removes all links from the linkDataArray that aren't valid.
@@ -160,6 +167,12 @@ function nodeWithKeyExists(key, nodeArray) {
     return len > 0;
 }
 
+
+/**
+ * Function which checks, if an filterName already exists.
+ * @param enteredName
+ * @return {boolean}
+ */
 function checkFilterNameExists(enteredName) {
     for (element of allFilter) {
         if (element.name === enteredName) {
@@ -182,7 +195,7 @@ function removeFilterFromArray(filterName) {
     console.log(allFilter);
 }
 /**
- * returns a filtered array with the wanted filter 
+ * Returns a filtered array with the wanted filter
  */
 function findFilter(filterName) {
     const filters = allFilter.filter(obj => {
@@ -191,6 +204,12 @@ function findFilter(filterName) {
     return filters;
 }
 
+
+/**
+ * Function which generates a filterElement (li-tag) for the given filter.
+ * @param filter Filter object which contains information how the diagram should be filtered.
+ * @return {HTMLLIElement} Returns an filterElement.
+ */
 function generateFilterElement(filter) {
     let li = document.createElement("li");
     let div = document.createElement("div");
@@ -205,12 +224,12 @@ function generateFilterElement(filter) {
     i.setAttribute("class", "material-icons");
 
     li.onclick = function (event) {
-        event
-            .stopPropagation(); changeFilterActivation(filter.name);
+        event.stopPropagation();
+        changeFilterActivation(filter.name);
     };
+
     i.onclick = function (event) {
         event.stopPropagation();
-        alert("Function to delete specific filter needs to be added");
         deleteFilterElementFromFilterCollection(filter.name);
     }
 
@@ -226,12 +245,23 @@ function generateFilterElement(filter) {
     return li;
 }
 
+
+/**
+ * Function which takes a filterElement (li-tag) as parameter and appends the filterElement to the filter collection.
+ * @param {HTMLLIElement}filterElement Is a li-tag.
+ */
 function appendFilterCollection(filterElement) {
-    document.getElementById("zeroFilterElement").style.display = "none";
     const collection = document.getElementById("filterCollection");
     collection.appendChild(filterElement);
 }
 
+
+/**
+ * This function checks if the filterElement for the given parameter filterName is already acitve or not.
+ * If active: Deactivate.
+ * If deactivated: Activate.
+ * @param filterName Is a string which identifies the filterElement.
+ */
 function changeFilterActivation(filterName) {
     const filterElement = document.getElementById(filterName);
     const activeBadge = filterElement.querySelector("span");
@@ -246,27 +276,26 @@ function changeFilterActivation(filterName) {
     // Enable filter
     else {
         // Function to activate filter needs to be added
+        filters = findFilter(filterName);
+        applyFilter(filters[0]);
 
         let span = document.createElement("span");
         span.setAttribute("class", "new badge");
         span.innerHTML = "Active";
         filterElement.querySelector("a").appendChild(span);
         filterElement.classList.add("active");
-        filters = findFilter(filterName);
-        applyFilter(filters[0]);
-
     }
-
 }
 
+
+/**
+ * Function which deletes the filterElement (li-tag) from the filter collection for the given parameter filterName.
+ * @param {String} filterName Is a string which identifies the filterElement.
+ */
 function deleteFilterElementFromFilterCollection(filterName) {
     const collection = document.getElementById("filterCollection");
     const filterElement = document.getElementById(filterName);
     collection.removeChild(filterElement);
     filterOff();
     removeFilterFromArray(filterName);
-
-    if (collection.childElementCount === 1) {
-        document.getElementById("zeroFilterElement").style.display = "list-item";
-    }
 }
