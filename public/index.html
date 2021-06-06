@@ -62,7 +62,7 @@
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
-                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Apply Filter</a></li>
+                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
                 </ul>
             </nav>
         </div>
@@ -191,7 +191,7 @@
                 <ul id="collapsible" class="collapsible">
                 </ul>
             </li>
-                    <button class="modal-btn sidenav-margin margin-top" onclick="filterDiagramFromModal(); openSidenav();">Apply</button>
+                    <button class="modal-btn sidenav-margin margin-top" onclick="filterDiagramFromModal(); openSidenav();">Add</button>
                     <button class="modal-btn-cancel sidenav-margin" onclick="openSidenav()">Cancel</button>
                 </form>
             </div>
@@ -223,7 +223,7 @@
                                 <div>Add filter
                                     <i class="material-icons left">add_circle_outline</i>
                                     <a href="" class="secondary-content">
-                                        <i class="material-icons tooltipped" data-position="left" data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an<b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
+                                        <i class="material-icons tooltipped" data-position="left" data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
                                     </a>
                                 </div>
                             </li>
