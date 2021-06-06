@@ -20,6 +20,7 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
     <meta charset="UTF-8">
     <title>Application Landscape Visualizer</title>
@@ -51,16 +52,17 @@
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create Diagram</button></a>
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
+                    Diagram</button></a>
         </div>
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
                     <li><a href="#" onclick="openCreateNodeModal();">Create Node</a></li>
                     <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
-                    <li><a href="#">Undo</a></li>
-                    <li><a href="#">Redo</a></li>
-                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
+                    <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
+                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Apply Filter</a></li>
                 </ul>
             </nav>
         </div>
@@ -74,9 +76,10 @@
             <div class="modal-content">
                 <h2>Create new Node.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
-                    <input type="hidden" id="contextMenu"/>
-                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text"/>
-                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription" placeholder="Description: " type="text"></textarea>
+                    <input type="hidden" id="contextMenu" />
+                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text" />
+                    <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
+                        placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
                         <input list="inputLicenceDropdown" autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
                         <datalist id="inputLicenceDropdown"></datalist>
@@ -105,12 +108,11 @@
                     </div>
                     <span class="dropdown-description">Application Type:</span>
                     <select class="input-dropdown" id="inputCategory" placeholder="Application Type: " type="text">
-                        <option value="Database">Database</option>
-                        <option value="Application">Application</option>
-                        <option value="Component">Component</option>
-                        <option value="Stuff">Stuff</option>
-                        <option value="More Stuff">More Stuff</option>
-                        <option value="Epic Stuff">Epic Stuff</option>
+                        <option value="BI">BI</option>
+                        <option value="CRM">CRM</option>
+                        <option value="EMS">EMS</option>
+                        <option value="ERP">ERP</option>
+                        <option value="GEN">GEN</option>
                     </select>
                     <button class="modal-btn" onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
                     <button class="modal-btn-cancel" onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
@@ -162,6 +164,7 @@
     <div class="modal-bg" id="saveDiagramModal">
         <div class="modal-popup">
             <div class="modal-close" onclick="closeModal()">+</div>
+
         <div class="modal-content">
             <h2>Save your Diagram.</h2>
             <form class="modal-form" action="" onsubmit="return false">
@@ -171,12 +174,12 @@
                 <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
             </form>
         </div>
+
         </div>
     </div>
-
-
+  
     <div class="main-content">
-
+      
         <!-- Slide Menu -->
         <ul id="slide-out" class="sidenav">
             <div class="sidenav-box">
@@ -193,13 +196,11 @@
                 </form>
             </div>
         </ul>
-
-
         <div id="diagramDiv"></div>
-
 
         <!-- Sidebar Right -->
         <div class="sidebar-right">
+
             <!-- Upper 50% of sidebar -->
           <div class="sidebar-box-resizable" >
               <h2>Node Information</h2>
@@ -236,11 +237,24 @@
                         </ul>
 
                     </div>
-                    <div id="visualizationTab" class="col s12">Test 2</div>
+                    <div id="visualizationTab" class="col s12">
+                        <select name="color-attribute" id="color-attribute" style="color: black">
+                            <option value="category">App. Type</option>
+                            <option value="license">License</option>
+                            <option value="version">Version</option>
+                            <option value="name">Name</option>
+                            <option value="profOwner">Prof. Owner</option>
+                            <option value="techOwner">Tech. Owner</option>
+                            <option value="tags">Tag</option>
+                            <option value="departments">Department</option>
+                        </select>
+                        <button id="apply-color" onclick="applyUserColorSetting()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply Color</button>
+                        <button id="remove-color" onclick="removeColorFromAllNodes()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove Color</button>
+
+                    </div>
                 </div>
             </div>
       </div>
-
     </div>
 
 
@@ -272,6 +286,7 @@
 <script src="js/searchbar.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
+<script src="js/colorNodesSetting.js"></script>
+<script src="js/visualisation.js"></script>
 
 </html>
-

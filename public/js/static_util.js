@@ -133,22 +133,34 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
     return filteredNodeSelectableAttributes;
 }
 
+/**
+* Not in use. DELETE.
+*/
 /** function to read filter properties*/
 function readFilterProperties() {
     const filterName = document.getElementById("filterName").value;
-    const filterInputFields = ["filterCategory", "filterTags", "filterVersion", "filterDepartment", "filterUsers", "filterLicense"];
+    const filterInputFields = ["filterCategory", "inputTags", "filterVersion", "inputDepartments", "filterUsers", "filterLicense"];
     const filter = {};
     filter.name = filterName;
     filter.properties = {};
     filterInputFields.forEach(function (property) {
         const value = document.getElementById(property).value;
+        if (property === "inputTags" || property === "inputDepartments") {
+            const chipValue = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById(property)).chipsData);
+            if (chipValue) {
+                filter.properties[property] = chipValue;
+            }
+        }
         if (value) {
             // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+
             filter.properties[property.replace("filter", "").toLowerCase()] = value;
         }
     });
+    console.log(filter.properties);
     return filter;
 }
+
 
 /**
  * Generates a random number which imitates to be unique.
@@ -166,5 +178,23 @@ function deleteHtmlChilds(HTMLElement) {
     while (HTMLElement.childNodes.length > 1) {
         HTMLElement.removeChild(HTMLElement.lastChild);
     }
+}
+
+/**
+* Not in use. DELETE.
+*/
+function readSettingProperties() {
+    const settingInputFields = ["DatabaseColor", "ComponentColor", "ApplicationColor", "StuffColor", "More StuffColor", "Epic StuffColor"];
+    const setting = {};
+    setting.properties = {};
+    settingInputFields.forEach(function (property) {
+        const value = document.getElementById(property).value;
+        if (value) {
+            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
+            setting[property.replace("Color", "")] = value;
+        }
+    });
+    settings[0] = setting;
+    return setting;
 }
 

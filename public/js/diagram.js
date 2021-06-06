@@ -45,7 +45,7 @@ function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
-    const newNode = {
+    var newNode = {
         key: data._id,
         name: data.name,
         category: data.category,
@@ -63,8 +63,10 @@ function addNodeToDiagram(data) {
         //color: color
     };
     model.addNodeData(newNode);
+    applyColorWhenNodeCreated(newNode);
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
+    console.log(newNode);
     modelNodeWithoutFilter = model.nodeDataArray;
 }
 

@@ -82,13 +82,13 @@ function generateCollapsibleBody(nodeAttribute) {
     div.appendChild(ul);
 
     for (let value of nodeAttributeValues) {
-        if(value === undefined) {
+        if (value === undefined) {
             value = "Undefined";
         }
         let li = document.createElement("li");
         let label = document.createElement("label");
         let input = document.createElement("input");
-        let id =  value.replace(/\s/g, "") + "_" + uniqueID();
+        let id = value.replace(/\s/g, "") + "_" + uniqueID();
 
         input.setAttribute("type", "checkbox");
         input.setAttribute("id", `${id}`);
@@ -113,22 +113,33 @@ function generateCollapsibleBody(nodeAttribute) {
  */
 function readFilterPropertiesFromSideNav() {
     const checkboxes = document.querySelectorAll(".checkbox-collapsible:checked");
-    let filterObject = {
-        name: document.getElementById("filterName").value,
-        properties: {}
-    };
+    const filterName = document.getElementById("filterName").value;
+    if (filterName === "") {
+        alert("Please enter a name for the filter");
+        return null;
+    } else if (checkFilterNameExists(filterName)) {
+        alert("Name already exists");
+        return null;
+    } else {
 
-    for (const checkbox of checkboxes) {
-        const attributeKey = checkbox.getAttribute("value");
 
-        if (attributeKey in filterObject.properties) {
-            filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
-        } else {
-            filterObject.properties[attributeKey] = [];
-            filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
+        let filterObject = {
+            name: filterName,
+            properties: {}
+        };
+
+        for (const checkbox of checkboxes) {
+            const attributeKey = checkbox.getAttribute("value");
+
+            if (attributeKey in filterObject.properties) {
+                filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
+            } else {
+                filterObject.properties[attributeKey] = [];
+                filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
+            }
         }
+        return filterObject;
     }
-    return filterObject;
 }
 
 
@@ -136,7 +147,7 @@ function readFilterPropertiesFromSideNav() {
  * Function which generates the content of the sidenav, opens and closes the sidenav.
  */
 function openSidenav() {
-    if(!sidenav.isOpen) {
+    if (!sidenav.isOpen) {
         generateCollapsible();
         sidenav.open();
     }
