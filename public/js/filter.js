@@ -166,7 +166,6 @@ function generateFilterElement(filter) {
 }
 
 function appendFilterCollection(filterElement) {
-    document.getElementById("zeroFilterElement").style.display = "none";
     const collection = document.getElementById("filterCollection");
     collection.appendChild(filterElement);
 }
@@ -198,8 +197,4 @@ function deleteFilterElementFromFilterCollection(filterName) {
     const collection = document.getElementById("filterCollection");
     const filterElement = document.getElementById(filterName);
     collection.removeChild(filterElement);
-
-    if(collection.childElementCount === 1) {
-        document.getElementById("zeroFilterElement").style.display = "list-item";
-    }
 }
