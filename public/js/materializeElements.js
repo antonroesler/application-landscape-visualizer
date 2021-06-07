@@ -57,5 +57,10 @@ document.addEventListener("DOMContentLoaded", function() {
     M.Collapsible.init(collapsibleElement, {
         accordion: false
     });
+
+    // Initialization of the tooltip element.
+    let tooltipElement = document.querySelectorAll('.tooltipped');
+    M.Tooltip.init(tooltipElement, {}
+    );
 });
 

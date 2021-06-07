@@ -81,12 +81,13 @@ hr {
 
 
 .logo {
-/*    cursor: pointer; */
     max-height: 20px;
     margin-right: auto;
 }
 
-/* Upper menu bar for creating, saving and loading diagram */
+
+/* Navigation
+   ========================================================================== */
 .main-nav {
     display: flex;
     justify-content: space-between;
@@ -97,7 +98,6 @@ hr {
     background-color: var(--dark-grey);
 }
 
-/* Lower menu bar to perform actions on the diagram */
 .sub-nav {
     display: flex;
     justify-content: center;
@@ -146,6 +146,9 @@ hr {
     background-color: var(--focus-blue);
 }
 
+
+/* Main Content and Diagram
+   ========================================================================== */
 .main-content {
     display: flex;
     flex: 1; /* The div grows as much as it can: body height 100vh */
@@ -162,7 +165,9 @@ hr {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 }
 
-/* Sidebar Right */
+
+/* Sidebar
+   ========================================================================== */
 .sidebar-right {
     display: flex;
     flex-direction: column;
@@ -189,7 +194,6 @@ hr {
 }
 
 /* Node Information */
-
 .node-info-container {
     display: flex;
     flex-direction: column;
@@ -209,6 +213,8 @@ hr {
     padding: 0 1.85rem 0.45rem 1.85rem;
 }
 
+/* Footer
+   ========================================================================== */
 footer {
     display: flex;
     flex-direction: column;
@@ -236,7 +242,8 @@ footer p {
     font-size: 10px;
 }
 
-/* Modal classes */
+/* Modal
+   ========================================================================== */
 .modal-bg {
     width: 100%;
     height: 100%;
@@ -419,36 +426,9 @@ footer p {
 
 }
 
-/* All three following styles can be deleted if all modals are changed */
-.modalDialog {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 99999;
-    opacity: 0;
-    transition: all 0.2s ease 0s;
-    pointer-events: None;
-}
 
-.modalDialog:target {
-    opacity: 1;
-    pointer-events: Auto;
-    border-radius: 18px;
-}
-
-.modalDialog > div {
-    width: 30%;
-    position: relative;
-    margin: 10% Auto;
-    padding: 5px 20px 13px 20px;
-    border-radius: 0px 0px 0px 10px;
-    background-color: #FFFFFF;
-
-    cursor: Default;
-}
-
-/* Custom scrollbar */
+/* Scrollbar
+   ========================================================================== */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -466,7 +446,8 @@ footer p {
     box-shadow: inset 7px 10px 12px #f0f0f0;
 }
 
-/* Styling for tags */
+/* Tags
+   ========================================================================== */
 .chip {
     display: inline-block;
     height: 30px;
@@ -534,8 +515,9 @@ footer p {
     width: 120px !important;
 }
 
+
 .chips .input::-webkit-calendar-picker-indicator {
-    display: none;
+    display: none !important;
 }
 
 .chips .input:focus {
@@ -554,7 +536,6 @@ footer p {
     -webkit-transform: translateY(-140%);
     transform: translateY(-140%);
 }
-
 
 .input-field {
     position: relative;
@@ -596,7 +577,8 @@ footer p {
     color: var(--focus-blue);
 }
 
-/* Row */
+/* Row
+   ========================================================================== */
 .row {
     margin-left: auto;
     margin-right: auto;
@@ -630,7 +612,8 @@ ul:not(.browser-default) {
     right: auto;
 }
 
-/* Tabs */
+/* Tabs
+   ========================================================================== */
 .tabs {
     position: relative;
     overflow-x: hidden;
@@ -744,7 +727,8 @@ ul:not(.browser-default) {
     }
 }
 
-/* Slide menu */
+/* Sidenav
+   ========================================================================== */
 .sidenav {
     position: fixed;
     width: 250px;
@@ -774,13 +758,6 @@ ul:not(.browser-default) {
 
 .sidenav .collapsible {
     margin: 0;
-}
-
-
-
-/* Highlights the active li element */
-.sidenav li.active {
-
 }
 
 /* Styles li a elements */
@@ -813,12 +790,6 @@ ul:not(.browser-default) {
 .sidenav li > label:hover {
     color: var(--focus-dark-grey);
 }
-
-/* Important: Can highlight all li elements (header and body) */
-.sidenav li > a:hover {
-
-}
-
 
 /* Arrow Icon Sytling */
 .sidenav li > a > i,
@@ -957,7 +928,6 @@ ul:not(.browser-default) {
 
 /* Badge
    ========================================================================== */
-
 span.badge {
     min-width: 3rem;
     padding: 0 6px;
@@ -984,4 +954,49 @@ span.badge.new {
 .left {
     float: left;
     margin-right: 6px;
+}
+
+
+/* Material Icon */
+.material-icons-small {
+    font-size: 22px !important;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Tooltip (not goJS tooltip)
+   ========================================================================== */
+.material-tooltip {
+    padding: 10px 8px;
+    font-size: 12px;
+    z-index: 99999;
+    background-color: transparent;
+    border-radius: 12px;
+    color: var(--white);
+    min-height: 36px;
+    line-height: 120%;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    max-width: calc(100% - 4px);
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    visibility: hidden;
+    background-color: var(--dark-grey);
+    font-family: "Montserrat", sans-serif;
+}
+
+.backdrop {
+    position: absolute;
+    opacity: 0;
+    height: 7px;
+    width: 14px;
+    border-radius: 0 0 50% 50%;
+    background-color: var(--dark-grey);
+    z-index: -1;
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+    visibility: hidden;
 }
