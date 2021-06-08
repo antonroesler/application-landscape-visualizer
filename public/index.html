@@ -42,9 +42,13 @@
     <header>
         <div class="main-nav">
             <img class="logo" src="img/logo/ecore_logo.png">
-            <form>
-                <input id="searchbar" oninput="searchbarInput()" type="text" style="height: 1.8rem;border-radius: 2rem; border:0;padding-left: 1rem; color: black; outline: none;">
-            </form>
+            <div class="search">
+                <i id="searchIcon" class="material-icons search-icon hovered" onclick="toggleSearchbar()">search</i>
+                <div class="input-search">
+                    <input id="searchbar" oninput="searchbarInput()" type="text" placeholder="Search nodes" autocomplete="off">
+                </div>
+                <i class="material-icons search-icon" onclick="resetSearchInput()">close</i>
+            </div>
             <nav>
                 <ul class="nav-links">
                     <li><a href="#" onclick="openLayoutModal()">Auto Layout</a></li>
