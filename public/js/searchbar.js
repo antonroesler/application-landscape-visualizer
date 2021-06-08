@@ -1,4 +1,19 @@
+/*
+* Copyright (c) 2021 Ecore. All rights reserved.
+*
+* University:        Frankfurt University of Applied Sciences
+* Study program:     Engineering Business Information Systems
+* Module:            Advanced Programming 2021
+* Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
+* Date:              21.04.2021
+*
+*/
 
+/**
+ * Contains functions to handle all events that deal with the searchbar.
+ *
+ * @author Leonard Husske, Anton Roesler
+ */
 
 function searchbarInput(){
     const searchtext = document.getElementById("searchbar").value
@@ -27,7 +42,7 @@ function toggleSearchbar() {
 
     search.classList.toggle("active-s");
     input.focus();
-};
+}
 
 
 /**
@@ -35,5 +50,6 @@ function toggleSearchbar() {
  */
 function resetSearchInput() {
     document.getElementById("searchbar").value = "";
-    removeStrokeFromAllNodesInDiagram();
-};
+    makeAllNodesFullOpacity();
+    setLinkOpacity();
+}
