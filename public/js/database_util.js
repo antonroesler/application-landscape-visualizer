@@ -58,11 +58,19 @@ async function saveDiagramToMongo(diagramName) {
     res.json().then(msg => console.log(msg))
 }
 
+function saveDiagram() {
+    try {
+        _saveDiagram().then(r => createToast("Diagram saved.", "success"));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 /**
  * Starts user dialog to save/overwrite diagram.
  * @returns {Promise<void>}
  */
-async function saveDiagram() {
+async function _saveDiagram() {
     const diagramName = document.getElementById("saveName").value;
     const x = await fetch(urljoin(URL, 'mongo/diagram/names'));
     const names = await x.json();
@@ -72,6 +80,8 @@ async function saveDiagram() {
             const delurl = urljoin(URL, "mongo", diagramName);
             await fetch(delurl, {method:'DELETE'})
             await saveDiagramToMongo(diagramName)
+        } else {
+
         }
     } else { // If name doesnt yet exists in DB, the diagram is simply saved.
         await saveDiagramToMongo(diagramName);
