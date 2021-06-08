@@ -28,11 +28,21 @@ function filterOff() {
     diagram.commitTransaction("filter removed");
 }
 
+function filterDiagramFromSidenav() {
+    try {
+        _filterDiagramFromSidenav();
+        createToast("Filter added.", "success");
+    } catch (e) {
+        console.log(e);
+        createToast(e, "fail");
+    }
+}
+
 
 /**
  * Reads user input from modal and creates a filter.
  */
-function filterDiagramFromModal() {
+function _filterDiagramFromSidenav() {
     const filter = readFilterPropertiesFromSideNav();
     if (filter === null) {
 
@@ -41,16 +51,6 @@ function filterDiagramFromModal() {
         appendFilterCollection(generateFilterElement(filter));
         applyFilter(filter);
     }
-}
-
-
-/**
- * Reads the selected value from filter dropdown and applies that filter to the model.
- */
-function filterDiagramFromSelect() {
-    const selectedFilter = document.getElementById("filterSelect").value;
-    filters = findFilter(selectedFilter);
-    applyFilter(filters[0]);
 }
 
 
