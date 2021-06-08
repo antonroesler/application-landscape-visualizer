@@ -60,7 +60,7 @@ async function saveDiagramToMongo(diagramName) {
 
 function saveDiagram() {
     try {
-        _saveDiagram().then(r => createToast("Diagram saved.", "success"));
+        _saveDiagram().then(r => createToast("Diagram saved.", "success")).catch(error => createToast(error, "fail"));
     } catch (e) {
         console.log(e);
     }
@@ -81,7 +81,7 @@ async function _saveDiagram() {
             await fetch(delurl, {method:'DELETE'})
             await saveDiagramToMongo(diagramName)
         } else {
-
+            throw "Saving canceled."
         }
     } else { // If name doesnt yet exists in DB, the diagram is simply saved.
         await saveDiagramToMongo(diagramName);
