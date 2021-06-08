@@ -74,6 +74,18 @@ function addNodeToDiagram(data) {
  * Delete selected node from nodeDataArray.
  */
 function deleteNode() {
+    try {
+        _deleteNode();
+        createToast("Node deleted.", "warning");
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+/**
+ * Worker function which actually deletes the node from nodeDataArray.
+ */
+function _deleteNode() {
     const id = diagram.selection.toArray()[0].key;
     const node = diagram.findNodeForKey(id);
     diagram.startTransaction();
