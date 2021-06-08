@@ -115,8 +115,7 @@ function readFilterPropertiesFromSideNav() {
     const checkboxes = document.querySelectorAll(".checkbox-collapsible:checked");
     const filterName = document.getElementById("filterName").value;
     if (filterName === "") {
-        alert("Please enter a name for the filter");
-        return null;
+        throw "Exception: No value for name. Please enter a name for the filter.";
     } else if (checkFilterNameExists(filterName)) {
         alert("Name already exists");
         return null;
