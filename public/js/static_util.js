@@ -180,4 +180,13 @@ function deleteHtmlChilds(HTMLElement) {
     }
 }
 
+/**
+ * Creates a toast which displays a message. the style of the toast can be chosen with the style parameter.
+ * @param {String} message A String which is displayed in the toast.
+ * @param {String} style Can be either: "success", "warning" or "fail"
+ */
+function createToast(message, style) {
+    M.toast({html: message, classes: `toast-${style}`});
+}
+
 
