@@ -3,16 +3,17 @@
 function searchbarInput(){
     const searchtext = document.getElementById("searchbar").value
     if (searchtext === ""){
-        removeStrokeFromAllNodesInDiagram()
+        makeAllNodesFullOpacity()
     } else {
         model.nodeDataArray.forEach(node => {
             if (node.name.toLowerCase().startsWith(searchtext.toLowerCase())) {
-                addStroke(node)
+                setOpacity(node, 1)
             }
             else {
-                removeStroke(node)
+                setOpacity(node)
             }
         })
     }
+    setLinkOpacity()
 
 }
