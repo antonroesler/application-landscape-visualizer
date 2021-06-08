@@ -32,6 +32,10 @@ function openCreateNodeModal() {
     document.getElementById("createNodeModal").style.display = "flex";
 }
 
+function openExportModal() {
+    document.getElementById("exportModal").style.display = "flex";
+}
+
 
 /**
  * Closes all modals which are displayed.

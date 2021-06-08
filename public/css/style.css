@@ -45,7 +45,7 @@ body {
     height: 100%;
 }
 
-li, a, p, h1, button, select, input, span, textarea {
+li, a, p, h1, button, select, input, span, textarea, label {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
@@ -475,6 +475,27 @@ footer p {
     text-decoration: underline;
 
 }
+
+/* Export Modal specific css */
+#exportModal form > div {
+    display: flex;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    margin: 0.5rem;
+    height: auto;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--silver-transparent);
+}
+#exportModal form > div:last-of-type {
+    border-bottom: none;
+}
+
+#exportModal form > div > label {
+    height: auto;
+    padding-left: 0.2rem;
+}
+
 
 
 /* Scrollbar
@@ -1109,3 +1130,4 @@ span.badge.new {
     color: rgba(101, 96, 66, 0.8);
     background-color: rgba(217, 209, 132, 0.8);
 }
+
