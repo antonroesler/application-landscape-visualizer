@@ -54,6 +54,7 @@
                     <li><a href="#" onclick="openLayoutModal()">Auto Layout</a></li>
                     <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
+                    <li><a href="#" onclick="openExportModal()">Export</a></li>
                 </ul>
             </nav>
             <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
@@ -141,6 +142,33 @@
                         <option value="cir">Circle</option>
                     </select>
                     <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Add</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal-bg" id="exportModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Export Diagram.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <div>
+                        <input type="checkbox" id="exp-png" name="exp-png">
+                        <label for="exp-png">PNG with transparent Background</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="exp-png-white" name="exp-png-white">
+                        <label for="exp-png-white">PNG with white Background</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="exp-svg" name="exp-svg">
+                        <label for="exp-svg">SVG</label>
+                    </div>
+                    <input class="input-text" type="text" placeholder="File Name... (optional)" id="exp-name">
+                    <button class="modal-btn" onclick="exportDiagram(); closeModal();">Download</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
@@ -281,6 +309,7 @@
 <script src="js/static_util.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/searchbar.js"></script>
+<script src="js/exportImg.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
 <script src="js/colorNodesSetting.js"></script>

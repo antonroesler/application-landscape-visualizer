@@ -14,7 +14,7 @@
  * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  */
 
-const URL = 'http://localhost:8000'
+//const URL = 'http://localhost:8000'
 
 const $ = go.GraphObject.make;
 

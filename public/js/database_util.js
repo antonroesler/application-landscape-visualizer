@@ -26,7 +26,7 @@ async function loadDiagram() {
     model.linkDataArray = [];
     diagram.commitTransaction("empty array");
     const name = document.getElementById("loadCategory").value;
-    const url = urljoin(URL, 'mongo/' + name);
+    const url = 'mongo/' + name;
     const res = await fetch(url);
     const loadDiagram = await res.json();
     loadDiagram.nodeDataArray.forEach(node => {
@@ -42,7 +42,7 @@ async function loadDiagram() {
  * @returns {Promise<void>}
  */
 async function saveDiagramToMongo(diagramName) {
-    const url = urljoin(URL, 'mongo');
+    const url = 'mongo';
     const params = {
         headers: {
             'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ function saveDiagram() {
  */
 async function _saveDiagram() {
     const diagramName = document.getElementById("saveName").value;
-    const x = await fetch(urljoin(URL, 'mongo/diagram/names'));
+    const x = await fetch('mongo/diagram/names');
     const names = await x.json();
     if (names.includes(diagramName)){
         const r = confirm("A diagram with that name already exists. Do you want to overwrite it?");
@@ -92,7 +92,7 @@ async function _saveDiagram() {
  * Loads all diagram names that exist in the database as an array.
  */
 async function loadDiagramNames() {
-    const url = urljoin(URL, 'mongo/diagram/names');
+    const url = 'mongo/diagram/names';
     const res = await fetch(url);
     res.json().then(diagrams => {
         let i;
