@@ -180,21 +180,4 @@ function deleteHtmlChilds(HTMLElement) {
     }
 }
 
-/**
-* Not in use. DELETE.
-*/
-function readSettingProperties() {
-    const settingInputFields = ["DatabaseColor", "ComponentColor", "ApplicationColor", "StuffColor", "More StuffColor", "Epic StuffColor"];
-    const setting = {};
-    setting.properties = {};
-    settingInputFields.forEach(function (property) {
-        const value = document.getElementById(property).value;
-        if (value) {
-            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
-            setting[property.replace("Color", "")] = value;
-        }
-    });
-    settings[0] = setting;
-    return setting;
-}
 
