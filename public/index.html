@@ -35,6 +35,7 @@
     <script src="libs/gojs-lib/Figures.js"></script>
     <script src="libs/gojs-lib/icons.js"></script>
     <script src="libs/url-join.js"></script>
+    <script src="libs/chart.js"></script>
 </head>
 
 <body onload="init()">
@@ -275,7 +276,19 @@
                         </select>
                         <button id="apply-color" onclick="applyUserColorSetting()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply Color</button>
                         <button id="remove-color" onclick="removeColorFromAllNodes()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove Color</button>
-
+                        <hr>
+                        <select id="histogram-dropdown" style="color: black">
+                            <option value="category" >App. Type</option>
+                            <option value="license" >License</option>
+                            <option value="profOwner" >Prof. Owner</option>
+                            <option value="techOwner" >Tech. Owner</option>
+                            <option value="tags" >Tag</option>
+                            <option value="departments">Department</option>
+                        </select>
+                        <button id="create-histogram" onclick="renderHistogramHandler()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Create Histogram</button>
+                        <div id="histogram-container" style="width: 100%; height: 100%;">
+                        </div>
+                    
                     </div>
                 </div>
             </div>
@@ -315,5 +328,6 @@
 <script src="js/link_template.js"></script>
 <script src="js/colorNodesSetting.js"></script>
 <script src="js/visualisation.js"></script>
+
 
 </html>
