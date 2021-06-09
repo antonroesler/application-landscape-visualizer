@@ -30,7 +30,7 @@ url-join.js
 materialize.js
 
 #chart.js
-chart.js
+libs/chart.js
 
 # jQuery
 jquery*
