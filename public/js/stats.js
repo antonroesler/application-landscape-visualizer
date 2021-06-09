@@ -15,7 +15,7 @@
  */
 
 
-/* ============== Calculate Histogram Data ============== */
+/* ============== Calculate Histogram Data on Attributes ============== */
 
 /**
  * Returns a Object that shows the distribution of values of the specified attribute. E.g. Departments:
@@ -64,3 +64,41 @@ function addCounter(value, dataObject) {
         dataObject[value] = 1;
     }
 }
+
+/* ============== Calculate Histogram Data on Graph Statistics ============== */
+
+
+/**
+ * Returns the number of parent nodes that a given node has.
+ * @param node
+ * @returns Number of parents of node
+ */
+function numberOfParentNodes(node){
+    const parents = new Set();
+    const node_key = node.key;
+    model.linkDataArray.forEach(link => {
+        if (link.to === node_key){
+            parents.add(link.from);
+        }
+    })
+    return parents.size;
+}
+
+/**
+ * Returns the number of child nodes that a given node has.
+ * @param node
+ * @returns Number of child of node
+ */
+function numberOfChildNodes(node){
+    const parents = new Set();
+    const node_key = node.key;
+    model.linkDataArray.forEach(link => {
+        if (link.from === node_key){
+            parents.add(link.to);
+        }
+    })
+    return parents.size;
+}
+
+
+
