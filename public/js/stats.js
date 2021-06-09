@@ -73,11 +73,11 @@ function addCounter(value, dataObject) {
  * @param node
  * @returns Number of parents of node
  */
-function numberOfParentNodes(node){
+function numberOfParentNodes(node) {
     const parents = new Set();
     const node_key = node.key;
     model.linkDataArray.forEach(link => {
-        if (link.to === node_key){
+        if (link.to === node_key) {
             parents.add(link.from);
         }
     })
@@ -89,11 +89,11 @@ function numberOfParentNodes(node){
  * @param node
  * @returns Number of child of node
  */
-function numberOfChildNodes(node){
+function numberOfChildNodes(node) {
     const parents = new Set();
     const node_key = node.key;
     model.linkDataArray.forEach(link => {
-        if (link.from === node_key){
+        if (link.from === node_key) {
             parents.add(link.to);
         }
     })
@@ -101,29 +101,31 @@ function numberOfChildNodes(node){
 }
 
 
-function renderHistogramHandler(){
+/* ============== Render Histogram ============== */
+
+function renderHistogramHandler() {
     const val = document.getElementById("histogram-dropdown").value;
     renderHistogram(val);
 
 }
 
+var Histogram = null;
 
-async function renderHistogram(attribute){
-    const data=generateHistogramDataObject(attribute)
-
+async function renderHistogram(attribute) {
+    const data = generateHistogramDataObject(attribute)
     const container = document.getElementById("histogram-container");
-    container.innerHTML="";
+    container.innerHTML = "";
     const canvas = document.createElement("canvas");
     canvas.style.height = "100%";
     container.appendChild(canvas);
     const values = [];
-    Object.keys(data).forEach(val=>{
+    Object.keys(data).forEach(val => {
         values.push(data[val])
     })
-    const res = await fetch("color?n="+values.length);
+    const res = await fetch("color?n=" + values.length);
     const colors = await res.json();
-
-    var myChart = new Chart(canvas, {
+    var lastHoveredIndex = null;
+    Histogram = new Chart(canvas, {
         type: "bar",
         data: {
             labels: Object.keys(data),
@@ -131,15 +133,15 @@ async function renderHistogram(attribute){
                 {
                     label: attribute,
                     data: values,
-                    backgroundColor:colors,
-                    borderColor:["rgba(48, 48, 48, 1)"],
+                    backgroundColor: colors,
+                    borderColor: ["rgba(48, 48, 48, 1)"],
                     borderWidth: 2
                 },
             ],
         },
         options: {
-            plugins:{
-                legend:{
+            plugins: {
+                legend: {
                     display: false,
                 }
             },
@@ -148,6 +150,26 @@ async function renderHistogram(attribute){
                     beginAtZero: true,
                 },
             },
-        },
+
+        }
     });
+    canvas.addEventListener('click', clickHandler);
+}
+
+function clickHandler(evt) {
+    const points = Histogram.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, true);
+    if (points.length) {
+        const attr_value = Histogram.data.labels[points[0].index];
+        const attr = document.getElementById('histogram-dropdown').value
+        const attr_name = nodeSelectableAttributes.get(document.getElementById('histogram-dropdown').value)
+        const filter = {
+            name: attr_name + " " + attr_value ,
+            properties: {}
+        }
+        filter.properties[attr] = [attr_value];
+        allFilter.push(filter);
+        appendFilterCollection(generateFilterElement(filter));
+        applyFilter(filter);
+
+    }
 }
