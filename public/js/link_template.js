@@ -23,8 +23,107 @@
 * @author Benedikt Möller
 *        
 */
+function stdLink(){
 
-var linkTemplate =
+new go.Binding("points").makeTwoWay(),
+$(go.Shape,  // the highlight shape, normally transparent
+  { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+$(go.Shape,  // the link path shape
+  { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+  new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+$(go.Shape,  // the arrowhead
+  { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+  new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+
+  {
+    // define a context menu for each node
+    contextMenu: $(
+      "ContextMenu",
+      $(
+        "ContextMenuButton",
+        {
+          "ButtonBorder.fill": "white",
+          _buttonFillOver: "skyblue",
+        },
+        $(go.TextBlock, "change Behaviour"),
+        {
+          click: deleteNode,
+        }
+      )
+      // more ContextMenuButtons would go here
+    ),
+  }
+}
+
+function getLink(){
+
+
+}
+
+var linkTemplateBezier =
+$(go.Link,
+  {
+    routing: go.Link.Normal,
+    curve: go.Link.Bezier,
+    curviness: 30,
+    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+    selectionAdorned: false
+    
+},
+// stdLink()
+new go.Binding("points").makeTwoWay(),
+        $(go.Shape,  // the highlight shape, normally transparent
+          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+        $(go.Shape,  // the link path shape
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+        $(go.Shape,  // the arrowhead
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+  );
+var linkTemplateOrthogonal =
+$(go.Link,
+  {
+    routing: go.Link.Orthogonal,
+    curviness: 30,
+    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+    selectionAdorned: false
+    
+},
+new go.Binding("points").makeTwoWay(),
+        $(go.Shape,  // the highlight shape, normally transparent
+          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+        $(go.Shape,  // the link path shape
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+        $(go.Shape,  // the arrowhead
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+  );
+
+
+var linkTemplateNormal =
+$(go.Link,
+  {
+    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+    selectionAdorned: false
+},
+new go.Binding("points").makeTwoWay(),
+        $(go.Shape,  // the highlight shape, normally transparent
+          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+        $(go.Shape,  // the link path shape
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+        $(go.Shape,  // the arrowhead
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+  );
+
+
+var linkTemplateAvoidsNodes =
     $(go.Link,
         {
             routing: go.Link.AvoidsNodes,
@@ -46,6 +145,35 @@ var linkTemplate =
         $(go.Shape,  // the arrowhead
           { toArrow: "standard", strokeWidth: 0, fill: "gray" },
           new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          new go.Binding("text", "Bandwith"),
+          new go.Binding("text", "Protocol"),
+          new go.Binding("text", "Latency Level"),
+          new go.Binding("text", "Type"),
+
+          {
+            //toolTip is used for the hover function
+            toolTip:
+                    $("ToolTip",
+                        $(go.Panel, "Table",
+                            { defaultAlignment: go.Spot.Left },
+                            $(go.TextBlock, "ID: ", { row: 0, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "key"),
+                                { row: 0, column: 1, margin: 5 }),
+                            $(go.TextBlock, "Bandwith: ", { row: 1, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "Bandwith"),
+                                { row: 1, column: 1, margin: 5 }),
+                            $(go.TextBlock, "Protocol: ", { row: 2, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "Protocol"),
+                                { row: 2, column: 1, margin: 5 }),
+                            $(go.TextBlock, "Latency Level: ", { row: 3, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "Latency Level"),
+                                { row: 3, column: 1, margin: 5 }),
+                            $(go.TextBlock, "Type: ", { row: 4, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "Type"),
+                                { row: 4, column: 1, margin: 5 }),
+                        )
+                    )
+          },
 
           {
             // define a context menu for each node
@@ -84,33 +212,7 @@ var linkTemplate =
 
     );
 
-/* 
-var 10GB_linkTemplate =
-    $(go.Link,
-        {
-            // shorten by the value of thickness 
-            toShortLength: 5, 
-            routing: go.Link.AvoidsNodes,
-            corner: 10,
-            curve: go.Link.JumpOver
-        },
-        // different thickness for e.g.: networkconnection 1gbit, 10gbit, 50 gbit
-        // $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
-        // {toShortLength: 10},
-        $(go.Shape, {strokeWidth: 5 }),  // thick undrawn path
-        // $(go.Shape, {strokeWidth: 10 }),  // thick undrawn path
-        // $(go.Shape, { toArrow: "Standard", scale: "1" }),
-        $(go.Shape, { toArrow: "Standard", scale: "2" }),
-        // $(go.Shape, { toArrow: "Standard", scale: "3" }),
-        
-
-    );
-
-    var linkTemplate = new go.Map();
-    linkTemplate.add("", 1GB_linkTemplate);
-    linkTemplate.add("10", 10GB_linkTemplate);
- */
 
 // var linkTemplateMap = new go.Map();
-// linkTemplateMap.add("", linkTemplate);
+// linkTemplateMap.add("", linkTemplateNormal);
 // linkTemplateMap.add("standard", linkTemplate);

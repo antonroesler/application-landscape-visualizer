@@ -45,24 +45,38 @@ function appendLayoutToDiagram(layout) {
     };
     diagram.startTransaction();
     diagram.layout = $(layouts[layout]);
+    if (layout == "cir") {
+        diagram.linkTemplate = linkTemplateBezier;
+    }else diagram.linkTemplate = linkTemplateAvoidsNodes;
+    diagram.commitTransaction();
+    
+    diagram.startTransaction();
+    diagram.linkTemplate.updateRoute();
     diagram.commitTransaction();
 }
 
+
+/*
+Link Template
+*/
 function linkLayoutModalDialogHandler() {
-    const layout = document.getElementById("linkLayoutOptions").value
-    appendLayoutToDiagram(layout)
+    const linkLayout = document.getElementById("linkLayoutOptions").value
+    appendLinkLayoutToDiagram(linkLayout)
     disableAutomaticLayout()
 }
-function appendLinkLayoutToDiagram(layout) {
-    const layouts = {
-        "tree": go.TreeLayout,
-        "grid": go.GridLayout,
-        "cir": go.CircularLayout,
-        "laydi": go.LayeredDigraphLayout,
-        "forcedir": go.ForceDirectedLayout,
+function appendLinkLayoutToDiagram(linkLayout) {
+    const linkLayouts = {
+        "avoids_nodes": linkTemplateAvoidsNodes,
+        "normal": linkTemplateNormal,
+        "bezier": linkTemplateBezier,
+        "orthogonal": linkTemplateOrthogonal
     };
+    lll = linkLayouts[linkLayout];
+    console.log("hallo welt");
+    console.log("des die nachricht" + lll);
     diagram.startTransaction();
-    diagram.layout = $(layouts[layout]);
+    diagram.linkTemplate = linkLayouts[linkLayout];
+    // diagram.linkTemplate.updateRoute();
     diagram.commitTransaction();
 }
 
