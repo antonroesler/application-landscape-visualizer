@@ -10,12 +10,11 @@
 */
 
 /**
-
  * Index JS defines global JS variables, especially the gojs model
  * @author Leonard Hußke , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
-const URL = 'http://localhost:8000'
+//const URL = 'http://localhost:8000'
 
 const $ = go.GraphObject.make;
 
@@ -25,25 +24,7 @@ const diagram = $(go.Diagram, "diagramDiv",
         "toolManager.hoverDelay": 100
     });
 
-function showMessage(s) {
-    document.getElementById("diagramEventsMsg").textContent = s;
-  }
-
-diagram.addDiagramListener("ObjectSingleClicked",
-    function(e) {
-        let part = e.subject.part;
-        let str = "ID: " + part.data.key + "\nName: " + part.data.nameProperty + "\nCategory: "
-            + part.data.category + "\nDescription: " + part.data.desc + "\nTags: "
-            + part.data.tags + "\nVersion: " + part.data.version + "\nDepartment: "
-            + part.data.departments + "\nAllowed Users: " + "\nLicense: " + part.data.license
-            + "\nLocation: " + part.data.loc + "\nStart Date: " + part.data.startDate
-            + "\nShutdown Date: " + part.data.shutdownDate + "\nProf. Owner: " + part.data.profOwner
-            + "\nTech. Owner: " + part.data.techOwner;
-        if (!(part instanceof go.Link)) showMessage(str);
-    });
-
 const model = $(go.GraphLinksModel);
-
 
 model.linkFromPortIdProperty= "fromPort";  // required information:
 model.linkToPortIdProperty= "toPort";
@@ -54,28 +35,28 @@ model.linkDataArray = [];
 let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
 
+const nodeWidth = 80;
 const initialLayout = diagram.layout;
 
 
 /**
- * Initialise chips for the createNodeModal.
+ * The keys of the nodeSelectableAttributes map are the attributes of a node which are allowed to be seen in the UI.
+ * The values of the nodeSelectableAttributes contain the node attributes which can be shown in the UI and which are in
+ * the right string format.
+ *
+ * @type {Map<string, string>}
  */
-const departmentChips = document.querySelectorAll("#inputDepartments");
-M.Chips.init(departmentChips, {
- /*   autocompleteOptions: {
-        data: {
-            'Youtube':null, // Dummy data
-            'Google':null // Dummy data
-        },
-        limit: Infinity,
-        minlength: 1
-    }, */
-    placeholder: "Department",
-    secondaryPlaceholder: "+tag",
-});
+const nodeSelectableAttributes = new Map([
+    ["name", "Name"],
+    ["desc", "Description"],
+    ["license", "License"],
+    ["version", "Version"],
+    ["departments", "Departments"],
+    ["tags", "Tags"],
+    ["startDate", "Start-Date"],
+    ["shutdownDate", "Shutdown-Date"],
+    ["profOwner", "Professional Owner"],
+    ["techOwner", "Technical Owner"],
+    ["category", "Application Type"]
+]);
 
-const tagChips = document.querySelectorAll("#inputTags");
-M.Chips.init(tagChips, {
-    placeholder: "Your tag",
-    secondaryPlaceholder: "+tag",
-});

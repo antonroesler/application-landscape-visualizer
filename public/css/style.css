@@ -20,8 +20,10 @@
 :root {
     --white: #FFFFFF;
     --off-white: #E8E8E8;
-    --silver: #d2d2d7;
-    --dark-grey: #303030;
+    --silver: rgba(210, 210, 215, 1);
+    --silver-transparent: rgba(210, 210, 215, 0.4);
+    --focus-dark-grey: rgba(48, 48, 48, 0.6);
+    --dark-grey: rgba(48, 48, 48, 1);
     --focus-blue: rgba(20, 124, 229, 1);
     --unfocus-blue: rgba(20, 124, 229, 0.8);
 }
@@ -32,13 +34,18 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    height: 100%;
 }
 
-li, a, p, h1, h2, h3, button, select, input, span, textarea {
+li, a, p, h1, button, select, input, span, textarea, label {
     font-family: "Montserrat", sans-serif;
     color: var(--off-white);
     font-weight: 500;
@@ -46,18 +53,41 @@ li, a, p, h1, h2, h3, button, select, input, span, textarea {
     text-decoration: none;
 }
 
+h2 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 22px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
+}
+
+h3 {
+    font-family: "Montserrat", sans-serif;
+    color: var(--dark-grey);
+    font-size: 16px;
+    font-weight: 500;
+    align-self: center;
+    padding: 0.85rem 0;
+}
+
 span {
     color: var(--dark-grey);
 }
 
+hr {
+    margin: 0 0.85rem 0.85rem 0.85rem;
+}
+
 
 .logo {
-/*    cursor: pointer; */
     max-height: 20px;
     margin-right: auto;
 }
 
-/* Upper menu bar for creating, saving and loading diagram */
+
+/* Navigation
+   ========================================================================== */
 .main-nav {
     display: flex;
     justify-content: space-between;
@@ -68,14 +98,13 @@ span {
     background-color: var(--dark-grey);
 }
 
-/* Lower menu bar to perform actions on the diagram */
 .sub-nav {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px 10% 10px 25px;
     width: 100%;
-    max-height: 40px;
+    height: 40px;
     background-color: var(--off-white);
     border-bottom: 1px solid var(--silver);
 }
@@ -117,9 +146,63 @@ span {
     background-color: var(--focus-blue);
 }
 
+/* Searchbar
+   ========================================================================== */
+.search {
+    width: 32px;
+    height: 32px;
+    border-radius: 60px;
+    background-color: var(--focus-dark-grey);
+    transition: 0.5s;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.hovered:hover {
+    color: var(--white);
+}
+
+.search.active-s  {
+    width: 360px !important;
+}
+
+.search-icon {
+    align-self: center;
+    margin-left: 4px;
+    color: var(--off-white);
+    font-size: 22px !important;
+}
+
+.search .input-search {
+    width: 300px;
+    height: 32px;
+    display: flex;
+    left: 10px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.search .input-search input {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background-color: var(--focus-dark-grey);
+
+}
+
+/* Main Content and Diagram
+   ========================================================================== */
 .main-content {
     display: flex;
     flex: 1; /* The div grows as much as it can: body height 100vh */
+    height: 100vh;
 }
 
 #diagramDiv {
@@ -133,11 +216,55 @@ span {
 }
 
 
+/* Sidebar
+   ========================================================================== */
 .sidebar-right {
+    display: flex;
+    flex-direction: column;
     background-color: var(--off-white);
-    width: 20%;
+    width: 384px;
+    max-height: calc(100vh - 150px); /* 150px = 50px main-nav + 40px sub-nav + 60px footer */
 }
 
+.sidebar-box {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar-box-resizable {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 50%;
+    resize: vertical;
+    overflow: auto;
+    max-height: 80%;
+    padding: 0 0.85rem;
+}
+
+/* Node Information */
+.node-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.box-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.node-info-text {
+    color: var(--dark-grey);
+    padding: 0 1.85rem 0.45rem 1.85rem;
+}
+
+/* Footer
+   ========================================================================== */
 footer {
     display: flex;
     flex-direction: column;
@@ -148,6 +275,7 @@ footer {
     width: 100%;
     max-height: 60px;
     background-color: var(--off-white);
+    z-index: 99;
 }
 
 .footer-content {
@@ -164,22 +292,8 @@ footer p {
     font-size: 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Modal
+   ========================================================================== */
 .modal-bg {
     width: 100%;
     height: 100%;
@@ -362,36 +476,30 @@ footer p {
 
 }
 
-/* All three following styles can be deleted if all modals are changed */
-.modalDialog {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 99999;
-    opacity: 0;
-    transition: all 0.2s ease 0s;
-    pointer-events: None;
+/* Export Modal specific css */
+#exportModal form > div {
+    display: flex;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    margin: 0.5rem;
+    height: auto;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--silver-transparent);
+}
+#exportModal form > div:last-of-type {
+    border-bottom: none;
 }
 
-.modalDialog:target {
-    opacity: 1;
-    pointer-events: Auto;
-    border-radius: 18px;
+#exportModal form > div > label {
+    height: auto;
+    padding-left: 0.2rem;
 }
 
-.modalDialog > div {
-    width: 30%;
-    position: relative;
-    margin: 10% Auto;
-    padding: 5px 20px 13px 20px;
-    border-radius: 0px 0px 0px 10px;
-    background-color: #FFFFFF;
 
-    cursor: Default;
-}
 
-/* Custom scrollbar */
+/* Scrollbar
+   ========================================================================== */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -409,14 +517,8 @@ footer p {
     box-shadow: inset 7px 10px 12px #f0f0f0;
 }
 
-
-
-
-
-
-
-
-
+/* Tags
+   ========================================================================== */
 .chip {
     display: inline-block;
     height: 30px;
@@ -484,8 +586,9 @@ footer p {
     width: 120px !important;
 }
 
+
 .chips .input::-webkit-calendar-picker-indicator {
-    display: none;
+    display: none !important;
 }
 
 .chips .input:focus {
@@ -504,7 +607,6 @@ footer p {
     -webkit-transform: translateY(-140%);
     transform: translateY(-140%);
 }
-
 
 .input-field {
     position: relative;
@@ -534,7 +636,6 @@ footer p {
     padding: 5px;
 }
 
-
 .dropdown-content > li:hover {
     background-color: var(--unfocus-blue);
 }
@@ -543,7 +644,490 @@ footer p {
     color: var(--white);
 }
 
-/* Autocomplete */
 .autocomplete-content li .highlight {
     color: var(--focus-blue);
 }
+
+/* Row
+   ========================================================================== */
+.row {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.row .col.s12 {
+    width: 100%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+.row .col {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0.85rem;
+    min-height: 1px;
+}
+
+ul:not(.browser-default) {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.row .col.s3 {
+    width: 50%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+/* Tabs
+   ========================================================================== */
+.tabs {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    background-color: var(--off-white);
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+.tabs.tabs-transparent {
+    background-color: transparent;
+}
+
+.tabs.tabs-transparent .tab a,
+.tabs.tabs-transparent .tab.disabled a,
+.tabs.tabs-transparent .tab.disabled a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.tabs.tabs-transparent .tab a:hover,
+.tabs.tabs-transparent .tab a.active {
+    color: #fff;
+}
+
+.tabs.tabs-transparent .indicator {
+    background-color: #fff;
+}
+
+.tabs.tabs-fixed-width {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.tabs.tabs-fixed-width .tab {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.tabs .tab {
+    display: inline-block;
+    text-align: center;
+    line-height: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.tabs .tab a {
+    color: var(--dark-grey);
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-transition: color .28s ease, background-color .28s ease;
+    transition: color .28s ease, background-color .28s ease;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: var(--silver-transparent);
+    outline: none;
+}
+
+.tabs, .tabs .tab a.active {
+    background-color: transparent;
+    color: var(--dark-grey);
+}
+
+.tab a:hover {
+    color: var(--focus-blue);
+}
+
+.tabs .tab.disabled a,
+.tabs .tab.disabled a:hover {
+    color: rgba(238, 110, 115, 0.4);
+    cursor: default;
+}
+
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--silver);
+    will-change: left, right;
+}
+
+@media only screen and (max-width: 992px) {
+    .tabs {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+    .tabs .tab {
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+    }
+    .tabs .tab a {
+        padding: 0 12px;
+    }
+}
+
+/* Sidenav
+   ========================================================================== */
+.sidenav {
+    position: fixed;
+    width: 250px;
+    left: 0;
+    margin: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    height: calc(100% - 150px);
+    background-color: var(--off-white);
+    z-index: 9;
+    overflow-y: auto;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);
+}
+
+.sidenav.right-aligned {
+    right: 0;
+    -webkit-transform: translateX(105%);
+    transform: translateX(105%);
+    left: auto;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.sidenav .collapsible {
+    margin: 0;
+}
+
+/* Styles li a elements */
+.sidenav li > a, label {
+    color: var(--dark-grey);
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    height: 48px;
+    padding: 0 0.85rem;
+}
+
+.sidenav li > a {
+    line-height: 48px;
+}
+
+.sidenav li > label {
+    cursor: pointer;
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+
+/* Height of last dropdown element before hr */
+.sidenav li:last-child {
+    line-height: 48px;
+    height: 48px;
+}
+
+.sidenav li > label:hover {
+    color: var(--focus-dark-grey);
+}
+
+/* Arrow Icon Sytling */
+.sidenav li > a > i,
+.sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"],
+.sidenav li > a > i.material-icons {
+    float: right;
+    height: 48px;
+    line-height: 48px;
+    width: 24px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* Maybe for ident of li elements */
+.sidenav .collapsible-body {
+    padding: 0;
+}
+
+/* Dark overlay should not be visible */
+.sidenav-overlay {
+    height: 0px;
+    width: 0px;
+}
+
+.sidenav-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sidenav-margin {
+    margin: 0 0.85rem 0.85rem 0.85rem;
+}
+
+
+/* Collapsible
+   ========================================================================== */
+
+.no-padding {
+    padding: 0 !important;
+}
+
+/* Needed for materialize.js */
+.collapsible {
+}
+
+.collapsible-header {
+    cursor: pointer;
+}
+
+.collapsible-header:focus {
+    outline: 0;
+}
+
+.collapsible-body {
+    display: none;
+    box-sizing: border-box;
+}
+
+.checkbox-collapsible {
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+}
+
+.checkbox-text {
+    padding-left: 0.85rem;
+}
+
+.hr-collapse {
+    margin: 0 0.85rem;
+}
+
+/* Helper Classes */
+.bold-text {
+    font-weight: bold;
+}
+
+.text-align-justify {
+    text-align: justify;
+}
+
+.margin-top {
+    margin-top: 0.85rem;
+}
+
+
+/* Collection
+   ========================================================================== */
+
+.collection {
+    margin: 1rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.collection .collection-item {
+    background-color: var(--white);
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: var(--dark-grey);
+    cursor: pointer;
+}
+
+.collection-item:not(.active):hover {
+    background-color: #f3f3f3 !important;
+}
+
+.collection-item:hover {
+    color: var(--unfocus-blue) !important;
+}
+
+
+.collection .collection-item.active {
+    background-color: var(--silver);
+    color: var(--dark-grey);
+}
+
+.secondary-content {
+    float: right;
+    color: var(--focus-dark-grey);
+}
+
+.secondary-content i:hover {
+    color: var(--unfocus-blue);
+}
+
+
+/* Badge
+   ========================================================================== */
+span.badge {
+    min-width: 3rem;
+    padding: 0 6px;
+    margin-left: 14px;
+    margin-right: 180px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 22px;
+    height: 22px;
+    color: #757575;
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+span.badge.new {
+    font-weight: 300;
+    font-size: 0.6rem;
+    color: #fff;
+    background-color: var(--focus-blue);
+    border-radius: 2px;
+}
+
+.left {
+    float: left;
+    margin-right: 6px;
+}
+
+
+/* Material Icon */
+.material-icons-small {
+    font-size: 22px !important;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Tooltip (not goJS tooltip)
+   ========================================================================== */
+.material-tooltip {
+    padding: 10px 8px;
+    font-size: 12px;
+    z-index: 99999;
+    background-color: transparent;
+    border-radius: 12px;
+    color: var(--white);
+    min-height: 36px;
+    line-height: 120%;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    max-width: calc(100% - 4px);
+    overflow: hidden;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    visibility: hidden;
+    background-color: var(--dark-grey);
+    font-family: "Montserrat", sans-serif;
+}
+
+.backdrop {
+    position: absolute;
+    opacity: 0;
+    height: 7px;
+    width: 14px;
+    border-radius: 0 0 50% 50%;
+    background-color: var(--dark-grey);
+    z-index: -1;
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+    visibility: hidden;
+}
+
+/* Toasts
+   ========================================================================== */
+.toast {
+    border-radius: 4px;
+    top: 35px;
+    width: auto;
+    margin-top: 10px;
+    position: relative;
+    max-width: 100%;
+    height: auto;
+    min-height: 48px;
+    line-height: 1.5em;
+    background-color: var(--silver);
+    padding: 6px 15px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--dark-grey);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    cursor: default;
+}
+
+#toast-container {
+    display: block;
+    position: fixed;
+    z-index: 98;
+
+    top: auto !important;
+    right: 400px;
+    bottom: 76px;
+    left: auto !important;
+}
+
+.toast-success {
+    color: rgba(74, 101, 66, 0.8);
+    background-color: rgba(154, 217, 132, 0.8);
+}
+
+.toast-fail {
+    color: rgba(101, 66, 66, 0.8);
+    background-color: rgba(217, 132, 132, 0.8);
+}
+
+.toast-warning {
+    color: rgba(101, 96, 66, 0.8);
+    background-color: rgba(217, 209, 132, 0.8);
+}
+

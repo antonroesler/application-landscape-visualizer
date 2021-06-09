@@ -45,9 +45,9 @@ function addNodeToDiagram(data) {
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
-    const newNode = {
+    var newNode = {
         key: data._id,
-        nameProperty: data.name,
+        name: data.name,
         category: data.category,
         desc: data.desc,
         tags: data.tags,
@@ -63,8 +63,10 @@ function addNodeToDiagram(data) {
         //color: color
     };
     model.addNodeData(newNode);
+    applyColorWhenNodeCreated(newNode);
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
+    console.log(newNode);
     modelNodeWithoutFilter = model.nodeDataArray;
 }
 
@@ -72,6 +74,18 @@ function addNodeToDiagram(data) {
  * Delete selected node from nodeDataArray.
  */
 function deleteNode() {
+    try {
+        _deleteNode();
+        createToast("Node deleted.", "warning");
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+/**
+ * Worker function which actually deletes the node from nodeDataArray.
+ */
+function _deleteNode() {
     const id = diagram.selection.toArray()[0].key;
     const node = diagram.findNodeForKey(id);
     diagram.startTransaction();

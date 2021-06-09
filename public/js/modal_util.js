@@ -10,7 +10,7 @@
 */
 
 /**
- * This file contains functions to open and close modals.
+ * This file contains functions which bring functionality to the modals.
  *
  * @author Leonard Husske
  */
@@ -35,6 +35,11 @@ function openCreateNodeModal() {
     document.getElementById("createNodeModal").style.display = "flex";
 }
 
+function openExportModal() {
+    document.getElementById("exportModal").style.display = "flex";
+}
+
+
 /**
  * Closes all modals which are displayed.
  */
@@ -52,8 +57,10 @@ function closeModal() {
     resetTags();
 }
 
+
 /**
  * Resets the first form which occurs as child of the given HTML-Tag.
+ * @param htmlTag
  */
 function resetFirstFormAfterHTMLTag(htmlTag) {
     htmlTag.getElementsByTagName('form')[0].reset();
@@ -93,45 +100,31 @@ function loadDropdownMenusForCreateNodeModal() {
  * Delete dropdown menu options from all datalists.
  */
 function deleteDropdownMenuOptions() {
-
     const dataLists = document.getElementsByTagName("datalist")
-    console.log(dataLists)
 
     for (const dataList of dataLists) {
         const length = dataList.options.length;
-        for (i = length - 1; i >= 0; i--) {
+        for (let i = length - 1; i >= 0; i--) {
             dataList.children[i].remove();
         }
     }
-
 }
+
+
+/**
+ *
+ */
 
 /**
  * Adds attributes from nodes in diagram to fitting dropdown menu in modal.
+ * @param {String} inputId String to identify the right input field.
+ * @param {String} nodeAttribute It is a noe attribute like name, desc, license, ...
  */
-function addDropdownMenuOptions(id, nodeAttribute) {
-    const inputTag = document.getElementById(id);
+function addDropdownMenuOptions(inputId, nodeAttribute) {
+    const inputTag = document.getElementById(inputId);
     const listId = inputTag.getAttribute("list");
-    const values = new Set([]);
-    console.log(listId);
-
-
     const autoDropdown = document.getElementById(listId);
-
-    console.log(model.nodeDataArray);
-
-    // Add every value of the specific node attribute to the set.
-    for (const node of model.nodeDataArray) {
-
-        // If value is an array, the values need to be extracted.
-        if(Array.isArray(node[nodeAttribute])) {
-            for (const value of node[nodeAttribute]) {
-                values.add(value);
-            }
-        } else {
-            values.add(node[nodeAttribute]);
-        }
-    }
+    const values = getAllValuesForOneNodeAttribute(nodeAttribute)
 
     // Create a new html option for every value in the set.
     values.forEach(function(value) {
@@ -141,14 +134,18 @@ function addDropdownMenuOptions(id, nodeAttribute) {
     })
 }
 
+
 /**
+ *
  * Helper function to get correct input field from chips.
+ * Sets an list attribute for the input field of chips, because they have a div container around their input field.
+ * @param {String} parentId ID of the parent element. In the case of chips it is a div.
+ * @return {string} Returns the id of the correct input field.
  */
 function setListAttributeForInput(parentId) {
     const parent = document.getElementById(parentId);
     const input = parent.firstChild;
     input.setAttribute("list", `${parentId}Dropdown`)
-    console.log(input);
 
     return input.getAttribute("id");
 }
