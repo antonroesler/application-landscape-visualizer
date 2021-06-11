@@ -8,7 +8,6 @@
 * Date:              21.04.2021
 *
 */
-
 /**
  * Contains all functions that are used to filter the diagram.
  *
@@ -17,11 +16,13 @@
 
 var allFilter = [];
 var appliedFilters = [];
+var moreThanOneFilter = false;
 
 /**
  * Removes all filters from model.
  */
 function filterOff() {
+    moreThanOneFilter = false;
     diagram.startTransaction();
     model.nodeDataArray = modelNodeWithoutFilter;
     model.linkDataArray = modelLinkWithoutFilter;
@@ -47,6 +48,7 @@ function _filterDiagramFromSidenav() {
     if (filter === null) {
 
     } else {
+        appliedFilters.push(filter.name);
         allFilter.push(filter);
         appendFilterCollection(generateFilterElement(filter));
         applyFilter(filter);
@@ -63,8 +65,8 @@ function applyFilter(f) {
         window.alert("there are no Nodes with this setting");
         return null;
     } else {
-        console.log(appliedFilters);
-        if (appliedFilters.length === 0) {
+        if (moreThanOneFilter === false) {
+            moreThanOneFilter = true;
             appliedFilters.push(f.name);
             activateFilter(filterNodeArray);
             filterAppLinks(filterNodeArray);
@@ -94,7 +96,15 @@ function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
 
 }
 
-
+function applyAllFilterInAppliedFilters() {
+    model.nodeDataArray = modelNodeWithoutFilter;
+    model.linkDataArray = modelLinkWithoutFilter;
+    moreThanOneFilter = false;
+    for (filterName of appliedFilters) {
+        filter = findFilter(filterName);
+        applyFilter(filter[0]);
+    }
+}
 /**
  * Rearranges nodeDataArray according to the filter properties
  */
@@ -194,6 +204,19 @@ function removeFilterFromArray(filterName) {
     })
     console.log(allFilter);
 }
+
+/**
+ * Removes filter name from array "appliedFilters"
+ */
+function removeAppliedFilterFromArray(filterName) {
+    appliedFilters = appliedFilters.filter(function (currentElement) {
+        if (filterName !== currentElement) {
+            return true;
+        }
+        return false;
+    })
+    console.log(allFilter);
+}
 /**
  * Returns a filtered array with the wanted filter
  */
@@ -269,13 +292,24 @@ function changeFilterActivation(filterName) {
     if (activeBadge != null) {
         filterElement.classList.remove("active");
         activeBadge.remove();
-        appliedFilters = [];
-        filterOff();
+        removeAppliedFilterFromArray(filterName);
+        if (appliedFilters.length === 0) {
+            filterOff();
+        } else {
+            applyAllFilterInAppliedFilters();
+        }
         // Function to disable filter needs to be added
     }
     // Enable filter
     else {
         // Function to activate filter needs to be added
+        if (appliedFilters.length === 0) {
+            moreThanOneFilter = false;
+        } else {
+
+            moreThanOneFilter = true;
+        }
+        appliedFilters.push(filterName);
         filters = findFilter(filterName);
         applyFilter(filters[0]);
 
@@ -295,7 +329,12 @@ function changeFilterActivation(filterName) {
 function deleteFilterElementFromFilterCollection(filterName) {
     const collection = document.getElementById("filterCollection");
     const filterElement = document.getElementById(filterName);
-    collection.removeChild(filterElement);
-    filterOff();
     removeFilterFromArray(filterName);
+    removeAppliedFilterFromArray(filterName);
+    collection.removeChild(filterElement);
+    if (appliedFilters.length === 0) {
+        filterOff();
+    } else {
+        applyAllFilterInAppliedFilters();
+    }
 }

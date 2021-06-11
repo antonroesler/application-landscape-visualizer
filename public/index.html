@@ -46,7 +46,8 @@
             <div class="search">
                 <i id="searchIcon" class="material-icons search-icon hovered" onclick="toggleSearchbar()">search</i>
                 <div class="input-search">
-                    <input id="searchbar" oninput="searchbarInput()" type="text" placeholder="Search nodes" autocomplete="off">
+                    <input id="searchbar" oninput="searchbarInput()" type="text" placeholder="Search nodes"
+                        autocomplete="off">
                 </div>
                 <i class="material-icons search-icon" onclick="resetSearchInput()">close</i>
             </div>
@@ -87,9 +88,11 @@
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
-                        <input list="inputLicenceDropdown" autocomplete="off" class="input-text" id="inputLicense" placeholder="License: " type="text"/>
+                        <input list="inputLicenceDropdown" autocomplete="off" class="input-text" id="inputLicense"
+                            placeholder="License: " type="text" />
                         <datalist id="inputLicenceDropdown"></datalist>
-                        <input list="inputVersionDropdown" autocomplete="off" class="input-text" id="inputVersion" placeholder="Version: " type="text"/>
+                        <input list="inputVersionDropdown" autocomplete="off" class="input-text" id="inputVersion"
+                            placeholder="Version: " type="text" />
                         <datalist id="inputVersionDropdown"></datalist>
                     </div>
                     <span class="dropdown-description">Departments:</span>
@@ -107,9 +110,11 @@
                         <input type="date" id="inputShutdownDate" class="input-text">
                     </div>
                     <div class="form-row">
-                        <input list="inputProfessionalOwnerDropdown" autocomplete="off" class="input-text" id="inputProfessionalOwner" placeholder="Prof. Owner: " type="text"/>
+                        <input list="inputProfessionalOwnerDropdown" autocomplete="off" class="input-text"
+                            id="inputProfessionalOwner" placeholder="Prof. Owner: " type="text" />
                         <datalist id="inputProfessionalOwnerDropdown"></datalist>
-                        <input list="inputTechnicalOwnerDropdown" autocomplete="off" class="input-text" id="inputTechnicalOwner" placeholder="Tech. Owner: " type="text"/>
+                        <input list="inputTechnicalOwnerDropdown" autocomplete="off" class="input-text"
+                            id="inputTechnicalOwner" placeholder="Tech. Owner: " type="text" />
                         <datalist id="inputTechnicalOwnerDropdown"></datalist>
                     </div>
                     <span class="dropdown-description">Application Type:</span>
@@ -120,8 +125,10 @@
                         <option value="ERP">ERP</option>
                         <option value="GEN">GEN</option>
                     </select>
-                    <button class="modal-btn" onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
-                    <button class="modal-btn-cancel" onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
+                    <button class="modal-btn"
+                        onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
+                    <button class="modal-btn-cancel"
+                        onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
                 </form>
             </div>
         </div>
@@ -198,15 +205,15 @@
         <div class="modal-popup">
             <div class="modal-close" onclick="closeModal()">+</div>
 
-        <div class="modal-content">
-            <h2>Save your Diagram.</h2>
-            <form class="modal-form" action="" onsubmit="return false">
-                <input autocomplete="off" class="input-text" type="text" id="saveName" placeholder="Name">
-                <input autocomplete="off" class="input-text" type="text" id="saveDesc" placeholder="Description">
-                <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
-                <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
-            </form>
-        </div>
+            <div class="modal-content">
+                <h2>Save your Diagram.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <input autocomplete="off" class="input-text" type="text" id="saveName" placeholder="Name">
+                    <input autocomplete="off" class="input-text" type="text" id="saveDesc" placeholder="Description">
+                    <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
 
         </div>
     </div>
@@ -216,15 +223,19 @@
         <!-- Slide Menu -->
         <ul id="slide-out" class="sidenav">
             <div class="sidenav-box">
-                <h2>Filter<i class="material-icons material-icons-small tooltipped" data-position="right" data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all nodes which have a matching<br>value in one of the selected checkboxes.">info_outline</i></h2>
+                <h2>Filter<i class="material-icons material-icons-small tooltipped" data-position="right"
+                        data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all nodes which have a matching<br>value in one of the selected checkboxes.">info_outline</i>
+                </h2>
                 <form id="sidenavForm" class="sidenav-form" action="" onsubmit="return false">
-                <input autocomplete="off" class="input-text sidenav-margin" id="filterName" placeholder="Filter Name: " type="text"/>
-                <hr class="hr-collapse">
-            <li class="no-padding">
-                <ul id="collapsible" class="collapsible">
-                </ul>
-            </li>
-                    <button class="modal-btn sidenav-margin margin-top" onclick="filterDiagramFromSidenav(); openSidenav();">Add</button>
+                    <input autocomplete="off" class="input-text sidenav-margin" id="filterName"
+                        placeholder="Filter Name: " type="text" />
+                    <hr class="hr-collapse">
+                    <li class="no-padding">
+                        <ul id="collapsible" class="collapsible">
+                        </ul>
+                    </li>
+                    <button class="modal-btn sidenav-margin margin-top"
+                        onclick="filterDiagramFromSidenav(); openSidenav();">Add</button>
                     <button class="modal-btn-cancel sidenav-margin" onclick="openSidenav()">Cancel</button>
                 </form>
             </div>
@@ -235,11 +246,11 @@
         <div class="sidebar-right">
 
             <!-- Upper 50% of sidebar -->
-          <div class="sidebar-box-resizable" >
-              <h2>Node Information</h2>
-              <div id="nodeInfoContainer" class="node-info-container">
-              </div>
-          </div>
+            <div class="sidebar-box-resizable">
+                <h2>Node Information</h2>
+                <div id="nodeInfoContainer" class="node-info-container">
+                </div>
+            </div>
             <!-- Lower 50% of sidebar -->
             <div class="sidebar-box">
                 <hr>
@@ -256,7 +267,8 @@
                                 <div>Add filter
                                     <i class="material-icons left">add_circle_outline</i>
                                     <a href="" class="secondary-content">
-                                        <i class="material-icons tooltipped" data-position="left" data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
+                                        <i class="material-icons tooltipped" data-position="left"
+                                            data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
                                     </a>
                                 </div>
                             </li>
@@ -274,8 +286,12 @@
                             <option value="tags">Tag</option>
                             <option value="departments">Department</option>
                         </select>
-                        <button id="apply-color" onclick="applyUserColorSetting()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply Color</button>
-                        <button id="remove-color" onclick="removeColorFromAllNodes()" style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove Color</button>
+                        <button id="apply-color" onclick="applyUserColorSetting()"
+                            style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply
+                            Color</button>
+                        <button id="remove-color" onclick="removeColorFromAllNodes()"
+                            style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove
+                            Color</button>
 
                         <hr>
                         <select id="histogram-dropdown" style="color: black">
@@ -293,7 +309,7 @@
                     </div>
                 </div>
             </div>
-      </div>
+        </div>
     </div>
 
 
