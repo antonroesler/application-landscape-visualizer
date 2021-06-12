@@ -1,19 +1,43 @@
-function combineTwoAttribute(){
+function combineTwoAttribute(a1, a2){
+    const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
+    const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
+    const heatmap_data = generate2DArray(attr1_values.length, attr2_values.length);
 
+    function getIndexes(node, attr, value_list) {
+        const indexes = []
+        if (isListTypeAttribute(attr)){
+            node[attr].forEach(value =>{
+                indexes.push(value_list.indexOf(value))
+            })
+        }else {
+            indexes.push(value_list.indexOf(node[attr]))
+        }
+        return indexes;
+    }
+
+    model.nodeDataArray.forEach(node => {
+        const values1_indexes = getIndexes(node, a1, attr1_values);
+        const values2_indexes = getIndexes(node, a2, attr2_values);
+        values1_indexes.forEach(val1 =>{
+            values2_indexes.forEach(val2 => {
+                heatmap_data[val1][val2] += 1
+            })
+        })
+    })
+
+    generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2));
 
 }
 
-function generateHeatMap() {
-    var xValues = ['A', 'B', 'C', 'D', 'E'];
 
-    var yValues = ['W', 'X', 'Y', 'Z'];
+function generate2DArray(rows, cols) {
+    var array = [], row = [];
+    while (cols--) row.push(0);
+    while (rows--) array.push(row.slice());
+    return array;
+}
 
-    var zValues = [
-        [0.00, 0.00, 0.33, 0.44, 0.55],
-        [0.10, 0.22, 0.42, 0.47, 0.59],
-        [0.21, 0.29, 0.75, 0.76, 0.88],
-        [0.22, 0.30, 0.35, 0.45, 1]
-    ];
+function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
 
     var colorscaleValue = [
         [0, 'rgb(0,0,4)'],
@@ -33,12 +57,12 @@ function generateHeatMap() {
         y: yValues,
         z: zValues,
         type: 'heatmap',
-        colorscale: colorscaleValue,
+        colorscale: "RdBu",
         showscale: true
     }];
 
     var layout = {
-        title: 'Annotated Heatmap',
+        title: attr1Name+' vs. '+attr2Name+' Heatmap',
         annotations: [],
         xaxis: {
             ticks: '',
@@ -83,4 +107,14 @@ function generateHeatMap() {
 
     Plotly.newPlot('diagramDiv', data, layout);
 
+}
+
+/*REMOVE AFTER STATS IS MERGED*/
+/**
+ * Returns true if a node attribute is a list attribute.
+ * @param attribute
+ * @returns {boolean}
+ */
+function isListTypeAttribute(attribute) {
+    return ["tags", "departments"].includes(attribute); // Bad solution, don't have access to a template/schema?
 }
