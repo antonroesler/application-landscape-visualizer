@@ -45,14 +45,11 @@ function filterDiagramFromSidenav() {
  */
 function _filterDiagramFromSidenav() {
     const filter = readFilterPropertiesFromSideNav();
-    if (filter === null) {
 
-    } else {
-        appliedFilters.push(filter.name);
-        allFilter.push(filter);
-        appendFilterCollection(generateFilterElement(filter));
-        applyFilter(filter);
-    }
+    appliedFilters.push(filter.name);
+    allFilter.push(filter);
+    appendFilterCollection(generateFilterElement(filter));
+    applyFilter(filter);
 }
 
 
