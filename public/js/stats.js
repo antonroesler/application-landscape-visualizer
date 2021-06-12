@@ -32,7 +32,10 @@ function generateHistogramDataObject(attribute = "tags") {
     const data = {};
 
     model.nodeDataArray.forEach(node => {
-        if (isListTypeAttribute(attribute)) {
+        if (["children", "parents", "neighbors"].includes(attribute)){
+            addCounter(String(getNumberOf(attribute, node)), data)
+        }
+        else if (isListTypeAttribute(attribute)) {
             node[attribute].forEach(value => {
                 addCounter(value, data)
             })
@@ -67,6 +70,20 @@ function addCounter(value, dataObject) {
 
 /* ============== Calculate Histogram Data on Graph Statistics ============== */
 
+/**
+ *
+ * @param relation
+ * @param node
+ * @returns {number}
+ */
+function getNumberOf(relation, node){
+    if (relation === "parents"){
+        return numberOfParentNodes(node)
+    } else if (relation === "children"){
+        return numberOfChildNodes(node)
+    }
+    return numberOfChildNodes(node) + numberOfParentNodes(node)
+}
 
 /**
  * Returns the number of parent nodes that a given node has.
@@ -90,14 +107,14 @@ function numberOfParentNodes(node) {
  * @returns Number of child of node
  */
 function numberOfChildNodes(node) {
-    const parents = new Set();
+    const children = new Set();
     const node_key = node.key;
     model.linkDataArray.forEach(link => {
         if (link.from === node_key) {
-            parents.add(link.to);
+            children.add(link.to);
         }
     })
-    return parents.size;
+    return children.size;
 }
 
 
