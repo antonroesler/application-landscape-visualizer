@@ -254,44 +254,46 @@
             <div class="sidebar-box">
                 <hr>
                 <div class="row">
-                    <div class="col s12">
+                    <div class="col s12 tabbar">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#filterTab">Filter</a></li>
                             <li class="tab col s3"><a href="#visualizationTab">Visualize</a></li>
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
-                        <ul id="filterCollection" class="collection">
-                            <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
-                                <div>Add filter
-                                    <i class="material-icons left">add_circle_outline</i>
-                                    <a href="" class="secondary-content">
-                                        <i class="material-icons tooltipped" data-position="left"
-                                            data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-
+                        <div class="custom-tab">
+                            <ul id="filterCollection" class="collection">
+                                <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
+                                    <div>Add filter
+                                        <i class="material-icons left">add_circle_outline</i>
+                                        <a href="" class="secondary-content">
+                                            <i class="material-icons tooltipped" data-position="left" onclick="return false"
+                                                data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div id="visualizationTab" class="col s12">
-                        <select name="color-attribute" id="color-attribute" style="color: black">
-                            <option value="category">App. Type</option>
-                            <option value="license">License</option>
-                            <option value="version">Version</option>
-                            <option value="name">Name</option>
-                            <option value="profOwner">Prof. Owner</option>
-                            <option value="techOwner">Tech. Owner</option>
-                            <option value="tags">Tag</option>
-                            <option value="departments">Department</option>
-                        </select>
-                        <button id="apply-color" onclick="applyUserColorSetting()"
-                            style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply
-                            Color</button>
-                        <button id="remove-color" onclick="removeColorFromAllNodes()"
-                            style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove
-                            Color</button>
-
+                        <div class="custom-tab">
+                            <select name="color-attribute" id="color-attribute" style="color: black">
+                                <option value="category">App. Type</option>
+                                <option value="license">License</option>
+                                <option value="version">Version</option>
+                                <option value="name">Name</option>
+                                <option value="profOwner">Prof. Owner</option>
+                                <option value="techOwner">Tech. Owner</option>
+                                <option value="tags">Tag</option>
+                                <option value="departments">Department</option>
+                            </select>
+                            <button id="apply-color" onclick="applyUserColorSetting()"
+                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply
+                                Color</button>
+                            <button id="remove-color" onclick="removeColorFromAllNodes()"
+                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove
+                                Color</button>
+                        </div>
                     </div>
                 </div>
             </div>

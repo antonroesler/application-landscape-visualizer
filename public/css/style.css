@@ -476,11 +476,12 @@ footer p {
 
 }
 
-/* Export Modal specific css */
+/* Export modal
+   ========================================================================== */
 #exportModal form > div {
     display: flex;
     align-content: center;
-    text-align: center;
+    text-align: left;
     align-items: center;
     margin: 0.5rem;
     height: auto;
@@ -493,9 +494,10 @@ footer p {
 
 #exportModal form > div > label {
     height: auto;
-    padding-left: 0.2rem;
+    padding-left: 0.8rem;
+    font-size: 17px;
+    cursor: pointer;
 }
-
 
 
 /* Scrollbar
@@ -685,6 +687,10 @@ ul:not(.browser-default) {
 
 /* Tabs
    ========================================================================== */
+.tabbar {
+    margin-bottom: 1rem;
+}
+
 .tabs {
     position: relative;
     overflow-x: hidden;
@@ -796,6 +802,10 @@ ul:not(.browser-default) {
     .tabs .tab a {
         padding: 0 12px;
     }
+}
+
+.custom-tab {
+    height: 0px;
 }
 
 /* Sidenav
@@ -956,7 +966,6 @@ ul:not(.browser-default) {
    ========================================================================== */
 
 .collection {
-    margin: 1rem 0 1rem 0;
     border: 1px solid #e0e0e0;
     border-radius: 2px;
     position: relative;
@@ -1070,6 +1079,10 @@ span.badge.new {
     -webkit-transform-origin: 50% 0%;
     transform-origin: 50% 0%;
     visibility: hidden;
+}
+
+.tooltipped {
+
 }
 
 /* Toasts
