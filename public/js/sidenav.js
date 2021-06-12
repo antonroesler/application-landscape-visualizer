@@ -119,7 +119,7 @@ function readFilterPropertiesFromSideNav() {
     } else if (checkFilterNameExists(filterName)) {
         throw "Exception: Duplicated for name. Please enter a unique name.";
     } else if(filterName.length > 16) {
-        throw "Exception: Filter name must have less than 16 characters.";
+        throw "Exception: Filter name must have 16 or less characters.";
     } else {
 
 
