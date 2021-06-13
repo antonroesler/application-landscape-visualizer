@@ -22,29 +22,6 @@ const Link = require('../model/Link')
 const Diagram = require('../model/Diagram')
 
 
-
-/**
- * Saves the whole model. model must be passed in the request's body.
- */
-router.post('/', async (req, res) => {
-    const nodeDataArray = [];
-    const linkDataArray = [];
-    formatNodeDataArray(req, nodeDataArray);
-    formatLinkDataArray(req, linkDataArray);
-    const diagram = new Diagram({
-        name: req.body.name,
-        nodeDataArray: nodeDataArray,
-        linkDataArray: linkDataArray
-    });
-    try {
-        const savedDiagram = await diagram.save()
-        res.json(savedDiagram);
-
-    }catch (err){
-        res.json(err)
-    }
-})
-
 /**
  * Get a diagram form the database. Must be specified by name.
  *
