@@ -1,15 +1,38 @@
-function combineTwoAttribute(a1, a2){
-    const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
-    const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
+
+
+
+
+function heatmap() {
+    try {
+        _heatmap();
+        createToast("Heatmap generated", "success");
+    } catch (e) {
+        console.log(e);
+        createToast(e, "fail");
+    }
+}
+
+
+function isValidAttribute(attrs) {
+    let validity = true;
+    attrs.forEach(attr=>{
+        if (!Array.from(nodeSelectableAttributes.keys()).includes(attr)){
+            validity = false;
+        }
+    })
+    return validity;
+}
+
+function generateHeatmapData(attr1_values, attr2_values, a1, a2) {
     const heatmap_data = generate2DArray(attr1_values.length, attr2_values.length);
 
     function getIndexes(node, attr, value_list) {
         const indexes = []
-        if (isListTypeAttribute(attr)){
-            node[attr].forEach(value =>{
+        if (isListTypeAttribute(attr)) {
+            node[attr].forEach(value => {
                 indexes.push(value_list.indexOf(value))
             })
-        }else {
+        } else {
             indexes.push(value_list.indexOf(node[attr]))
         }
         return indexes;
@@ -18,14 +41,29 @@ function combineTwoAttribute(a1, a2){
     model.nodeDataArray.forEach(node => {
         const values1_indexes = getIndexes(node, a1, attr1_values);
         const values2_indexes = getIndexes(node, a2, attr2_values);
-        values1_indexes.forEach(val1 =>{
+        values1_indexes.forEach(val1 => {
             values2_indexes.forEach(val2 => {
                 heatmap_data[val1][val2] += 1
             })
         })
     })
+    return heatmap_data;
+}
 
-    generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2));
+function _heatmap(){
+    const a1 = document.getElementById('heatmap-attribute1').value;
+    const a2 = document.getElementById('heatmap-attribute2').value;
+    const schema = document.getElementById('heatmap-color').value;
+    if (isValidAttribute([a1, a2])){
+        const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
+        const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
+        const heatmap_data = generateHeatmapData(attr1_values, attr2_values, a1, a2);
+
+        generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2), schema);
+
+    } else {
+        throw "Attribute is not valid."
+    }
 
 }
 
@@ -37,19 +75,7 @@ function generate2DArray(rows, cols) {
     return array;
 }
 
-function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
-
-    var colorscaleValue = [
-        [0, 'rgb(0,0,4)'],
-        [0.13, 'rgb(31,12,72)'],
-        [0.25, 'rgb(85,15,109)'],
-        [0.38, 'rgb(136,34,106)'],
-        [0.5, 'rgb(186,54,85)'],
-        [0.63, 'rgb(227,89,51)'],
-        [0.75, 'rgb(249,140,10)'],
-        [0.88, 'rgb(249,201,50)'],
-        [1, 'rgb(252,255,164)']
-    ];
+function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema) {
 
 
     var data = [{
@@ -57,7 +83,7 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
         y: yValues,
         z: zValues,
         type: 'heatmap',
-        colorscale: "RdBu",
+        colorscale: getSchema(schema),
         showscale: true
     }];
 
@@ -80,11 +106,6 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
     for (var i = 0; i < yValues.length; i++) {
         for (var j = 0; j < xValues.length; j++) {
             var currentValue = zValues[i][j];
-            if (currentValue != 0.0) {
-                var textColor = 'white';
-            } else {
-                var textColor = 'black';
-            }
             var result = {
                 xref: 'x1',
                 yref: 'y1',
@@ -92,13 +113,13 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
                 y: yValues[i],
                 text: zValues[i][j],
                 font: {
-                    family: 'Arial',
+                    family: 'Montserrat',
                     size: 12,
                     color: 'rgb(50, 171, 96)'
                 },
                 showarrow: false,
                 font: {
-                    color: textColor
+                    color: "grey"
                 }
             };
             layout.annotations.push(result);
@@ -107,6 +128,25 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name) {
 
     Plotly.newPlot('diagramDiv', data, layout);
 
+}
+
+/* HEATMAP COLOR SCHEMAS */
+function getSchema(schemaName){
+    if (schemaName.toLowerCase() === "inferno"){
+        return [
+            [0, 'rgb(0,0,4)'],
+            [0.13, 'rgb(31,12,72)'],
+            [0.25, 'rgb(85,15,109)'],
+            [0.38, 'rgb(136,34,106)'],
+            [0.5, 'rgb(186,54,85)'],
+            [0.63, 'rgb(227,89,51)'],
+            [0.75, 'rgb(249,140,10)'],
+            [0.88, 'rgb(249,201,50)'],
+            [1, 'rgb(252,255,164)']
+        ];
+    }
+
+    else return schemaName;
 }
 
 /*REMOVE AFTER STATS IS MERGED*/
