@@ -51,6 +51,66 @@ function addNodeAndLink() {
     openCreateNodeModal()
 }
 
+
+function hideAllOtherNodes() {
+    diagram.nodeTemplate = mainTemplateParentChild;
+    parentChildNodeSet.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(parentChildNodeSet);
+    model.linkDataArray = [];
+    diagram.commitTransaction("all other nodes have been hid");
+}
+
+function showAll() {
+    allParentChildKeys.clear();
+    parentChildNodeSet.clear();
+    parentChildLinkArray = [];
+    diagram.nodeTemplate = mainTemplate;
+    if (moreThanOneFilter === true) {
+        diagram.startTransaction();
+        model.nodeDataArray = diagramNodeWhenFilterIsActive;
+        model.linkDataArray = diagramLinkWhenFilterIsActive;
+        diagram.updateAllRelationshipsFromData();
+        diagram.updateAllTargetBindings();
+        diagram.commitTransaction("parentChild view removed");
+    } else {
+        diagram.startTransaction();
+        model.nodeDataArray = modelNodeWithoutFilter;
+        model.linkDataArray = modelLinkWithoutFilter;
+        diagram.updateAllRelationshipsFromData();
+        diagram.updateAllTargetBindings();
+        diagram.commitTransaction("parentChild view removed");
+    }
+}
+
+function showParents() {
+    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    parents = getParentsChildFromKey(findParentsOfANode(selectedNode));
+    for (node of parents) {
+        parentChildNodeSet.add(node);
+    }
+    updateDiagram();
+}
+
+function showChilds() {
+    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    childs = getParentsChildFromKey(findChildsofANode(selectedNode));
+    for (node of childs) {
+        parentChildNodeSet.add(node);
+    }
+    updateDiagram();
+}
+
+function updateDiagram() {
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(parentChildNodeSet);
+    model.linkDataArray = parentChildLinkArray;
+    diagram.updateAllRelationshipsFromData();
+    diagram.updateAllTargetBindings();
+    diagram.commitTransaction("all other nodes have been hid");
+
+}
+
 /**function to handle diffrent node adding possibilities depending 
   on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
