@@ -190,3 +190,10 @@ function createToast(message, style) {
 }
 
 
+function hideHTMLElement(htmlElement) {
+    htmlElement.style.display = "none";
+}
+
+function showHTMLElement(htmlElement, display="flex") {
+    htmlElement.style.display = display;
+}

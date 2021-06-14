@@ -239,8 +239,11 @@
                 </form>
             </div>
         </ul>
-        <div id="diagramDiv"></div>
 
+        <div class="content">
+        <div id="diagramDiv" class="content"></div>
+        <div id="heatmap" style="display: none"></div>
+        </div>
         <!-- Sidebar Right -->
         <div class="sidebar-right">
 
@@ -316,7 +319,7 @@
                             </select>
                             <button id="render-heatmap" onclick="heatmap()"
                                     style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Generate Heatmap</button>
-                            <button id="hide-heatmap" onclick="hideHeatmap()"
+                            <button id="hide-heatmap" onclick="closeHeatmap()"
                                     style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Close Heatmap</button>
                             <select name="color-attribute" id="heatmap-color" style="color: black">
                                 <option value="YlOrRd">Fire</option>

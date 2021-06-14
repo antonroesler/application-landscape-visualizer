@@ -51,6 +51,8 @@ function generateHeatmapData(attr1_values, attr2_values, a1, a2) {
 }
 
 function _heatmap(){
+    hideHTMLElement(document.getElementById('diagramDiv'));
+    showHTMLElement(document.getElementById('heatmap'))
     const a1 = document.getElementById('heatmap-attribute1').value;
     const a2 = document.getElementById('heatmap-attribute2').value;
     const schema = document.getElementById('heatmap-color').value;
@@ -126,7 +128,7 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
         }
     }
 
-    Plotly.newPlot('diagramDiv', data, layout);
+    Plotly.newPlot('heatmap', data, layout);
 
 }
 
@@ -147,6 +149,12 @@ function getSchema(schemaName){
     }
 
     else return schemaName;
+}
+
+
+function closeHeatmap(){
+    showHTMLElement(document.getElementById('diagramDiv'));
+    hideHTMLElement(document.getElementById('heatmap'))
 }
 
 /*REMOVE AFTER STATS IS MERGED*/
