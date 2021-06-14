@@ -48,12 +48,12 @@
                     <input id="searchbar" oninput="searchbarInput()" type="text" placeholder="Search nodes"
                         autocomplete="off">
                 </div>
-                <i class="material-icons search-icon" onclick="resetSearchInput()">close</i>
+                <i class="material-icons search-icon" onclick="resetSearchInput(); toggleSearchbar();">close</i>
             </div>
             <nav>
                 <ul class="nav-links">
                     <li><a href="#" onclick="openLinkLayoutModal()">Link Layout</a></li>
-                    <li><a href="#" onclick="openLayoutModal()">Auto Layout</a></li>
+                    <li><a href="#" onclick="openLayoutModal()">Diagram Layout</a></li>
                     <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                     <li><a href="#" onclick="openExportModal()">Export</a></li>
@@ -149,7 +149,7 @@
                         <option value="grid">Grid</option>
                         <option value="cir">Circle</option>
                     </select>
-                    <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Add</button>
+                    <button class="modal-btn" onclick="layoutModalDialogHandler(); closeModal();">Apply</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
