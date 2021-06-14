@@ -16,7 +16,9 @@
  */
 
 
-
+/**
+ * Entrypoint-function that is called to by the click on the generate heatmap button.
+ */
 function heatmap() {
     try {
         _heatmap();
@@ -27,17 +29,37 @@ function heatmap() {
     }
 }
 
+/**
+ * Handles the generation of the heatmap. Reads values from html inputs and triggers the generation of the actual heatmap.
+ * Also it hides the diagram and displays the heatmap div.
+ */
+function _heatmap(){
+    hideHTMLElement(document.getElementById('diagramDiv'));
+    showHTMLElement(document.getElementById('heatmap'))
+    const a1 = document.getElementById('heatmap-attribute1').value;
+    const a2 = document.getElementById('heatmap-attribute2').value;
+    const schema = document.getElementById('heatmap-color').value;
+    if (isValidAttribute([a1, a2])){
+        const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
+        const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
+        const heatmap_data = generateHeatmapData(attr1_values, attr2_values, a1, a2);
 
-function isValidAttribute(attrs) {
-    let validity = true;
-    attrs.forEach(attr=>{
-        if (!Array.from(nodeSelectableAttributes.keys()).includes(attr)){
-            validity = false;
-        }
-    })
-    return validity;
+        generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2), schema);
+
+    } else {
+        throw "Attribute is not valid."
+    }
+
 }
 
+/**
+ * Generates the combination matrix for two attributes.
+ * @param attr1_values
+ * @param attr2_values
+ * @param a1
+ * @param a2
+ * @returns {[[],[]...]} combination matrix
+ */
 function generateHeatmapData(attr1_values, attr2_values, a1, a2) {
     const heatmap_data = generate2DArray(attr1_values.length, attr2_values.length);
 
@@ -65,26 +87,27 @@ function generateHeatmapData(attr1_values, attr2_values, a1, a2) {
     return heatmap_data;
 }
 
-function _heatmap(){
-    hideHTMLElement(document.getElementById('diagramDiv'));
-    showHTMLElement(document.getElementById('heatmap'))
-    const a1 = document.getElementById('heatmap-attribute1').value;
-    const a2 = document.getElementById('heatmap-attribute2').value;
-    const schema = document.getElementById('heatmap-color').value;
-    if (isValidAttribute([a1, a2])){
-        const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
-        const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
-        const heatmap_data = generateHeatmapData(attr1_values, attr2_values, a1, a2);
-
-        generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2), schema);
-
-    } else {
-        throw "Attribute is not valid."
-    }
-
+/**
+ * Checks if a list of attribute names are all valid attribute names ('techOwner', 'tags'...)
+ * @param attrs Array of strings
+ * @returns {boolean}
+ */
+function isValidAttribute(attrs) {
+    let validity = true;
+    attrs.forEach(attr=>{
+        if (!Array.from(nodeSelectableAttributes.keys()).includes(attr)){
+            validity = false;
+        }
+    })
+    return validity;
 }
 
-
+/**
+ * Generates a 2D-Zeros-Array of size rows*cols
+ * @param rows
+ * @param cols
+ * @returns {*[]}
+ */
 function generate2DArray(rows, cols) {
     var array = [], row = [];
     while (cols--) row.push(0);
@@ -92,6 +115,15 @@ function generate2DArray(rows, cols) {
     return array;
 }
 
+/**
+ * Generates a heatmap from given data and displays it in the html.
+ * @param xValues Array of X values
+ * @param yValues Array of Y values
+ * @param zValues 2D-Array of Z Values
+ * @param attr1Name Name of Attribute1 (User readable name for title)
+ * @param attr2Name Name of Attribute2 (User readable name for title)
+ * @param schema Name of the color schema ('inferno', 'greens'...)
+ */
 function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema) {
 
 
@@ -166,7 +198,9 @@ function getSchema(schemaName){
     else return schemaName;
 }
 
-
+/**
+ * Function to close the heatmap and display the diagram.
+ */
 function closeHeatmap(){
     showHTMLElement(document.getElementById('diagramDiv'));
     hideHTMLElement(document.getElementById('heatmap'))
