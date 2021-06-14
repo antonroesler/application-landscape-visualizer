@@ -23,6 +23,7 @@ var moreThanOneFilter = false;
  */
 function filterOff() {
     moreThanOneFilter = false;
+    diagramWhenFilterIsActive = [];
     diagram.startTransaction();
     model.nodeDataArray = modelNodeWithoutFilter;
     model.linkDataArray = modelLinkWithoutFilter;
@@ -135,6 +136,7 @@ function activateFilter(filterNodeArray) {
     diagram.startTransaction();
     model.nodeDataArray = filterNodeArray;
     diagram.commitTransaction("filter node applied");
+    diagramNodeWhenFilterIsActive = filterNodeArray;
     return filterNodeArray;
 }
 
@@ -152,6 +154,7 @@ function filterAppLinks(filterNodeArray) {
     diagram.startTransaction();
     model.linkDataArray = filterLinkArray;
     diagram.commitTransaction("filter link applied");
+    diagramLinkWhenFilterIsActive = filterLinkArray;
 }
 
 /**
@@ -318,6 +321,16 @@ function changeFilterActivation(filterName) {
     }
 }
 
+function deactivateAllAppliedFilters() {
+    moreThanOneFilter = false;
+    for (filter of appliedFilters) {
+        const filterElement = document.getElementById(filter);
+        const activeBadge = filterElement.querySelector("span");
+        filterElement.classList.remove("active");
+        removeAppliedFilterFromArray(filter);
+
+    }
+}
 
 /**
  * Function which deletes the filterElement (li-tag) from the filter collection for the given parameter filterName.
