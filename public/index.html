@@ -35,6 +35,7 @@
     <script src="libs/gojs-lib/Figures.js"></script>
     <script src="libs/gojs-lib/icons.js"></script>
     <script src="libs/url-join.js"></script>
+    <script src="libs/chart.js"></script>
 </head>
 
 <body onload="init()">
@@ -298,23 +299,27 @@
                     </div>
                     <div id="visualizationTab" class="col s12">
                         <div class="custom-tab">
-                            <select name="color-attribute" id="color-attribute" style="color: black">
-                                <option value="category">App. Type</option>
-                                <option value="license">License</option>
-                                <option value="version">Version</option>
-                                <option value="name">Name</option>
-                                <option value="profOwner">Prof. Owner</option>
-                                <option value="techOwner">Tech. Owner</option>
-                                <option value="tags">Tag</option>
-                                <option value="departments">Department</option>
-                            </select>
-                            <button id="apply-color" onclick="applyUserColorSetting()"
-                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply
-                                Color</button>
-                            <button id="remove-color" onclick="removeColorFromAllNodes()"
-                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove
-                                Color</button>
+
+                            <ul class="collection">
+                                <li id="FilterElement" class="collection-item">
+                                    <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
+                                        <option value="" selected disabled hidden>Create histogram</option>
+                                        <option value="category" >Application Type</option>
+                                        <option value="license" >License</option>
+                                        <option value="profOwner" >Professional Owner</option>
+                                        <option value="techOwner" >Technical Owner</option>
+                                        <option value="tags" >Tags</option>
+                                        <option value="departments">Departments</option>
+                                        <option value="children">Child Nodes</option>
+                                        <option value="parents">Parent Nodes</option>
+                                        <option value="neighbors">Neighbor Nodes</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        <div id="histogram-container" style="width: 100%; height: 100%;">
                         </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -349,6 +354,7 @@
 <script src="js/sidebar.js"></script>
 <script src="js/searchbar.js"></script>
 <script src="js/exportImg.js"></script>
+<script src="js/stats.js"></script>
 <script src="js/node_template.js"></script>
 <script src="js/link_template.js"></script>
 <script src="js/colorNodesSetting.js"></script>
