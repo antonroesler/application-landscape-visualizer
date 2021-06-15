@@ -120,42 +120,75 @@ function numberOfChildNodes(node) {
 
 /* ============== Render Histogram ============== */
 
+let Histogram = null;
+
+/**
+ * Reads the chosen value from the dropdown and calls function to render the histogram.
+ */
 function renderHistogramHandler() {
     const val = document.getElementById("histogram-dropdown").value;
     renderHistogram(val);
-
 }
 
-var Histogram = null;
-
-async function renderHistogram(attribute) {
+/**
+ * Renders a histogram in the Histogram Tab in the html for the specified attribute.
+ * @param attribute (techOwner, tags...)
+ */
+function renderHistogram(attribute) {
     const data = generateHistogramDataObject(attribute)
+    const canvas = generateHistogramHtmlElement()
+    const labels = Object.keys(data);
+    const values = extractValues(data);
+    Histogram = new Chart(canvas, configurePlotlyHistogram(labels, attribute, values));
+}
+
+/**
+ * Returns an array of all values (not keys) form an object.
+ * @param obj
+ * @returns {String[]}
+ */
+function extractValues(obj){
+    const values = [];
+    Object.keys(obj).forEach(val => {
+        values.push(obj[val])
+    })
+    return values;
+}
+
+/**
+ * Clears the 'old' histogram and creates a 'fresh' html element to render the histogram on.
+ * @returns {HTMLCanvasElement}
+ */
+function generateHistogramHtmlElement(){
     const container = document.getElementById("histogram-container");
     container.innerHTML = "";
     const canvas = document.createElement("canvas");
     canvas.style.height = "100%";
     container.appendChild(canvas);
-    const values = [];
-    Object.keys(data).forEach(val => {
-        values.push(data[val])
-    })
-    const res = await fetch("color?n=" + values.length);
-    const colors = await res.json();
-    var lastHoveredIndex = null;
-    Histogram = new Chart(canvas, {
+    canvas.addEventListener('click', clickHandler);
+    return canvas;
+}
+
+/**
+ * Returns the configuration-object for a plotly bar chart with the specified data.
+ * @param labels An array of strings the are the labels on the x-axis of each bar
+ * @param title The title of the diagram
+ * @param values An array of heights for each chart (must be same order as labels)
+ * @returns {{data: {datasets: [{backgroundColor: string, data, label}], labels}, options: {plugins: {legend: {display: boolean}}, scales: {y: {beginAtZero: boolean}}}, type: string}}
+ */
+function configurePlotlyHistogram(labels, title, values){
+    return {
         type: "bar",
-        data: {
-            labels: Object.keys(data),
+            data: {
+        labels: labels,
             datasets: [
-                {
-                    label: attribute,
-                    data: values,
-                    backgroundColor: colors,
-                    borderColor: ["rgba(48, 48, 48, 1)"],
-                    borderWidth: 2
-                },
-            ],
-        },
+            {
+                label: title,
+                data: values,
+                backgroundColor: 'rgba(20, 124, 229, 0.8)'
+            },
+        ],
+    },
         options: {
             plugins: {
                 legend: {
@@ -169,24 +202,36 @@ async function renderHistogram(attribute) {
             },
 
         }
-    });
-    canvas.addEventListener('click', clickHandler);
+    }
+
 }
 
+
+/**
+ * Handles click events on the histogram.
+ * @param evt
+ */
 function clickHandler(evt) {
     const points = Histogram.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, true);
     if (points.length) {
-        const attr_value = Histogram.data.labels[points[0].index];
-        const attr = document.getElementById('histogram-dropdown').value
-        const attr_name = nodeSelectableAttributes.get(document.getElementById('histogram-dropdown').value)
-        const filter = {
-            name: attr_name + " " + attr_value ,
-            properties: {}
-        }
-        filter.properties[attr] = [attr_value];
-        allFilter.push(filter);
-        appendFilterCollection(generateFilterElement(filter));
-        applyFilter(filter);
-
+        createFilterFromHistogram(Histogram.data.labels[points[0].index]);
     }
+}
+
+/**
+ * Creates a new filter based on the passed value (e.g. 'cloud') and the category that is selected in the dropdown
+ * (e.g. 'tags').
+ * @param attr_value The value of the filter - not the attribute (that is read from the dropdown)
+ */
+function createFilterFromHistogram(attr_value) {
+    const attr = document.getElementById('histogram-dropdown').value
+    const attr_name = nodeSelectableAttributes.get(document.getElementById('histogram-dropdown').value)
+    const filter = {
+        name: attr_name + " " + attr_value,
+        properties: {}
+    }
+    filter.properties[attr] = [attr_value];
+    allFilter.push(filter);
+    appendFilterCollection(generateFilterElement(filter));
+    applyFilter(filter);
 }
