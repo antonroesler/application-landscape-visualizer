@@ -680,7 +680,7 @@ ul:not(.browser-default) {
 }
 
 .row .col.s3 {
-    width: 33%;
+    width: 25%;
     margin-left: auto;
     left: auto;
     right: auto;
