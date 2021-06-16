@@ -10,8 +10,8 @@
 */
 
 /**
- * Index JS defines global variables and adds properties to these variables.
- * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
+ * Index JS defines global JS variables, especially the gojs model
+ * @author Leonard Hußke , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
 //const URL = 'http://localhost:8000'
