@@ -680,7 +680,7 @@ ul:not(.browser-default) {
 }
 
 .row .col.s3 {
-    width: 50%;
+    width: 33%;
     margin-left: auto;
     left: auto;
     right: auto;
@@ -811,7 +811,18 @@ ul:not(.browser-default) {
 
 #histogram-container {
     margin-top: 0.85rem;
+    height: 100%;
+    width: 100%;
 }
+
+.tab-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0.85rem;
+}
+
+
 
 /* Sidenav
    ========================================================================== */
