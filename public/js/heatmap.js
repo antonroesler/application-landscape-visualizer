@@ -10,7 +10,7 @@
 */
 
 /**
- * Contains all functions that are used to generate and render the heatmap
+ * Contains all functions that are used to generate and render the heatmap.
  *
  * @author Anton Roesler, Leonard Hußke
  */
@@ -33,23 +33,21 @@ function heatmap() {
  * Handles the generation of the heatmap. Reads values from html inputs and triggers the generation of the actual heatmap.
  * Also it hides the diagram and displays the heatmap div.
  */
-function _heatmap(){
+function _heatmap() {
     hideHTMLElement(document.getElementById('diagramDiv'));
     showHTMLElement(document.getElementById('heatmap'))
     const a1 = document.getElementById('heatmap-attribute1').value;
     const a2 = document.getElementById('heatmap-attribute2').value;
     const schema = document.getElementById('heatmap-color').value;
-    if (isValidAttribute([a1, a2])){
+    if (isValidAttribute([a1, a2])) {
         const attr1_values = Array.from(getAllValuesForOneNodeAttribute(a1));
         const attr2_values = Array.from(getAllValuesForOneNodeAttribute(a2));
         const heatmap_data = generateHeatmapData(attr1_values, attr2_values, a1, a2);
 
-        generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1),  nodeSelectableAttributes.get(a2), schema);
-
+        generateHeatMap(attr2_values, attr1_values, heatmap_data, nodeSelectableAttributes.get(a1), nodeSelectableAttributes.get(a2), schema);
     } else {
         throw "Attribute is not valid."
     }
-
 }
 
 /**
@@ -94,8 +92,8 @@ function generateHeatmapData(attr1_values, attr2_values, a1, a2) {
  */
 function isValidAttribute(attrs) {
     let validity = true;
-    attrs.forEach(attr=>{
-        if (!Array.from(nodeSelectableAttributes.keys()).includes(attr)){
+    attrs.forEach(attr => {
+        if (!Array.from(nodeSelectableAttributes.keys()).includes(attr)) {
             validity = false;
         }
     })
@@ -125,8 +123,6 @@ function generate2DArray(rows, cols) {
  * @param schema Name of the color schema ('inferno', 'greens'...)
  */
 function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema) {
-
-
     var data = [{
         x: xValues,
         y: yValues,
@@ -137,7 +133,7 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
     }];
 
     var layout = {
-        title: attr1Name+' vs. '+attr2Name+' Heatmap',
+        title: attr1Name + ' vs. ' + attr2Name + ' Heatmap',
         annotations: [],
         xaxis: {
             ticks: '',
@@ -174,14 +170,36 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
             layout.annotations.push(result);
         }
     }
+    const plot = document.getElementById('heatmap')
+    Plotly.newPlot(plot, data, layout);
+    plot.on('plotly_click', clickHeatmap);
+}
 
-    Plotly.newPlot('heatmap', data, layout);
+/* HEATMAP CLICK */
+/**
+ * Handles a click on the heatmap by creating two filters according to the clicked field in the heatmap.
+ * @param data Click event data
+ */
+function clickHeatmap(data) {
+    const f1_value = data.points[0].y
+    const f2_value = data.points[0].x
+    const f1_attr = document.getElementById('heatmap-attribute1').value;
+    const f2_attr = document.getElementById('heatmap-attribute2').value;
+    addAndApplyFilter(createFilterObject(f1_value, f1_attr))
+    addAndApplyFilter(createFilterObject(f2_value, f2_attr))
+}
 
+/**
+ * Function to close the heatmap and display the diagram.
+ */
+function closeHeatmap() {
+    showHTMLElement(document.getElementById('diagramDiv'));
+    hideHTMLElement(document.getElementById('heatmap'))
 }
 
 /* HEATMAP COLOR SCHEMAS */
-function getSchema(schemaName){
-    if (schemaName.toLowerCase() === "inferno"){
+function getSchema(schemaName) {
+    if (schemaName.toLowerCase() === "inferno") {
         return [
             [0, 'rgb(0,0,4)'],
             [0.13, 'rgb(31,12,72)'],
@@ -193,25 +211,5 @@ function getSchema(schemaName){
             [0.88, 'rgb(249,201,50)'],
             [1, 'rgb(252,255,164)']
         ];
-    }
-
-    else return schemaName;
-}
-
-/**
- * Function to close the heatmap and display the diagram.
- */
-function closeHeatmap(){
-    showHTMLElement(document.getElementById('diagramDiv'));
-    hideHTMLElement(document.getElementById('heatmap'))
-}
-
-/*REMOVE AFTER STATS IS MERGED*/
-/**
- * Returns true if a node attribute is a list attribute.
- * @param attribute
- * @returns {boolean}
- */
-function isListTypeAttribute(attribute) {
-    return ["tags", "departments"].includes(attribute); // Bad solution, don't have access to a template/schema?
+    } else return schemaName;
 }
