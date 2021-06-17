@@ -23,7 +23,7 @@ function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
-    diagram.linkTemplateMap = linkTemplateMap;
+    diagram.linkTemplate = linkTemplateAvoidsNodes;
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
