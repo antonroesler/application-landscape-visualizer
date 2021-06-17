@@ -163,7 +163,7 @@ function generateHistogramHtmlElement(){
     const container = document.getElementById("histogram-container");
     container.innerHTML = "";
     const canvas = document.createElement("canvas");
-    canvas.style.height = "100%";
+    container.style.height = '233px';
     container.appendChild(canvas);
     canvas.addEventListener('click', clickHandler);
     return canvas;
@@ -190,6 +190,8 @@ function configurePlotlyHistogram(labels, title, values){
         ],
     },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: false,
