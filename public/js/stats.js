@@ -225,13 +225,23 @@ function clickHandler(evt) {
  */
 function createFilterFromHistogram(attr_value) {
     const attr = document.getElementById('histogram-dropdown').value
-    const attr_name = nodeSelectableAttributes.get(document.getElementById('histogram-dropdown').value)
+    const filter = createFilterObject(attr_value, attr);
+    addAndApplyFilter(filter);
+}
+
+/**
+ * Returns a filter object that can be added as a filter on the diagram. Only works for one-attribute and one-value
+ * filter. (Click on Histogram/Heatmap)
+ * @param attr_value The value that the filter should be created with (Lane, Cloud...)
+ * @param attr The attribute that the filter id for (techOwner, tags...)
+ * @returns {{name: string, properties: {}}} Filter Object
+ */
+function createFilterObject( attr_value, attr) {
+    const attr_name = nodeSelectableAttributes.get(attr)
     const filter = {
         name: attr_name + " " + attr_value,
         properties: {}
     }
     filter.properties[attr] = [attr_value];
-    allFilter.push(filter);
-    appendFilterCollection(generateFilterElement(filter));
-    applyFilter(filter);
+    return filter;
 }
