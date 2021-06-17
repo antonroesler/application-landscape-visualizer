@@ -206,12 +206,13 @@ hr {
     height: 100vh;
 }
 
-#diagramDiv {
+.content {
     display: flex;
     flex: 1;
+    justify-content: center;
 }
 
-#diagramDiv * {
+.content * {
     outline: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 }
