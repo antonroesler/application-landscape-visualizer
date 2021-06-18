@@ -68,9 +68,6 @@ router.get('/grad/', async (req, res) => {
     let n = Number(req.query.n);
     let c1 = "#" + req.query.a;
     let c2 = "#" + req.query.b;
-    console.log(n)
-    console.log(c1)
-    console.log(c2)
     if (!n || n<1){
         n=3;
     }

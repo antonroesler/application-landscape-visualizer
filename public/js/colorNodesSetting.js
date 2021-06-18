@@ -74,14 +74,15 @@ async function colorAllNodesByAttribute(attributeName){
 }
 
 /**
- * Colors all nodes by their shutdown date.
+ * Colors all nodes by a date attribute.
+ * @param attribute either shutdownDate or startDate
  * @param nCat
  * @returns {Promise<void>}
  */
-async function colorNodeByShutDownDate(nCat=3){
+async function colorNodesByDate(attribute, nCat=10){
     const dates = [];
     model.nodeDataArray.forEach(node => {
-        const d = Date.parse(node['shutdownDate']);
+        const d = Date.parse(node[attribute]);
         if (!isNaN(d)){
             dates.push(d);
         }
@@ -90,7 +91,7 @@ async function colorNodeByShutDownDate(nCat=3){
     const binSize = diff/nCat;
     const nodes = {};
     model.nodeDataArray.forEach(node => {
-        const cat = Math.round(Date.parse(node['shutdownDate'])/binSize);
+        const cat = Math.round(Date.parse(node[attribute])/binSize);
         if (nodes[cat]) {
             nodes[cat].push(node)
         } else {
@@ -117,7 +118,10 @@ async function colorCategorizedNodeMap(nodes, grad=false){
 
 function applyUserColorSetting(){
     const dataField = readColorMetaDataField()
-    colorAllNodesByAttribute(dataField)
+    if (dataField.endsWith("Date")){
+        colorNodesByDate(dataField)
+    } else
+        colorAllNodesByAttribute(dataField)
 }
 
 function readColorMetaDataField(){
