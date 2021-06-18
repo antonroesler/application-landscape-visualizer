@@ -134,7 +134,6 @@ hr {
 }
 
 .nav-btn {
-    margin-left: 20px;
     padding: 7px 15px;
     background-color: var(--unfocus-blue);
     border: none;
@@ -206,12 +205,13 @@ hr {
     height: 100vh;
 }
 
-#diagramDiv {
+.content {
     display: flex;
     flex: 1;
+    justify-content: center;
 }
 
-#diagramDiv * {
+.content * {
     outline: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 }
@@ -680,7 +680,7 @@ ul:not(.browser-default) {
 }
 
 .row .col.s3 {
-    width: 50%;
+    width: 25%;
     margin-left: auto;
     left: auto;
     right: auto;
@@ -811,7 +811,22 @@ ul:not(.browser-default) {
 
 #histogram-container {
     margin-top: 0.85rem;
+    height: 100%;
+    width: 100%;
 }
+
+.tab-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0.85rem;
+}
+
+.tab-btn-container {
+    display: flex;
+    justify-content: space-around;
+}
+
 
 /* Sidenav
    ========================================================================== */
@@ -1171,4 +1186,27 @@ span.badge.new {
     color: rgba(101, 96, 66, 0.8);
     background-color: rgba(217, 209, 132, 0.8);
 }
+
+/* Helper
+   ========================================================================== */
+
+.center {
+    align-self: center;
+    justify-self: center;
+    padding: 0.15rem;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.hr-tab {
+    margin: 0.85rem;
+}
+
+.margin-left {
+    margin-left: 0.85rem;
+}
+
 

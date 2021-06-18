@@ -19,6 +19,17 @@ var appliedFilters = [];
 var moreThanOneFilter = false;
 
 /**
+ * Used to app a new filter to the diagram from else where in the code. Psuhes the filter to the all-Filter array,
+ * applies the filter and adds it to the html.
+ * @param filter
+ */
+function addAndApplyFilter(filter) {
+    allFilter.push(filter);
+    appendFilterCollection(generateFilterElement(filter));
+    applyFilter(filter);
+}
+
+/**
  * Removes all filters from model.
  */
 function filterOff() {
@@ -102,6 +113,7 @@ function applyAllFilterInAppliedFilters() {
         applyFilter(filter[0]);
     }
 }
+
 /**
  * Rearranges nodeDataArray according to the filter properties
  */
@@ -189,6 +201,7 @@ function checkFilterNameExists(enteredName) {
         }
     }
 }
+
 /**
  * Removes filter from already created filters inside of array "allFilters"
  */
@@ -214,6 +227,7 @@ function removeAppliedFilterFromArray(filterName) {
     })
     console.log(allFilter);
 }
+
 /**
  * Returns a filtered array with the wanted filter
  */
