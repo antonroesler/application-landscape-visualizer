@@ -17,6 +17,7 @@
 
 /* ============== Calculate Histogram Data on Attributes ============== */
 
+
 /**
  * Returns a Object that shows the distribution of values of the specified attribute. E.g. Departments:
  * {
@@ -39,7 +40,9 @@ function generateHistogramDataObject(attribute = "tags") {
             node[attribute].forEach(value => {
                 addCounter(value, data)
             })
-        } else {
+        } else if (["shutdownDate", "startDate"].includes(attribute)) {
+            addCounter(String(getYearOf(attribute, node)), data)
+        }else {
             addCounter(node[attribute], data);
         }
     })
@@ -246,4 +249,21 @@ function createFilterObject( attr_value, attr) {
     }
     filter.properties[attr] = [attr_value];
     return filter;
+}
+
+/* Date functions */
+
+/**
+ * Returns the year of an date type attribute for a node.
+ * @param attribute ("shutdownDate", "startDate"...)
+ * @param node a node object
+ * @returns {string} The year ("2021" or "N/A" if empty)
+ */
+function getYearOf(attribute, node) {
+    let year = "N/A";
+    const value = node[attribute].substring(0,4);
+    if (value){
+        year = value;
+    }
+    return year;
 }

@@ -325,16 +325,25 @@
                             <ul class="collection">
                                 <li class="collection-item">
                                     <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
-                                        <option value="" selected disabled hidden>Create histogram</option>
-                                        <option value="category" >Application Type</option>
-                                        <option value="license" >License</option>
-                                        <option value="profOwner" >Professional Owner</option>
-                                        <option value="techOwner" >Technical Owner</option>
-                                        <option value="tags" >Tags</option>
-                                        <option value="departments">Departments</option>
-                                        <option value="children">Child Nodes</option>
-                                        <option value="parents">Parent Nodes</option>
-                                        <option value="neighbors">Neighbor Nodes</option>
+                                        <optgroup label="Application Value Fields">
+                                            <option value="" selected disabled hidden>Create histogram</option>
+                                            <option value="category" >Application Type</option>
+                                            <option value="license" >License</option>
+                                            <option value="profOwner" >Professional Owner</option>
+                                            <option value="techOwner" >Technical Owner</option>
+                                            <option value="tags" >Tags</option>
+                                            <option value="departments">Departments</option>
+                                        </optgroup>
+                                        <optgroup label="Dates">
+                                            <option value="shutdownDate">Shutdown Year</option>
+                                            <option value="startDate">Start Year</option>
+                                        </optgroup>
+                                        <optgroup label="Graph Properties">
+                                            <option value="children">Child Nodes</option>
+                                            <option value="parents">Parent Nodes</option>
+                                            <option value="neighbors">Neighbor Nodes</option>
+                                        </optgroup>
+
                                     </select>
                                 </li>
                             </ul>
