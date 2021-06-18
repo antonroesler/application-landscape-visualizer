@@ -163,16 +163,21 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
                     color: 'rgb(50, 171, 96)'
                 },
                 showarrow: false,
-                font: {
-                    color: "grey"
-                }
             };
             layout.annotations.push(result);
         }
     }
     const plot = document.getElementById('heatmap')
     Plotly.newPlot(plot, data, layout);
+
+    /* Click event on heatmap pot */
     plot.on('plotly_click', clickHeatmap);
+
+    /* Change cursor style to pointer when hovering */
+    dragLayer = document.getElementsByClassName('nsewdrag')[0]
+    plot.on('plotly_hover', function(data){
+        dragLayer.style.cursor = 'pointer'
+    });
 }
 
 /* HEATMAP CLICK */
