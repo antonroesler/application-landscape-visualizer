@@ -60,7 +60,7 @@
                     <li><a href="#" onclick="openExportModal()">Export</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
         </div>
         <div class="sub-nav">
@@ -299,20 +299,25 @@
                     </div>
                     <div id="visualizationTab" class="col s12">
                         <div class="custom-tab">
-                            <form class="tab-form" action="" onsubmit="return false">
-                                <select name="color-attribute" id="color-attribute" class="input-dropdown">
-                                    <option value="category">Application Type</option>
-                                    <option value="license">License</option>
-                                    <option value="version">Version</option>
-                                    <option value="name">Name</option>
-                                    <option value="profOwner">Professional Owner</option>
-                                    <option value="techOwner">Technical Owner</option>
-                                    <option value="tags">Tags</option>
-                                    <option value="departments">Departments</option>
-                                </select>
-                                <button id="apply-color" onclick="applyUserColorSetting()" class="modal-btn">Apply Color</button>
-                                <button id="remove-color" onclick="removeColorFromAllNodes()" class="modal-btn-cancel">Remove Color</button>
-                            </form>
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <select name="color-attribute" id="color-attribute" class="tab-input-dropdown">
+                                        <option value="" selected disabled hidden>Choose attribute</option>
+                                        <option value="category">Application Type</option>
+                                        <option value="license">License</option>
+                                        <option value="version">Version</option>
+                                        <option value="name">Name</option>
+                                        <option value="profOwner">Professional Owner</option>
+                                        <option value="techOwner">Technical Owner</option>
+                                        <option value="tags">Tags</option>
+                                        <option value="departments">Departments</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div class="margin-top tab-btn-container">
+                                <button id="apply-color" onclick="applyUserColorSetting()" class="nav-btn">Apply Color</button>
+                                <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove Color</button>
+                            </div>
                         </div>
                     </div>
                     <div id="histogramTab" class="col s12">
@@ -338,40 +343,59 @@
                     </div>
                     <div id="heatmapTab" class="col s12">
                         <div class="custom-tab">
-                          <select name="color-attribute" id="heatmap-attribute1" style="color: black">
-                              <option value="category">App. Type</option>
-                              <option value="license">License</option>
-                              <option value="profOwner">Prof. Owner</option>
-                              <option value="techOwner">Tech. Owner</option>
-                              <option value="tags">Tag</option>
-                              <option value="departments">Department</option>
-                          </select>
-                          <select name="color-attribute" id="heatmap-attribute2" style="color: black">
-                              <option value="category">App. Type</option>
-                              <option value="license">License</option>
-                              <option value="profOwner">Prof. Owner</option>
-                              <option value="techOwner">Tech. Owner</option>
-                              <option value="tags">Tag</option>
-                              <option value="departments">Department</option>
-                          </select>
-                          <button id="render-heatmap" onclick="heatmap()"
-                                  style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Generate Heatmap</button>
-                          <button id="hide-heatmap" onclick="closeHeatmap()"
-                                  style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Close Heatmap</button>
-                          <select name="color-attribute" id="heatmap-color" style="color: black">
-                              <option value="YlOrRd">Fire</option>
-                              <option value="YlGnBu">Cool</option>
-                              <option value="RdBu">Red and Blue</option>
-                              <option value="Portland">Portland</option>
-                              <option value="Picnic">Picnic</option>
-                              <option value="Jet">Jet</option>
-                              <option value="Hot">Hot</option>
-                              <option value="Greys">Greys</option>
-                              <option value="Greens">Greens</option>
-                              <option value="Earth">Earth</option>
-                              <option value="Bluered">Bluered</option>
-                              <option value="inferno">Inferno</option>
-                          </select>
+                            <div class="flex">
+                                <ul class="collection">
+                                    <li class="collection-item">
+                                        <select name="color-attribute" id="heatmap-attribute1" class="tab-input-dropdown">
+                                            <option value="" selected disabled hidden>Choose attribute 1</option>
+                                            <option value="category">App. Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Prof. Owner</option>
+                                            <option value="techOwner">Tech. Owner</option>
+                                            <option value="tags">Tag</option>
+                                            <option value="departments">Department</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                                    <i class="material-icons center">compare_arrows</i>
+                                <ul class="collection">
+                                    <li class="collection-item">
+                                        <select name="color-attribute" id="heatmap-attribute2" class="tab-input-dropdown">
+                                            <option value="" selected disabled hidden>Choose attribute 2</option>
+                                            <option value="category">App. Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Prof. Owner</option>
+                                            <option value="techOwner">Tech. Owner</option>
+                                            <option value="tags">Tag</option>
+                                            <option value="departments">Department</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr class="hr-tab">
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <select name="color-attribute" id="heatmap-color" class="tab-input-dropdown">
+                                        <option value="" selected disabled hidden>Choose colorway</option>
+                                        <option value="YlOrRd">Fire</option>
+                                        <option value="YlGnBu">Cool</option>
+                                        <option value="RdBu">Red and Blue</option>
+                                        <option value="Portland">Portland</option>
+                                        <option value="Picnic">Picnic</option>
+                                        <option value="Jet">Jet</option>
+                                        <option value="Hot">Hot</option>
+                                        <option value="Greys">Greys</option>
+                                        <option value="Greens">Greens</option>
+                                        <option value="Earth">Earth</option>
+                                        <option value="Bluered">Bluered</option>
+                                        <option value="inferno">Inferno</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div class="margin-top tab-btn-container">
+                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate Heatmap</button>
+                                <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close Heatmap</button>
+                            </div>
                         </div>
                     </div>
                 </div>
