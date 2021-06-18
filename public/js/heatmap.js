@@ -129,7 +129,12 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
         z: zValues,
         type: 'heatmap',
         colorscale: getSchema(schema),
-        showscale: true
+        showscale: true,
+        hovertemplate:
+            "%{yaxis.title.text}: <b>%{y}</b><br>" +
+            "%{xaxis.title.text}: <b>%{x}</b><br>" +
+            "Number of Applications: <b>%{z}</b>" +
+            "<extra></extra>"
     }];
 
     var layout = {
@@ -137,14 +142,28 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
         annotations: [],
         xaxis: {
             ticks: '',
-            side: 'top'
+            side: 'top',
+            title: {
+                text: attr2Name,
+                font: {
+                    size: 1,
+                    color: 'transparent'
+                }
+            },
+            fixedrange: true
         },
         yaxis: {
             ticks: '',
             ticksuffix: ' ',
-            width: 700,
-            height: 700,
-            autosize: false
+            autosize: false,
+            title: {
+                text: attr1Name,
+                font: {
+                    size: 1,
+                    color: 'transparent'
+                }
+            },
+            fixedrange: true
         }
     };
 
@@ -163,6 +182,7 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
                     color: 'rgb(50, 171, 96)'
                 },
                 showarrow: false,
+
             };
             layout.annotations.push(result);
         }
@@ -175,7 +195,7 @@ function generateHeatMap(xValues, yValues, zValues, attr1Name, attr2Name, schema
 
     /* Change cursor style to pointer when hovering */
     dragLayer = document.getElementsByClassName('nsewdrag')[0]
-    plot.on('plotly_hover', function(data){
+    plot.on('plotly_hover', function (data) {
         dragLayer.style.cursor = 'pointer'
     });
 }
@@ -192,6 +212,7 @@ function clickHeatmap(data) {
     const f2_attr = document.getElementById('heatmap-attribute2').value;
     addAndApplyFilter(createFilterObject(f1_value, f1_attr))
     addAndApplyFilter(createFilterObject(f2_value, f2_attr))
+    heatmap() // update heatmap
 }
 
 /**
