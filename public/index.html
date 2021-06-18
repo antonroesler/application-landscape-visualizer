@@ -303,14 +303,16 @@
                                 <li class="collection-item">
                                     <select name="color-attribute" id="color-attribute" class="tab-input-dropdown">
                                         <option value="" selected disabled hidden>Choose attribute</option>
-                                        <option value="category">Application Type</option>
-                                        <option value="license">License</option>
-                                        <option value="version">Version</option>
-                                        <option value="name">Name</option>
-                                        <option value="profOwner">Professional Owner</option>
-                                        <option value="techOwner">Technical Owner</option>
-                                        <option value="tags">Tags</option>
-                                        <option value="departments">Departments</option>
+                                        <optgroup label="Nominal Fields">
+                                            <option value="category">Application Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Professional Owner</option>
+                                            <option value="techOwner">Technical Owner</option>
+                                        </optgroup>
+                                        <optgroup label="Quantitative Fields">
+                                            <option value="startDate">Start Date</option>
+                                            <option value="shutdownDate">Shutdown Date</option>
+                                        </optgroup>
                                     </select>
                                 </li>
                             </ul>
