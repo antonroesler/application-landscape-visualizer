@@ -31,6 +31,14 @@ function applyUserColorSetting() {
         colorAllNodesByAttribute(dataField)
 }
 
+/**
+ * Reads value from visualize dropdown menu.
+ * @returns String
+ */
+function readColorMetaDataField() {
+    return document.getElementById("color-attribute").value;
+}
+
 /* Functions that actually apply the color node nodes */
 /**
  * Adds a color to a given node.
@@ -118,13 +126,20 @@ async function colorNodesByDate(attribute, nCat = 10) {
     await colorCategorizedNodeMap(nodes, true)
 }
 
+/**
+ * Fetches and applies a color map with n colors where n is the length of the nodes array.
+ * @param nodes HashMap of array of nodes {x: [node1, node2...], y: [node8, node9,...]} al nodes in on array will have
+ * the same color
+ * @param grad If set to true a color gradient from red to white will be applied.
+ * @returns {Promise<void>}
+ */
 async function colorCategorizedNodeMap(nodes, grad = false) {
     let url;
     const n = Object.keys(nodes).length;
     if (grad) {
         url = "color/grad?a=ff0022&b=ffffff&n=";
     } else {
-        url = "color?n="+n;
+        url = "color?n=";
     }
     const res = await fetch(url + n);
     const colors = await res.json();
@@ -134,45 +149,7 @@ async function colorCategorizedNodeMap(nodes, grad = false) {
 }
 
 
-function readColorMetaDataField() {
-    return document.getElementById("color-attribute").value;
-}
 
-
-function settingFromSideBar() {
-    const setting = readSettingProperties();
-    applySetting(setting);
-}
-
-function applySetting(setting) {
-    settingAppNodes(setting);
-}
-
-function settingAppNodes(setting) {
-    var settingProperty = Object.keys(setting);
-    settingProperty.forEach(property => {
-        model.nodeDataArray.forEach(node => {
-                if (node.category === property) {
-                    console.log(node)
-                    addColorToNode(node, setting[property]);
-                }
-            }
-        )
-    })
-}
-
-function applyColorWhenNodeCreated(node) {
-    if (settings.length != 0) {
-        var settingProperty = Object.keys(settings[0]);
-        settingProperty.forEach(property => {
-            if (property === node.category) {
-                addColorToNode(node, settings[0][property]);
-            } else {
-            }
-        });
-    } else {
-    }
-}
 
 /* Color child and parent nodes */
 /**
@@ -301,7 +278,7 @@ function isInAnySet(parent, dataObj) {
     return false;
 }
 
-/* Approach to color nodes in a gradient by distance from the selected node - NOT in use yet */
+/* Approach to color nodes in a gradient by distance from the selected node - NOT in use yet TODO: Implement or delete.*/
 
 function colorNodesInSetObject(obj, color) {
     Object.keys(obj).forEach(key => {
@@ -377,5 +354,42 @@ function addAndTraverseParents(dataObj, node, distance) {
             }
 
         })
+    }
+}
+
+/* Old Functions TODO: Delete if not needed.*/
+
+function settingFromSideBar() {
+    const setting = readSettingProperties();
+    applySetting(setting);
+}
+
+function applySetting(setting) {
+    settingAppNodes(setting);
+}
+
+function settingAppNodes(setting) {
+    var settingProperty = Object.keys(setting);
+    settingProperty.forEach(property => {
+        model.nodeDataArray.forEach(node => {
+                if (node.category === property) {
+                    console.log(node)
+                    addColorToNode(node, setting[property]);
+                }
+            }
+        )
+    })
+}
+
+function applyColorWhenNodeCreated(node) {
+    if (settings.length != 0) {
+        var settingProperty = Object.keys(settings[0]);
+        settingProperty.forEach(property => {
+            if (property === node.category) {
+                addColorToNode(node, settings[0][property]);
+            } else {
+            }
+        });
+    } else {
     }
 }
