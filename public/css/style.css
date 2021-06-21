@@ -93,7 +93,7 @@ hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 3%;
+    padding: 25px 0px 25px 3%;
     width: 100%;
     max-height: 30px;
     background-color: var(--dark-grey);
@@ -144,6 +144,15 @@ hr {
 
 .nav-btn:hover {
     background-color: var(--focus-blue);
+}
+
+.nav-icon {
+    margin-right: 0.85rem;
+    margin-left: 3%;
+}
+
+.nav-icon:hover {
+    color: var(--white);
 }
 
 /* Searchbar
