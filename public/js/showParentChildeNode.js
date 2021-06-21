@@ -27,6 +27,7 @@ var allParentChildKeys = new Set();
 function findParentsOfANode(node) {
     for (parentLinks of modelLinkWithoutFilter) {
         if (parentLinks.to === node.key) {
+            parentChildArrayGrew += 1;
             allParentChildKeys.add(parentLinks.from);
             parentChildLinkArray.push(parentLinks);
         }
@@ -51,6 +52,7 @@ function getParentsChildFromKey(nodeKeys) {
 function findChildsofANode(node) {
     for (childLinks of modelLinkWithoutFilter) {
         if (childLinks.from === node.key) {
+            parentChildArrayGrew += 1;
             allParentChildKeys.add(childLinks.to);
             parentChildLinkArray.push(childLinks);
         }
