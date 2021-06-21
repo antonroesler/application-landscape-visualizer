@@ -15,7 +15,10 @@
  *
  * @author Feng Yi Lu
  */
-
+var parentChildFeatureOn = false;
+var parentChildArrayGrew = 0;
+var parentButton;
+var before = 0;
 /**main contextMenu of the diagram*/
 diagram.contextMenu =
     $("ContextMenu",
@@ -59,6 +62,8 @@ function hideAllOtherNodes() {
     model.nodeDataArray = Array.from(parentChildNodeSet);
     model.linkDataArray = [];
     diagram.commitTransaction("all other nodes have been hid");
+    parentChildFeatureOn = true;
+    parentChildArrayGrew = 0;
 }
 
 function showAll() {
@@ -68,11 +73,14 @@ function showAll() {
     diagram.nodeTemplate = mainTemplate;
     if (moreThanOneFilter === true) {
         diagram.startTransaction();
-        model.nodeDataArray = diagramNodeWhenFilterIsActive;
-        model.linkDataArray = diagramLinkWhenFilterIsActive;
+        model.nodeDataArray = modelNodeWithoutFilter;
+        model.linkDataArray = modelLinkWithoutFilter;
         diagram.updateAllRelationshipsFromData();
         diagram.updateAllTargetBindings();
         diagram.commitTransaction("parentChild view removed");
+        parentChildFeatureOn = false;
+        parentChildArrayGrew = 0;
+        applyAllFilters();
     } else {
         diagram.startTransaction();
         model.nodeDataArray = modelNodeWithoutFilter;
@@ -80,6 +88,8 @@ function showAll() {
         diagram.updateAllRelationshipsFromData();
         diagram.updateAllTargetBindings();
         diagram.commitTransaction("parentChild view removed");
+        parentChildFeatureOn = false;
+        parentChildArrayGrew = 0;
     }
 }
 
@@ -89,6 +99,7 @@ function showParents() {
     for (node of parents) {
         parentChildNodeSet.add(node);
     }
+    parentButton = true;
     updateDiagram();
 }
 
@@ -98,24 +109,47 @@ function showChilds() {
     for (node of childs) {
         parentChildNodeSet.add(node);
     }
+    parentButton = false;
     updateDiagram();
 }
 
 function updateDiagram() {
+    before = model.nodeDataArray.length;
     diagram.startTransaction();
     model.nodeDataArray = Array.from(parentChildNodeSet);
     model.linkDataArray = parentChildLinkArray;
     diagram.updateAllRelationshipsFromData();
     diagram.updateAllTargetBindings();
-    diagram.commitTransaction("all other nodes have been hid");
+    diagram.commitTransaction("updated");
+    diagramNodeParentChildBeforeFilterIsActive = Array.from(parentChildNodeSet);
+    diagramLinkParentChildBeforeFilterIsActive = parentChildLinkArray;
+    applyAllFilters();
+    toastAlert();
+    parentChildArrayGrew = 0;
+}
 
+function toastAlert() {
+    if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {
+        if (parentButton === true) {
+            alert("parent is not shown because of filter");
+        }
+        else {
+            alert("child is not shown because of filter");
+        }
+    } else if (parentChildArrayGrew === 0) {
+        if (parentButton === true) {
+            alert("there are no parents node left");
+        }
+        else {
+            alert("there are no childs for this node left");
+        }
+    }
 }
 
 /**function to handle diffrent node adding possibilities depending 
   on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
-    console.log(contextMenuValue === "diagramContextMenu")
     if (contextMenuValue === "nodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         addLinkToDiagram(newLink);
