@@ -57,6 +57,7 @@ function addNodeAndLink() {
 
 function hideAllOtherNodes() {
     diagram.nodeTemplate = mainTemplateParentChild;
+    diagramNodeParentChildBeforeFilterIsActive.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     parentChildNodeSet.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     diagram.startTransaction();
     model.nodeDataArray = Array.from(parentChildNodeSet);
@@ -70,6 +71,8 @@ function showAll() {
     allParentChildKeys.clear();
     parentChildNodeSet.clear();
     parentChildLinkArray = [];
+    diagramLinkParentChildBeforeFilterIsActive = [];
+    diagramNodeParentChildBeforeFilterIsActive.clear();
     diagram.nodeTemplate = mainTemplate;
     if (moreThanOneFilter === true) {
         diagram.startTransaction();
@@ -95,6 +98,7 @@ function showAll() {
 
 function showParents() {
     selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    parentChildNodeSet.add(selectedNode);
     parents = getParentsChildFromKey(findParentsOfANode(selectedNode));
     for (node of parents) {
         parentChildNodeSet.add(node);
@@ -105,6 +109,7 @@ function showParents() {
 
 function showChilds() {
     selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    parentChildNodeSet.add(selectedNode);
     childs = getParentsChildFromKey(findChildsofANode(selectedNode));
     for (node of childs) {
         parentChildNodeSet.add(node);
@@ -121,7 +126,7 @@ function updateDiagram() {
     diagram.updateAllRelationshipsFromData();
     diagram.updateAllTargetBindings();
     diagram.commitTransaction("updated");
-    diagramNodeParentChildBeforeFilterIsActive = Array.from(parentChildNodeSet);
+    diagramNodeParentChildBeforeFilterIsActive = parentChildNodeSet;
     diagramLinkParentChildBeforeFilterIsActive = parentChildLinkArray;
     applyAllFilters();
     toastAlert();

@@ -14,6 +14,7 @@
  * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  */
 
+
 var allFilter = [];
 var appliedFilters = [];
 var moreThanOneFilter = false;
@@ -43,11 +44,11 @@ function filterOff() {
 function filterOffWhenParentChildActive() {
     moreThanOneFilter = false;
     diagram.startTransaction();
-    model.nodeDataArray = diagramNodeParentChildBeforeFilterIsActive;
+    model.nodeDataArray = Array.from(diagramNodeParentChildBeforeFilterIsActive);
     model.linkDataArray = diagramLinkParentChildBeforeFilterIsActive;
     diagram.commitTransaction("filter removed");
     if (appliedFilters.length > 1) {
-        diagramNodeParentChildBeforeFilterIsActive = [];
+        diagramNodeParentChildBeforeFilterIsActive.clear();
         diagramLinkParentChildBeforeFilterIsActive = [];
     } else {
     }
