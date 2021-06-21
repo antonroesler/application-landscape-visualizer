@@ -39,6 +39,9 @@ function openExportModal() {
     document.getElementById("exportModal").style.display = "flex";
 }
 
+function openSettingsModal() {
+    document.getElementById("settingsModal").style.display = "flex";
+}
 
 /**
  * Closes all modals which are displayed.
@@ -57,7 +60,6 @@ function closeModal() {
     resetTags();
 }
 
-
 /**
  * Resets the first form which occurs as child of the given HTML-Tag.
  * @param htmlTag
@@ -65,7 +67,6 @@ function closeModal() {
 function resetFirstFormAfterHTMLTag(htmlTag) {
     htmlTag.getElementsByTagName('form')[0].reset();
 }
-
 
 /**
  * Delete all chips inside the chips div.
@@ -109,11 +110,6 @@ function deleteDropdownMenuOptions() {
         }
     }
 }
-
-
-/**
- *
- */
 
 /**
  * Adds attributes from nodes in diagram to fitting dropdown menu in modal.
