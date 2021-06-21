@@ -25,8 +25,8 @@
     --silver-transparent: rgba(210, 210, 215, 0.4);
     --focus-dark-grey: rgba(48, 48, 48, 0.6);
     --dark-grey: rgba(48, 48, 48, 1);
-    --focus-blue: rgba(20, 124, 229, 1);
-    --unfocus-blue: rgba(20, 124, 229, 0.8);
+    --focus-blue: rgb(22, 135, 248);
+    --unfocus-blue: rgb(19, 124, 229);
 }
 
 * {
