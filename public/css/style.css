@@ -244,8 +244,8 @@ hr {
     padding: 0 0.85rem;
 }
 
-/* Node Information */
-.node-info-container {
+/* Information */
+.info-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
