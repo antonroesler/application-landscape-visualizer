@@ -55,7 +55,6 @@ function addNodeAndLink() {
   on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
-    console.log(contextMenuValue === "diagramContextMenu")
     if (contextMenuValue === "nodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         addLinkToDiagram(newLink);

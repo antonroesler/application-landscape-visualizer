@@ -21,8 +21,13 @@
  */
 diagram.addDiagramListener("ObjectSingleClicked", function(e) {
     let part = e.subject.part;
-    if (!(part instanceof go.Link)) {
-        generateNodeInfo(part);
+    if (part instanceof go.Node) {
+        generateSidebarHeadline("Application Information")
+        generateInfo(part, nodeSelectableAttributes);
+    }
+    else if (part instanceof go.Link) {
+        generateSidebarHeadline("Connection Information")
+        generateInfo(part, linkSelectableAttributes);
     }
 });
 
@@ -32,6 +37,7 @@ diagram.addDiagramListener("ObjectSingleClicked", function(e) {
  * If the background is clicked, the node information in the sidebar are deleted.
  */
 diagram.addDiagramListener("BackgroundSingleClicked", function(e) {
-    const nodeInfoContainer = document.getElementById("nodeInfoContainer");
-    deleteHtmlChilds(nodeInfoContainer);
+    const infoContainer = document.getElementById("infoContainer");
+    deleteHtmlChilds(infoContainer);
+    generateSidebarHeadline("Statistical Key Figures")
 });

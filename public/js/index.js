@@ -60,3 +60,9 @@ const nodeSelectableAttributes = new Map([
     ["category", "Application Type"]
 ]);
 
+const linkSelectableAttributes = new Map([
+    ["category", "Connection Type"],
+    ["from", "From Application"],
+    ["to", "To Application"]
+])
+
