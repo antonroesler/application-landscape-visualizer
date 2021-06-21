@@ -36,8 +36,8 @@ let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
 let parentChildNodeSet = new Set();
 let parentChildLinkArray = [];
-let diagramNodeWhenFilterIsActive = [];
-let diagramLinkWhenFilterIsActive = [];
+let diagramNodeParentChildBeforeFilterIsActive = [];
+let diagramLinkParentChildBeforeFilterIsActive = [];
 const nodeWidth = 80;
 const initialLayout = diagram.layout;
 
