@@ -35,6 +35,7 @@
     <script src="libs/gojs-lib/Figures.js"></script>
     <script src="libs/gojs-lib/icons.js"></script>
     <script src="libs/url-join.js"></script>
+    <script src="libs/chart.js"></script>
 </head>
 
 <body onload="init()">
@@ -59,7 +60,7 @@
                     <li><a href="#" onclick="openExportModal()">Export</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn">Create
+            <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
         </div>
         <div class="sub-nav">
@@ -74,7 +75,6 @@
             </nav>
         </div>
     </header>
-
 
     <!-- Create Node Modal -->
     <div class="modal-bg" id="createNodeModal">
@@ -133,7 +133,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Layout Modal -->
     <div class="modal-bg" id="layoutModal">
@@ -203,7 +202,6 @@
         </div>
     </div>
 
-
     <!-- Load Diagram Modal -->
     <div class="modal-bg" id="loadDiagramModal">
         <div class="modal-popup">
@@ -218,7 +216,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Save Diagram Modal -->
     <div class="modal-bg" id="saveDiagramModal">
@@ -260,11 +257,13 @@
                 </form>
             </div>
         </ul>
-        <div id="diagramDiv"></div>
 
+        <div class="content">
+        <div id="diagramDiv" class="content"></div>
+        <div id="heatmap" style="display: none"></div>
+        </div>
         <!-- Sidebar Right -->
         <div class="sidebar-right">
-
             <!-- Upper 50% of sidebar -->
             <div class="sidebar-box-resizable">
                 <h2>Node Information</h2>
@@ -277,8 +276,10 @@
                 <div class="row">
                     <div class="col s12 tabbar">
                         <ul class="tabs">
-                            <li class="tab col s3"><a href="#filterTab">Filter</a></li>
-                            <li class="tab col s3"><a href="#visualizationTab">Visualize</a></li>
+                            <li class="tab col s3"><a href="#filterTab"><i class="material-icons">layers</i></a></li>
+                            <li class="tab col s3"><a href="#visualizationTab"><i class="material-icons">color_lens</i></a></li>
+                            <li class="tab col s3"><a href="#histogramTab"><i class="material-icons">insert_chart</i></a></li>
+                            <li class="tab col s3"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a></li>
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
@@ -298,29 +299,123 @@
                     </div>
                     <div id="visualizationTab" class="col s12">
                         <div class="custom-tab">
-                            <select name="color-attribute" id="color-attribute" style="color: black">
-                                <option value="category">App. Type</option>
-                                <option value="license">License</option>
-                                <option value="version">Version</option>
-                                <option value="name">Name</option>
-                                <option value="profOwner">Prof. Owner</option>
-                                <option value="techOwner">Tech. Owner</option>
-                                <option value="tags">Tag</option>
-                                <option value="departments">Department</option>
-                            </select>
-                            <button id="apply-color" onclick="applyUserColorSetting()"
-                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Apply
-                                Color</button>
-                            <button id="remove-color" onclick="removeColorFromAllNodes()"
-                                style="background-color: rgba(20, 124, 229, 1); border:0; outline: 0; border-radius: 1rem; padding: 0.2rem;">Remove
-                                Color</button>
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <select name="color-attribute" id="color-attribute" class="tab-input-dropdown">
+                                        <option value="" selected disabled hidden>Choose attribute</option>
+                                        <optgroup label="Nominal Fields">
+                                            <option value="category">Application Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Professional Owner</option>
+                                            <option value="techOwner">Technical Owner</option>
+                                        </optgroup>
+                                        <optgroup label="Quantitative Fields">
+                                            <option value="startDate">Start Date</option>
+                                            <option value="shutdownDate">Shutdown Date</option>
+                                        </optgroup>
+                                        <optgroup label="Node-Graph Properties">
+                                            <option value="parent-child">Parents and Children</option>
+                                        </optgroup>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div class="margin-top tab-btn-container">
+                                <button id="apply-color" onclick="applyUserColorSetting()" class="nav-btn">Apply Color</button>
+                                <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove Color</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="histogramTab" class="col s12">
+                        <div class="custom-tab">
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
+                                        <optgroup label="Application Value Fields">
+                                            <option value="" selected disabled hidden>Create histogram</option>
+                                            <option value="category" >Application Type</option>
+                                            <option value="license" >License</option>
+                                            <option value="profOwner" >Professional Owner</option>
+                                            <option value="techOwner" >Technical Owner</option>
+                                            <option value="tags" >Tags</option>
+                                            <option value="departments">Departments</option>
+                                        </optgroup>
+                                        <optgroup label="Dates">
+                                            <option value="shutdownDate">Shutdown Year</option>
+                                            <option value="startDate">Start Year</option>
+                                        </optgroup>
+                                        <optgroup label="Graph Properties">
+                                            <option value="children">Child Nodes</option>
+                                            <option value="parents">Parent Nodes</option>
+                                            <option value="neighbors">Neighbor Nodes</option>
+                                        </optgroup>
+
+                                    </select>
+                                </li>
+                            </ul>
+                            <div id="histogram-container"></div>
+                        </div>
+                    </div>
+                    <div id="heatmapTab" class="col s12">
+                        <div class="custom-tab">
+                            <div class="flex">
+                                <ul class="collection">
+                                    <li class="collection-item">
+                                        <select name="color-attribute" id="heatmap-attribute1" class="tab-input-dropdown">
+                                            <option value="" selected disabled hidden>Choose attribute 1</option>
+                                            <option value="category">App. Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Prof. Owner</option>
+                                            <option value="techOwner">Tech. Owner</option>
+                                            <option value="tags">Tag</option>
+                                            <option value="departments">Department</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                                    <i class="material-icons center">compare_arrows</i>
+                                <ul class="collection">
+                                    <li class="collection-item">
+                                        <select name="color-attribute" id="heatmap-attribute2" class="tab-input-dropdown">
+                                            <option value="" selected disabled hidden>Choose attribute 2</option>
+                                            <option value="category">App. Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Prof. Owner</option>
+                                            <option value="techOwner">Tech. Owner</option>
+                                            <option value="tags">Tag</option>
+                                            <option value="departments">Department</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr class="hr-tab">
+                            <ul class="collection">
+                                <li class="collection-item">
+                                    <select name="color-attribute" id="heatmap-color" class="tab-input-dropdown">
+                                        <option value="" selected disabled hidden>Choose colorway</option>
+                                        <option value="YlOrRd">Fire</option>
+                                        <option value="YlGnBu">Cool</option>
+                                        <option value="RdBu">Red and Blue</option>
+                                        <option value="Portland">Portland</option>
+                                        <option value="Picnic">Picnic</option>
+                                        <option value="Jet">Jet</option>
+                                        <option value="Hot">Hot</option>
+                                        <option value="Greys">Greys</option>
+                                        <option value="Greens">Greens</option>
+                                        <option value="Earth">Earth</option>
+                                        <option value="Bluered">Bluered</option>
+                                        <option value="inferno">Inferno</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div class="margin-top tab-btn-container">
+                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate Heatmap</button>
+                                <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close Heatmap</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <footer>
         <div class="footer-content">
@@ -332,28 +427,28 @@
     </footer>
 
 </body>
-
+<script src="https://cdn.plot.ly/plotly-2.0.0.min.js"></script> <!-- Load Plotly /-->
 <script src="libs/materialize.js"></script>
 <script src="js/index.js"></script>
 <script src="js/diagramListener.js"></script>
 <script src="js/materializeElements.js"></script>
 <script src="js/sidenav.js"></script>
-<script src="js/modal_util.js"></script>
-<script src="js/database_util.js"></script>
+<script src="js/modalUtil.js"></script>
+<script src="js/databaseUtil.js"></script>
 <script src="js/diagram.js"></script>
 <script src="js/showParentChildeNode.js"></script>
 <script src="js/contextmenu.js"></script>
 <script src="js/filter.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/highlight.js"></script>
-<script src="js/static_util.js"></script>
+<script src="js/staticUtil.js"></script>
 <script src="js/sidebar.js"></script>
 <script src="js/searchbar.js"></script>
 <script src="js/exportImg.js"></script>
-<script src="js/node_template.js"></script>
-<script src="js/link_template.js"></script>
-<script src="js/colorNodesSetting.js"></script>
+<script src="js/heatmap.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/nodeTemplate.js"></script>
+<script src="js/linkTemplate.js"></script>
+<script src="js/colorNodes.js"></script>
 <script src="js/visualisation.js"></script>
-
-
 </html>

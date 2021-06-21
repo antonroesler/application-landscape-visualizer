@@ -8,7 +8,7 @@
 * Date:              21.04.2021
 *
 */
-
+/*TODO: Delete this file?? Is it in use?*/
 /**
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.

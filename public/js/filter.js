@@ -19,6 +19,17 @@ var appliedFilters = [];
 var moreThanOneFilter = false;
 
 /**
+ * Used to app a new filter to the diagram from else where in the code. Psuhes the filter to the all-Filter array,
+ * applies the filter and adds it to the html.
+ * @param filter
+ */
+function addAndApplyFilter(filter) {
+    allFilter.push(filter);
+    appendFilterCollection(generateFilterElement(filter));
+    applyFilter(filter);
+}
+
+/**
  * Removes all filters from model.
  */
 function filterOff() {
@@ -58,7 +69,7 @@ function _filterDiagramFromSidenav() {
  * Applies a filter to the model.
  */
 function applyFilter(f) {
-    filterNodeArray = filterAppNodes(f);
+    const filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
         window.alert("there are no Nodes with this setting");
         return null;
@@ -69,9 +80,9 @@ function applyFilter(f) {
             activateFilter(filterNodeArray);
             filterAppLinks(filterNodeArray);
         } else {
-            previousFilter = findFilter(appliedFilters[appliedFilters.length - 1]);
-            previousFilterNodeArray = filterAppNodes(previousFilter[0]);
-            andFilterArray = applyAdditionalFilter(f, previousFilterNodeArray);
+            const previousFilter = findFilter(appliedFilters[appliedFilters.length - 1]);
+            const previousFilterNodeArray = filterAppNodes(previousFilter[0]);
+            const andFilterArray = applyAdditionalFilter(f, previousFilterNodeArray);
             activateFilter(andFilterArray);
             filterAppLinks(andFilterArray);
         }
@@ -83,8 +94,8 @@ function applyFilter(f) {
  * Applies a and filter when there is more than one chosen
  */
 function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
-    nextFilterArray = filterAppNodes(nextFilter);
-    andFilterArray = previousFilterNodeArray.filter(node => nextFilterArray.includes(node));
+    const nextFilterArray = filterAppNodes(nextFilter);
+    const andFilterArray = previousFilterNodeArray.filter(node => nextFilterArray.includes(node));
     console.log(andFilterArray);
     if (andFilterArray.length === 0) {
         alert("there is are no nodes with this combined filter");
@@ -103,11 +114,13 @@ function applyAllFilterInAppliedFilters() {
         applyFilter(filter[0]);
     }
 }
+
 /**
  * Rearranges nodeDataArray according to the filter properties
  */
 function filterAppNodes(filter) {
-    const filterNodeArray = model.nodeDataArray.filter(function (currentElement) {
+    if (filter == undefined) return null;
+    return model.nodeDataArray.filter(function (currentElement) {
         for (let key in filter.properties) {
             var currentElementProp = currentElement[key];
             var currentFilterProps = filter.properties[key];
@@ -125,7 +138,6 @@ function filterAppNodes(filter) {
         }
         return false;
     });
-    return filterNodeArray;
 }
 
 
@@ -192,6 +204,7 @@ function checkFilterNameExists(enteredName) {
         }
     }
 }
+
 /**
  * Removes filter from already created filters inside of array "allFilters"
  */
@@ -217,6 +230,7 @@ function removeAppliedFilterFromArray(filterName) {
     })
     console.log(allFilter);
 }
+
 /**
  * Returns a filtered array with the wanted filter
  */
