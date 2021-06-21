@@ -62,6 +62,7 @@
             </nav>
             <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
+            <a class="nav-icon" href="#" onclick="openSettingsModal()"><i class="material-icons">more_vert</i></a>
         </div>
         <div class="sub-nav">
             <nav>
@@ -161,6 +162,33 @@
             <div class="modal-close" onclick="closeModal()">+</div>
             <div class="modal-content">
                 <h2>Export Diagram.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <div>
+                        <input type="checkbox" id="exp-png" name="exp-png">
+                        <label for="exp-png">PNG with transparent Background</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="exp-png-white" name="exp-png-white">
+                        <label for="exp-png-white">PNG with white Background</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="exp-svg" name="exp-svg">
+                        <label for="exp-svg">SVG</label>
+                    </div>
+                    <input class="input-text" type="text" placeholder="File Name... (optional)" id="exp-name">
+                    <button class="modal-btn" onclick="exportDiagram(); closeModal();">Download</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-bg" id="settingsModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Change Settings.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
                     <div>
                         <input type="checkbox" id="exp-png" name="exp-png">
