@@ -1,6 +1,22 @@
+/*
+* Copyright (c) 2021 Ecore. All rights reserved.
+*
+* University:        Frankfurt University of Applied Sciences
+* Study program:     Engineering Business Information Systems
+* Module:            Advanced Programming 2021
+* Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
+* Date:              21.04.2021
+*
+*/
+
+/**
+ * Contains functions that calculate statistical data on the diagram that is used for the "Statistical Key Figure" Tab.
+ * @author Anton Roesler
+ */
+
 /* Total number of Nodes / Links*/
 /**
- * Returns the number of nodes in the NodeDataAarry
+ * Returns the number of nodes in the NodeDataArray
  * @returns {number} of Nodes
  */
 function totalNumberOfNodes() {
@@ -8,8 +24,8 @@ function totalNumberOfNodes() {
 }
 
 /**
- * Returns the number of nodes in the NodeDataAarry
- * @returns {number} of Nodes
+ * Returns the number of nodes in the LinkDataArray
+ * @returns {number} of Links
  */
 function totalNumberOfLinks() {
     return totalNumberOf('links')
@@ -98,11 +114,11 @@ function numberOfSeparateGraphs() {
     let nOfGraphs = 0;
     for (let i = 0; i < model.nodeDataArray.length; i++) {
         const node = model.nodeDataArray[i];
-        if (!allNodes.has(node)){
+        if (!allNodes.has(node)) {
             nOfGraphs++;
             addNodeAndAllLinkedNodes(node, allNodes);
         }
-        if (allNodes.size === model.nodeDataArray.length){
+        if (allNodes.size === model.nodeDataArray.length) {
             break;
         }
     }
