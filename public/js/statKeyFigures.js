@@ -1,14 +1,9 @@
-
-
-
-
-
 /* Total number of Nodes / Links*/
 /**
  * Returns the number of nodes in the NodeDataAarry
  * @returns {number} of Nodes
  */
-function totalNumberOfNodes(){
+function totalNumberOfNodes() {
     return totalNumberOf('nodes')
 }
 
@@ -16,7 +11,7 @@ function totalNumberOfNodes(){
  * Returns the number of nodes in the NodeDataAarry
  * @returns {number} of Nodes
  */
-function totalNumberOfLinks(){
+function totalNumberOfLinks() {
     return totalNumberOf('links')
 }
 
@@ -25,15 +20,15 @@ function totalNumberOfLinks(){
  * @param part 'nodes' or 'links'
  * @returns {number}
  */
-function totalNumberOf(part){
+function totalNumberOf(part) {
     try {
-        if (part.toLowerCase().startsWith('link')){
+        if (part.toLowerCase().startsWith('link')) {
             return model.linkDataArray.length
-        } else{
+        } else {
             return model.nodeDataArray.length
         }
-    } catch (e){
-        createToast(part+"DataArray is missing", 'fail')
+    } catch (e) {
+        createToast(part + "DataArray is missing", 'fail')
         return 0;
     }
 }
@@ -44,7 +39,7 @@ function totalNumberOf(part){
  * Returns avg number of child nodes.
  * @returns {*}
  */
-function avgNumberOfChildren(){
+function avgNumberOfChildren() {
     return _avgNumberOf(numberOfChildNodes)
 }
 
@@ -52,7 +47,7 @@ function avgNumberOfChildren(){
  * Returns avg number of parent nodes
  * @returns {*}
  */
-function avgNumberOfParents(){
+function avgNumberOfParents() {
     return _avgNumberOf(numberOfParentNodes)
 }
 
@@ -62,7 +57,7 @@ function avgNumberOfParents(){
  * @returns {*}
  * @private
  */
-function _avgNumberOf(getter){
+function _avgNumberOf(getter) {
     const numbers = [];
     model.nodeDataArray.forEach(node => {
         numbers.push(getter(node))
@@ -70,15 +65,18 @@ function _avgNumberOf(getter){
     return meanOfArray(numbers);
 }
 
-function meanOfArray(arr){
-    return arr.reduce(function(sum, a) { return sum + a },0)/(arr.length||1);
+function meanOfArray(arr) {
+    return arr.reduce(function (sum, a) {
+        return sum + a
+    }, 0) / (arr.length || 1);
 }
 
 
 /* Average number of inputs */
+
 /*
 One might think this is the same as number of children/parents but there is one exception as a node that has two links
-to the same child node has only one child bu two outputs and vice versa for the parent
+to the same child node has only one child but two outputs and vice versa for the parent
 */
 
 /**
@@ -86,6 +84,53 @@ to the same child node has only one child bu two outputs and vice versa for the 
  * each input is the output of another node.
  * @returns {number}
  */
-function avgNumberOfInputsOutputs(){
-    return (model.linkDataArray.length/model.nodeDataArray.length)
+function avgNumberOfInputsOutputs() {
+    return (model.linkDataArray.length / model.nodeDataArray.length)
+}
+
+/* Number of totally separated graphs */
+/**
+ * Returns the number of totally separated Graphs in the diagram.
+ * @returns {number}
+ */
+function numberOfSeparateGraphs() {
+    const allNodes = new Set();
+    let nOfGraphs = 0;
+    for (let i = 0; i < model.nodeDataArray.length; i++) {
+        const node = model.nodeDataArray[i];
+        if (!allNodes.has(node)){
+            nOfGraphs++;
+            addNodeAndAllLinkedNodes(node, allNodes);
+        }
+        if (allNodes.size === model.nodeDataArray.length){
+            break;
+        }
+    }
+    return nOfGraphs;
+}
+
+/**
+ * Traverses the full network of parents/children from a given node and adds all nodes to the given allNodes set.
+ * @param node a go.Node object
+ * @param allNodes a Set
+ */
+function addNodeAndAllLinkedNodes(node, allNodes) {
+    if (!allNodes.has(node)) {
+        allNodes.add(node);
+        getAllReachableNodes(node).forEach(neighbor => {
+            addNodeAndAllLinkedNodes(neighbor, allNodes)
+        })
+    }
+}
+
+/**
+ * Returns a set of all direct parents and children of a node.
+ * @param node a go.Node object
+ * @returns {Set<go.Node>} Set of go.Nodes objects
+ */
+function getAllReachableNodes(node) {
+    const neighbors = new Set()
+    getAllChildNodes(node, neighbors);
+    getAllParentNodes(node, neighbors);
+    return neighbors;
 }
