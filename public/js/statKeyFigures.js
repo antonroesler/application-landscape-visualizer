@@ -73,3 +73,19 @@ function _avgNumberOf(getter){
 function meanOfArray(arr){
     return arr.reduce(function(sum, a) { return sum + a },0)/(arr.length||1);
 }
+
+
+/* Average number of inputs */
+/*
+One might think this is the same as number of children/parents but there is one exception as a node that has two links
+to the same child node has only one child bu two outputs and vice versa for the parent
+*/
+
+/**
+ * Returns avg number of inputs and outputs of all nodes in the diagram. The number is the same for in and outputs as
+ * each input is the output of another node.
+ * @returns {number}
+ */
+function avgNumberOfInputsOutputs(){
+    return (model.linkDataArray.length/model.nodeDataArray.length)
+}
