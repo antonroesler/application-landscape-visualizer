@@ -75,8 +75,9 @@ function showAll() {
     diagramNodeParentChildBeforeFilterIsActive.clear();
     diagram.nodeTemplate = mainTemplate;
     if (moreThanOneFilter === true) {
+        var noDublicates = new Set(modelNodeWithoutFilter);
         diagram.startTransaction();
-        model.nodeDataArray = modelNodeWithoutFilter;
+        model.nodeDataArray = Array.from(noDublicates);
         model.linkDataArray = modelLinkWithoutFilter;
         diagram.updateAllRelationshipsFromData();
         diagram.updateAllTargetBindings();
@@ -85,8 +86,9 @@ function showAll() {
         parentChildArrayGrew = 0;
         applyAllFilters();
     } else {
+        var noDublicates = new Set(modelNodeWithoutFilter);
         diagram.startTransaction();
-        model.nodeDataArray = modelNodeWithoutFilter;
+        model.nodeDataArray = Array.from(noDublicates);
         model.linkDataArray = modelLinkWithoutFilter;
         diagram.updateAllRelationshipsFromData();
         diagram.updateAllTargetBindings();
@@ -136,17 +138,17 @@ function updateDiagram() {
 function toastAlert() {
     if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {
         if (parentButton === true) {
-            alert("parent is not shown because of filter");
+            createToast("Parent is not shown because of a filter", 'fail')
         }
         else {
-            alert("child is not shown because of filter");
+            createToast("Child is not shown because of a filter", 'fail')
         }
     } else if (parentChildArrayGrew === 0) {
         if (parentButton === true) {
-            alert("there are no parents node left");
+            createToast("This node has no parents left", 'fail')
         }
         else {
-            alert("there are no childs for this node left");
+            createToast("This node has no childrens left", 'fail')
         }
     }
 }

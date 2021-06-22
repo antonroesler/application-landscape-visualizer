@@ -34,9 +34,10 @@ function addAndApplyFilter(filter) {
  * Removes all filters from model.
  */
 function filterOff() {
+    var noDublicates = new Set(modelNodeWithoutFilter);
     moreThanOneFilter = false;
     diagram.startTransaction();
-    model.nodeDataArray = modelNodeWithoutFilter;
+    model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
     diagram.commitTransaction("filter removed");
 }
@@ -117,7 +118,8 @@ function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
 }
 
 function applyAllFilterInAppliedFilters() {
-    model.nodeDataArray = modelNodeWithoutFilter;
+    var noDublicates = new Set(modelNodeWithoutFilter);
+    model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
     applyAllFilters();
 }
@@ -397,4 +399,12 @@ function deleteFilterElementFromFilterCollection(filterName) {
             applyAllFilterInAppliedFilters();
         }
     }
+}
+function linkHandlerWhileFilterOn() {
+    model.linkDataArray.forEach(link => {
+        console.log(link);
+        if (modelLinkWithoutFilter.includes(link) === false) {
+            modelLinkWithoutFilter.push(link);
+        }
+    })
 }
