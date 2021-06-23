@@ -67,6 +67,7 @@ function addNodeToDiagram(data) {
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
     modelNodeWithoutFilter.push(newNode);
+
 }
 
 /**

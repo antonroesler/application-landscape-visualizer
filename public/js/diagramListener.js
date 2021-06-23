@@ -21,8 +21,13 @@
  */
 diagram.addDiagramListener("ObjectSingleClicked", function (e) {
     let part = e.subject.part;
-    if (!(part instanceof go.Link)) {
-        generateNodeInfo(part);
+    if (part instanceof go.Node) {
+        generateSidebarHeadline("Application Information")
+        generateInfo(part, nodeSelectableAttributes);
+    }
+    else if (part instanceof go.Link) {
+        generateSidebarHeadline("Connection Information")
+        generateInfo(part, linkSelectableAttributes);
     }
 });
 
@@ -34,6 +39,7 @@ diagram.addDiagramListener("ObjectSingleClicked", function (e) {
 diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
     const nodeInfoContainer = document.getElementById("nodeInfoContainer");
     deleteHtmlChilds(nodeInfoContainer);
+    generateSidebarHeadline("Statistical Key Figures")
 });
 
 
@@ -45,4 +51,5 @@ diagram.addDiagramListener("LinkDrawn", function (e) {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
         linkHandlerWhileFilterOn();
     }
+
 });
