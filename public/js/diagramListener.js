@@ -36,6 +36,11 @@ diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
     deleteHtmlChilds(nodeInfoContainer);
 });
 
+
+/**
+ * Adds an diagramListener when a link is created.
+ * 
+ */
 diagram.addDiagramListener("LinkDrawn", function (e) {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
         linkHandlerWhileFilterOn();

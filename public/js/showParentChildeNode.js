@@ -23,7 +23,11 @@
  * @author Feng Yi Lu
  *
  */
+
+
 var allParentChildKeys = new Set();
+/*function finds a parent of a node
+ */
 function findParentsOfANode(node) {
     for (parentLinks of modelLinkWithoutFilter) {
         if (parentLinks.to === node.key) {
@@ -35,6 +39,8 @@ function findParentsOfANode(node) {
     return allParentChildKeys;
 }
 
+/*function returns the child or parent of a certain node
+ */
 function getParentsChildFromKey(nodeKeys) {
     parentChild = modelNodeWithoutFilter.filter(node => {
         for (keys of nodeKeys) {
@@ -48,7 +54,8 @@ function getParentsChildFromKey(nodeKeys) {
     return parentChild;
 }
 
-
+/*function finds a child of a node
+ */
 function findChildsofANode(node) {
     for (childLinks of modelLinkWithoutFilter) {
         if (childLinks.from === node.key) {

@@ -42,6 +42,9 @@ function filterOff() {
     diagram.commitTransaction("filter removed");
 }
 
+/**
+ * Removes a active filter when parent child features is active.
+ */
 function filterOffWhenParentChildActive() {
     moreThanOneFilter = false;
     diagram.startTransaction();
