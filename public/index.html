@@ -67,8 +67,8 @@
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="openCreateNodeModal();">Create Node</a></li>
-                    <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
+                    <li><a href="#" onclick="openCreateNodeModal();">Create Application</a></li>
+                    <li><a href="#" onclick="deleteNode()">Delete Application</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
                     <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
@@ -82,7 +82,7 @@
         <div class="modal-popup">
             <div class="modal-close" onclick="deleteDropdownMenuOptions(); closeModal();">+</div>
             <div class="modal-content">
-                <h2>Create new Node.</h2>
+                <h2>Create Application.</h2>
                 <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
                     <input type="hidden" id="contextMenu" />
                     <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
