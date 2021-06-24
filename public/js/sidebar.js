@@ -115,3 +115,25 @@ function getNodeNameById(id) {
     return nodeArray[0].name;
 }
 
+
+/**
+ * Necessary function to hide last tab, because of materializecss bug.
+ */
+function hideLastTab() {
+    let htmlTabs = document.getElementsByClassName("col s12 carousel-item");
+    let lastTab = htmlTabs[htmlTabs.length - 1];
+
+    lastTab.style.display = "none";
+}
+
+/**
+ * Necessary function to expose last tab when clicked, because of materializecss bug.
+ */
+function exposeLastTab() {
+    let htmlTabs = document.getElementsByClassName("col s12 carousel-item");
+    let lastTab = htmlTabs[htmlTabs.length - 1];
+
+    if(lastTab.style.display === "none") {
+        lastTab.style.display = "block";
+    }
+}
