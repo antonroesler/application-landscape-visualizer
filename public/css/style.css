@@ -252,6 +252,17 @@ hr {
     width: 100%;
 }
 
+.info-container-icon {
+    margin-left: 0.25rem;
+    align-self: center;
+    cursor: pointer;
+    font-size: 20px !important;
+}
+
+.info-container-icon:hover {
+    color: var(--focus-blue);
+}
+
 .box-row {
     display: flex;
     flex-direction: row;
@@ -262,7 +273,17 @@ hr {
 .node-info-text {
     color: var(--dark-grey);
     padding: 0 1.85rem 0.45rem 1.85rem;
+    hyphens: auto;
+    text-align: right;
 }
+
+.bold-text {
+    color: var(--dark-grey);
+    font-weight: bold;
+    padding: 0 1.85rem 0.45rem 1.85rem;
+    text-align: left;
+}
+
 
 /* Footer
    ========================================================================== */
@@ -969,10 +990,6 @@ ul:not(.browser-default) {
 }
 
 /* Helper Classes */
-.bold-text {
-    font-weight: bold;
-}
-
 .text-align-justify {
     text-align: justify;
 }
@@ -1040,6 +1057,17 @@ ul:not(.browser-default) {
 
 .collection-item select:focus {
     outline: none;
+    color: var(--unfocus-blue);
+    background-color: var(--focus-off-white);
+}
+
+.collection-item:focus-within {
+    background-color: var(--focus-off-white);
+}
+
+.collection-item select:focus {
+    color: var(--unfocus-blue);
+    background-color: var(--focus-off-white);
 }
 
 .collection-item select option{
