@@ -208,22 +208,27 @@
         <div class="modal-popup">
             <div class="modal-close" onclick="closeModal()">+</div>
             <div class="modal-content">
-                <h2>Change Settings.</h2>
+                <h2>Settings.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
-                    <div>
-                        <input type="checkbox" id="exp-png" name="exp-png">
-                        <label for="exp-png">PNG with transparent Background</label>
+                    <div class="form-row">
+                        <p class="modal-text">Diagram Hover</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" checked>
+                                <span class="lever"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div>
-                        <input type="checkbox" id="exp-png-white" name="exp-png-white">
-                        <label for="exp-png-white">PNG with white Background</label>
+                    <div class="form-row">
+                        <p class="modal-text">Show Tutorial</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div>
-                        <input type="checkbox" id="exp-svg" name="exp-svg">
-                        <label for="exp-svg">SVG</label>
-                    </div>
-                    <input class="input-text" type="text" placeholder="File Name... (optional)" id="exp-name">
-                    <button class="modal-btn" onclick="exportDiagram(); closeModal();">Download</button>
+                    <button class="modal-btn" onclick="exportDiagram(); closeModal();">Save</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
