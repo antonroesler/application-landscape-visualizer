@@ -37,7 +37,7 @@ diagram.addDiagramListener("ObjectSingleClicked", function (e) {
  * If the background is clicked, the node information in the sidebar are deleted.
  */
 diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
-    const nodeInfoContainer = document.getElementById("nodeInfoContainer");
+    const nodeInfoContainer = document.getElementById("infoContainer");
     deleteHtmlChilds(nodeInfoContainer);
     generateSidebarHeadline("Statistical Key Figures")
 });
