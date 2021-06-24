@@ -77,7 +77,7 @@ async function _saveDiagram() {
     if (names.includes(diagramName)){
         const r = confirm("A diagram with that name already exists. Do you want to overwrite it?");
         if (r === true) { // True if user wants to overwrite diagram.
-            const delurl = urljoin(URL, "mongo", diagramName);
+            const delurl = urljoin("mongo", diagramName);
             await fetch(delurl, {method:'DELETE'})
             await saveDiagramToMongo(diagramName)
         } else {

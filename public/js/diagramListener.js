@@ -19,7 +19,7 @@
  * Adds an diagramListener when an Object in the diagram is clicked.
  * If a node is clicked, the node information are generated.
  */
-diagram.addDiagramListener("ObjectSingleClicked", function(e) {
+diagram.addDiagramListener("ObjectSingleClicked", function (e) {
     let part = e.subject.part;
     if (part instanceof go.Node) {
         generateSidebarHeadline("Application Information")
@@ -36,8 +36,20 @@ diagram.addDiagramListener("ObjectSingleClicked", function(e) {
  * Adds an diagramListener when the diagram background is clicked.
  * If the background is clicked, the node information in the sidebar are deleted.
  */
-diagram.addDiagramListener("BackgroundSingleClicked", function(e) {
-    const infoContainer = document.getElementById("infoContainer");
-    deleteHtmlChilds(infoContainer);
+diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
+    const nodeInfoContainer = document.getElementById("nodeInfoContainer");
+    deleteHtmlChilds(nodeInfoContainer);
     generateSidebarHeadline("Statistical Key Figures")
+});
+
+
+/**
+ * Adds an diagramListener when a link is created.
+ * 
+ */
+diagram.addDiagramListener("LinkDrawn", function (e) {
+    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+        linkHandlerWhileFilterOn();
+    }
+
 });
