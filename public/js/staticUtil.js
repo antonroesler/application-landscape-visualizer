@@ -27,44 +27,59 @@ function ChipJsonValuesToArray(json) {
     return valueArray;
 }
 
+function ArrayValueToChipJasonValues(array) {
+    let chipData = [];
+    for (const chipContent of array) {
+        chipData.push({tag: chipContent});
+    }
+    return chipData
+}
+
+function pushChipDataToChipElement(chipElement, chipData) {
+    for (const chipJson of chipData) {
+        chipElement.addChip(chipJson);
+    }
+}
+
+
 
 /**
  * Gets the input values from the user and calls the addNode() function to add
  * node to diagram.
  */
-function readNodeProperties() {
+function readNodePropertiesFromModal() {
     const name = document.getElementById("inputName").value;
-    if (name === "") {
-        window.alert("Please enter a name for the node");
-    } else {
-        const category = document.getElementById("inputCategory").value;
-        const desc = document.getElementById("inputDescription").value;
-        const tags = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputTags")).chipsData);
-        const departments = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputDepartments")).chipsData);
-        const version = document.getElementById("inputVersion").value;
-        const license = document.getElementById("inputLicense").value;
-        const profOwner = document.getElementById("inputProfessionalOwner").value;
-        const techOwner = document.getElementById("inputTechnicalOwner").value;
-        const startDate = document.getElementById("inputStartDate").value;
-        const shutdownDate = document.getElementById("inputShutdownDate").value;
-        if (appNodeNameExists(name) === true) {
-            window.alert("Node name already exists.");
-            return undefined
-        }
+    const category = document.getElementById("inputCategory").value;
+    const desc = document.getElementById("inputDescription").value;
+    const tags = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputTags")).chipsData);
+    const departments = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById("inputDepartments")).chipsData);
+    const version = document.getElementById("inputVersion").value;
+    const license = document.getElementById("inputLicense").value;
+    const profOwner = document.getElementById("inputProfessionalOwner").value;
+    const techOwner = document.getElementById("inputTechnicalOwner").value;
+    const startDate = document.getElementById("inputStartDate").value;
+    const shutdownDate = document.getElementById("inputShutdownDate").value;
 
-        return {
-            name: name,
-            category: category,
-            desc: desc,
-            tags: tags,
-            version: version,
-            departments: departments,
-            license: license,
-            profOwner: profOwner,
-            techOwner: techOwner,
-            startDate: startDate,
-            shutdownDate: shutdownDate
-        }
+    return {
+        name: name,
+        category: category,
+        desc: desc,
+        tags: tags,
+        version: version,
+        departments: departments,
+        license: license,
+        profOwner: profOwner,
+        techOwner: techOwner,
+        startDate: startDate,
+        shutdownDate: shutdownDate
+    }
+}
+
+function readLinkPropertiesFromModal() {
+    const type = document.getElementById("connectionTypeOptions").value;
+
+    return {
+        type: type
     }
 }
 
@@ -133,34 +148,6 @@ function filterNodeSelectableAttributes(excludedNodeAttributes, containsEmptySet
     return filteredNodeSelectableAttributes;
 }
 
-/**
-* Not in use. DELETE.
-*/
-/** function to read filter properties*/
-function readFilterProperties() {
-    const filterName = document.getElementById("filterName").value;
-    const filterInputFields = ["filterCategory", "inputTags", "filterVersion", "inputDepartments", "filterUsers", "filterLicense"];
-    const filter = {};
-    filter.name = filterName;
-    filter.properties = {};
-    filterInputFields.forEach(function (property) {
-        const value = document.getElementById(property).value;
-        if (property === "inputTags" || property === "inputDepartments") {
-            const chipValue = ChipJsonValuesToArray(M.Chips.getInstance(document.getElementById(property)).chipsData);
-            if (chipValue) {
-                filter.properties[property] = chipValue;
-            }
-        }
-        if (value) {
-            // replace: "filterCategory" => "category", "filterTag" => "tag" ...
-
-            filter.properties[property.replace("filter", "").toLowerCase()] = value;
-        }
-    });
-    console.log(filter.properties);
-    return filter;
-}
-
 
 /**
  * Generates a random number which imitates to be unique.
@@ -196,4 +183,10 @@ function hideHTMLElement(htmlElement) {
 
 function showHTMLElement(htmlElement, display="flex") {
     htmlElement.style.display = display;
+}
+
+
+function getSelectedGoJsElement() {
+    const goJsElement = diagram.selection.first();
+    return goJsElement;
 }
