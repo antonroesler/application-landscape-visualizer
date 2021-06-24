@@ -191,9 +191,13 @@ function changeCreateNodeModaltoEditNodeModal() {
     const headline = createNodeModal.querySelector("h2");
     const form = createNodeModal.querySelector("form");
     const btn = createNodeModal.querySelector(".modal-btn");
+    const btnCancel = createNodeModal.querySelector(".modal-btn-cancel");
+    const cancel = createNodeModal.querySelector(".modal-close");
 
     headline.innerHTML = "Edit Application."
     btn.innerHTML = "Save"
+    btnCancel.onclick = function() { changeEditNodeModalToCreateNodeModal(); closeModal(); };
+    cancel.onclick = function() { changeEditNodeModalToCreateNodeModal(); closeModal(); };
     form.onsubmit = function() {
         deleteDropdownMenuOptions();
         overwriteSelectedNode()
@@ -212,9 +216,13 @@ function changeEditNodeModalToCreateNodeModal() {
     const headline = createNodeModal.querySelector("h2");
     const form = createNodeModal.querySelector("form");
     const btn = createNodeModal.querySelector(".modal-btn");
+    const btnCancel = createNodeModal.querySelector(".modal-btn-cancel");
+    const cancel = createNodeModal.querySelector(".modal-close");
 
     headline.innerHTML = "Create Application."
     btn.innerHTML = "Create"
+    btnCancel.onclick = function() { closeModal(); };
+    cancel.onclick = function() { closeModal(); };
     form.onsubmit = function() {
         deleteDropdownMenuOptions();
         addAppNode();
