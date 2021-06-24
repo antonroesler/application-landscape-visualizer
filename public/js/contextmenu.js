@@ -15,7 +15,10 @@
  *
  * @author Feng Yi Lu
  */
-
+var parentChildFeatureOn = false;
+var parentChildArrayGrew = 0;
+var parentButton;
+var before = 0;
 /**main contextMenu of the diagram*/
 diagram.contextMenu =
     $("ContextMenu",
@@ -49,6 +52,105 @@ diagram.contextMenu =
 function addNodeAndLink() {
     document.getElementById("contextMenu").value = "nodeContextMenuAdd";
     openCreateNodeModal()
+}
+
+
+function hideAllOtherNodes() {
+    diagram.nodeTemplate = mainTemplateParentChild;
+    diagramNodeParentChildBeforeFilterIsActive.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
+    parentChildNodeSet.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(parentChildNodeSet);
+    model.linkDataArray = [];
+    diagram.commitTransaction("all other nodes have been hid");
+    parentChildFeatureOn = true;
+    parentChildArrayGrew = 0;
+}
+
+function showAll() {
+    allParentChildKeys.clear();
+    parentChildNodeSet.clear();
+    parentChildLinkArray = [];
+    diagramLinkParentChildBeforeFilterIsActive = [];
+    diagramNodeParentChildBeforeFilterIsActive.clear();
+    diagram.nodeTemplate = mainTemplate;
+    if (moreThanOneFilter === true) {
+        var noDublicates = new Set(modelNodeWithoutFilter);
+        diagram.startTransaction();
+        model.nodeDataArray = Array.from(noDublicates);
+        model.linkDataArray = modelLinkWithoutFilter;
+        diagram.updateAllRelationshipsFromData();
+        diagram.updateAllTargetBindings();
+        diagram.commitTransaction("parentChild view removed");
+        parentChildFeatureOn = false;
+        parentChildArrayGrew = 0;
+        applyAllFilters();
+    } else {
+        var noDublicates = new Set(modelNodeWithoutFilter);
+        diagram.startTransaction();
+        model.nodeDataArray = Array.from(noDublicates);
+        model.linkDataArray = modelLinkWithoutFilter;
+        diagram.updateAllRelationshipsFromData();
+        diagram.updateAllTargetBindings();
+        diagram.commitTransaction("parentChild view removed");
+        parentChildFeatureOn = false;
+        parentChildArrayGrew = 0;
+    }
+}
+
+function showParents() {
+    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    parentChildNodeSet.add(selectedNode);
+    parents = getParentsChildFromKey(findParentsOfANode(selectedNode));
+    for (node of parents) {
+        parentChildNodeSet.add(node);
+    }
+    parentButton = true;
+    updateDiagram();
+}
+
+function showChilds() {
+    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    parentChildNodeSet.add(selectedNode);
+    childs = getParentsChildFromKey(findChildsofANode(selectedNode));
+    for (node of childs) {
+        parentChildNodeSet.add(node);
+    }
+    parentButton = false;
+    updateDiagram();
+}
+
+function updateDiagram() {
+    before = model.nodeDataArray.length;
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(parentChildNodeSet);
+    model.linkDataArray = parentChildLinkArray;
+    diagram.updateAllRelationshipsFromData();
+    diagram.updateAllTargetBindings();
+    diagram.commitTransaction("updated");
+    diagramNodeParentChildBeforeFilterIsActive = parentChildNodeSet;
+    diagramLinkParentChildBeforeFilterIsActive = parentChildLinkArray;
+    applyAllFilters();
+    toastAlert();
+    parentChildArrayGrew = 0;
+}
+
+function toastAlert() {
+    if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {
+        if (parentButton === true) {
+            createToast("Parent is not shown because of a filter", 'fail')
+        }
+        else {
+            createToast("Child is not shown because of a filter", 'fail')
+        }
+    } else if (parentChildArrayGrew === 0) {
+        if (parentButton === true) {
+            createToast("This node has no parents left", 'fail')
+        }
+        else {
+            createToast("This node has no childrens left", 'fail')
+        }
+    }
 }
 
 /**function to handle diffrent node adding possibilities depending 

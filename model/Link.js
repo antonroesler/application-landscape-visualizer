@@ -27,6 +27,7 @@ const AppNodeSchema = mongoose.Schema({
         required: true
     },
     category: String,
+    type: String
 });
 
 

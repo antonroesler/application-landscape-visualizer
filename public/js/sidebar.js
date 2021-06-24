@@ -58,7 +58,7 @@ function generateInfoRow(attribute, value, setTextVertical = false, selectableAt
     if(!setTextVertical) {
         div.setAttribute("class", "box-row");
     }
-    pAttribute.setAttribute("class", "node-info-text bold-text");
+    pAttribute.setAttribute("class", "bold-text");
     pValue.setAttribute("class", "node-info-text");
 
     pAttribute.innerHTML = selectableAttributes.get(attribute) + ":";
@@ -81,9 +81,24 @@ function generateInfoRow(attribute, value, setTextVertical = false, selectableAt
 }
 
 
-
+/**
+ * Function generates the headline for the sidebar infobox.
+ * Appends the edit icon. -> TODO Could be refactored?
+ * @param {String} headline Displayed text
+ */
 function generateSidebarHeadline(headline) {
     let h2 = document.querySelector(".sidebar-box-resizable").querySelector("h2");
+    if(document.querySelector(".info-container-icon") !== null) {
+        document.querySelector(".info-container-icon").remove();
+    }
+    if(headline === "Application Information") {
+        h2.insertAdjacentHTML("afterend", "<i class='material-icons info-container-icon'" +
+            "onclick='openEditNodeModal()'>edit</i>");
+    } else if(headline === "Connection Information") {
+        h2.insertAdjacentHTML("afterend", "<i class='material-icons info-container-icon'" +
+            "onclick='openEditLinkModal();'>edit</i>");
+    }
+    else {}
     h2.innerHTML = headline;
 }
 
@@ -100,3 +115,25 @@ function getNodeNameById(id) {
     return nodeArray[0].name;
 }
 
+
+/**
+ * Necessary function to hide last tab, because of materializecss bug.
+ */
+function hideLastTab() {
+    let htmlTabs = document.getElementsByClassName("col s12 carousel-item");
+    let lastTab = htmlTabs[htmlTabs.length - 1];
+
+    lastTab.style.display = "none";
+}
+
+/**
+ * Necessary function to expose last tab when clicked, because of materializecss bug.
+ */
+function exposeLastTab() {
+    let htmlTabs = document.getElementsByClassName("col s12 carousel-item");
+    let lastTab = htmlTabs[htmlTabs.length - 1];
+
+    if(lastTab.style.display === "none") {
+        lastTab.style.display = "block";
+    }
+}

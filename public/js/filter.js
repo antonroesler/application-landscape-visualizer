@@ -14,6 +14,7 @@
  * @author Leonard Hußke , Feng Yi Lu, Anton Roesler
  */
 
+
 var allFilter = [];
 var appliedFilters = [];
 var moreThanOneFilter = false;
@@ -33,11 +34,28 @@ function addAndApplyFilter(filter) {
  * Removes all filters from model.
  */
 function filterOff() {
+    var noDublicates = new Set(modelNodeWithoutFilter);
     moreThanOneFilter = false;
     diagram.startTransaction();
-    model.nodeDataArray = modelNodeWithoutFilter;
+    model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
     diagram.commitTransaction("filter removed");
+}
+
+/**
+ * Removes a active filter when parent child features is active.
+ */
+function filterOffWhenParentChildActive() {
+    moreThanOneFilter = false;
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(diagramNodeParentChildBeforeFilterIsActive);
+    model.linkDataArray = diagramLinkParentChildBeforeFilterIsActive;
+    diagram.commitTransaction("filter removed");
+    if (appliedFilters.length > 1) {
+        diagramNodeParentChildBeforeFilterIsActive.clear();
+        diagramLinkParentChildBeforeFilterIsActive = [];
+    } else {
+    }
 }
 
 function filterDiagramFromSidenav() {
@@ -71,11 +89,9 @@ function applyFilter(f) {
     const filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
         window.alert("there are no Nodes with this setting");
-        return null;
     } else {
         if (moreThanOneFilter === false) {
             moreThanOneFilter = true;
-            appliedFilters.push(f.name);
             activateFilter(filterNodeArray);
             filterAppLinks(filterNodeArray);
         } else {
@@ -105,8 +121,13 @@ function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
 }
 
 function applyAllFilterInAppliedFilters() {
-    model.nodeDataArray = modelNodeWithoutFilter;
+    var noDublicates = new Set(modelNodeWithoutFilter);
+    model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
+    applyAllFilters();
+}
+
+function applyAllFilters() {
     moreThanOneFilter = false;
     for (filterName of appliedFilters) {
         filter = findFilter(filterName);
@@ -147,6 +168,7 @@ function activateFilter(filterNodeArray) {
     diagram.startTransaction();
     model.nodeDataArray = filterNodeArray;
     diagram.commitTransaction("filter node applied");
+    diagramNodeWhenFilterIsActive = filterNodeArray;
     return filterNodeArray;
 }
 
@@ -164,6 +186,7 @@ function filterAppLinks(filterNodeArray) {
     diagram.startTransaction();
     model.linkDataArray = filterLinkArray;
     diagram.commitTransaction("filter link applied");
+    diagramLinkWhenFilterIsActive = filterLinkArray;
 }
 
 /**
@@ -225,7 +248,7 @@ function removeAppliedFilterFromArray(filterName) {
         }
         return false;
     })
-    console.log(allFilter);
+    console.log(appliedFilters);
 }
 
 /**
@@ -305,9 +328,18 @@ function changeFilterActivation(filterName) {
         activeBadge.remove();
         removeAppliedFilterFromArray(filterName);
         if (appliedFilters.length === 0) {
-            filterOff();
+            if (parentChildFeatureOn === true) {
+                filterOffWhenParentChildActive()
+            } else {
+                filterOff();
+            }
         } else {
-            applyAllFilterInAppliedFilters();
+            if (parentChildFeatureOn === true) {
+                filterOffWhenParentChildActive();
+                applyAllFilters();
+            } else {
+                applyAllFilterInAppliedFilters();
+            }
         }
         // Function to disable filter needs to be added
     }
@@ -332,6 +364,19 @@ function changeFilterActivation(filterName) {
     }
 }
 
+function deactivateAllAppliedFilters() {
+    moreThanOneFilter = false;
+    for (filter of appliedFilters) {
+        console.log(appliedFilters);
+        console.log(filter);
+        const filterElement = document.getElementById(filter);
+        const activeBadge = filterElement.querySelector("span");
+        filterElement.classList.remove("active");
+        removeAppliedFilterFromArray(filter);
+        activeBadge.remove();
+
+    }
+}
 
 /**
  * Function which deletes the filterElement (li-tag) from the filter collection for the given parameter filterName.
@@ -344,8 +389,25 @@ function deleteFilterElementFromFilterCollection(filterName) {
     removeAppliedFilterFromArray(filterName);
     collection.removeChild(filterElement);
     if (appliedFilters.length === 0) {
-        filterOff();
+        if (parentChildFeatureOn === true) {
+            filterOffWhenParentChildActive()
+        } else {
+            filterOff();
+        }
     } else {
-        applyAllFilterInAppliedFilters();
+        if (parentChildFeatureOn === true) {
+            filterOffWhenParentChildActive();
+            applyAllFilters();
+        } else {
+            applyAllFilterInAppliedFilters();
+        }
     }
+}
+function linkHandlerWhileFilterOn() {
+    model.linkDataArray.forEach(link => {
+        console.log(link);
+        if (modelLinkWithoutFilter.includes(link) === false) {
+            modelLinkWithoutFilter.push(link);
+        }
+    })
 }
