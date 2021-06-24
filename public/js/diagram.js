@@ -33,7 +33,7 @@ function init() {
  * Reads user inputs and creates a new Node from the users data.
  */
 function addAppNode() {
-    const data = readNodeProperties();
+    const data = readNodePropertiesFromModal();
     data._id = Date.now();
     addNodeToDiagram(data);
 }
@@ -66,8 +66,8 @@ function addNodeToDiagram(data) {
     applyColorWhenNodeCreated(newNode);
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
-    console.log(newNode);
-    modelNodeWithoutFilter = model.nodeDataArray;
+    modelNodeWithoutFilter.push(newNode);
+
 }
 
 /**
@@ -104,6 +104,7 @@ function addLinkToDiagram(link) {
     diagram.startTransaction();
     model.addLinkData({
         key: link._id,
+        type: link.type,
         from: link.from,
         to: link.to,
     });
@@ -111,6 +112,30 @@ function addLinkToDiagram(link) {
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
+
+
+function overwriteSelectedNode() {
+    const node = getSelectedGoJsElement().sb;
+    const newNodeData = readNodePropertiesFromModal();
+    model.startTransaction("change node values");
+    for (const attribute of nodeSelectableAttributes.keys()) {
+        model.set(node, attribute, newNodeData[attribute]);
+    }
+    model.commitTransaction("change node values");
+}
+
+
+function overwriteSelectedLink() {
+    const link = getSelectedGoJsElement().sb;
+    const newLinkData = readLinkPropertiesFromModal();
+    model.startTransaction("change link values");
+    for (const attribute of linkSelectableAttributes.keys()) {
+        if(newLinkData[attribute] != undefined) {
+            model.set(link, attribute, newLinkData[attribute]);
+        }
+    }
+    model.commitTransaction("change link values");
+}
 
 
 

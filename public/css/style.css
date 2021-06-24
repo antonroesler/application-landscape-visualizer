@@ -25,8 +25,8 @@
     --silver-transparent: rgba(210, 210, 215, 0.4);
     --focus-dark-grey: rgba(48, 48, 48, 0.6);
     --dark-grey: rgba(48, 48, 48, 1);
-    --focus-blue: rgba(20, 124, 229, 1);
-    --unfocus-blue: rgba(20, 124, 229, 0.8);
+    --focus-blue: rgb(22, 135, 248);
+    --unfocus-blue: rgb(19, 124, 229);
 }
 
 * {
@@ -253,12 +253,23 @@ hr {
     padding: 0 0.85rem;
 }
 
-/* Node Information */
-.node-info-container {
+/* Information */
+.info-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+}
+
+.info-container-icon {
+    margin-left: 0.25rem;
+    align-self: center;
+    cursor: pointer;
+    font-size: 20px !important;
+}
+
+.info-container-icon:hover {
+    color: var(--focus-blue);
 }
 
 .box-row {
@@ -271,7 +282,17 @@ hr {
 .node-info-text {
     color: var(--dark-grey);
     padding: 0 1.85rem 0.45rem 1.85rem;
+    hyphens: auto;
+    text-align: right;
 }
+
+.bold-text {
+    color: var(--dark-grey);
+    font-weight: bold;
+    padding: 0 1.85rem 0.45rem 1.85rem;
+    text-align: left;
+}
+
 
 /* Footer
    ========================================================================== */
@@ -978,10 +999,6 @@ ul:not(.browser-default) {
 }
 
 /* Helper Classes */
-.bold-text {
-    font-weight: bold;
-}
-
 .text-align-justify {
     text-align: justify;
 }
@@ -1049,6 +1066,17 @@ ul:not(.browser-default) {
 
 .collection-item select:focus {
     outline: none;
+    color: var(--unfocus-blue);
+    background-color: var(--focus-off-white);
+}
+
+.collection-item:focus-within {
+    background-color: var(--focus-off-white);
+}
+
+.collection-item select:focus {
+    color: var(--unfocus-blue);
+    background-color: var(--focus-off-white);
 }
 
 .collection-item select option{
