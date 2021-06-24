@@ -39,6 +39,16 @@ function openExportModal() {
     document.getElementById("exportModal").style.display = "flex";
 }
 
+function openEditLinkModal() {
+    document.getElementById("linkModal").style.display = "flex";
+}
+
+function openEditNodeModal() {
+    openCreateNodeModal();
+    fillNodeDataIntoCreateNodeModal();
+    changeCreateNodeModaltoEditNodeModal();
+}
+
 
 /**
  * Closes all modals which are displayed.
@@ -148,4 +158,67 @@ function setListAttributeForInput(parentId) {
     input.setAttribute("list", `${parentId}Dropdown`)
 
     return input.getAttribute("id");
+}
+
+
+/**
+ * Get selected Node and extract the data to fill out the createNodeModal.
+ */
+function fillNodeDataIntoCreateNodeModal() {
+    const goJsElement = getSelectedGoJsElement();
+    const node = goJsElement.sb;
+    const chipElementTags = M.Chips.getInstance(document.getElementById("inputTags"));
+    const chipElementDepartments = M.Chips.getInstance(document.getElementById("inputDepartments"));
+
+    document.getElementById("inputName").value = node.name;
+    document.getElementById("inputCategory").value = node.category;
+    document.getElementById("inputDescription").value = node.desc;
+    pushChipDataToChipElement(chipElementTags, ArrayValueToChipJasonValues(node.tags));
+    pushChipDataToChipElement(chipElementDepartments, ArrayValueToChipJasonValues(node.departments));
+    document.getElementById("inputVersion").value  = node.version;
+    document.getElementById("inputLicense").value = node.license;
+    document.getElementById("inputProfessionalOwner").value = node.profOwner;
+    document.getElementById("inputTechnicalOwner").value = node.techOwner;
+    document.getElementById("inputStartDate").value = node.startDate;
+    document.getElementById("inputShutdownDate").value = node.shutdownDate;
+}
+
+/**
+ * Function to change the style and functions of the button to reuse the html of the createNodeModal
+ */
+function changeCreateNodeModaltoEditNodeModal() {
+    const createNodeModal = document.querySelector("#createNodeModal");
+    const headline = createNodeModal.querySelector("h2");
+    const form = createNodeModal.querySelector("form");
+    const btn = createNodeModal.querySelector(".modal-btn");
+
+    headline.innerHTML = "Edit Application."
+    btn.innerHTML = "Save"
+    form.onsubmit = function() {
+        deleteDropdownMenuOptions();
+        overwriteSelectedNode()
+        closeModal();
+        changeEditNodeModalToCreateNodeModal();
+        return false;
+    }
+}
+
+
+/**
+ * Reset editNodeModal to CreateNodeModal
+ */
+function changeEditNodeModalToCreateNodeModal() {
+    const createNodeModal = document.querySelector("#createNodeModal");
+    const headline = createNodeModal.querySelector("h2");
+    const form = createNodeModal.querySelector("form");
+    const btn = createNodeModal.querySelector(".modal-btn");
+
+    headline.innerHTML = "Create Application."
+    btn.innerHTML = "Create"
+    form.onsubmit = function() {
+        deleteDropdownMenuOptions();
+        addAppNode();
+        closeModal();
+        return false
+    }
 }
