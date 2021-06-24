@@ -23,6 +23,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta lang="en">
     <title>Application Landscape Visualizer</title>
 
     <link href="css/style.css" rel="stylesheet">
@@ -82,9 +83,9 @@
             <div class="modal-close" onclick="deleteDropdownMenuOptions(); closeModal();">+</div>
             <div class="modal-content">
                 <h2>Create new Node.</h2>
-                <form class="modal-form" action="" onsubmit="return false">
+                <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
                     <input type="hidden" id="contextMenu" />
-                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text" />
+                    <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
@@ -125,10 +126,29 @@
                         <option value="ERP">ERP</option>
                         <option value="GEN">GEN</option>
                     </select>
-                    <button class="modal-btn"
-                        onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
+                    <button class="modal-btn" type="submit"
+                        onclick="">Create</button>
                     <button class="modal-btn-cancel"
                         onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Modal -->
+    <div class="modal-bg" id="linkModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Edit Connection.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <select class="input-dropdown" id="connectionTypeOptions">
+                        <option value="" selected disabled hidden>Choose Connection Type</option>
+                        <option value="Business Process">Business Process</option>
+                        <option value="Data Flow">Data Flow</option>
+                    </select>
+                    <button class="modal-btn" onclick="overwriteSelectedLink(); closeModal();">Save</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
         </div>
@@ -267,7 +287,9 @@
         <div class="sidebar-right">
             <!-- Upper 50% of sidebar -->
             <div class="sidebar-box-resizable">
-                <h2>Statistical Key Figures</h2>
+                <div class="box-row">
+                    <h2>Statistical Key Figures</h2>
+                </div>
                 <div id="infoContainer" class="info-container">
                 </div>
             </div>
