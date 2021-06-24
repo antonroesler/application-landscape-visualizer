@@ -56,9 +56,39 @@ $(go.Shape,  // the arrowhead
   }
 }
 
-function getLink(){
 
+var linkType = 1;
 
+function changeBehaviour(){
+  if (linkType == 0) {
+    linkType = 1
+  } else {
+    linkType = 0
+  }
+  console.log("Hello Link Change to: " + linkType);
+  // checkBehaviour();
+  // diagram.linkTemplate.updateRoute();
+}
+
+function checkBehaviour(){
+  
+  if (linkType == 1) {
+    return $(go.Shape,  // the link path shape
+      { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+      new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject())
+    
+  } else {
+    return $(go.Shape, {
+      isPanelMain: true,
+      stroke: "red",
+      strokeWidth: 2,
+      strokeDashArray: [5, 5]
+  })
+}}
+
+function change (){
+  changeBehaviour();
+  setLinkOpacity();
 }
 
 var linkTemplateBezier =
@@ -83,7 +113,15 @@ new go.Binding("points").makeTwoWay(),
           { toArrow: "standard", strokeWidth: 0, fill: "gray" },
           new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
           new go.Binding("opacity", "opacity"), // To make link transparent
-  );
+  
+          $(go.Shape, {
+            isPanelMain: true,
+            stroke: "red",
+            strokeWidth: 3,
+            name: "PIPE",
+            strokeDashArray: [5, 5]
+          })
+         );
 var linkTemplateOrthogonal =
 $(go.Link,
   {
@@ -143,20 +181,24 @@ var linkTemplateAvoidsNodes =
         new go.Binding("points").makeTwoWay(),
         $(go.Shape,  // the highlight shape, normally transparent
           { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        $(go.Shape,  // the link path shape
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-        $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-          new go.Binding("opacity", "opacity"), // To make link transparent
-          new go.Binding("text", "Bandwith"),
-          new go.Binding("text", "Protocol"),
-          new go.Binding("text", "Latency Level"),
-          new go.Binding("text", "Type"),
 
-          {
-            //toolTip is used for the hover function
+          
+          checkBehaviour(),
+          // $(go.Shape,  // the link path shape
+          //   { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          //   new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+            $(go.Shape,  // the arrowhead
+              { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+              new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+              new go.Binding("opacity", "opacity"), // To make link transparent
+              new go.Binding("text", "Bandwith"),
+              new go.Binding("text", "Protocol"),
+              new go.Binding("text", "Latency Level"),
+              new go.Binding("text", "Type"),
+              
+
+              {
+                //toolTip is used for the hover function
             toolTip:
                     $("ToolTip",
                         $(go.Panel, "Table",
@@ -192,7 +234,7 @@ var linkTemplateAvoidsNodes =
                 },
                 $(go.TextBlock, "change Behaviour"),
                 {
-                  click: deleteNode,
+                  click: change,
                 }
               )
               // more ContextMenuButtons would go here
