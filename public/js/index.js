@@ -41,6 +41,8 @@ let diagramLinkParentChildBeforeFilterIsActive = [];
 const nodeWidth = 80;
 const initialLayout = diagram.layout;
 
+let doTooltip = null;
+
 
 /**
  * The keys of the nodeSelectableAttributes map are the attributes of a node which are allowed to be seen in the UI.
@@ -67,5 +69,12 @@ const linkSelectableAttributes = new Map([
     ["type", "Connection Type"],
     ["from", "From Application"],
     ["to", "To Application"]
-])
+]);
+
+const defaultSettings = {
+    "checkboxDiagramHover" : true,
+    "checkboxTutorial" : true
+};
+
+
 

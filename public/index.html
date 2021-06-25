@@ -39,7 +39,7 @@
     <script src="libs/chart.js"></script>
 </head>
 
-<body onload="init(); hideLastTab()">
+<body onload="init(); hideLastTab(); applySettings();">
 
     <header>
         <div class="main-nav">
@@ -63,6 +63,7 @@
             </nav>
             <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
+            <a class="nav-icon" href="#" onclick="openSettingsModal()"><i class="material-icons">more_vert</i></a>
         </div>
         <div class="sub-nav">
             <nav>
@@ -196,6 +197,38 @@
                     </div>
                     <input class="input-text" type="text" placeholder="File Name... (optional)" id="exp-name">
                     <button class="modal-btn" onclick="exportDiagram(); closeModal();">Download</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-bg" id="settingsModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Settings.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <div class="form-row">
+                        <p class="modal-text">Diagram Hover</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxDiagramHover">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <p class="modal-text">Show Tutorial</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxTutorial">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="modal-btn" onclick="saveSettings(); applySettings(); closeModal();">Save</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
@@ -475,4 +508,5 @@
 <script src="js/linkTemplate.js"></script>
 <script src="js/colorNodes.js"></script>
 <script src="js/visualisation.js"></script>
+<script src="js/settings.js"></script>
 </html>

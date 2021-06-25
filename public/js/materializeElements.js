@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const departmentChips = document.querySelectorAll("#inputDepartments");
     M.Chips.init(departmentChips, {
         placeholder: "Department",
-        secondaryPlaceholder: "+tag",
+        secondaryPlaceholder: "+department",
     });
 
     // Initialization of tag chips for createNode modal.
