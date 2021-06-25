@@ -259,8 +259,8 @@
         </ul>
 
         <div class="content">
-        <div id="diagramDiv" class="content"></div>
-        <div id="heatmap" style="display: none"></div>
+            <div id="diagramDiv" class="content"></div>
+            <div id="heatmap" style="display: none"></div>
         </div>
 
         <!-- Sidebar Right -->
@@ -278,9 +278,12 @@
                     <div class="col s12 tabbar">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#filterTab"><i class="material-icons">layers</i></a></li>
-                            <li class="tab col s3"><a href="#visualizationTab"><i class="material-icons">color_lens</i></a></li>
-                            <li class="tab col s3"><a href="#histogramTab"><i class="material-icons">insert_chart</i></a></li>
-                            <li class="tab col s3"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a></li>
+                            <li class="tab col s3"><a href="#visualizationTab"><i
+                                        class="material-icons">color_lens</i></a></li>
+                            <li class="tab col s3"><a href="#histogramTab"><i
+                                        class="material-icons">insert_chart</i></a></li>
+                            <li class="tab col s3"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a>
+                            </li>
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
@@ -290,7 +293,8 @@
                                     <div>Add filter
                                         <i class="material-icons left">add_circle_outline</i>
                                         <a href="" class="secondary-content">
-                                            <i class="material-icons tooltipped" data-position="left" onclick="return false"
+                                            <i class="material-icons tooltipped" data-position="left"
+                                                onclick="return false"
                                                 data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
                                         </a>
                                     </div>
@@ -321,8 +325,10 @@
                                 </li>
                             </ul>
                             <div class="margin-top tab-btn-container">
-                                <button id="apply-color" onclick="applyUserColorSetting()" class="nav-btn">Apply Color</button>
-                                <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove Color</button>
+                                <button id="apply-color" onclick="applyUserColorSetting()" class="nav-btn">Apply
+                                    Color</button>
+                                <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove
+                                    Color</button>
                             </div>
                         </div>
                     </div>
@@ -330,14 +336,15 @@
                         <div class="custom-tab">
                             <ul class="collection">
                                 <li class="collection-item">
-                                    <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
+                                    <select id="histogram-dropdown" class="tab-input-dropdown"
+                                        onchange="renderHistogramHandler()">
                                         <optgroup label="Application Value Fields">
                                             <option value="" selected disabled hidden>Create histogram</option>
-                                            <option value="category" >Application Type</option>
-                                            <option value="license" >License</option>
-                                            <option value="profOwner" >Professional Owner</option>
-                                            <option value="techOwner" >Technical Owner</option>
-                                            <option value="tags" >Tags</option>
+                                            <option value="category">Application Type</option>
+                                            <option value="license">License</option>
+                                            <option value="profOwner">Professional Owner</option>
+                                            <option value="techOwner">Technical Owner</option>
+                                            <option value="tags">Tags</option>
                                             <option value="departments">Departments</option>
                                         </optgroup>
                                         <optgroup label="Dates">
@@ -361,7 +368,8 @@
                             <div class="flex">
                                 <ul class="collection">
                                     <li class="collection-item">
-                                        <select name="color-attribute" id="heatmap-attribute1" class="tab-input-dropdown">
+                                        <select name="color-attribute" id="heatmap-attribute1"
+                                            class="tab-input-dropdown">
                                             <option value="" selected disabled hidden>Choose attribute 1</option>
                                             <option value="category">Application Type</option>
                                             <option value="license">License</option>
@@ -372,10 +380,11 @@
                                         </select>
                                     </li>
                                 </ul>
-                                    <i class="material-icons center">compare_arrows</i>
+                                <i class="material-icons center">compare_arrows</i>
                                 <ul class="collection">
                                     <li class="collection-item">
-                                        <select name="color-attribute" id="heatmap-attribute2" class="tab-input-dropdown">
+                                        <select name="color-attribute" id="heatmap-attribute2"
+                                            class="tab-input-dropdown">
                                             <option value="" selected disabled hidden>Choose attribute 2</option>
                                             <option value="category">Application Type</option>
                                             <option value="license">License</option>
@@ -408,8 +417,10 @@
                                 </li>
                             </ul>
                             <div class="margin-top tab-btn-container">
-                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate Heatmap</button>
-                                <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close Heatmap</button>
+                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate
+                                    Heatmap</button>
+                                <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close
+                                    Heatmap</button>
                             </div>
                         </div>
                     </div>
@@ -437,6 +448,7 @@
 <script src="js/modalUtil.js"></script>
 <script src="js/databaseUtil.js"></script>
 <script src="js/diagram.js"></script>
+<script src="js/colorNodes.js"></script>
 <script src="js/showParentChildeNode.js"></script>
 <script src="js/contextmenu.js"></script>
 <script src="js/filter.js"></script>
@@ -451,6 +463,5 @@
 <script src="js/histogram.js"></script>
 <script src="js/nodeTemplate.js"></script>
 <script src="js/linkTemplate.js"></script>
-<script src="js/colorNodes.js"></script>
 <script src="js/visualisation.js"></script>
 </html>

@@ -15,7 +15,6 @@
  *
  * @author Feng Yi Lu
  */
-var parentChildFeatureOn = false;
 var parentChildArrayGrew = 0;
 var parentButton;
 var before = 0;
@@ -67,6 +66,18 @@ function hideAllOtherNodes() {
     parentChildArrayGrew = 0;
 }
 
+function showAllActivate() {
+    var noDublicates = new Set(modelNodeWithoutFilter);
+    diagram.startTransaction();
+    model.nodeDataArray = Array.from(noDublicates);
+    model.linkDataArray = modelLinkWithoutFilter;
+    diagram.updateAllRelationshipsFromData();
+    diagram.updateAllTargetBindings();
+    diagram.commitTransaction("parentChild view removed");
+    parentChildFeatureOn = false;
+    parentChildArrayGrew = 0;
+}
+
 function showAll() {
     allParentChildKeys.clear();
     parentChildNodeSet.clear();
@@ -75,28 +86,32 @@ function showAll() {
     diagramNodeParentChildBeforeFilterIsActive.clear();
     diagram.nodeTemplate = mainTemplate;
     if (moreThanOneFilter === true) {
-        var noDublicates = new Set(modelNodeWithoutFilter);
-        diagram.startTransaction();
-        model.nodeDataArray = Array.from(noDublicates);
-        model.linkDataArray = modelLinkWithoutFilter;
-        diagram.updateAllRelationshipsFromData();
-        diagram.updateAllTargetBindings();
-        diagram.commitTransaction("parentChild view removed");
-        parentChildFeatureOn = false;
-        parentChildArrayGrew = 0;
+        showAllActivate();
         applyAllFilters();
     } else {
-        var noDublicates = new Set(modelNodeWithoutFilter);
-        diagram.startTransaction();
-        model.nodeDataArray = Array.from(noDublicates);
-        model.linkDataArray = modelLinkWithoutFilter;
-        diagram.updateAllRelationshipsFromData();
-        diagram.updateAllTargetBindings();
-        diagram.commitTransaction("parentChild view removed");
-        parentChildFeatureOn = false;
-        parentChildArrayGrew = 0;
+        showAllActivate();
     }
 }
+function showAllParentsContextmenu() {
+    selectedNode = getSelectedNode();
+    parents = new Set();
+    getAllParentNodes(selectedNode, parents);
+    for (node of parents) {
+        parentChildNodeSet.add(node);
+    }
+    updateDiagram();
+}
+
+function showAllChildrenContextmenu() {
+    selectedNode = getSelectedNode();
+    childs = new Set();
+    getAllChildNodes(selectedNode, childs);
+    for (node of childs) {
+        parentChildNodeSet.add(node);
+    }
+    updateDiagram();
+}
+
 
 function showParents() {
     selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
@@ -134,6 +149,7 @@ function updateDiagram() {
     toastAlert();
     parentChildArrayGrew = 0;
 }
+
 
 function toastAlert() {
     if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {

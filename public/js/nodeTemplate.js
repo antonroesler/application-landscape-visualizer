@@ -196,9 +196,19 @@ var parentChildFeatureActive = $("ContextMenu",
             "ButtonBorder.fill": "white",
             _buttonFillOver: "skyblue",
         },
-        $(go.TextBlock, "Show Parents of this node"),
+        $(go.TextBlock, "Show parents of this node"),
         {
             click: showParents,
+        }
+    ), $(
+        "ContextMenuButton",
+        {
+            "ButtonBorder.fill": "white",
+            _buttonFillOver: "skyblue",
+        },
+        $(go.TextBlock, "Show all parents of this node"),
+        {
+            click: showAllParentsContextmenu,
         }
     ), $("ContextMenuButton", {
         "ButtonBorder.fill": "white",
@@ -207,6 +217,16 @@ var parentChildFeatureActive = $("ContextMenu",
         $(go.TextBlock, "Show childs of this node"),
         {
             click: showChilds,
+        }
+    ), $(
+        "ContextMenuButton",
+        {
+            "ButtonBorder.fill": "white",
+            _buttonFillOver: "skyblue",
+        },
+        $(go.TextBlock, "Show all childs of this node"),
+        {
+            click: showAllChildrenContextmenu,
         }
     ), $("ContextMenuButton", {
         "ButtonBorder.fill": "white",
