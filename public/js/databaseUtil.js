@@ -28,13 +28,22 @@ async function loadDiagram() {
     const name = document.getElementById("loadCategory").value;
     const url = 'mongo/' + name;
     const res = await fetch(url);
-    const loadDiagram = await res.json();
-    loadDiagram.nodeDataArray.forEach(node => {
+    const loadedDiagram = await res.json();
+    loadedDiagram.nodeDataArray.forEach(node => {
         addNodeToDiagram(node);
     });
-    loadDiagram.linkDataArray.forEach(link => {
+    loadedDiagram.linkDataArray.forEach(link => {
         addLinkToDiagram(link);
     });
+    allFilter = loadedDiagram.filters;
+    allFilter.forEach(filter => {
+        appendFilterCollection(generateFilterElement(filter))
+    })
+    const colorSchema = loadedDiagram.colorSchema;
+    if (colorSchema){
+        applyUserColorSetting(loadedDiagram.colorSchema)
+    }
+
 }
 
 /**
@@ -51,7 +60,9 @@ async function saveDiagramToMongo(diagramName) {
         body: JSON.stringify({
             nodeDataArray: model.nodeDataArray,
             linkDataArray: model.linkDataArray,
-            name: diagramName
+            name: diagramName,
+            filters: allFilter,
+            colorSchema: activeSchema
         })
     };
     const res = await fetch(url, params);

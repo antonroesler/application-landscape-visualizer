@@ -34,7 +34,9 @@ router.post('/', async (req, res) => {
     const diagram = new Diagram({
         name: req.body.name,
         nodeDataArray: nodeDataArray,
-        linkDataArray: linkDataArray
+        linkDataArray: linkDataArray,
+        filters: req.body.filters,
+        colorSchema: req.body.colorSchema
     });
     try {
         const savedDiagram = await diagram.save()
@@ -57,7 +59,6 @@ router.get('/:name', async (req, res) => {
     try {
         const diagram = await Diagram.findOne({name:name});
         res.json(diagram);
-
     }catch (err){
         res.json(err)
     }

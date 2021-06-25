@@ -25,7 +25,9 @@ const Diagram = new Schema({
         unique: true
     },
     nodeDataArray: [AppNode],
-    linkDataArray: [Link]
+    linkDataArray: [Link],
+    filters: [{name:String, properties:{type:Map, of:[String], default:{}}}],
+    colorSchema: String
 });
 
 

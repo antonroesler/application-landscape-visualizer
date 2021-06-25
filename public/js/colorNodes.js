@@ -15,12 +15,16 @@
  * @author Feng Yi Lu, Anton Roesler
  */
 
+let activeSchema = null; // Used only by database.
+
 /* HTML Handler Methods */
 /**
  * Reads values from html fields and calls appropriate function to color nodes by user specified values.
  */
-function applyUserColorSetting() {
-    const dataField = readColorMetaDataField()
+function applyUserColorSetting(dataField=null) {
+    if(!dataField){
+        dataField = readColorMetaDataField()
+    }
     if (dataField.endsWith("Date")) {
         colorNodesByDate(dataField)
     } else if (dataField === 'distance') {
@@ -29,6 +33,7 @@ function applyUserColorSetting() {
         colorChildsAndParents()
     } else
         colorAllNodesByAttribute(dataField)
+    activeSchema = dataField;
 }
 
 /**
@@ -77,6 +82,7 @@ function removeColorFromAllNodes() {
     model.nodeDataArray.forEach(node => {
         removeColorFromNode(node);
     })
+    activeSchema = null;
 }
 
 /* Color nodes by a value of an attribute */
