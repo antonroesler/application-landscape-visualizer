@@ -211,6 +211,16 @@ hr {
     justify-content: center;
 }
 
+.contentov {
+    display: inline-flexbox;
+    position: absolut;
+    bottom: 0;
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    justify-content: center;
+}
+
 .content * {
     outline: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */

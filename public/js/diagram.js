@@ -27,6 +27,9 @@ function init() {
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
+var myOverview =
+  $(go.Overview, "myOverviewDiv",
+    { observed: diagram });
 
 
 /**
