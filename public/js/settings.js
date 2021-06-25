@@ -61,10 +61,10 @@ function applySettings() {
     for (const settingsKey in settings) {
         switch (settingsKey) {
             case "checkboxDiagramHover":
-                toggleTooltip(settings[settingsKey]);
+                toggleTooltipSetting(settings[settingsKey]);
                 break;
             case "checkboxTutorial":
-                toggleTutorial(settings[settingsKey]);
+                toggleTutorialSetting(settings[settingsKey]);
                 break;
             default:
                 break;
@@ -72,7 +72,7 @@ function applySettings() {
     }
 }
 
-function toggleTooltip(isActive) {
+function toggleTooltipSetting(isActive) {
     if(isActive) {
         if(doTooltip !== null) {
             diagram.toolManager.doToolTip = doTooltip;
@@ -84,10 +84,11 @@ function toggleTooltip(isActive) {
     }
 }
 
-function toggleTutorial(isActive) {
+function toggleTutorialSetting(isActive) {
     if(isActive) {
-        // Add function to activate tutorial
+        document.getElementById("tutorial").style.display = "inline-block";
+        toggleTutorial();
     } else {
-        // Deactivate tutorial
+        document.getElementById("tutorial").style.display = "none";
     }
 }
