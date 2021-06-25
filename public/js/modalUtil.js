@@ -50,6 +50,7 @@ function openEditNodeModal() {
 }
 
 function openSettingsModal() {
+    loadSettingsIntoModal();
     document.getElementById("settingsModal").style.display = "flex";
 }
 
