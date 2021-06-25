@@ -86,8 +86,8 @@ function toggleTooltip(isActive) {
 
 function toggleTutorial(isActive) {
     if(isActive) {
-        alert("Tutorial aktiv");
+        // Add function to activate tutorial
     } else {
-        alert("Tutorial inaktiv");
+        // Deactivate tutorial
     }
 }
