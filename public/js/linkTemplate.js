@@ -86,8 +86,26 @@ function checkBehaviour(){
   })
 }}
 
+function setLinkOpacityBene(){
+  model.linkDataArray.forEach(link => {
+      if (hasTransparentNode(link)){
+          setDash(link, [5,5])
+      } else {
+          setDash(link, [0,0])
+      }
+  })
+}
+
+function setDash(obj,dash=[5,5]){
+  diagram.model.commit(function (m){
+      m.set(obj, "strokeDashArray", dash)
+      m.set(obj, "dashText", dash)
+  }, "changed dash");
+}
+
 function change (){
   changeBehaviour();
+  checkBehaviour();
   setLinkOpacity();
 }
 
@@ -191,6 +209,7 @@ var linkTemplateAvoidsNodes =
               { toArrow: "standard", strokeWidth: 0, fill: "gray" },
               new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
               new go.Binding("opacity", "opacity"), // To make link transparent
+              new go.Binding("strokeDashArray", "dash"),
               new go.Binding("text", "Bandwith"),
               new go.Binding("text", "Protocol"),
               new go.Binding("text", "Latency Level"),
