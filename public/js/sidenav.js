@@ -146,7 +146,7 @@ function readFilterPropertiesFromSideNav() {
 /**
  * Function which generates the content of the sidenav, opens and closes the sidenav.
  */
-function openSidenav() {
+function toggleSidenav() {
     if (!sidenav.isOpen) {
         generateCollapsible();
         sidenav.open();
