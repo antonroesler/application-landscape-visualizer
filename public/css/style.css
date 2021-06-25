@@ -1776,4 +1776,44 @@ button.btn-floating {
 }
 
 
+/* Color legend
+   ========================================================================== */
+#legend {
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    display: flex
+}
+
+.legend-row{
+    display:flex;
+    margin-bottom: 1rem;
+    flex: 50%;
+}
+
+.legend-color-dot {
+    border-radius: 1rem;
+    margin-right: 0.5rem;
+    border: 2px solid var(--dark-grey);
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.legend-label {
+    font-family: "Montserrat", sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
