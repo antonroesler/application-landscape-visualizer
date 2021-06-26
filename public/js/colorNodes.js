@@ -77,6 +77,7 @@ function removeColorFromAllNodes() {
     model.nodeDataArray.forEach(node => {
         removeColorFromNode(node);
     })
+    removeLegend()
 }
 
 /* Color nodes by a value of an attribute */
