@@ -18,6 +18,7 @@
  * Global instance fo the sidenav
  */
 let sidenav;
+let tapTarget;
 
 /**
  * EventListener "DOMContentLoaded" adds the following initialization of materialize.js elements
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const departmentChips = document.querySelectorAll("#inputDepartments");
     M.Chips.init(departmentChips, {
         placeholder: "Department",
-        secondaryPlaceholder: "+tag",
+        secondaryPlaceholder: "+department",
     });
 
     // Initialization of tag chips for createNode modal.
@@ -60,7 +61,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Initialization of the tooltip element.
     let tooltipElement = document.querySelectorAll('.tooltipped');
-    M.Tooltip.init(tooltipElement, {}
-    );
+    M.Tooltip.init(tooltipElement, {
+    });
+
+    let tapTargetElement = document.querySelector('.tap-target');
+    M.TapTarget.init(tapTargetElement, {
+    });
+    tapTarget = M.TapTarget.getInstance(tapTargetElement);
 });
 

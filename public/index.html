@@ -27,7 +27,7 @@
     <title>Application Landscape Visualizer</title>
 
     <link href="css/style.css" rel="stylesheet">
-    <!--<link href="css/materialize.css" rel="stylesheet"> -->
+    <!-- <link href="css/materialize.css" rel="stylesheet"> -->
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <!-- Important Google Icon Font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -39,7 +39,7 @@
     <script src="libs/chart.js"></script>
 </head>
 
-<body onload="init(); hideLastTab()">
+<body onload="init(); hideLastTab(); applySettings();">
 
     <header>
         <div class="main-nav">
@@ -63,6 +63,7 @@
             </nav>
             <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
+            <a class="nav-icon" href="#" onclick="openSettingsModal()"><i class="material-icons">more_vert</i></a>
         </div>
         <div class="sub-nav">
             <nav>
@@ -71,7 +72,7 @@
                     <li><a href="#" onclick="deleteNode()">Delete Application</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
-                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
+                    <li><a href="#" data-target="slide-out" class="" onclick="toggleSidenav()">Add Filter</a></li>
                 </ul>
             </nav>
         </div>
@@ -202,6 +203,38 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="modal-bg" id="settingsModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Settings.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <div class="form-row">
+                        <p class="modal-text">Diagram Hover</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxDiagramHover">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <p class="modal-text">Show Tutorial</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxTutorial">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="modal-btn" onclick="saveSettings(); applySettings(); closeModal();">Save</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Link Layout Modal -->
     <div class="modal-bg" id="linkLayoutModal">
         <div class="modal-popup">
@@ -272,11 +305,27 @@
                         </ul>
                     </li>
                     <button class="modal-btn sidenav-margin margin-top"
-                        onclick="filterDiagramFromSidenav(); openSidenav();">Add</button>
-                    <button class="modal-btn-cancel sidenav-margin" onclick="openSidenav()">Cancel</button>
+                        onclick="filterDiagramFromSidenav(); toggleSidenav();">Add</button>
+                    <button class="modal-btn-cancel sidenav-margin" onclick="toggleSidenav()">Cancel</button>
                 </form>
             </div>
         </ul>
+
+        <!-- Element Showed -->
+        <a id="tutorial" class="waves-effect waves-light btn btn-floating fixer" onclick="toggleTutorial()"><i class="material-icons">lightbulb_outline</i></a>
+        <!-- Tap Target Structure -->
+        <div class="tap-target" data-target="tutorial">
+            <div class="tap-target-content">
+                <h4 class="tutorial-text">Welcome!</h4>
+                <p class="tutorial-text">
+                    Encourage return visits by introducing users to new features and functionality at contextually relevant moments.
+                </p>
+                <div class="tutorial-row">
+
+                    <button class="nav-btn" onclick=""><i class="material-icons">play_circle_outline</i>Start Tutorial</button>
+                </div>
+            </div>
+        </div>
 
         <div class="content">
         <div id="diagramDiv" class="content"></div>
@@ -308,7 +357,7 @@
                     <div id="filterTab" class="col s12">
                         <div class="custom-tab">
                             <ul id="filterCollection" class="collection">
-                                <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
+                                <li id="zeroFilterElement" class="collection-item" onclick="toggleSidenav()">
                                     <div>Add filter
                                         <i class="material-icons left">add_circle_outline</i>
                                         <a href="" class="secondary-content">
@@ -346,6 +395,8 @@
                                 <button id="apply-color" onclick="applyUserColorSetting()" class="nav-btn">Apply Color</button>
                                 <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove Color</button>
                             </div>
+                            <div id="legend"></div>
+
                         </div>
                     </div>
                     <div id="histogramTab" class="col s12">
@@ -475,4 +526,6 @@
 <script src="js/linkTemplate.js"></script>
 <script src="js/colorNodes.js"></script>
 <script src="js/visualisation.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/tutorial.js"></script>
 </html>
