@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Leonard Husske , Feng Yi Lu, Anton Roesler
+ * @author Leonard Husske , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
 /**
@@ -27,10 +27,36 @@ function init() {
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
-var myOverview =
-  $(go.Overview, "myOverviewDiv",
-    { observed: diagram });
 
+/**
+ * create overview with defined shape
+ */
+var overview = 
+  $(go.Overview, "overviewDiv",
+    {  
+        observed: diagram,
+    });
+
+setupOverviewBox(overview);
+
+function setupOverviewBox(overview) {
+	var box = new go.Part();
+	var s = new go.Shape();
+	s.stroke = 'rgb(20, 124, 229)';
+	s.strokeWidth = 2;
+	s.fill = 'transparent';
+    s.figure = "Rectangle";
+	s.name = 'BOXSHAPE';
+	box.selectable = true;
+	box.selectionObjectName = 'BOXSHAPE';
+	box.locationObjectName = 'BOXSHAPE';
+	box.resizeObjectName = 'BOXSHAPE';
+	box.cursor = 'move';
+	box.selectionAdorned = false;
+	box.add(s);
+
+	overview.box = box;
+	}
 
 /**
  * Reads user inputs and creates a new Node from the users data.

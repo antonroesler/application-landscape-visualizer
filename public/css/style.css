@@ -212,13 +212,15 @@ hr {
 }
 
 .contentov {
-    display: inline-flexbox;
-    position: absolut;
-    bottom: 0;
-    width: 150px;
-    height: 150px;
-    z-index: 1;
-    justify-content: center;
+    /* display: inline-flexbox; */
+    position: fixed;
+    top: 90px;
+    left: 0;
+    border: 1px solid var(--dark-grey);
+    background-color: white;
+    width: 176px;
+    height: 104px;
+    z-index: 3;
 }
 
 .content * {
