@@ -23,7 +23,6 @@
  * @author Feng Yi Lu, Benedikt Möller
  *
  */
-
 var parentChildFeature = false;
 /**
  * function is needed to use the icons in icons.js
@@ -152,33 +151,39 @@ var mainTemplate = $(
             $("ToolTip",
                 $(go.Panel, "Table",
                     { defaultAlignment: go.Spot.Left },
-                    $(go.TextBlock, "ID: ", { row: 0, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "key"),
-                        { row: 0, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "name"),
                         { row: 1, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Category: ", { row: 2, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Application Type: ", { row: 2, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "category"),
                         { row: 2, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "desc"),
-                        { row: 3, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5 }),
+                        {
+                            row: 3, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "tags"),
-                        { row: 4, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5 }),
+                        {
+                            row: 4, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "version"),
                         { row: 5, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Department: ", { row: 6, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Departments: ", { row: 6, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "departments"),
-                        { row: 6, column: 1, margin: 5 }),
-                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5 }),
+                        {
+                            row: 6, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "license"),
                         { row: 8, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Location: ", { row: 9, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "loc"),
-                        { row: 9, column: 1, margin: 5 }),
                 )
             )
     },
@@ -296,33 +301,39 @@ var mainTemplateParentChild = $(
             $("ToolTip",
                 $(go.Panel, "Table",
                     { defaultAlignment: go.Spot.Left },
-                    $(go.TextBlock, "ID: ", { row: 0, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "key"),
-                        { row: 0, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "name"),
                         { row: 1, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Category: ", { row: 2, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Application Type: ", { row: 2, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "category"),
                         { row: 2, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "desc"),
-                        { row: 3, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5 }),
+                        {
+                            row: 3, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "tags"),
-                        { row: 4, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5 }),
+                        {
+                            row: 4, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "version"),
                         { row: 5, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Department: ", { row: 6, column: 0, margin: 5 }),
+                    $(go.TextBlock, "Departments: ", { row: 6, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "departments"),
-                        { row: 6, column: 1, margin: 5 }),
-                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5 }),
+                        {
+                            row: 6, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
+                            maxLines: 1,
+                            width: 100
+                        }),
+                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
                     $(go.TextBlock, new go.Binding("text", "license"),
                         { row: 8, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Location: ", { row: 9, column: 0, margin: 5 }),
-                    $(go.TextBlock, new go.Binding("text", "loc"),
-                        { row: 9, column: 1, margin: 5 }),
                 )
             )
     },

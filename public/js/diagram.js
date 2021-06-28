@@ -35,12 +35,15 @@ function addAppNode() {
     const data = readNodeProperties();
     data._id = Date.now();
     addNodeToDiagram(data);
+
 }
+
 
 /**
  * Saves an AppNode object to the model.
  */
-function addNodeToDiagram(data) {
+function addNodeToDiagram(d) {
+    data = addSpaceToTagsDepartments(d);
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
