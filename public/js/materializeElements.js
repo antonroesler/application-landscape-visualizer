@@ -19,6 +19,7 @@
  */
 let sidenav;
 let tapTarget;
+let tabs;
 
 /**
  * EventListener "DOMContentLoaded" adds the following initialization of materialize.js elements
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
     M.Tabs.init(sidebarTabs, {
         swipeable: true
     });
+    tabs = M.Tabs.getInstance(sidebarTabs);
 
     // Initialization of the sidenav.
     let sidenavElement = document.querySelector('.sidenav');
