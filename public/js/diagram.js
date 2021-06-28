@@ -28,7 +28,6 @@ function init() {
 }
 
 
-
 /**
  * Reads user inputs and creates a new Node from the users data.
  */

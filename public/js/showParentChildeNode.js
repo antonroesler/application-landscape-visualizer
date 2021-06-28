@@ -83,3 +83,19 @@ function showAllChildren(node) {
     c = new Set(parent);
     return Array.from(c);
 }
+
+function clearAllArraysFilterPC() {
+    modelNodeWithoutFilter = [];
+    modelLinkWithoutFilter = [];
+    parentChildFeatureOn = false;
+    allParentChildKeys.clear();
+    parentChildNodeSet.clear();
+    parentChildLinkArray = [];
+    diagramLinkParentChildBeforeFilterIsActive = [];
+    diagramNodeParentChildBeforeFilterIsActive.clear();
+    moreThanOneFilter = false;
+    deactivateAllAppliedFilters();
+    allParentChildKeys.clear();
+    appliedFilters = [];
+    diagram.nodeTemplate = mainTemplate;
+}
