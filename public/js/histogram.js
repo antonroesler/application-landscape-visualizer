@@ -11,7 +11,7 @@
 
 /**
  * Contains functions that calculate statistical data on the diagram and displays charts in the visualize Tab
- * @author Anton Roesler
+ * @author Anton Roesler, Patrick Frech
  */
 
 
@@ -130,8 +130,9 @@ let Histogram = null;
  */
 function renderHistogramHandler() {
     const val = document.getElementById("histogram-dropdown").value;
-    renderHistogram(val);
+    renderHistogram(val);      
 }
+
 
 /**
  * Sorts two arrays dy the value array. Used for arrqys where labels[i] corresponds to values[i]
