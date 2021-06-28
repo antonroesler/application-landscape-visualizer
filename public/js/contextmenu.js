@@ -176,6 +176,9 @@ function handleContextMenuOptions(newNode) {
     if (contextMenuValue === "nodeContextMenuAdd") {
         const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
         addLinkToDiagram(newLink);
+        if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+            linkHandlerWhileFilterOn();
+        }
         document.getElementById("contextMenu").value = "default";
     }
     if (contextMenuValue === "diagramContextMenu") {

@@ -110,7 +110,7 @@ function addLinkToDiagram(link) {
         to: link.to,
     });
     diagram.commitTransaction("update");
-    modelLinkWithoutFilter = model.linkDataArray;
+    modelLinkWithoutFilter.push(link);
 }
 
 
