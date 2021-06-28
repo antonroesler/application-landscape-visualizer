@@ -27,7 +27,14 @@
     --dark-grey: rgba(48, 48, 48, 1);
     --focus-blue: rgb(22, 135, 248);
     --unfocus-blue: rgb(19, 124, 229);
-    --light-blue: #74b4ff
+    --light-blue: #74b4ff;
+
+
+    /* Variables to change :before tour-arrow */
+    --tut-pseudo-left: -25px;
+    --tut-pseudo-top: 30px;
+    --tut-pseudo-transform: rotate(-90deg);
+    --tut-pseudo-display: "block";
 }
 
 * {
@@ -154,6 +161,11 @@ hr {
 
 .nav-btn:hover {
     background-color: var(--focus-blue);
+}
+
+.nav-btn:disabled {
+    background-color: var(--silver);
+    cursor: not-allowed;
 }
 
 .nav-icon {
@@ -1740,6 +1752,16 @@ button.btn-floating {
     margin-left: 0.85rem;
 }
 
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+/* Tutorial Tap Target
+   ========================================================================== */
 .fixer {
     position: fixed;
     bottom: 95px;
@@ -1802,14 +1824,89 @@ button.btn-floating {
     font-family: "Montserrat", sans-serif;
 }
 
+/* Tutorial Tour
+   ========================================================================== */
+.tour-layout {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
 
+.tour-veil {
+    position: absolute;
+    box-shadow: 0 0 0 200vw rgb(0 0 0 / 35%);
+}
 
+#highlightedElement {
+    position: absolute;
+    width: 155px;
+    height: 40px;
+    top: 50px;
+    left: 580px;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0px 200vw rgb(255 255 255 / 40%);
+}
 
+.tour-box {
+    top: 100px;
+    left: 600px;
+    width: 290px;
+    transition: 200ms;
+    position: absolute;
+    background: #ffffff;
+    border: 1px solid rgba(197, 208, 222, 0.4);
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+}
 
+.tour-box:before {
+    content: '';
+    width: 39px;
+    height: 12px;
+    position: absolute;
+    background: url(../img/misc/tour-arrow.png);
+    top: var(--tut-pseudo-top);
+    left: var(--tut-pseudo-left);
+    transform: var(--tut-pseudo-transform);
+    display: var(--tut-pseudo-display);
+}
 
+.tour-box-content {
+    padding: 24px 30px 22px;
+}
 
+.tour-box-header {
+    color: var(--dark-grey);
+    font-size: 18px;
+}
 
+.tour-close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 32px;
+    color: var(--dark-grey);
+    opacity: 0.7;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
 
+.tour-box-text {
+    color: var(--dark-grey);
+}
+
+.tour-box-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 18px 10px;
+    border-top: 1px solid rgba(197, 208, 222, 0.4);
+}
 
 
 
