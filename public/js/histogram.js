@@ -133,13 +133,6 @@ function renderHistogramHandler() {
     renderHistogram(val);      
 }
 
-function standardHistogram(){
-    if (val = null) {
-        renderHistogram("tags");
-    } 
-        
-    
-}
 
 /**
  * Renders a histogram in the Histogram Tab in the html for the specified attribute.
