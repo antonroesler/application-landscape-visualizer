@@ -263,7 +263,7 @@
                 <h2>Load your Diagram.</h2>
                 <form class="modal-form" action="" onsubmit="return false">
                     <select class="input-dropdown" id="loadCategory"></select>
-                    <button class="modal-btn" onclick="loadDiagram(); closeModal();">Load</button>
+                    <button class="modal-btn" onclick="loadDiagram(); closeModal(); renderHistogram('license');">Load</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
@@ -401,7 +401,7 @@
                         </div>
                     </div>
                     <div id="histogramTab" class="col s12">
-                        <div class="custom-tab">
+                        <div class="custom-tab" >
                             <ul class="collection">
                                 <li class="collection-item">
                                     <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
