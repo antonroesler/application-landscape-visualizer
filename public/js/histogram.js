@@ -224,7 +224,7 @@ function configurePlotlyHistogram(labels, title, values){
             },
         ],
     },
-        options: {
+        options: {  
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
