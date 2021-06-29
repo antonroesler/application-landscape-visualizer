@@ -252,6 +252,7 @@ function clickHandler(evt) {
     const points = Histogram.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, true);
     if (points.length) {
         createFilterFromHistogram(Histogram.data.labels[points[0].index]);
+        tabs.select("filterTab");
     }
 }
 
