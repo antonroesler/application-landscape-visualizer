@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Anton Roesler
+ * @author Anton Roesler, Patrick Frech
  */
 
 /**
@@ -35,6 +35,7 @@ async function loadDiagram() {
     loadDiagram.linkDataArray.forEach(link => {
         addLinkToDiagram(link);
     });
+    renderHistogram("category");
 }
 
 /**

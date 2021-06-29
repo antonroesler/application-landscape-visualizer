@@ -43,7 +43,7 @@
 
     <header>
         <div class="main-nav">
-            <img class="logo" src="img/logo/ecore_logo.png">
+            <img class="logo" src="img/logo/ecore_logo_large.png">
             <div class="search">
                 <i id="searchIcon" class="material-icons search-icon hovered" onclick="toggleSearchbar()">search</i>
                 <div class="input-search">
@@ -328,7 +328,8 @@
         </div>
 
         <div class="content">
-        <div id="diagramDiv" class="content"></div>
+            <div id="overviewDiv" class="contentov"></div>
+            <div id="diagramDiv" class="content"></div>
         <div id="heatmap" style="display: none"></div>
         </div>
 
@@ -400,7 +401,7 @@
                         </div>
                     </div>
                     <div id="histogramTab" class="col s12">
-                        <div class="custom-tab">
+                        <div class="custom-tab" >
                             <ul class="collection">
                                 <li class="collection-item">
                                     <select id="histogram-dropdown" class="tab-input-dropdown" onchange="renderHistogramHandler()">
@@ -426,7 +427,7 @@
                                     </select>
                                 </li>
                             </ul>
-                            <div id="histogram-container"></div>
+                            <div id="histogram-container" style="cursor: pointer;"></div>
                         </div>
                     </div>
                     <div id="heatmapTab" class="col s12">
