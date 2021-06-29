@@ -23,39 +23,6 @@
 * @author Benedikt Möller
 *        
 */
-function stdLink(){
-
-new go.Binding("points").makeTwoWay(),
-$(go.Shape,  // the highlight shape, normally transparent
-  { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-$(go.Shape,  // the link path shape
-  { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-  new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-$(go.Shape,  // the arrowhead
-  { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-  new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-  new go.Binding("opacity", "opacity"), // To make link transparent
-
-  {
-    // define a context menu for each node
-    contextMenu: $(
-      "ContextMenu",
-      $(
-        "ContextMenuButton",
-        {
-          "ButtonBorder.fill": "white",
-          _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "change Behaviour"),
-        {
-          click: deleteNode,
-        }
-      )
-      // more ContextMenuButtons would go here
-    ),
-  }
-}
-
 
 var linkType = 1;
 
@@ -94,6 +61,12 @@ function setLinkOpacityBene(){
           setDash(link, [0,0])
       }
   })
+}
+
+function dashF(){
+  // var dash = [5,5];
+  // dash = dash.toString();
+  return "[5,5]";
 }
 
 function setDash(obj,dash=[5,5]){
@@ -201,15 +174,17 @@ var linkTemplateAvoidsNodes =
           { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
 
           
-          checkBehaviour(),
-          // $(go.Shape,  // the link path shape
-          //   { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          //   new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          // checkBehaviour(),
+          $(go.Shape,  // the link path shape
+            { isPanelMain: true, stroke: "gray", strokeWidth: 2},
+            new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject(),
+            new go.Binding("strokeDashArray", "dash", dashF)),
+
             $(go.Shape,  // the arrowhead
-              { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+              { toArrow: "standard", strokeWidth: 0, fill: "gray"},
               new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
               new go.Binding("opacity", "opacity"), // To make link transparent
-              new go.Binding("strokeDashArray", "dash"),
+              // new go.Binding("geometry", "category", geoFunc),
               new go.Binding("text", "Bandwith"),
               new go.Binding("text", "Protocol"),
               new go.Binding("text", "Latency Level"),
