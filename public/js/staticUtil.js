@@ -98,7 +98,6 @@ function appNodeNameExists(name) {
     return false;
 }
 
-
 /**
  * Function gets all values for a specific node attribute from all nodes in
  * in the diagram (nodeDataArray)

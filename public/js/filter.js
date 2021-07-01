@@ -25,6 +25,7 @@ var moreThanOneFilter = false;
  * @param filter
  */
 function addAndApplyFilter(filter) {
+    appliedFilters.push(filter.name);
     allFilter.push(filter);
     appendFilterCollection(generateFilterElement(filter));
     applyFilter(filter);

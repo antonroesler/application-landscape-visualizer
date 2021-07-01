@@ -38,6 +38,7 @@ let parentChildNodeSet = new Set();
 let parentChildLinkArray = [];
 let diagramNodeParentChildBeforeFilterIsActive = new Set();
 let diagramLinkParentChildBeforeFilterIsActive = [];
+var parentChildFeatureOn = false;
 const nodeWidth = 80;
 const initialLayout = diagram.layout;
 

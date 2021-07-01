@@ -10,6 +10,8 @@
  *
  */
 
+
+
 /**
  * This file contains all templates that will be used for different styles of
  * AppNodes. In this file we create a variable that contains a preset of a node
@@ -67,3 +69,33 @@ function findChildsofANode(node) {
     return allParentChildKeys;
 }
 
+
+
+function showAllChildren(node) {
+    children = Array.from(findParentsOfANode(node));
+    for (length of test) {
+        for (cNode of children) {
+            findParentsOfANode(cNode).forEach(childrenNode => {
+                children.push(childrenNode);
+            })
+        }
+    }
+    c = new Set(parent);
+    return Array.from(c);
+}
+
+function clearAllArraysFilterPC() {
+    modelNodeWithoutFilter = [];
+    modelLinkWithoutFilter = [];
+    parentChildFeatureOn = false;
+    allParentChildKeys.clear();
+    parentChildNodeSet.clear();
+    parentChildLinkArray = [];
+    diagramLinkParentChildBeforeFilterIsActive = [];
+    diagramNodeParentChildBeforeFilterIsActive.clear();
+    moreThanOneFilter = false;
+    deactivateAllAppliedFilters();
+    allParentChildKeys.clear();
+    appliedFilters = [];
+    diagram.nodeTemplate = mainTemplate;
+}

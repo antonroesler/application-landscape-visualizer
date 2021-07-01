@@ -28,6 +28,7 @@ function init() {
 }
 
 
+
 /**
  * create overview with defined shape
  */
@@ -65,12 +66,15 @@ function addAppNode() {
     const data = readNodePropertiesFromModal();
     data._id = Date.now();
     addNodeToDiagram(data);
+
 }
+
 
 /**
  * Saves an AppNode object to the model.
  */
-function addNodeToDiagram(data) {
+function addNodeToDiagram(d) {
+    data = addSpaceToTagsDepartments(d);
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
@@ -138,7 +142,7 @@ function addLinkToDiagram(link) {
         to: link.to,
     });
     diagram.commitTransaction("update");
-    modelLinkWithoutFilter = model.linkDataArray;
+    modelLinkWithoutFilter.push(link);
 }
 
 
