@@ -80,8 +80,10 @@ function readLinkPropertiesFromModal() {
     var dash;
     if (type === "Business Process") {
         dash = [5,5]
-    }else dash = [0,0]
-
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }else {dash = [0,0]
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }
     return {
         type: type,
         dash: dash

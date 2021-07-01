@@ -24,133 +24,6 @@
 *        
 */
 
-// can deleted
-/*
-var linkType = 1;
-
-function changeBehaviour(){
-  if (linkType == 0) {
-    linkType = 1
-  } else {
-    linkType = 0
-  }
-  console.log("Hello Link Change to: " + linkType);
-  // checkBehaviour();
-  // diagram.linkTemplate.updateRoute();
-}
-
-function checkBehaviour(){
-  
-  if (linkType == 1) {
-    return $(go.Shape,  // the link path shape
-      { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-      new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject())
-    
-  } else {
-    return $(go.Shape, {
-      isPanelMain: true,
-      stroke: "red",
-      strokeWidth: 2,
-      strokeDashArray: [5, 5]
-  })
-}}
-
-function setLinkOpacityBene(){
-  model.linkDataArray.forEach(link => {
-      if (hasTransparentNode(link)){
-          setDash(link, [5,5])
-      } else {
-          setDash(link, [0,0])
-      }
-  })
-}
-
-function dashF(){
-  // var dash = [5,5];
-  // dash = dash.toString();
-  return "[5,5]";
-}
-
-function setDash(obj,dash=[5,5]){
-  diagram.model.commit(function (m){
-      m.set(obj, "strokeDashArray", dash)
-      m.set(obj, "dashText", dash)
-  }, "changed dash");
-}
-
-function change (){
-  changeBehaviour();
-  checkBehaviour();
-  setLinkOpacity();
-}
-*/
-
-var linkTemplateBezier =
-$(go.Link,
-  {
-    routing: go.Link.Normal,
-    curve: go.Link.Bezier,
-    curviness: 40,
-    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
-    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
-    selectionAdorned: false
-    
-},
-// stdLink()
-new go.Binding("points").makeTwoWay(),
-        $(go.Shape,  // the highlight shape, normally transparent
-          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        $(go.Shape,  // the link path shape
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-        $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-          new go.Binding("opacity", "opacity"), // To make link transparent
-         );
-
-
-var linkTemplateOrthogonal =
-$(go.Link,
-  {
-    routing: go.Link.Orthogonal,
-    curviness: 30,
-    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
-    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
-    selectionAdorned: false
-    
-},
-new go.Binding("points").makeTwoWay(),
-        $(go.Shape,  // the highlight shape, normally transparent
-          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        $(go.Shape,  // the link path shape
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-        $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-          new go.Binding("opacity", "opacity"), // To make link transparent
-  );
-
-
-var linkTemplateNormal =
-$(go.Link,
-  {
-    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
-    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
-    selectionAdorned: false
-},
-new go.Binding("points").makeTwoWay(),
-        $(go.Shape,  // the highlight shape, normally transparent
-          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        $(go.Shape,  // the link path shape
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-        $(go.Shape,  // the arrowhead
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-          new go.Binding("opacity", "opacity"), // To make link transparent
-  );
 
 var linkTemplate =
 $(go.Link,
@@ -159,37 +32,112 @@ $(go.Link,
     toShortLength: 3,
     corner: 5,
     curve: go.Link.JumpOver,
-
+    
     mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
     mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
     selectionAdorned: false
-},
-        //link Bindings
-        new go.Binding("routing","routing"),
-        new go.Binding("points").makeTwoWay(),
-        new go.Binding("opacity", "opacity"), // To make link transparent
-        new go.Binding("text", "Bandwith"),
-        new go.Binding("text", "Protocol"),
-        new go.Binding("text", "Latency Level"),
-        new go.Binding("text", "type"),
-        new go.Binding("text", "dash"),
+  },
+  //link Bindings
+  new go.Binding("routing","routing", go.Binding.parseEnum(go.Link, go.Link.Normal)),
+  new go.Binding("curve", "curve", go.Binding.parseEnum(go.Link, go.Link.Normal)),
+  new go.Binding("curviness", "curviness"),
+  new go.Binding("points").makeTwoWay(),
+  new go.Binding("opacity", "opacity"), // To make link transparent
+  new go.Binding("text", "Bandwith"),
+  new go.Binding("text", "Protocol"),
+  new go.Binding("text", "Latency Level"),
+  new go.Binding("text", "type"),
+  new go.Binding("text", "dash"),
+  
+  // the highlight shape, normally transparent
+  $(go.Shape,  
+    { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+    
+  // the link path shape
+  $(go.Shape,  
+    { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+      new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject(),
+      new go.Binding("strokeDashArray", "dash")),
+      
 
-
-        $(go.Shape,  // the highlight shape, normally transparent
-          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        
-        // the link path shape
-        $(go.Shape,  
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
-          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject(),
-          new go.Binding("strokeDashArray", "dash")),
-
-        // the arrowhead
-        $(go.Shape,  
-          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
-          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-          new go.Binding("opacity", "opacity"), // To make link transparent
+  // the arrowhead
+  $(go.Shape,  
+    { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+      new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+      new go.Binding("opacity", "opacity"), // To make link transparent
+  
   );
+
+
+//Version in template desing, not Binding design
+
+/*
+  var linkTemplateBezier =
+  $(go.Link,
+    {
+      routing: go.Link.Normal,
+      curve: go.Link.Bezier,
+      curviness: 40,
+      mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+      mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+      selectionAdorned: false
+      
+  },
+  // stdLink()
+  new go.Binding("points").makeTwoWay(),
+          $(go.Shape,  // the highlight shape, normally transparent
+            { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+          $(go.Shape,  // the link path shape
+            { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+            new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          $(go.Shape,  // the arrowhead
+            { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+            new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+            new go.Binding("opacity", "opacity"), // To make link transparent
+           );
+  
+  
+  var linkTemplateOrthogonal =
+  $(go.Link,
+    {
+      routing: go.Link.Orthogonal,
+      curviness: 30,
+      mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+      mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+      selectionAdorned: false
+      
+  },
+  new go.Binding("points").makeTwoWay(),
+          $(go.Shape,  // the highlight shape, normally transparent
+            { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+          $(go.Shape,  // the link path shape
+            { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+            new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          $(go.Shape,  // the arrowhead
+            { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+            new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+            new go.Binding("opacity", "opacity"), // To make link transparent
+    );
+  
+
+  var linkTemplateNormal =
+  $(go.Link,
+    {
+      mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+      mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+      selectionAdorned: false
+  },
+  new go.Binding("points").makeTwoWay(),
+          $(go.Shape,  // the highlight shape, normally transparent
+            { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+          $(go.Shape,  // the link path shape
+            { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+            new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          $(go.Shape,  // the arrowhead
+            { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+            new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+            new go.Binding("opacity", "opacity"), // To make link transparent
+    );
 
 
 var linkTemplateAvoidsNodes =
@@ -283,3 +231,5 @@ var linkTemplateAvoidsNodes =
 // var linkTemplateMap = new go.Map();
 // linkTemplateMap.add("", linkTemplateNormal);
 // linkTemplateMap.add("standard", linkTemplate);
+
+*/

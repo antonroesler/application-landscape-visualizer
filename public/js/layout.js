@@ -57,28 +57,39 @@ function appendLayoutToDiagram(layout) {
 
 
 /*
-Link Template
+Set Link Attriutes for Layout
 */
 function linkLayoutModalDialogHandler() {
-    const linkLayout = document.getElementById("linkLayoutOptions").value
-    appendLinkLayoutToDiagram(linkLayout)
-    disableAutomaticLayout()
+    const route = document.getElementById("linkLayoutOptions").value
+    
+    if (route != "Bezier") {
+        model.linkDataArray.forEach(link => {setRoute(link, routing=route, curve="None", curviness=0 );});
+    } else {
+        model.linkDataArray.forEach(link => {setRoute(link, routing="Normal", curve=route, curviness=40 );});
+    }
 }
-function appendLinkLayoutToDiagram(linkLayout) {
-    const linkLayouts = {
-        "avoids_nodes": linkTemplateAvoidsNodes,
-        "normal": linkTemplateNormal,
-        "bezier": linkTemplateBezier,
-        "orthogonal": linkTemplateOrthogonal
-    };
-    lll = linkLayouts[linkLayout];
-    console.log("hallo welt");
-    console.log("des die nachricht" + lll);
-    diagram.startTransaction();
-    diagram.linkTemplate = linkLayouts[linkLayout];
-    // diagram.linkTemplate.updateRoute();
-    diagram.commitTransaction();
+
+function setRoute(link,routing,curve,curviness){
+    diagram.model.commit(function (m){
+        m.set(link, "routing", routing) 
+        m.set(link, "curve", curve)
+        m.set(link, "curviness", curviness)
+    },"changed LinkLayout");
 }
+
+//Not longer needed if Binding Design is better -> DELETE after decision
+// function appendLinkLayoutToDiagram(linkLayout) {
+//     const linkLayouts = {
+//         "avoids_nodes": linkTemplateAvoidsNodes,
+//         "normal": linkTemplateNormal,
+//         "bezier": linkTemplateBezier,
+//         "orthogonal": linkTemplateOrthogonal
+//     };
+//     diagram.startTransaction();
+//     diagram.linkTemplate = linkLayouts[linkLayout];
+//     diagram.commitTransaction();
+// }
+
 
 /**
  * Disables the gojs behavior of automatically reorganizing the diagram's layout.
