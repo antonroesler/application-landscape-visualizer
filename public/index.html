@@ -23,10 +23,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta lang="en">
     <title>Application Landscape Visualizer</title>
 
     <link href="css/style.css" rel="stylesheet">
-    <!--<link href="css/materialize.css" rel="stylesheet"> -->
+    <!-- <link href="css/materialize.css" rel="stylesheet"> -->
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <!-- Important Google Icon Font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,11 +39,11 @@
     <script src="libs/chart.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="init(); hideLastTab(); applySettings();">
 
     <header>
         <div class="main-nav">
-            <img class="logo" src="img/logo/ecore_logo.png">
+            <img class="logo" src="img/logo/ecore_logo_large.png">
             <div class="search">
                 <i id="searchIcon" class="material-icons search-icon hovered" onclick="toggleSearchbar()">search</i>
                 <div class="input-search">
@@ -62,15 +63,16 @@
             </nav>
             <a class="cta" href="#" onclick="window.location.reload()"><button class="nav-btn margin-left">Create
                     Diagram</button></a>
+            <a class="nav-icon" href="#" onclick="openSettingsModal()"><i class="material-icons">more_vert</i></a>
         </div>
         <div class="sub-nav">
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="openCreateNodeModal();">Create Node</a></li>
-                    <li><a href="#" onclick="deleteNode()">Delete Node</a></li>
+                    <li><a href="#" onclick="openCreateNodeModal();">Create Application</a></li>
+                    <li><a href="#" onclick="deleteNode()">Delete Application</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.undo()">Undo</a></li>
                     <li><a href="#" onclick="diagram.commandHandler.redo()">Redo</a></li>
-                    <li><a href="#" data-target="slide-out" class="" onclick="openSidenav()">Add Filter</a></li>
+                    <li><a href="#" data-target="slide-out" class="" onclick="toggleSidenav()">Add Filter</a></li>
                 </ul>
             </nav>
         </div>
@@ -81,10 +83,10 @@
         <div class="modal-popup">
             <div class="modal-close" onclick="deleteDropdownMenuOptions(); closeModal();">+</div>
             <div class="modal-content">
-                <h2>Create new Node.</h2>
-                <form class="modal-form" action="" onsubmit="return false">
+                <h2>Create Application.</h2>
+                <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
                     <input type="hidden" id="contextMenu" />
-                    <input autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " type="text" />
+                    <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
@@ -125,10 +127,29 @@
                         <option value="ERP">ERP</option>
                         <option value="GEN">GEN</option>
                     </select>
-                    <button class="modal-btn"
-                        onclick="deleteDropdownMenuOptions(); addAppNode(); closeModal();">Create</button>
+                    <button class="modal-btn" type="submit"
+                        onclick="">Create</button>
                     <button class="modal-btn-cancel"
                         onclick="deleteDropdownMenuOptions(); closeModal();">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Modal -->
+    <div class="modal-bg" id="linkModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Edit Connection.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <select class="input-dropdown" id="connectionTypeOptions">
+                        <option value="" selected disabled hidden>Choose Connection Type</option>
+                        <option value="Business Process">Business Process</option>
+                        <option value="Data Flow">Data Flow</option>
+                    </select>
+                    <button class="modal-btn" onclick="overwriteSelectedLink(); closeModal();">Save</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
         </div>
@@ -176,6 +197,38 @@
                     </div>
                     <input class="input-text" type="text" placeholder="File Name... (optional)" id="exp-name">
                     <button class="modal-btn" onclick="exportDiagram(); closeModal();">Download</button>
+                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-bg" id="settingsModal">
+        <div class="modal-popup">
+            <div class="modal-close" onclick="closeModal()">+</div>
+            <div class="modal-content">
+                <h2>Settings.</h2>
+                <form class="modal-form" action="" onsubmit="return false">
+                    <div class="form-row">
+                        <p class="modal-text">Diagram Hover</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxDiagramHover">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <p class="modal-text">Show Tutorial</p>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" id="checkboxTutorial">
+                                <span class="lever"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <button class="modal-btn" onclick="saveSettings(); applySettings(); closeModal();">Save</button>
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
@@ -252,23 +305,42 @@
                         </ul>
                     </li>
                     <button class="modal-btn sidenav-margin margin-top"
-                        onclick="filterDiagramFromSidenav(); openSidenav();">Add</button>
-                    <button class="modal-btn-cancel sidenav-margin" onclick="openSidenav()">Cancel</button>
+                        onclick="filterDiagramFromSidenav(); toggleSidenav();">Add</button>
+                    <button class="modal-btn-cancel sidenav-margin" onclick="toggleSidenav()">Cancel</button>
                 </form>
             </div>
         </ul>
 
-        <div class="content">
-            <div id="diagramDiv" class="content">
+        <!-- Element Showed -->
+        <a id="tutorial" class="waves-effect waves-light btn btn-floating fixer" onclick="toggleTutorial()"><i class="material-icons">lightbulb_outline</i></a>
+        <!-- Tap Target Structure -->
+        <div class="tap-target" data-target="tutorial">
+            <div class="tap-target-content">
+                <h4 class="tutorial-text">Welcome!</h4>
+                <p class="tutorial-text">
+                    Encourage return visits by introducing users to new features and functionality at contextually relevant moments.
+                </p>
+                <div class="tutorial-row">
+
+                    <button class="nav-btn" onclick=""><i class="material-icons">play_circle_outline</i>Start Tutorial</button>
+                </div>
             </div>
-            <div id="heatmap" style="display: none"></div>
+        </div>
+
+        <div class="content">
+
+            <div id="overviewDiv" class="contentov"></div>
+            <div id="diagramDiv" class="content"></div>
+        <div id="heatmap" style="display: none"></div>
         </div>
 
         <!-- Sidebar Right -->
         <div class="sidebar-right">
             <!-- Upper 50% of sidebar -->
             <div class="sidebar-box-resizable">
-                <h2>Statistical Key Figures</h2>
+                <div class="box-row">
+                    <h2>Statistical Key Figures</h2>
+                </div>
                 <div id="infoContainer" class="info-container">
                 </div>
             </div>
@@ -279,18 +351,15 @@
                     <div class="col s12 tabbar">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#filterTab"><i class="material-icons">layers</i></a></li>
-                            <li class="tab col s3"><a href="#visualizationTab"><i
-                                        class="material-icons">color_lens</i></a></li>
-                            <li class="tab col s3"><a href="#histogramTab"><i
-                                        class="material-icons">insert_chart</i></a></li>
-                            <li class="tab col s3"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a>
-                            </li>
+                            <li class="tab col s3"><a href="#visualizationTab"><i class="material-icons">color_lens</i></a></li>
+                            <li class="tab col s3"><a href="#histogramTab"><i class="material-icons">insert_chart</i></a></li>
+                            <li class="tab col s3" onclick="exposeLastTab()"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a></li>
                         </ul>
                     </div>
                     <div id="filterTab" class="col s12">
                         <div class="custom-tab">
                             <ul id="filterCollection" class="collection">
-                                <li id="zeroFilterElement" class="collection-item" onclick="openSidenav()">
+                                <li id="zeroFilterElement" class="collection-item" onclick="toggleSidenav()">
                                     <div>Add filter
                                         <i class="material-icons left">add_circle_outline</i>
                                         <a href="" class="secondary-content">
@@ -331,10 +400,12 @@
                                 <button id="remove-color" onclick="removeColorFromAllNodes()" class="nav-btn">Remove
                                     Color</button>
                             </div>
+                            <div id="legend"></div>
+
                         </div>
                     </div>
                     <div id="histogramTab" class="col s12">
-                        <div class="custom-tab">
+                        <div class="custom-tab" >
                             <ul class="collection">
                                 <li class="collection-item">
                                     <select id="histogram-dropdown" class="tab-input-dropdown"
@@ -361,7 +432,7 @@
                                     </select>
                                 </li>
                             </ul>
-                            <div id="histogram-container"></div>
+                            <div id="histogram-container" style="cursor: pointer;"></div>
                         </div>
                     </div>
                     <div id="heatmapTab" class="col s12">
@@ -465,5 +536,6 @@
 <script src="js/nodeTemplate.js"></script>
 <script src="js/linkTemplate.js"></script>
 <script src="js/visualisation.js"></script>
-
+<script src="js/settings.js"></script>
+<script src="js/tutorial.js"></script>
 </html>

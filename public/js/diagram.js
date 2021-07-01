@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Leonard Husske , Feng Yi Lu, Anton Roesler
+ * @author Leonard Husske , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
 /**
@@ -28,11 +28,42 @@ function init() {
 }
 
 
+
+/**
+ * create overview with defined shape
+ */
+var overview = 
+  $(go.Overview, "overviewDiv",
+    {  
+        observed: diagram,
+    });
+
+setupOverviewBox(overview);
+
+function setupOverviewBox(overview) {
+	var box = new go.Part();
+	var s = new go.Shape();
+	s.stroke = 'rgb(20, 124, 229)';
+	s.strokeWidth = 2;
+	s.fill = 'transparent';
+    s.figure = "Rectangle";
+	s.name = 'BOXSHAPE';
+	box.selectable = true;
+	box.selectionObjectName = 'BOXSHAPE';
+	box.locationObjectName = 'BOXSHAPE';
+	box.resizeObjectName = 'BOXSHAPE';
+	box.cursor = 'move';
+	box.selectionAdorned = false;
+	box.add(s);
+
+	overview.box = box;
+	}
+
 /**
  * Reads user inputs and creates a new Node from the users data.
  */
 function addAppNode() {
-    const data = readNodeProperties();
+    const data = readNodePropertiesFromModal();
     data._id = Date.now();
     addNodeToDiagram(data);
 
@@ -106,6 +137,7 @@ function addLinkToDiagram(link) {
     diagram.startTransaction();
     model.addLinkData({
         key: link._id,
+        type: link.type,
         from: link.from,
         to: link.to,
     });
@@ -113,6 +145,30 @@ function addLinkToDiagram(link) {
     modelLinkWithoutFilter.push(link);
 }
 
+
+
+function overwriteSelectedNode() {
+    const node = getSelectedGoJsElement().sb;
+    const newNodeData = readNodePropertiesFromModal();
+    model.startTransaction("change node values");
+    for (const attribute of nodeSelectableAttributes.keys()) {
+        model.set(node, attribute, newNodeData[attribute]);
+    }
+    model.commitTransaction("change node values");
+}
+
+
+function overwriteSelectedLink() {
+    const link = getSelectedGoJsElement().sb;
+    const newLinkData = readLinkPropertiesFromModal();
+    model.startTransaction("change link values");
+    for (const attribute of linkSelectableAttributes.keys()) {
+        if(newLinkData[attribute] != undefined) {
+            model.set(link, attribute, newLinkData[attribute]);
+        }
+    }
+    model.commitTransaction("change link values");
+}
 
 
 
