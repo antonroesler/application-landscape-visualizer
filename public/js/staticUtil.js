@@ -77,9 +77,14 @@ function readNodePropertiesFromModal() {
 
 function readLinkPropertiesFromModal() {
     const type = document.getElementById("connectionTypeOptions").value;
+    var dash;
+    if (type === "Business Process") {
+        dash = [5,5]
+    }else dash = [0,0]
 
     return {
-        type: type
+        type: type,
+        dash: dash
     }
 }
 

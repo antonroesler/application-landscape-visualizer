@@ -24,6 +24,8 @@
 *        
 */
 
+// can deleted
+/*
 var linkType = 1;
 
 function changeBehaviour(){
@@ -81,13 +83,14 @@ function change (){
   checkBehaviour();
   setLinkOpacity();
 }
+*/
 
 var linkTemplateBezier =
 $(go.Link,
   {
     routing: go.Link.Normal,
     curve: go.Link.Bezier,
-    curviness: 30,
+    curviness: 40,
     mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
     mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
     selectionAdorned: false
@@ -104,15 +107,9 @@ new go.Binding("points").makeTwoWay(),
           { toArrow: "standard", strokeWidth: 0, fill: "gray" },
           new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
           new go.Binding("opacity", "opacity"), // To make link transparent
-  
-          $(go.Shape, {
-            isPanelMain: true,
-            stroke: "red",
-            strokeWidth: 3,
-            name: "PIPE",
-            strokeDashArray: [5, 5]
-          })
          );
+
+
 var linkTemplateOrthogonal =
 $(go.Link,
   {
@@ -155,6 +152,45 @@ new go.Binding("points").makeTwoWay(),
           new go.Binding("opacity", "opacity"), // To make link transparent
   );
 
+var linkTemplate =
+$(go.Link,
+  {
+    routing: go.Link.AvoidsNodes,
+    toShortLength: 3,
+    corner: 5,
+    curve: go.Link.JumpOver,
+
+    mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(20, 124, 229,0.3)"; },
+    mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; },
+    selectionAdorned: false
+},
+        //link Bindings
+        new go.Binding("routing","routing"),
+        new go.Binding("points").makeTwoWay(),
+        new go.Binding("opacity", "opacity"), // To make link transparent
+        new go.Binding("text", "Bandwith"),
+        new go.Binding("text", "Protocol"),
+        new go.Binding("text", "Latency Level"),
+        new go.Binding("text", "type"),
+        new go.Binding("text", "dash"),
+
+
+        $(go.Shape,  // the highlight shape, normally transparent
+          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
+        
+        // the link path shape
+        $(go.Shape,  
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2 },
+          new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject(),
+          new go.Binding("strokeDashArray", "dash")),
+
+        // the arrowhead
+        $(go.Shape,  
+          { toArrow: "standard", strokeWidth: 0, fill: "gray" },
+          new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
+          new go.Binding("opacity", "opacity"), // To make link transparent
+  );
+
 
 var linkTemplateAvoidsNodes =
     $(go.Link,
@@ -169,30 +205,36 @@ var linkTemplateAvoidsNodes =
             selectionAdorned: false
          
         },
+        //link Bindings
+        new go.Binding("routing","routing"),
         new go.Binding("points").makeTwoWay(),
-        $(go.Shape,  // the highlight shape, normally transparent
+        new go.Binding("opacity", "opacity"), // To make link transparent
+        new go.Binding("text", "Bandwith"),
+        new go.Binding("text", "Protocol"),
+        new go.Binding("text", "Latency Level"),
+        new go.Binding("text", "type"),
+        new go.Binding("text", "dash"),
+
+
+        // the highlight shape, normally transparent
+        $(go.Shape,  
           { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-
           
-          // checkBehaviour(),
-          $(go.Shape,  // the link path shape
-            { isPanelMain: true, stroke: "gray", strokeWidth: 2},
+        // the link path shape 
+        $(go.Shape,  
+          { isPanelMain: true, stroke: "gray", strokeWidth: 2},
             new go.Binding("stroke", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject(),
-            new go.Binding("strokeDashArray", "dash", dashF)),
-
-            $(go.Shape,  // the arrowhead
-              { toArrow: "standard", strokeWidth: 0, fill: "gray"},
-              new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
-              new go.Binding("opacity", "opacity"), // To make link transparent
-              // new go.Binding("geometry", "category", geoFunc),
-              new go.Binding("text", "Bandwith"),
-              new go.Binding("text", "Protocol"),
-              new go.Binding("text", "Latency Level"),
-              new go.Binding("text", "Type"),
+            // new go.Binding("strokeDashArray", "dash", function(sel) { return sel ? [0,0] : [5,5]; }).ofObject()),
+            new go.Binding("strokeDashArray", "dash")),
+        
+        // the arrowhead    
+        $(go.Shape,  
+          { toArrow: "standard", strokeWidth: 0, fill: "gray"},
+            new go.Binding("fill", "isSelected", function(sel) { return sel ? "rgb(20, 124, 229)" : "gray"; }).ofObject()),
               
 
+            //toolTip is used for the hover function
               {
-                //toolTip is used for the hover function
             toolTip:
                     $("ToolTip",
                         $(go.Panel, "Table",
@@ -208,49 +250,33 @@ var linkTemplateAvoidsNodes =
                                 { row: 2, column: 1, margin: 5 }),
                             $(go.TextBlock, "Latency Level: ", { row: 3, column: 0, margin: 5 }),
                             $(go.TextBlock, new go.Binding("text", "Latency Level"),
-                                { row: 3, column: 1, margin: 5 }),
+                              { row: 3, column: 1, margin: 5 }),
                             $(go.TextBlock, "Type: ", { row: 4, column: 0, margin: 5 }),
-                            $(go.TextBlock, new go.Binding("text", "Type"),
-                                { row: 4, column: 1, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "type"),
+                              { row: 4, column: 1, margin: 5 }),
+                            $(go.TextBlock, "Dash: ", { row: 5, column: 0, margin: 5 }),
+                            $(go.TextBlock, new go.Binding("text", "dash"),
+                                { row: 5, column: 1, margin: 5 }),
                         )
                     )
           },
 
-          {
-            // define a context menu for each node
-            contextMenu: $(
-              "ContextMenu",
-              $(
-                "ContextMenuButton",
-                {
-                  "ButtonBorder.fill": "white",
-                  _buttonFillOver: "skyblue",
-                },
-                $(go.TextBlock, "change Behaviour"),
-                {
-                  click: change,
-                }
-              )
-              // more ContextMenuButtons would go here
-            ),
-          }
-        // $(go.Panel, "Auto",  // the link label, normally not visible
-        //   { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5 },
-        //   new go.Binding("visible", "visible").makeTwoWay(),
-        //   $(go.Shape, "RoundedRectangle",  // the label shape
-        //     { fill: "#F8F8F8", strokeWidth: 0 }),
-        //   $(go.TextBlock, "Yes",  // the label
-        //     {
-        //       textAlign: "center",
-        //       font: "10pt helvetica, arial, sans-serif",
-        //       stroke: "#333333",
-        //       editable: true
-        //     },
-        //     new go.Binding("text").makeTwoWay())
-        // ),
-        // $(go.Shape, { isPanelMain: true }),  // default stroke === "black", strokeWidth === 1
-        // $(go.Shape, { toArrow: "Standard", scale: 1 })
-
+          // {
+          //   // define a context menu for each node
+          //   contextMenu: $("ContextMenu",
+          //     $("ContextMenuButton",
+          //       {
+          //         "ButtonBorder.fill": "white",
+          //         _buttonFillOver: "skyblue",
+          //       },
+          //       $(go.TextBlock, "change Behaviour"),
+          //       {
+          //         click: deleteNode,
+          //       }
+          //     )
+          //     // more ContextMenuButtons would go here
+          //   ),
+          // }
     );
 
 

@@ -68,7 +68,8 @@ const nodeSelectableAttributes = new Map([
 const linkSelectableAttributes = new Map([
     ["type", "Connection Type"],
     ["from", "From Application"],
-    ["to", "To Application"]
+    ["to", "To Application"],
+    ["dash", "dash"]
 ]);
 
 const defaultSettings = {

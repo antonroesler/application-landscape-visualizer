@@ -136,6 +136,7 @@ function addLinkToDiagram(link) {
         type: link.type,
         from: link.from,
         to: link.to,
+        dash: link.dash
     });
     diagram.commitTransaction("update");
     modelLinkWithoutFilter = model.linkDataArray;
