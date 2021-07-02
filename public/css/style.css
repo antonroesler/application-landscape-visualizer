@@ -1815,6 +1815,13 @@ button.btn-floating {
     font-family: "Montserrat", sans-serif;
 }
 
+/* Diagram Title
+   ========================================================================== */
+
+.main-nav > p {
+    float: left;
+    margin-right: auto;
+}
 
 
 

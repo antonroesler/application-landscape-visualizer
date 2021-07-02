@@ -36,7 +36,7 @@ async function loadDiagram() {
     loadDiagram.linkDataArray.forEach(link => {
         addLinkToDiagram(link);
     });
-    renderHistogram("category");
+    updateDiagramTitle(name)
 }
 
 /**

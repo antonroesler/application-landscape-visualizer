@@ -196,3 +196,11 @@ function getSelectedGoJsElement() {
     const goJsElement = diagram.selection.first();
     return goJsElement;
 }
+
+/**
+ * Updates the diagrams name that is displayed in the middle of the header.
+ * @param value
+ */
+function updateDiagramTitle(value){
+    document.getElementById('diagram-title-name').innerText = value;
+}
