@@ -340,7 +340,7 @@ footer {
     padding: 5px 0px;
 }
 
-footer p, a {
+footer p, footer a {
     color: var(--dark-grey);
     font-size: 10px;
 }
