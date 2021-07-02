@@ -77,6 +77,7 @@ function removeColorFromAllNodes() {
     model.nodeDataArray.forEach(node => {
         removeColorFromNode(node);
     })
+    removeLegend()
 }
 
 /* Color nodes by a value of an attribute */
@@ -146,6 +147,11 @@ async function colorCategorizedNodeMap(nodes, grad = false) {
     Object.keys(nodes).forEach((key, i) => {
         colorAllNodes(nodes[key], colors[i]);
     })
+    if (!grad){
+        makeLegend(Object.keys(nodes), colors);
+    } else {
+        removeLegend()
+    }
 }
 
 
@@ -185,6 +191,7 @@ function _colorChildsAndParents(node) {
         }
     })
     addColorToNode(node.sb, '#ffca3a')
+    makeLegend(["Child", "Parent", "Both", "Selected"], ["#8ac926","#ff595e","#1982c4", '#ffca3a'])
 }
 
 
@@ -287,6 +294,48 @@ function isInAnySet(parent, dataObj) {
     }
     return false;
 }
+
+/* Functions to render legend */
+
+/**
+ * Adds an element to the color legend in the coloring tab
+ * @param label_text The text next to the color
+ * @param color the color
+ */
+function addLegendElement(label_text, color){
+    const legend = document.getElementById('legend');
+    const row = document.createElement('div');
+    const circle = document.createElement('div');
+    const label = document.createElement('div');
+    label.innerHTML = label_text;
+    label.classList.add("legend-label");
+    circle.classList.add('legend-color-dot');
+    row.classList.add('legend-row');
+    circle.style.backgroundColor = color;
+    row.appendChild(circle);
+    row.appendChild(label)
+    legend.appendChild(row);
+}
+
+/**
+ * Function to create a legend from to array where label[i] is the label for color[i].
+ * @param labels String Array.
+ * @param colors Array of colors.
+ */
+function makeLegend(labels, colors){
+    removeLegend()
+    for (let i = 0; i < labels.length; i++) {
+        addLegendElement(labels[i], colors[i]);
+    }
+}
+
+/**
+ * Empties the legend.
+ */
+function removeLegend(){
+    document.getElementById('legend').innerHTML = '';
+}
+
 
 /* Approach to color nodes in a gradient by distance from the selected node - NOT in use yet TODO: Implement or delete.*/
 

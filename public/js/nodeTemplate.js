@@ -127,19 +127,19 @@ var mainTemplate = $(
         makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),
         makePort("L", go.Spot.Left, go.Spot.LeftSide, true, true),
         makePort("R", go.Spot.Right, go.Spot.RightSide, true, true),
-
-    ),
-
-    $(
-        go.TextBlock,
-        {
-            font: "bold 12pt sans-serif",
-            opacity: 1.0,
-        },
-        new go.Binding("text", "name"),
-        new go.Binding("opacity", "opacityText"),
-
-    ),
+        
+        ),
+        
+        $(
+            go.TextBlock,
+            {
+                font: "bold 12pt sans-serif",
+                opacity: 1.0,
+            },
+            new go.Binding("text", "name"),
+            new go.Binding("opacity", "opacityText"),
+            
+            ),
     makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
     new go.Binding("text", "tags"),
     new go.Binding("text", "version"),
