@@ -77,9 +77,16 @@ function readNodePropertiesFromModal() {
 
 function readLinkPropertiesFromModal() {
     const type = document.getElementById("connectionTypeOptions").value;
-
+    var dash;
+    if (type === "Business Process") {
+        dash = [5,5]
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }else {dash = [0,0]
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }
     return {
-        type: type
+        type: type,
+        dash: dash
     }
 }
 

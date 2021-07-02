@@ -23,7 +23,7 @@ function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
-    diagram.linkTemplate = linkTemplateAvoidsNodes;
+    diagram.linkTemplate = linkTemplate;
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
@@ -140,6 +140,7 @@ function addLinkToDiagram(link) {
         type: link.type,
         from: link.from,
         to: link.to,
+        dash: link.dash
     });
     diagram.commitTransaction("update");
     modelLinkWithoutFilter.push(link);
