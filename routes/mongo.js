@@ -149,7 +149,8 @@ function formatLinkDataArray(req, linkDataArray) {
         linkDataArray.push(new Link({
             from: link.from,
             to: link.to,
-            category: link.category
+            type: link.type,
+            dash: link.dash
         }))
     });
 }
