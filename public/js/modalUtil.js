@@ -15,14 +15,6 @@
  * @author Leonard Husske
  */
 
-function openSaveDiagramModal() {
-    const name = document.getElementById('diagram-title-name').innerText;
-    console.log(name)
-    if (!["undefined", "null", "untitled"].includes(String(name).toLowerCase())){
-        document.getElementById('saveName').value = name;
-    }
-    document.getElementById("saveDiagramModal").style.display = "flex";
-}
 
 function openLoadDiagramModal() {
     document.getElementById("loadDiagramModal").style.display = "flex";

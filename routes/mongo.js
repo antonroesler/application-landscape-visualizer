@@ -22,29 +22,6 @@ const Link = require('../model/Link')
 const Diagram = require('../model/Diagram')
 
 
-
-/**
- * Saves the whole model. model must be passed in the request's body.
- */
-router.post('/', async (req, res) => {
-    const nodeDataArray = [];
-    const linkDataArray = [];
-    formatNodeDataArray(req, nodeDataArray);
-    formatLinkDataArray(req, linkDataArray);
-    const diagram = new Diagram({
-        name: req.body.name,
-        nodeDataArray: nodeDataArray,
-        linkDataArray: linkDataArray
-    });
-    try {
-        const savedDiagram = await diagram.save()
-        res.json(savedDiagram);
-
-    }catch (err){
-        res.json(err)
-    }
-})
-
 /**
  * Get a diagram form the database. Must be specified by name.
  *
@@ -56,24 +33,6 @@ router.get('/:name', async (req, res) => {
     const name = req.params.name
     try {
         const diagram = await Diagram.findOne({name:name});
-        res.json(diagram);
-
-    }catch (err){
-        res.json(err)
-    }
-})
-
-/**
- * Deletes a diagram form the database. Must be specified by name.
- *
- * mongo/ABC
- *
- * to delete the diagram called ABC
- */
-router.delete('/:name', async (req, res) => {
-    const name = req.params.name
-    try {
-        const diagram = await Diagram.deleteMany({name:name});
         res.json(diagram);
 
     }catch (err){

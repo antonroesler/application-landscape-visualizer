@@ -58,7 +58,6 @@
                     <li><a href="#" onclick="openLinkLayoutModal()">Link Layout</a></li>
                     <li><a href="#" onclick="openLayoutModal()">Diagram Layout</a></li>
                     <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
-                    <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
                     <li><a href="#" onclick="openExportModal()">Export</a></li>
                 </ul>
             </nav>
@@ -268,24 +267,6 @@
                     <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <!-- Save Diagram Modal -->
-    <div class="modal-bg" id="saveDiagramModal">
-        <div class="modal-popup">
-            <div class="modal-close" onclick="closeModal()">+</div>
-
-            <div class="modal-content">
-                <h2>Save your Diagram.</h2>
-                <form class="modal-form" action="" onsubmit="return false">
-                    <input autocomplete="off" class="input-text" type="text" id="saveName" placeholder="Name">
-                    <input autocomplete="off" class="input-text" type="text" id="saveDesc" placeholder="Description">
-                    <button class="modal-btn" onclick="saveDiagram(); closeModal();">Save</button>
-                    <button class="modal-btn-cancel" onclick="closeModal()">Cancel</button>
-                </form>
-            </div>
-
         </div>
     </div>
 
