@@ -50,6 +50,8 @@ diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
 diagram.addDiagramListener("LinkDrawn", function (e) {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
         linkHandlerWhileFilterOn();
+    } else {
+        modelLinkWithoutFilter = model.linkDataArray;
     }
 
 });

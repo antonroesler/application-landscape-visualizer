@@ -237,8 +237,8 @@ function getAllDirectParentNodes(node) {
  * @param parents A Set
  */
 function getAllParentNodes(node, parents) {
-    if (parentChildFeatureOn === true) {
-        setBasedOnMode = getParentsChildFromKey(findParentsOfANode(node));
+    if (parentChildFeatureOn === true) { 
+        setBasedOnMode = getNodesFromKeys(findParentsOfANode(node));
     } else {
         setBasedOnMode = getAllDirectParentNodes(node);
     }
@@ -259,7 +259,7 @@ function getAllParentNodes(node, parents) {
  */
 function getAllChildNodes(node, childs) {
     if (parentChildFeatureOn === true) {
-        setBasedOnMode = getParentsChildFromKey(findChildsofANode(node));
+        setBasedOnMode = getNodesFromKeys(findChildsofANode(node));
     } else {
         setBasedOnMode = getAllDirectChildNodes(node);
     }
