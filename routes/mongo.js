@@ -126,7 +126,7 @@ router.get('/:diagramName/departments', async (req, res) => {
 function formatNodeDataArray(req, nodeDataArray) {
     req.body.nodeDataArray.forEach(node => {
         const appNode = new AppNode({
-            _id: node.key,
+            key: node.key,
             name: node.name,
             category: node.category,
             desc: node.desc,
