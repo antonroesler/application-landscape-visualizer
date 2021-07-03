@@ -409,6 +409,6 @@ function linkHandlerWhileFilterOn() {
         console.log(link);
         if (modelLinkWithoutFilter.includes(link) === false) {
             modelLinkWithoutFilter.push(link);
-        }
+        } 
     })
 }

@@ -27,10 +27,11 @@
  */
 
 
-var allParentChildKeys = new Set();
+
 /*function finds a parent of a node
  */
 function findParentsOfANode(node) {
+    var allParentChildKeys = new Set();
     for (parentLinks of modelLinkWithoutFilter) {
         if (parentLinks.to === node.key) {
             parentChildArrayGrew += 1;
@@ -43,22 +44,22 @@ function findParentsOfANode(node) {
 
 /*function returns the child or parent of a certain node
  */
-function getParentsChildFromKey(nodeKeys) {
-    parentChild = modelNodeWithoutFilter.filter(node => {
+function getNodesFromKeys(nodeKeys) {
+    nodes = modelNodeWithoutFilter.filter(node => {
         for (keys of nodeKeys) {
             if (keys === node.key) {
                 return true;
             }
         }
         return false
-
     })
-    return parentChild;
+    return nodes;
 }
 
 /*function finds a child of a node
  */
 function findChildsofANode(node) {
+    var allParentChildKeys = new Set();
     for (childLinks of modelLinkWithoutFilter) {
         if (childLinks.from === node.key) {
             parentChildArrayGrew += 1;
@@ -71,31 +72,17 @@ function findChildsofANode(node) {
 
 
 
-function showAllChildren(node) {
-    children = Array.from(findParentsOfANode(node));
-    for (length of test) {
-        for (cNode of children) {
-            findParentsOfANode(cNode).forEach(childrenNode => {
-                children.push(childrenNode);
-            })
-        }
-    }
-    c = new Set(parent);
-    return Array.from(c);
-}
 
 function clearAllArraysFilterPC() {
     modelNodeWithoutFilter = [];
     modelLinkWithoutFilter = [];
     parentChildFeatureOn = false;
-    allParentChildKeys.clear();
     parentChildNodeSet.clear();
     parentChildLinkArray = [];
     diagramLinkParentChildBeforeFilterIsActive = [];
     diagramNodeParentChildBeforeFilterIsActive.clear();
     moreThanOneFilter = false;
     deactivateAllAppliedFilters();
-    allParentChildKeys.clear();
     appliedFilters = [];
     diagram.nodeTemplate = mainTemplate;
 }

@@ -79,7 +79,6 @@ function showAllActivate() {
 }
 
 function showAll() {
-    allParentChildKeys.clear();
     parentChildNodeSet.clear();
     parentChildLinkArray = [];
     diagramLinkParentChildBeforeFilterIsActive = [];
@@ -116,7 +115,7 @@ function showAllChildrenContextmenu() {
 function showParents() {
     selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    parents = getParentsChildFromKey(findParentsOfANode(selectedNode));
+    parents = getNodesFromKeys(findParentsOfANode(selectedNode));
     for (node of parents) {
         parentChildNodeSet.add(node);
     }
@@ -127,7 +126,7 @@ function showParents() {
 function showChilds() {
     selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    childs = getParentsChildFromKey(findChildsofANode(selectedNode));
+    childs = getNodesFromKeys(findChildsofANode(selectedNode));
     for (node of childs) {
         parentChildNodeSet.add(node);
     }
