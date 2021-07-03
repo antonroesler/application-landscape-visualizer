@@ -22,6 +22,7 @@
  */
 async function loadDiagram() {
     clearAllArraysFilterPC();
+    removeLegend();
     diagram.startTransaction();
     model.nodeDataArray = [];
     model.linkDataArray = [];
