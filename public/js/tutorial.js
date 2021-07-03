@@ -134,7 +134,7 @@ function tour(clickedBtnId) {
         case 3:
             changeCssTop(tourBox, 100);
             changeCssLeft(tourBox, 1235);
-            changeTourBoxHeader("Information Something");
+            changeTourBoxHeader("Get Information");
             changeHighlightedElement(384, 410, 90, 1536);
             changeTourArrowStyle(tourBox, 30, 274, 90, "block");
             changeTourImage('click.gif');
@@ -203,7 +203,7 @@ function tour(clickedBtnId) {
 tourText = {
     'create':'Create applications and specify attributes such as \'Name\', \'Description\', \'Tags\' and more for each application.',
     'connect': 'Drag an arrow from one application to another to create a connection between two. This connection can be a data flow or a business process.',
-    'info': 'On the right side, if you have nothing selected, you will find some key figures for the diagram. If you select an application, you will find all the data for this application here and can also edit it. The same applies to connections.',
+    'info': 'On the right side, if you have nothing selected, you will find some key figures for the landscape. If you select an application, you will find all the data for this application here and can also edit it. The same applies to connections.',
     'filter': 'You can create filters to display only certain applications. Filters can be applied to all possible attributes.',
     'histogram': 'Histograms can give you valuable insights into the value distribution of application attributes. In addition, graph properties can also be displayed as histograms. Small tip: A filter can be created by clicking on a bar.',
     'color': 'Applications can be colored here. You can select all possible attributes as the characteristic for coloring.',
