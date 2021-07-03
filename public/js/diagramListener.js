@@ -40,6 +40,7 @@ diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
     const nodeInfoContainer = document.getElementById("infoContainer");
     deleteHtmlChilds(nodeInfoContainer);
     generateSidebarHeadline("Statistical Key Figures")
+    generateKeyFigureInfo();
 });
 
 
