@@ -1878,11 +1878,13 @@ button.btn-floating {
 
 .tour-box-content {
     padding: 24px 30px 22px;
+    text-align: justify;
 }
 
 .tour-box-header {
     color: var(--dark-grey);
     font-size: 18px;
+    text-align: center;
 }
 
 .tour-close {
@@ -1896,7 +1898,7 @@ button.btn-floating {
     cursor: pointer;
 }
 
-#tour-box-text {
+.tour-box-text {
     color: var(--dark-grey);
 }
 
