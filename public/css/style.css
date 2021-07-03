@@ -1896,7 +1896,7 @@ button.btn-floating {
     cursor: pointer;
 }
 
-.tour-box-text {
+#tour-box-text {
     color: var(--dark-grey);
 }
 
@@ -1906,6 +1906,14 @@ button.btn-floating {
     justify-content: space-between;
     padding: 9px 18px 10px;
     border-top: 1px solid rgba(197, 208, 222, 0.4);
+}
+
+#tour-img {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    max-width: 231px;
+    max-height: 95px;
 }
 
 
