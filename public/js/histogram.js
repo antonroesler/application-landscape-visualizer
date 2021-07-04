@@ -11,7 +11,7 @@
 
 /**
  * Contains functions that calculate statistical data on the diagram and displays charts in the visualize Tab
- * @author Anton Roesler
+ * @author Anton Roesler, Patrick Frech
  */
 
 
@@ -130,7 +130,34 @@ let Histogram = null;
  */
 function renderHistogramHandler() {
     const val = document.getElementById("histogram-dropdown").value;
-    renderHistogram(val);
+    renderHistogram(val);      
+}
+
+
+/**
+ * Sorts two arrays dy the value array. Used for arrqys where labels[i] corresponds to values[i]
+ * @param values
+ * @param labels
+ */
+function sortByValues(values, labels) {
+    console.log(values)
+    //1) combine the arrays:
+    const tempList = [];
+    for (let j = 0; j < values.length; j++)
+        tempList.push({'val': values[j], 'lab': labels[j]});
+
+    //2) sort:
+    tempList.sort(function (a, b) {
+        return ((a.val > b.val) ? -1 : ((a.val === b.val) ? 0 : 1));
+        //Sort could be modified to, for example, sort on the age
+        // if the name is the same.
+    });
+
+    //3) separate them back out:
+    for (let k = 0; k < values.length; k++) {
+        labels[k] = tempList[k].lab;
+        values[k] = tempList[k].val;
+    }
 }
 
 /**
@@ -142,6 +169,11 @@ function renderHistogram(attribute) {
     const canvas = generateHistogramHtmlElement()
     const labels = Object.keys(data);
     const values = extractValues(data);
+    if (!["children", "parents", "neighbors", "shutdownDate", "startDate"].includes(attribute)) {
+        sortByValues(values, labels);
+    }
+
+
     Histogram = new Chart(canvas, configurePlotlyHistogram(labels, attribute, values));
 }
 
@@ -192,7 +224,7 @@ function configurePlotlyHistogram(labels, title, values){
             },
         ],
     },
-        options: {
+        options: {  
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
@@ -220,6 +252,7 @@ function clickHandler(evt) {
     const points = Histogram.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, true);
     if (points.length) {
         createFilterFromHistogram(Histogram.data.labels[points[0].index]);
+        tabs.select("filterTab");
     }
 }
 

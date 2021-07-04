@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Anton Roesler
+ * @author Anton Roesler, Patrick Frech
  */
 
 /**
@@ -21,6 +21,8 @@
  *
  */
 async function loadDiagram() {
+    clearAllArraysFilterPC();
+    removeLegend();
     diagram.startTransaction();
     model.nodeDataArray = [];
     model.linkDataArray = [];
@@ -35,6 +37,7 @@ async function loadDiagram() {
     loadDiagram.linkDataArray.forEach(link => {
         addLinkToDiagram(link);
     });
+    updateDiagramTitle(name)
 }
 
 /**
@@ -74,11 +77,11 @@ async function _saveDiagram() {
     const diagramName = document.getElementById("saveName").value;
     const x = await fetch('mongo/diagram/names');
     const names = await x.json();
-    if (names.includes(diagramName)){
+    if (names.includes(diagramName)) {
         const r = confirm("A diagram with that name already exists. Do you want to overwrite it?");
         if (r === true) { // True if user wants to overwrite diagram.
             const delurl = urljoin("mongo", diagramName);
-            await fetch(delurl, {method:'DELETE'})
+            await fetch(delurl, { method: 'DELETE' })
             await saveDiagramToMongo(diagramName)
         } else {
             throw "Saving canceled."

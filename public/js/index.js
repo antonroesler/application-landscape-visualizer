@@ -38,6 +38,7 @@ let parentChildNodeSet = new Set();
 let parentChildLinkArray = [];
 let diagramNodeParentChildBeforeFilterIsActive = new Set();
 let diagramLinkParentChildBeforeFilterIsActive = [];
+var parentChildFeatureOn = false;
 const nodeWidth = 80;
 const initialLayout = diagram.layout;
 
@@ -68,7 +69,8 @@ const nodeSelectableAttributes = new Map([
 const linkSelectableAttributes = new Map([
     ["type", "Connection Type"],
     ["from", "From Application"],
-    ["to", "To Application"]
+    ["to", "To Application"],
+    ["dash", "dash"]
 ]);
 
 const defaultSettings = {

@@ -13,7 +13,7 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Leonard Husske , Feng Yi Lu, Anton Roesler
+ * @author Leonard Husske , Feng Yi Lu, Anton Roesler, Benedikt Möller
  */
 
 /**
@@ -23,11 +23,41 @@ function init() {
     diagram.model = model;
     // passing our Template Maps into our diagram
     diagram.nodeTemplate = mainTemplate;
-    diagram.linkTemplate = linkTemplateAvoidsNodes;
+    diagram.linkTemplate = linkTemplate;
     modelLinkWithoutFilter = model.linkDataArray;
 }
 
 
+
+/**
+ * create overview with defined shape
+ */
+var overview = 
+  $(go.Overview, "overviewDiv",
+    {  
+        observed: diagram,
+    });
+
+setupOverviewBox(overview);
+
+function setupOverviewBox(overview) {
+	var box = new go.Part();
+	var s = new go.Shape();
+	s.stroke = 'rgb(20, 124, 229)';
+	s.strokeWidth = 2;
+	s.fill = 'transparent';
+    s.figure = "Rectangle";
+	s.name = 'BOXSHAPE';
+	box.selectable = true;
+	box.selectionObjectName = 'BOXSHAPE';
+	box.locationObjectName = 'BOXSHAPE';
+	box.resizeObjectName = 'BOXSHAPE';
+	box.cursor = 'move';
+	box.selectionAdorned = false;
+	box.add(s);
+
+	overview.box = box;
+	}
 
 /**
  * Reads user inputs and creates a new Node from the users data.
@@ -36,17 +66,20 @@ function addAppNode() {
     const data = readNodePropertiesFromModal();
     data._id = Date.now();
     addNodeToDiagram(data);
+
 }
+
 
 /**
  * Saves an AppNode object to the model.
  */
-function addNodeToDiagram(data) {
+function addNodeToDiagram(d) {
+    const data = addSpaceToTagsDepartments(d);
     diagram.startTransaction("make new node");
     //if (category ==="Application"){var color = "blue"}
     //custom color setting for user
     var newNode = {
-        key: data._id,
+        key: data.key,
         name: data.name,
         category: data.category,
         desc: data.desc,
@@ -59,8 +92,6 @@ function addNodeToDiagram(data) {
         startDate: data.startDate,
         shutdownDate: data.shutdownDate,
         loc: data.loc,
-        //allowedUsers: data.allowedUsers,
-        //color: color
     };
     model.addNodeData(newNode);
     applyColorWhenNodeCreated(newNode);
@@ -107,9 +138,10 @@ function addLinkToDiagram(link) {
         type: link.type,
         from: link.from,
         to: link.to,
+        dash: link.dash
     });
     diagram.commitTransaction("update");
-    modelLinkWithoutFilter = model.linkDataArray;
+    modelLinkWithoutFilter.push(link);
 }
 
 

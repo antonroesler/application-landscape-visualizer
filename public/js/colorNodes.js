@@ -77,6 +77,7 @@ function removeColorFromAllNodes() {
     model.nodeDataArray.forEach(node => {
         removeColorFromNode(node);
     })
+    removeLegend()
 }
 
 /* Color nodes by a value of an attribute */
@@ -243,7 +244,12 @@ function getAllDirectParentNodes(node) {
  * @param parents A Set
  */
 function getAllParentNodes(node, parents) {
-    getAllDirectParentNodes(node).forEach(parent => {
+    if (parentChildFeatureOn === true) { 
+        setBasedOnMode = getNodesFromKeys(findParentsOfANode(node));
+    } else {
+        setBasedOnMode = getAllDirectParentNodes(node);
+    }
+    setBasedOnMode.forEach(parent => {
         if (!parents.has(parent)) {
             parents.add(parent);
             getAllParentNodes(parent, parents);
@@ -259,7 +265,12 @@ function getAllParentNodes(node, parents) {
  * @param childs A Set
  */
 function getAllChildNodes(node, childs) {
-    getAllDirectChildNodes(node).forEach(child => {
+    if (parentChildFeatureOn === true) {
+        setBasedOnMode = getNodesFromKeys(findChildsofANode(node));
+    } else {
+        setBasedOnMode = getAllDirectChildNodes(node);
+    }
+    setBasedOnMode.forEach(child => {
         if (!childs.has(child)) {
             childs.add(child);
             getAllChildNodes(child, childs);
@@ -420,11 +431,11 @@ function settingAppNodes(setting) {
     var settingProperty = Object.keys(setting);
     settingProperty.forEach(property => {
         model.nodeDataArray.forEach(node => {
-                if (node.category === property) {
-                    console.log(node)
-                    addColorToNode(node, setting[property]);
-                }
+            if (node.category === property) {
+                console.log(node)
+                addColorToNode(node, setting[property]);
             }
+        }
         )
     })
 }

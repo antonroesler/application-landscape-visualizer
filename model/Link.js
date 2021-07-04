@@ -26,7 +26,7 @@ const AppNodeSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    category: String,
+    dash: [Number],
     type: String
 });
 

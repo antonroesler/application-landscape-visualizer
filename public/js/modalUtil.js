@@ -16,6 +16,11 @@
  */
 
 function openSaveDiagramModal() {
+    const name = document.getElementById('diagram-title-name').innerText;
+    console.log(name)
+    if (!["undefined", "null", "untitled"].includes(String(name).toLowerCase())){
+        document.getElementById('saveName').value = name;
+    }
     document.getElementById("saveDiagramModal").style.display = "flex";
 }
 
@@ -63,7 +68,7 @@ function closeModal() {
 
     /* Check if modal is active and deactivate it */
     for (let modal of modals) {
-        if(modal.style.display === "flex") {
+        if (modal.style.display === "flex") {
             modal.style.display = "none";
             resetFirstFormAfterHTMLTag(modal);
         }
@@ -90,7 +95,7 @@ function resetTags() {
 
         // Chips need to be deleted from the end, because they would move up.
         let i = instance.chipsData.length - 1;
-        for ( i; i >= 0; i--) {
+        for (i; i >= 0; i--) {
             instance.deleteChip(i);
         }
     }
@@ -134,7 +139,7 @@ function addDropdownMenuOptions(inputId, nodeAttribute) {
     const values = getAllValuesForOneNodeAttribute(nodeAttribute)
 
     // Create a new html option for every value in the set.
-    values.forEach(function(value) {
+    values.forEach(function (value) {
         const el = document.createElement("option");
         el.value = value;
         autoDropdown.appendChild(el)
@@ -158,6 +163,23 @@ function setListAttributeForInput(parentId) {
 }
 
 
+/**
+
+ * adds a " " to each string between tag and department 
+ */
+ function addSpaceToTagsDepartments(data) {
+    var tags = [];
+    var departments = [];
+    data.tags.forEach(tag => {
+        tags.push(" " + tag);
+    })
+    data.departments.forEach(department => {
+        departments.push(" " + department);
+    })
+    data.tags = tags;
+    data.departments = departments;
+    return data;
+ }
 /**
  * Get selected Node and extract the data to fill out the createNodeModal.
  */

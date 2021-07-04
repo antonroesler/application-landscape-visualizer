@@ -77,9 +77,16 @@ function readNodePropertiesFromModal() {
 
 function readLinkPropertiesFromModal() {
     const type = document.getElementById("connectionTypeOptions").value;
-
+    var dash;
+    if (type === "Business Process") {
+        dash = [5,5]
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }else {dash = [0,0]
+        // diagram.model.commit(function (m){ m.set(link, "dash", dash)},"changed Connection");
+    }
     return {
-        type: type
+        type: type,
+        dash: dash
     }
 }
 
@@ -97,7 +104,6 @@ function appNodeNameExists(name) {
     }
     return false;
 }
-
 
 /**
  * Function gets all values for a specific node attribute from all nodes in
@@ -189,4 +195,12 @@ function showHTMLElement(htmlElement, display="flex") {
 function getSelectedGoJsElement() {
     const goJsElement = diagram.selection.first();
     return goJsElement;
+}
+
+/**
+ * Updates the diagrams name that is displayed in the middle of the header.
+ * @param value
+ */
+function updateDiagramTitle(value){
+    document.getElementById('diagram-title-name').innerText = value;
 }

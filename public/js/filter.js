@@ -25,6 +25,7 @@ var moreThanOneFilter = false;
  * @param filter
  */
 function addAndApplyFilter(filter) {
+    appliedFilters.push(filter.name);
     allFilter.push(filter);
     appendFilterCollection(generateFilterElement(filter));
     applyFilter(filter);
@@ -408,6 +409,6 @@ function linkHandlerWhileFilterOn() {
         console.log(link);
         if (modelLinkWithoutFilter.includes(link) === false) {
             modelLinkWithoutFilter.push(link);
-        }
+        } 
     })
 }

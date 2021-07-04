@@ -98,7 +98,7 @@ hr {
 
 
 .logo {
-    max-height: 20px;
+    max-height: 40px;
     margin-right: auto;
 }
 
@@ -242,6 +242,18 @@ hr {
     justify-content: center;
 }
 
+.contentov {
+    /* display: inline-flexbox; */
+    position: fixed;
+    top: 90px;
+    left: 0;
+    border: 1px solid var(--dark-grey);
+    background-color: white;
+    width: 176px;
+    height: 104px;
+    z-index: 3;
+}
+
 .content * {
     outline: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
@@ -262,6 +274,7 @@ hr {
     flex-grow: 1;
     overflow-x: hidden;
     overflow-y: auto;
+   
 }
 
 .sidebar-box-resizable {
@@ -339,7 +352,7 @@ footer {
     padding: 5px 0px;
 }
 
-footer p {
+footer p, footer a {
     color: var(--dark-grey);
     font-size: 10px;
 }
@@ -1822,6 +1835,14 @@ button.btn-floating {
 
 .legend-label {
     font-family: "Montserrat", sans-serif;
+}
+
+/* Diagram Title
+   ========================================================================== */
+.main-nav > p {
+    float: left;
+    margin-right: auto;
+
 }
 
 /* Tutorial Tour
