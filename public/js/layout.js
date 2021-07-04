@@ -71,19 +71,6 @@ function setRoute(link,routing,curve,curviness){
     },"changed LinkLayout");
 }
 
-//Not longer needed if Binding Design is better -> DELETE after decision
-// function appendLinkLayoutToDiagram(linkLayout) {
-//     const linkLayouts = {
-//         "avoids_nodes": linkTemplateAvoidsNodes,
-//         "normal": linkTemplateNormal,
-//         "bezier": linkTemplateBezier,
-//         "orthogonal": linkTemplateOrthogonal
-//     };
-//     diagram.startTransaction();
-//     diagram.linkTemplate = linkLayouts[linkLayout];
-//     diagram.commitTransaction();
-// }
-
 
 /**
  * Disables the gojs behavior of automatically reorganizing the diagram's layout.
