@@ -322,8 +322,26 @@
                     Encourage return visits by introducing users to new features and functionality at contextually relevant moments.
                 </p>
                 <div class="tutorial-row">
+                    <button class="nav-btn" onclick="startTour()"><i class="material-icons">play_circle_outline</i>Start Tutorial</button>
+                </div>
+            </div>
+        </div>
 
-                    <button class="nav-btn" onclick=""><i class="material-icons">play_circle_outline</i>Start Tutorial</button>
+        <div class="tour-layout">
+            <div class="tour-veil"></div>
+            <div id="highlightedElement" class=""></div>
+            <div id="tourBox" class="tour-box">
+                <div class="tour-box-content">
+                    <div class="tour-close" onclick="closeTour()">+</div>
+                    <h4 class="tour-box-header">Create Applications</h4>
+                    <img src="img/tour/node.png" id="tour-img">
+                    <p id="tour-box-text" class="tour-box-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                        ut labore et dolore magna aliquyam erat,sed diam voluptua. At vero eos et accusam et</p>
+                </div>
+                <div class="tour-box-footer">
+                    <button id="btnTourBack" class="nav-btn" onclick="tour(this.id)">Back</button>
+                    <p id="tourPages" class="tour-box-text">0 / 0</p>
+                    <button id="btnTourNext" class="nav-btn" onclick="tour(this.id)">Next</button>
                 </div>
             </div>
         </div>
