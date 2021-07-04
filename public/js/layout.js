@@ -45,12 +45,6 @@ function appendLayoutToDiagram(layout) {
     };
     diagram.startTransaction();
     diagram.layout = $(layouts[layout]);
-    if (layout == "cir") {
-        diagram.linkTemplate = linkTemplateBezier;
-    }else diagram.linkTemplate = linkTemplateAvoidsNodes;
-    diagram.commitTransaction();
-    
-    diagram.startTransaction();
     diagram.linkTemplate.updateRoute();
     diagram.commitTransaction();
 }
