@@ -78,7 +78,7 @@ function _avgNumberOf(getter) {
     model.nodeDataArray.forEach(node => {
         numbers.push(getter(node))
     })
-    return meanOfArray(numbers);
+    return meanOfArray(numbers).toFixed(2);
 }
 
 function meanOfArray(arr) {
