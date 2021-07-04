@@ -80,6 +80,17 @@ function generateInfoRow(attribute, value, setTextVertical = false, selectableAt
     return div;
 }
 
+function generateKeyFigureInfo() {
+    const infoContainer = document.getElementById("infoContainer");
+
+    deleteHtmlChilds(infoContainer);
+    let div;
+    for (const attribute of selectableKeyFigures.keys()) {
+        div = generateInfoRow(attribute, window[attribute](),false, selectableKeyFigures);
+        infoContainer.appendChild(div);
+    }
+    return infoContainer;
+}
 
 /**
  * Function generates the headline for the sidebar infobox.

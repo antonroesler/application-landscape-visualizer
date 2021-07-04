@@ -38,6 +38,7 @@ async function loadDiagram() {
         addLinkToDiagram(link);
     });
     updateDiagramTitle(name)
+    generateKeyFigureInfo()
 }
 
 /**

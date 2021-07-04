@@ -68,9 +68,18 @@ const nodeSelectableAttributes = new Map([
 
 const linkSelectableAttributes = new Map([
     ["type", "Connection Type"],
-    ["from", "From Application"],
-    ["to", "To Application"],
+    ["from", "From"],
+    ["to", "To"],
     ["dash", "dash"]
+]);
+
+const selectableKeyFigures = new Map([
+    ["totalNumberOfNodes", "Number of Applications"],
+    ["totalNumberOfLinks", "Number of Connections"],
+    ["avgNumberOfChildren", "Average Number of Children"],
+    ["avgNumberOfParents", "Average Number of Parents"],
+    ["avgNumberOfInputsOutputs", "Average number of Inputs"],
+    ["numberOfSeparateGraphs", "Number of separate Graphs"]
 ]);
 
 const defaultSettings = {
