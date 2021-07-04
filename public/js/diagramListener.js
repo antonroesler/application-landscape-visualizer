@@ -48,11 +48,21 @@ diagram.addDiagramListener("BackgroundSingleClicked", function (e) {
  * Adds an diagramListener when a link is created.
  * 
  */
-diagram.addDiagramListener("LinkDrawn", function (e) {
+diagram.addDiagramListener("LinkDrawn", function () {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
         linkHandlerWhileFilterOn();
     } else {
         modelLinkWithoutFilter = model.linkDataArray;
     }
+    event()
+});
 
+
+diagram.addDiagramListener("SelectionDeleted", function () {
+    event()
+
+});
+
+diagram.addDiagramListener("PartCreated", function () {
+    event()
 });
