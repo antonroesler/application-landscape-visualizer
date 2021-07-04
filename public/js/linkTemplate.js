@@ -41,13 +41,14 @@ $(go.Link,
   new go.Binding("routing","routing", go.Binding.parseEnum(go.Link, go.Link.Normal)),
   new go.Binding("curve", "curve", go.Binding.parseEnum(go.Link, go.Link.Normal)),
   new go.Binding("curviness", "curviness"),
-  new go.Binding("dash", "dash"),
   new go.Binding("points").makeTwoWay(),
-  new go.Binding("opacity", "opacity"), // To make link transparent
+  new go.Binding("text", "type"),
+    // optional Metadata Information
   new go.Binding("text", "Bandwith"),
   new go.Binding("text", "Protocol"),
   new go.Binding("text", "Latency Level"),
-  new go.Binding("text", "type"),
+    // To make link transparent
+  new go.Binding("opacity", "opacity"),
   
   // the highlight shape, normally transparent
   $(go.Shape,  
