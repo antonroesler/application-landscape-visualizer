@@ -46,6 +46,14 @@ function openExportModal() {
 
 function openEditLinkModal() {
     document.getElementById("linkModal").style.display = "flex";
+    // Select the current option in the dropdown menu.
+    const activeValue = document.getElementsByClassName("node-info-text")[0].innerHTML
+    const options = document.getElementById('connectionTypeOptions').children
+    for (option of options){
+        if (option.innerHTML === activeValue){
+            option.selected = true;
+        }
+    }
 }
 
 function openEditNodeModal() {
