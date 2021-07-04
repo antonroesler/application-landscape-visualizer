@@ -1940,7 +1940,26 @@ button.btn-floating {
 }
 
 
+/* Tutorial Tour
+   ========================================================================== */
+#connection-filter {
+    display: flex;
+    justify-content: space-between;
 
+}
+#connection-filter > div{
+    display: flex;
+    justify-content: space-between;
+}
+
+#connection-filter > div > * {
+    margin: 0;
+    padding: 0;
+}
+
+#connection-filter > div > input {
+    margin-right: 0.5rem;
+}
 
 
 
