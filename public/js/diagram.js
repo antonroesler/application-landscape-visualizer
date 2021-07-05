@@ -64,7 +64,7 @@ function setupOverviewBox(overview) {
  */
 function addAppNode() {
     const data = readNodePropertiesFromModal();
-    data._id = Date.now();
+    data.key = Date.now();
     addNodeToDiagram(data);
 
 }
