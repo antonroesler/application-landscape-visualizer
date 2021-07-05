@@ -86,7 +86,6 @@
             <div class="modal-content">
                 <h2>Create Application.</h2>
                 <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
-                    <input type="hidden" id="contextMenu" />
                     <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
@@ -529,6 +528,23 @@
             <p> Copyright © 2021 ECORE. All rights reserved. </p>
         </div>
     </footer>
+
+
+    <ul id="contextMenu" class="menu">
+        <li id="cut" class="menu-item" onclick="cxcommand(event)">Cut</li>
+        <li id="copy" class="menu-item" onclick="cxcommand(event)">Copy</li>
+        <li id="paste" class="menu-item" onclick="cxcommand(event)">Paste</li>
+        <li id="delete" class="menu-item" onclick="cxcommand(event)">Delete</li>
+        <li id="color" class="menu-item">Color
+            <ul class="menu">
+                <li class="menu-item" style="background-color: #f38181;" onclick="cxcommand(event, 'color')">Red</li>
+                <li class="menu-item" style="background-color: #eaffd0;" onclick="cxcommand(event, 'color')">Green</li>
+                <li class="menu-item" style="background-color: #95e1d3;" onclick="cxcommand(event, 'color')">Blue</li>
+                <li class="menu-item" style="background-color: #fce38a;" onclick="cxcommand(event, 'color')">Yellow</li>
+            </ul>
+        </li>
+    </ul>
+
 
 </body>
 <script src="https://cdn.plot.ly/plotly-2.0.0.min.js"></script> <!-- Load Plotly /-->

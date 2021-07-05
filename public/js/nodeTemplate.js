@@ -67,35 +67,89 @@ function makePort(name, align, spot, output, input) {
     });
 }
 
-var parentChildFeatureNotActive = $("ContextMenu",
-    $(
-        "ContextMenuButton",
-        {
-            "ButtonBorder.fill": "white",
-            _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "delete"),
-        {
-            click: deleteNode,
+var parentChildFeatureNotActive = $(go.HTMLInfo,{
+    show: showContextMenu,
+    hide: hideContextMenu
+});
+
+function hideCX() {
+    if (myDiagram.currentTool instanceof go.ContextMenuTool) {
+        myDiagram.currentTool.doCancel();
+    }
+}
+var cxElement = document.getElementById("contextMenu");
+function showContextMenu(obj, diagram, tool) {
+    // Show only the relevant buttons given the current state.
+    var cmd = diagram.commandHandler;
+    var hasMenuItem = false;
+    function maybeShowItem(elt, pred) {
+        if (pred) {
+            elt.style.display = "block";
+            hasMenuItem = true;
+        } else {
+            elt.style.display = "none";
         }
-    ), $("ContextMenuButton", {
-        "ButtonBorder.fill": "white",
-        _buttonFillOver: "skyblue",
-    },
-        $(go.TextBlock, "add"),
-        {
-            click: addNodeAndLink,
+    }
+    maybeShowItem(document.getElementById("cut"), cmd.canCutSelection());
+    maybeShowItem(document.getElementById("copy"), cmd.canCopySelection());
+    maybeShowItem(document.getElementById("paste"), cmd.canPasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint));
+    maybeShowItem(document.getElementById("delete"), cmd.canDeleteSelection());
+    maybeShowItem(document.getElementById("color"), obj !== null);
+
+    // Now show the whole context menu element
+    if (hasMenuItem) {
+        cxElement.classList.add("show-menu");
+        // we don't bother overriding positionContextMenu, we just do it here:
+        var mousePt = diagram.lastInput.viewPoint;
+        cxElement.style.left = mousePt.x + 5 + "px";
+        cxElement.style.top = mousePt.y + "px";
+    }
+
+    // Optional: Use a `window` click listener with event capture to
+    //           remove the context menu if the user clicks elsewhere on the page
+    window.addEventListener("click", hideCX, true);
+}
+
+function hideContextMenu() {
+    cxElement.classList.remove("show-menu");
+    // Optional: Use a `window` click listener with event capture to
+    //           remove the context menu if the user clicks elsewhere on the page
+    window.removeEventListener("click", hideCX, true);
+}
+
+// This is the general menu command handler, parameterized by the name of the command.
+function cxcommand(event, val) {
+    if (val === undefined) val = event.currentTarget.id;
+    var diagram = myDiagram;
+    switch (val) {
+        case "cut": diagram.commandHandler.cutSelection(); break;
+        case "copy": diagram.commandHandler.copySelection(); break;
+        case "paste": diagram.commandHandler.pasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint); break;
+        case "delete": diagram.commandHandler.deleteSelection(); break;
+        case "color": {
+            var color = window.getComputedStyle(event.target)['background-color'];
+            changeColor(diagram, color); break;
         }
-    ), $("ContextMenuButton", {
-        "ButtonBorder.fill": "white",
-        _buttonFillOver: "skyblue",
-    },
-        $(go.TextBlock, "Hide all other Nodes"),
-        {
-            click: hideAllOtherNodes,
+    }
+    diagram.currentTool.stopTool();
+}
+
+// A custom command, for changing the color of the selected node(s).
+function changeColor(diagram, color) {
+    // Always make changes in a transaction, except when initializing the diagram.
+    diagram.startTransaction("change color");
+    diagram.selection.each(function(node) {
+        if (node instanceof go.Node) {  // ignore any selected Links and simple Parts
+            // Examine and modify the data, not the Node directly.
+            var data = node.data;
+            // Call setDataProperty to support undo/redo as well as
+            // automatically evaluating any relevant bindings.
+            diagram.model.setDataProperty(data, "color", color);
         }
-    ),
-)
+    });
+    diagram.commitTransaction("change color");
+}
+
 /**
  * Template
  * is used for generating a node and also showing Metadata and key of the node while hovering
