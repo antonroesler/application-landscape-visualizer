@@ -276,8 +276,13 @@ function createFilterFromHistogram(attr_value) {
  */
 function createFilterObject( attr_value, attr) {
     const attr_name = nodeSelectableAttributes.get(attr)
+    let name = attr_name + " " + attr_value
+    if(name.length > 25) {
+        name = name.substring(0, 25);
+        name += "...";
+    }
     const filter = {
-        name: attr_name + " " + attr_value,
+        name: name,
         properties: {}
     }
     filter.properties[attr] = [attr_value];
