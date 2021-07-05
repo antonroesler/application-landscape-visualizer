@@ -201,7 +201,7 @@ var parentChildFeatureActive = $("ContextMenu",
             "ButtonBorder.fill": "white",
             _buttonFillOver: "skyblue",
         },
-        $(go.TextBlock, "Show parents of this node"),
+        $(go.TextBlock, "Show parents"),
         {
             click: showParents,
         }
@@ -211,7 +211,7 @@ var parentChildFeatureActive = $("ContextMenu",
             "ButtonBorder.fill": "white",
             _buttonFillOver: "skyblue",
         },
-        $(go.TextBlock, "Show all parents of this node"),
+        $(go.TextBlock, "Show all predecessors"),
         {
             click: showAllParentsContextmenu,
         }
@@ -219,7 +219,7 @@ var parentChildFeatureActive = $("ContextMenu",
         "ButtonBorder.fill": "white",
         _buttonFillOver: "skyblue",
     },
-        $(go.TextBlock, "Show childs of this node"),
+        $(go.TextBlock, "Show children\n"),
         {
             click: showChilds,
         }
@@ -229,7 +229,7 @@ var parentChildFeatureActive = $("ContextMenu",
             "ButtonBorder.fill": "white",
             _buttonFillOver: "skyblue",
         },
-        $(go.TextBlock, "Show all childs of this node"),
+        $(go.TextBlock, "Show descendants"),
         {
             click: showAllChildrenContextmenu,
         }
@@ -237,7 +237,7 @@ var parentChildFeatureActive = $("ContextMenu",
         "ButtonBorder.fill": "white",
         _buttonFillOver: "skyblue",
     },
-        $(go.TextBlock, "back to normal view"),
+        $(go.TextBlock, "Back to whole diagram"),
         {
             click: showAll,
         }
