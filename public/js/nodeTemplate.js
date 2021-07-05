@@ -5,25 +5,20 @@
  * Study program:     Engineering Business Information Systems
  * Module:            Advanced Programming 2021
  * Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
- * Date:              21.04.2021
+ * Date:              05.07.2021
  *
  *
  */
 
 /**
- * This file contains all templates that will be used for different styles of
- * AppNodes. In this file we create a variable that contains a preset of a node
- * style these variables can be used in the index.js file.
- * 'templmap' is a map that contains all of our templates that we create.
- * In Index.js we declare a TemplateMap to our diagram
- * "diagram.nodeTemplateMap = templmap;" with that our nodes are able to use
- * these templates.
- * (the attribute "category" inside of the AppNode object declares which template it uses)
+ * Contains the node template that defines style and functionality of a gojs node object. Also contains the gojs context
+ * menu.
  *
- * @author Feng Yi Lu, Benedikt Möller
+ * @author Feng Yi Lu, Benedikt Möller, Anton Roesler
  *
  */
-var parentChildFeature = false;
+const cxElement = document.getElementById("contextMenu");
+
 /**
  * function is needed to use the icons in icons.js
  */
@@ -33,11 +28,6 @@ function geoFunc(geoname) {
         geo = icons[geoname] = go.Geometry.parse(geo, true); // fill each geometry
     }
     return geo;
-}
-
-function getColor(x) {
-    console.log(x);
-    return "red"
 }
 
 function makePort(name, align, spot, output, input) {
@@ -67,88 +57,91 @@ function makePort(name, align, spot, output, input) {
     });
 }
 
-var parentChildFeatureNotActive = $(go.HTMLInfo,{
+/* Define custom context menu as html info element. */
+const contextMenu = $(go.HTMLInfo, {
     show: showContextMenu,
     hide: hideContextMenu
 });
 
+/**
+ * Hides the context menu if active.
+ */
 function hideCX() {
-    if (myDiagram.currentTool instanceof go.ContextMenuTool) {
-        myDiagram.currentTool.doCancel();
+    if (diagram.currentTool instanceof go.ContextMenuTool) {
+        diagram.currentTool.doCancel();
     }
 }
-var cxElement = document.getElementById("contextMenu");
-function showContextMenu(obj, diagram, tool) {
-    // Show only the relevant buttons given the current state.
-    var cmd = diagram.commandHandler;
-    var hasMenuItem = false;
-    function maybeShowItem(elt, pred) {
-        if (pred) {
+
+/**
+ * Shows the context menu. Option depend on if parent-child-feature is active.
+ */
+function showContextMenu(obj, diagram) {
+    let hasMenuItem = false;
+
+    function maybeShowItem(elt, stat) {
+        if (parentChildFeatureOn === stat) {
             elt.style.display = "block";
             hasMenuItem = true;
         } else {
             elt.style.display = "none";
         }
     }
-    maybeShowItem(document.getElementById("cut"), cmd.canCutSelection());
-    maybeShowItem(document.getElementById("copy"), cmd.canCopySelection());
-    maybeShowItem(document.getElementById("paste"), cmd.canPasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint));
-    maybeShowItem(document.getElementById("delete"), cmd.canDeleteSelection());
-    maybeShowItem(document.getElementById("color"), obj !== null);
+    maybeShowItem(document.getElementById("parent-opt"), true);
+    maybeShowItem(document.getElementById("children-opt"), true);
+    maybeShowItem(document.getElementById("pred-opt"), true);
+    maybeShowItem(document.getElementById("desc-opt"), true);
+    maybeShowItem(document.getElementById("back-opt"), true);
+    maybeShowItem(document.getElementById("isolate-opt"), false);
+    maybeShowItem(document.getElementById("delete-opt"), false);
 
-    // Now show the whole context menu element
     if (hasMenuItem) {
         cxElement.classList.add("show-menu");
-        // we don't bother overriding positionContextMenu, we just do it here:
-        var mousePt = diagram.lastInput.viewPoint;
+        const mousePt = diagram.lastInput.viewPoint;
         cxElement.style.left = mousePt.x + 5 + "px";
         cxElement.style.top = mousePt.y + "px";
     }
-
-    // Optional: Use a `window` click listener with event capture to
-    //           remove the context menu if the user clicks elsewhere on the page
     window.addEventListener("click", hideCX, true);
 }
 
 function hideContextMenu() {
     cxElement.classList.remove("show-menu");
-    // Optional: Use a `window` click listener with event capture to
-    //           remove the context menu if the user clicks elsewhere on the page
     window.removeEventListener("click", hideCX, true);
 }
 
-// This is the general menu command handler, parameterized by the name of the command.
+/**
+ * Executes a command, that was triggered by a click on a context menu option.
+ * @param event
+ * @param val
+ */
 function cxcommand(event, val) {
     if (val === undefined) val = event.currentTarget.id;
-    var diagram = myDiagram;
     switch (val) {
-        case "cut": diagram.commandHandler.cutSelection(); break;
-        case "copy": diagram.commandHandler.copySelection(); break;
-        case "paste": diagram.commandHandler.pasteSelection(diagram.toolManager.contextMenuTool.mouseDownPoint); break;
-        case "delete": diagram.commandHandler.deleteSelection(); break;
-        case "color": {
-            var color = window.getComputedStyle(event.target)['background-color'];
-            changeColor(diagram, color); break;
-        }
+        case "isolate-opt":
+            hideAllOtherNodes();
+            break;
+        case "delete-opt":
+            diagram.commandHandler.deleteSelection();
+            break;
+        case "parent-opt":
+            showParents();
+            break;
+        case "children-opt":
+            showChilds();
+            break;
+        case "pred-opt":
+            showAllParentsContextmenu();
+            break;
+        case "desc-opt":
+            showAllChildrenContextmenu();
+            break;
+        case "back-opt":
+            showAll();
+            break;
+
     }
     diagram.currentTool.stopTool();
 }
 
-// A custom command, for changing the color of the selected node(s).
-function changeColor(diagram, color) {
-    // Always make changes in a transaction, except when initializing the diagram.
-    diagram.startTransaction("change color");
-    diagram.selection.each(function(node) {
-        if (node instanceof go.Node) {  // ignore any selected Links and simple Parts
-            // Examine and modify the data, not the Node directly.
-            var data = node.data;
-            // Call setDataProperty to support undo/redo as well as
-            // automatically evaluating any relevant bindings.
-            diagram.model.setDataProperty(data, "color", color);
-        }
-    });
-    diagram.commitTransaction("change color");
-}
 
 /**
  * Template
@@ -181,157 +174,6 @@ var mainTemplate = $(
         makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),
         makePort("L", go.Spot.Left, go.Spot.LeftSide, true, true),
         makePort("R", go.Spot.Right, go.Spot.RightSide, true, true),
-        
-        ),
-        
-        $(
-            go.TextBlock,
-            {
-                font: "bold 12pt sans-serif",
-                opacity: 1.0,
-            },
-            new go.Binding("text", "name"),
-            new go.Binding("opacity", "opacityText"),
-            
-            ),
-    makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
-    new go.Binding("text", "tags"),
-    new go.Binding("text", "version"),
-    new go.Binding("text", "departments"),
-    new go.Binding("text", "license"),
-    {
-        //toolTip is used for the hover function
-        toolTip:
-            $("ToolTip",
-                $(go.Panel, "Table",
-                    { defaultAlignment: go.Spot.Left },
-                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "name"),
-                        { row: 1, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Application Type: ", { row: 2, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "category"),
-                        { row: 2, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "desc"),
-                        {
-                            row: 3, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
-                            maxLines: 1,
-                            width: 100
-                        }),
-                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "tags"),
-                        {
-                            row: 4, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
-                            maxLines: 1,
-                            width: 100
-                        }),
-                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "version"),
-                        { row: 5, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Departments: ", { row: 6, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "departments"),
-                        {
-                            row: 6, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
-                            maxLines: 1,
-                            width: 100
-                        }),
-                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
-                    $(go.TextBlock, new go.Binding("text", "license"),
-                        { row: 8, column: 1, margin: 5 }),
-                )
-            )
-    },
-    {
-        // define a context menu for each node
-        contextMenu: parentChildFeatureNotActive
-    }
-);
-
-
-var parentChildFeatureActive = $("ContextMenu",
-    $(
-        "ContextMenuButton",
-        {
-            "ButtonBorder.fill": "white",
-            _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "Show parents"),
-        {
-            click: showParents,
-        }
-    ), $(
-        "ContextMenuButton",
-        {
-            "ButtonBorder.fill": "white",
-            _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "Show all predecessors"),
-        {
-            click: showAllParentsContextmenu,
-        }
-    ), $("ContextMenuButton", {
-        "ButtonBorder.fill": "white",
-        _buttonFillOver: "skyblue",
-    },
-        $(go.TextBlock, "Show children\n"),
-        {
-            click: showChilds,
-        }
-    ), $(
-        "ContextMenuButton",
-        {
-            "ButtonBorder.fill": "white",
-            _buttonFillOver: "skyblue",
-        },
-        $(go.TextBlock, "Show descendants"),
-        {
-            click: showAllChildrenContextmenu,
-        }
-    ), $("ContextMenuButton", {
-        "ButtonBorder.fill": "white",
-        _buttonFillOver: "skyblue",
-    },
-        $(go.TextBlock, "Back to whole diagram"),
-        {
-            click: showAll,
-        }
-    ),
-)
-
-
-
-
-
-
-
-var mainTemplateParentChild = $(
-    go.Node,
-    "Vertical",
-    new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-    $(
-        go.Panel,
-        "Auto",
-        $(
-            go.Shape,
-            {
-                background: "transparent",
-                fill: "black",
-                strokeWidth: 0,
-                width: nodeWidth,
-                height: 70,
-                opacity: 1.0,
-            },
-            new go.Binding("geometry", "category", geoFunc),
-            new go.Binding("opacity", "opacity"),
-            new go.Binding("stroke", "stroke"),
-            new go.Binding("background", "color"),
-            new go.Binding("strokeWidth", "strokeWidth"),
-        ),
-        // four named ports, one on each side:
-        makePort("T", go.Spot.Top, go.Spot.TopSide, true, true),
-        makePort("L", go.Spot.Left, go.Spot.LeftSide, true, true),
-        makePort("R", go.Spot.Right, go.Spot.RightSide, true, true),
-
     ),
 
     $(
@@ -342,7 +184,6 @@ var mainTemplateParentChild = $(
         },
         new go.Binding("text", "name"),
         new go.Binding("opacity", "opacityText"),
-
     ),
     makePort("B", go.Spot.Bottom, go.Spot.BottomSide, true, true),
     new go.Binding("text", "tags"),
@@ -354,46 +195,45 @@ var mainTemplateParentChild = $(
         toolTip:
             $("ToolTip",
                 $(go.Panel, "Table",
-                    { defaultAlignment: go.Spot.Left },
-                    $(go.TextBlock, "Name: ", { row: 1, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                    {defaultAlignment: go.Spot.Left},
+                    $(go.TextBlock, "Name: ", {row: 1, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "name"),
-                        { row: 1, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Application Type: ", { row: 2, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                        {row: 1, column: 1, margin: 5}),
+                    $(go.TextBlock, "Application Type: ", {row: 2, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "category"),
-                        { row: 2, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Description: ", { row: 3, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                        {row: 2, column: 1, margin: 5}),
+                    $(go.TextBlock, "Description: ", {row: 3, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "desc"),
                         {
                             row: 3, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
                             maxLines: 1,
                             width: 100
                         }),
-                    $(go.TextBlock, "Tags: ", { row: 4, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                    $(go.TextBlock, "Tags: ", {row: 4, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "tags"),
                         {
                             row: 4, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
                             maxLines: 1,
                             width: 100
                         }),
-                    $(go.TextBlock, "Version: ", { row: 5, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                    $(go.TextBlock, "Version: ", {row: 5, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "version"),
-                        { row: 5, column: 1, margin: 5 }),
-                    $(go.TextBlock, "Departments: ", { row: 6, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                        {row: 5, column: 1, margin: 5}),
+                    $(go.TextBlock, "Departments: ", {row: 6, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "departments"),
                         {
                             row: 6, column: 1, margin: 5, overflow: go.TextBlock.OverflowEllipsis,
                             maxLines: 1,
                             width: 100
                         }),
-                    $(go.TextBlock, "License: ", { row: 8, column: 0, margin: 5, font: "bold 12pt sans-serif" }),
+                    $(go.TextBlock, "License: ", {row: 8, column: 0, margin: 5, font: "bold 12pt sans-serif"}),
                     $(go.TextBlock, new go.Binding("text", "license"),
-                        { row: 8, column: 1, margin: 5 }),
+                        {row: 8, column: 1, margin: 5}),
                 )
             )
     },
     {
         // define a context menu for each node
-        contextMenu: parentChildFeatureActive
-
+        contextMenu: contextMenu
     }
 );

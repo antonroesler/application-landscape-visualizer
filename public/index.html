@@ -531,18 +531,13 @@
 
 
     <ul id="contextMenu" class="menu">
-        <li id="cut" class="menu-item" onclick="cxcommand(event)">Cut</li>
-        <li id="copy" class="menu-item" onclick="cxcommand(event)">Copy</li>
-        <li id="paste" class="menu-item" onclick="cxcommand(event)">Paste</li>
-        <li id="delete" class="menu-item" onclick="cxcommand(event)">Delete</li>
-        <li id="color" class="menu-item">Color
-            <ul class="menu">
-                <li class="menu-item" style="background-color: #f38181;" onclick="cxcommand(event, 'color')">Red</li>
-                <li class="menu-item" style="background-color: #eaffd0;" onclick="cxcommand(event, 'color')">Green</li>
-                <li class="menu-item" style="background-color: #95e1d3;" onclick="cxcommand(event, 'color')">Blue</li>
-                <li class="menu-item" style="background-color: #fce38a;" onclick="cxcommand(event, 'color')">Yellow</li>
-            </ul>
-        </li>
+        <li id="delete-opt" class="menu-item" onclick="cxcommand(event)">Delete</li>
+        <li id="isolate-opt" class="menu-item" onclick="cxcommand(event)">Isolate</li>
+        <li id="parent-opt" class="menu-item" onclick="cxcommand(event)">Show Parents</li>
+        <li id="children-opt" class="menu-item" onclick="cxcommand(event)">Show Children</li>
+        <li id="pred-opt" class="menu-item" onclick="cxcommand(event)">Show all Predecessors</li>
+        <li id="desc-opt" class="menu-item" onclick="cxcommand(event)">Show all Descendants</li>
+        <li id="back-opt" class="menu-item" onclick="cxcommand(event)">Back to whole Diagram</li>
     </ul>
 
 

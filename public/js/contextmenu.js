@@ -55,7 +55,6 @@ function addNodeAndLink() {
 
 
 function hideAllOtherNodes() {
-    diagram.nodeTemplate = mainTemplateParentChild;
     diagramNodeParentChildBeforeFilterIsActive.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     parentChildNodeSet.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     diagram.startTransaction();
