@@ -63,6 +63,7 @@ function filterDiagramFromSidenav() {
     try {
         _filterDiagramFromSidenav();
         createToast("Filter added.", "success");
+        toggleSidenav();
     } catch (e) {
         console.log(e);
         createToast(e, "fail");
