@@ -69,8 +69,7 @@ const nodeSelectableAttributes = new Map([
 const linkSelectableAttributes = new Map([
     ["type", "Connection Type"],
     ["from", "From"],
-    ["to", "To"],
-    ["dash", "dash"]
+    ["to", "To"]
 ]);
 
 const selectableKeyFigures = new Map([
