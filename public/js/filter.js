@@ -365,6 +365,7 @@ function changeFilterActivation(filterName) {
         filterElement.querySelector("a").appendChild(span);
         filterElement.classList.add("active");
     }
+    diagramEvent()
 }
 
 function deactivateAllAppliedFilters() {

@@ -20,7 +20,7 @@
  */
 function diagramEvent(){
     renderHistogramHandler();
-    if (getSelectedGoJsElement() != null){
+    if (getSelectedGoJsElement() === null){
         generateKeyFigureInfo();
     }
 
