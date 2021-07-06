@@ -18,34 +18,116 @@
 var parentChildArrayGrew = 0;
 var parentButton;
 var before = 0;
-/**main contextMenu of the diagram*/
-diagram.contextMenu =
-    $("ContextMenu",
-        $("ContextMenuButton",
-            $(go.TextBlock, "Undo"),
-            { click: function (e, obj) { e.diagram.commandHandler.undo(); } },
-            new go.Binding("visible", "", function (o) {
-                return o.diagram.commandHandler.canUndo();
-            }).ofObject()),
-        $("ContextMenuButton",
-            $(go.TextBlock, "Redo"),
-            { click: function (e, obj) { e.diagram.commandHandler.redo(); } },
-            new go.Binding("visible", "", function (o) {
-                return o.diagram.commandHandler.canRedo();
-            }).ofObject()),
-        $("ContextMenuButton",
-            $(go.TextBlock, "New Node"),
-            {
-                click: function (e, obj) {
-                    e.diagram.commit(function (d) {
-                        openCreateNodeModal()
-                        document.getElementById("contextMenu").value = "diagramContextMenu";
 
-                    });
-                }
-            }
-        )
-    );
+/*main contextMenu of the diagram*/
+
+const cxElement = document.getElementById("contextMenu");
+
+diagram.contextMenu = $(go.HTMLInfo, {
+    show: showContextMenu,
+    hide: hideContextMenu
+});
+
+
+/* Define custom context menu as html info element. */
+const contextMenu = $(go.HTMLInfo, {
+    show: showContextMenu,
+    hide: hideContextMenu
+});
+
+/**
+ * Hides the context menu if active.
+ */
+function hideCX() {
+    if (diagram.currentTool instanceof go.ContextMenuTool) {
+        diagram.currentTool.doCancel();
+    }
+}
+
+/**
+ * Shows the context menu. Option depend on if parent-child-feature is active.
+ */
+function showContextMenu(obj, diagram) {
+    let hasMenuItem = false;
+
+    function maybeShowItem(elt, stat) {
+        if (stat) {
+            elt.style.display = "block";
+            hasMenuItem = true;
+        } else {
+            elt.style.display = "none";
+        }
+    }
+
+    maybeShowItem(document.getElementById("parent-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("children-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("pred-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("desc-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("back-opt"), parentChildFeatureOn);
+    maybeShowItem(document.getElementById("isolate-opt"), !parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("delete-opt"), !parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("new-opt"), obj === null);
+    maybeShowItem(document.getElementById("undo-opt"), obj === null);
+    maybeShowItem(document.getElementById("redo-opt"), obj === null);
+
+
+    if (hasMenuItem) {
+        cxElement.classList.add("show-menu");
+        const mousePt = diagram.lastInput.viewPoint;
+        cxElement.style.left = mousePt.x + 5 + "px";
+        cxElement.style.top = mousePt.y + "px";
+    }
+    window.addEventListener("click", hideCX, true);
+}
+
+function hideContextMenu() {
+    cxElement.classList.remove("show-menu");
+    window.removeEventListener("click", hideCX, true);
+}
+
+/**
+ * Executes a command, that was triggered by a click on a context menu option.
+ * @param event
+ * @param val
+ */
+function cxcommand(event, val) {
+    if (val === undefined) val = event.currentTarget.id;
+    switch (val) {
+        case "isolate-opt":
+            hideAllOtherNodes();
+            break;
+        case "delete-opt":
+            diagram.commandHandler.deleteSelection();
+            break;
+        case "parent-opt":
+            showParents();
+            break;
+        case "children-opt":
+            showChilds();
+            break;
+        case "pred-opt":
+            showAllParentsContextmenu();
+            break;
+        case "desc-opt":
+            showAllChildrenContextmenu();
+            break;
+        case "back-opt":
+            showAll();
+            break;
+        case "new-opt":
+            openCreateNodeModal();
+            document.getElementById("contextMenu").value = "diagramContextMenu";
+            break;
+        case "undo-opt":
+            diagram.commandHandler.undo();
+            break;
+        case "redo-opt":
+            diagram.commandHandler.redo();
+            break;
+
+    }
+    diagram.currentTool.stopTool();
+}
 
 
 function addNodeAndLink() {
@@ -90,6 +172,7 @@ function showAll() {
         showAllActivate();
     }
 }
+
 function showAllParentsContextmenu() {
     selectedNode = getSelectedNode();
     parents = new Set();
@@ -153,26 +236,24 @@ function toastAlert() {
     if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {
         if (parentButton === true) {
             createToast("Parent is not shown because of a filter", 'fail')
-        }
-        else {
+        } else {
             createToast("Child is not shown because of a filter", 'fail')
         }
     } else if (parentChildArrayGrew === 0) {
         if (parentButton === true) {
             createToast("This node has no parents left", 'fail')
-        }
-        else {
+        } else {
             createToast("This node has no childrens left", 'fail')
         }
     }
 }
 
-/**function to handle diffrent node adding possibilities depending 
-  on the hidden input value of "contextMenu" */
+/**function to handle diffrent node adding possibilities depending
+ on the hidden input value of "contextMenu" */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
     if (contextMenuValue === "nodeContextMenuAdd") {
-        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
+        const newLink = {from: diagram.selection.toArray()[0].key, to: newNode.key};
         addLinkToDiagram(newLink);
         if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
             linkHandlerWhileFilterOn();
