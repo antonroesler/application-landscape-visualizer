@@ -5,7 +5,7 @@
 * Study program:     Engineering Business Information Systems
 * Module:            Advanced Programming 2021
 * Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
-* Date:              21.04.2021
+* Date:              06.07.2021
 *
 */
 
@@ -13,20 +13,13 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Feng Yi Lu
+ * @author Feng Yi Lu, Anton Rösler
  */
-var parentChildArrayGrew = 0;
-var parentButton;
-var before = 0;
-
-/*main contextMenu of the diagram*/
+let parentChildArrayGrew = 0;
+let parentButton;
+let before = 0;
 
 const cxElement = document.getElementById("contextMenu");
-
-diagram.contextMenu = $(go.HTMLInfo, {
-    show: showContextMenu,
-    hide: hideContextMenu
-});
 
 
 /* Define custom context menu as html info element. */
@@ -34,6 +27,8 @@ const contextMenu = $(go.HTMLInfo, {
     show: showContextMenu,
     hide: hideContextMenu
 });
+
+diagram.contextMenu = contextMenu;
 
 /**
  * Hides the context menu if active.
@@ -130,11 +125,6 @@ function cxcommand(event, val) {
 }
 
 
-function addNodeAndLink() {
-    document.getElementById("contextMenu").value = "nodeContextMenuAdd";
-    openCreateNodeModal()
-}
-
 
 function hideAllOtherNodes() {
     diagramNodeParentChildBeforeFilterIsActive.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
@@ -174,20 +164,20 @@ function showAll() {
 }
 
 function showAllParentsContextmenu() {
-    selectedNode = getSelectedNode();
-    parents = new Set();
+    const selectedNode = getSelectedNode();
+    const parents = new Set();
     getAllParentNodes(selectedNode, parents);
-    for (node of parents) {
+    for (const node of parents) {
         parentChildNodeSet.add(node);
     }
     updateDiagram();
 }
 
 function showAllChildrenContextmenu() {
-    selectedNode = getSelectedNode();
-    childs = new Set();
+    const selectedNode = getSelectedNode();
+    const childs = new Set();
     getAllChildNodes(selectedNode, childs);
-    for (node of childs) {
+    for (const node of childs) {
         parentChildNodeSet.add(node);
     }
     updateDiagram();
@@ -195,10 +185,10 @@ function showAllChildrenContextmenu() {
 
 
 function showParents() {
-    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    const selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    parents = getNodesFromKeys(findParentsOfANode(selectedNode));
-    for (node of parents) {
+    const parents = getNodesFromKeys(findParentsOfANode(selectedNode));
+    for (const node of parents) {
         parentChildNodeSet.add(node);
     }
     parentButton = true;
@@ -206,10 +196,10 @@ function showParents() {
 }
 
 function showChilds() {
-    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    const selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    childs = getNodesFromKeys(findChildsofANode(selectedNode));
-    for (node of childs) {
+    const childs = getNodesFromKeys(findChildsofANode(selectedNode));
+    for (const node of childs) {
         parentChildNodeSet.add(node);
     }
     parentButton = false;
@@ -241,15 +231,16 @@ function toastAlert() {
         }
     } else if (parentChildArrayGrew === 0) {
         if (parentButton === true) {
-            createToast("This node has no parents left", 'fail')
+            createToast("This node has no parent left", 'fail')
         } else {
-            createToast("This node has no childrens left", 'fail')
+            createToast("This node has no child left", 'fail')
         }
     }
 }
 
-/**function to handle diffrent node adding possibilities depending
- on the hidden input value of "contextMenu" */
+/**
+ * function to handle different node adding possibilities depending on the hidden input value of "contextMenu"
+ */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
     if (contextMenuValue === "nodeContextMenuAdd") {
