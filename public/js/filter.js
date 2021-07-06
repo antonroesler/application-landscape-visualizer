@@ -41,7 +41,7 @@ function filterOff() {
     model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
     diagram.commitTransaction("filter removed");
-    event()
+    diagramEvent()
 }
 
 /**
@@ -104,7 +104,7 @@ function applyFilter(f) {
             filterAppLinks(andFilterArray);
         }
     }
-    event()
+    diagramEvent()
 }
 
 
@@ -238,7 +238,7 @@ function removeFilterFromArray(filterName) {
         }
         return false;
     })
-    event()
+    diagramEvent()
 }
 
 /**
@@ -251,7 +251,7 @@ function removeAppliedFilterFromArray(filterName) {
         }
         return false;
     })
-    event()
+    diagramEvent()
 }
 
 /**

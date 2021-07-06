@@ -18,7 +18,10 @@
 /**
  * Called when an even happens. Updates the histogram, key figure info etc.
  */
-function event(){
+function diagramEvent(){
     renderHistogramHandler();
-    generateKeyFigureInfo();
+    if (getSelectedGoJsElement() != null){
+        generateKeyFigureInfo();
+    }
+
 }

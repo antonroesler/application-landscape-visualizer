@@ -54,15 +54,15 @@ diagram.addDiagramListener("LinkDrawn", function () {
     } else {
         modelLinkWithoutFilter = model.linkDataArray;
     }
-    event()
+    diagramEvent()
 });
 
 
 diagram.addDiagramListener("SelectionDeleted", function () {
-    event()
+    diagramEvent()
 
 });
 
 diagram.addDiagramListener("PartCreated", function () {
-    event()
+    diagramEvent()
 });

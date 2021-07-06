@@ -98,6 +98,7 @@ function addNodeToDiagram(d) {
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
     modelNodeWithoutFilter.push(newNode);
+    diagramEvent()
 
 }
 
@@ -122,6 +123,7 @@ function _deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
+    diagramEvent()
 }
 
 
