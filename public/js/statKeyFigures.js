@@ -98,10 +98,15 @@ to the same child node has only one child but two outputs and vice versa for the
 /**
  * Returns avg number of inputs and outputs of all nodes in the diagram. The number is the same for in and outputs as
  * each input is the output of another node.
- * @returns {String}
+ * @returns {*}
  */
 function avgNumberOfInputsOutputs() {
-    return (model.linkDataArray.length / model.nodeDataArray.length).toFixed(2);
+    const avg = (model.linkDataArray.length / model.nodeDataArray.length).toFixed(2);
+    if(isNaN(parseFloat(avg))) {
+        return 0;
+    } else {
+    return avg;
+    }
 }
 
 /* Number of totally separated graphs */

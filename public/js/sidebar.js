@@ -57,6 +57,8 @@ function generateInfoRow(attribute, value, setTextVertical = false, selectableAt
 
     if(!setTextVertical) {
         div.setAttribute("class", "box-row");
+    } else {
+        pValue.style.textAlign = "justify";
     }
     pAttribute.setAttribute("class", "bold-text");
     pValue.setAttribute("class", "node-info-text");
@@ -88,6 +90,7 @@ function generateKeyFigureInfo() {
     for (const attribute of selectableKeyFigures.keys()) {
         div = generateInfoRow(attribute, window[attribute](),false, selectableKeyFigures);
         infoContainer.appendChild(div);
+        div.style.paddingTop = "1.5rem"
     }
     return infoContainer;
 }

@@ -64,6 +64,7 @@ function filterDiagramFromSidenav() {
     try {
         _filterDiagramFromSidenav();
         createToast("Filter added.", "success");
+        toggleSidenav();
     } catch (e) {
         console.log(e);
         createToast(e, "fail");
@@ -90,7 +91,7 @@ function _filterDiagramFromSidenav() {
 function applyFilter(f) {
     const filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
-        window.alert("there are no Nodes with this setting");
+        createToast("There are no Applications with this property!", "fail");
     } else {
         if (moreThanOneFilter === false) {
             moreThanOneFilter = true;
