@@ -214,6 +214,8 @@ function clickHeatmap(data) {
     addAndApplyFilter(createFilterObject(f2_value, f2_attr))
     heatmap() // update heatmap
     diagramEvent()
+    tabs.select("filterTab");
+    closeHeatmap()
 }
 
 /**
