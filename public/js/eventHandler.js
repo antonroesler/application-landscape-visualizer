@@ -21,4 +21,5 @@
 function diagramEvent(){
     renderHistogramHandler();
     generateKeyFigureInfo();
+    closeHeatmap();
 }

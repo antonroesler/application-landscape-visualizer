@@ -368,8 +368,8 @@
                 <div class="row">
                     <div class="col s12 tabbar">
                         <ul class="tabs">
-                            <li class="tab col s3"><a href="#filterTab"><i class="material-icons">layers</i></a></li>
-                            <li class="tab col s3"><a href="#visualizationTab"><i class="material-icons">color_lens</i></a></li>
+                            <li class="tab col s3"><a href="#filterTab"><i class="material-icons" onclick="closeHeatmap()">layers</i></a></li>
+                            <li class="tab col s3"><a href="#visualizationTab" ><i class="material-icons" onclick="closeHeatmap()">color_lens</i></a></li>
                             <li class="tab col s3"><a href="#histogramTab"><i class="material-icons">insert_chart</i></a></li>
                             <li class="tab col s3" onclick="exposeLastTab()"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a></li>
                         </ul>
@@ -507,8 +507,8 @@
                                 </li>
                             </ul>
                             <div class="margin-top tab-btn-container">
-                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate
-                                    Heatmap</button>
+                                <button id="render-heatmap" onclick="heatmap(); generateKeyFigureInfo()" class="nav-btn">
+                                    Generate Heatmap</button>
                                 <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close
                                     Heatmap</button>
                             </div>
