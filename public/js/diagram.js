@@ -64,7 +64,7 @@ function setupOverviewBox(overview) {
  */
 function addAppNode() {
     const data = readNodePropertiesFromModal();
-    data._id = Date.now();
+    data.key = Date.now();
     addNodeToDiagram(data);
 
 }
@@ -98,6 +98,7 @@ function addNodeToDiagram(d) {
     handleContextMenuOptions(newNode);
     diagram.commitTransaction("update");
     modelNodeWithoutFilter.push(newNode);
+    diagramEvent()
 
 }
 
@@ -122,6 +123,7 @@ function _deleteNode() {
     diagram.startTransaction();
     diagram.remove(node);
     diagram.commitTransaction("deleted node");
+    diagramEvent()
 }
 
 
@@ -134,7 +136,7 @@ function _deleteNode() {
 function addLinkToDiagram(link) {
     diagram.startTransaction();
     model.addLinkData({
-        key: link._id,
+        //key: link._id,
         type: link.type,
         from: link.from,
         to: link.to,

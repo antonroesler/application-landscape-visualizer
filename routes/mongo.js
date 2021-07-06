@@ -20,6 +20,8 @@ const router = express.Router();
 const AppNode = require('../model/AppNode')
 const Link = require('../model/Link')
 const Diagram = require('../model/Diagram')
+const defaultDiagram = require('../data/defaultDiagram')
+const mongoose =require('mongoose')
 
 
 
@@ -54,13 +56,25 @@ router.post('/', async (req, res) => {
  */
 router.get('/:name', async (req, res) => {
     const name = req.params.name
-    try {
-        const diagram = await Diagram.findOne({name:name});
-        res.json(diagram);
+    if (mongoose.connection.readyState === 1) {
+        try {
+            const diagram = await Diagram.findOne({name: name});
+            res.json(diagram);
 
-    }catch (err){
-        res.json(err)
+        } catch (err) {
+            res.status(500);
+            res.json(err)
+        }
+    } else {
+        if (name.toLowerCase().startsWith("demo")){
+            res.json(defaultDiagram)
+        }
+        else {
+            res.status(500);
+            res.json()
+        }
     }
+
 })
 
 /**
@@ -85,16 +99,26 @@ router.delete('/:name', async (req, res) => {
  * Get names of all diagrams stored in the database.
  */
 router.get('/diagram/names', async (req, res) => {
-    try {
-        const names = [];
-        const diagrams = await Diagram.find();
-        diagrams.forEach(diagram => {
-            names.push(diagram.name)
-        })
-        res.json(names);
-    }catch (err){
-        res.json(err)
-    }
+        if (mongoose.connection.readyState === 1) {
+            try {
+                const names = [];
+                const diagrams = await Diagram.find();
+                diagrams.forEach(diagram => {
+                    names.push(diagram.name)
+                })
+                res.json(names);
+            } catch (err){
+                res.status(500); // Something else is wrong with the DB.
+                res.send(err)
+            }
+
+        } else {
+            res.status(401); // Likely the DB login data is not correct.
+            res.send()
+        }
+
+
+
 })
 
 /**

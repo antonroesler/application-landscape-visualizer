@@ -86,7 +86,6 @@
             <div class="modal-content">
                 <h2>Create Application.</h2>
                 <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
-                    <input type="hidden" id="contextMenu" />
                     <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
@@ -530,6 +529,21 @@
         </div>
     </footer>
 
+
+    <ul id="contextMenu" class="menu">
+        <li id="delete-opt" class="menu-item" onclick="cxcommand(event)">Delete</li>
+        <li id="isolate-opt" class="menu-item" onclick="cxcommand(event)">Isolate</li>
+        <li id="parent-opt" class="menu-item" onclick="cxcommand(event)">Show Parents</li>
+        <li id="children-opt" class="menu-item" onclick="cxcommand(event)">Show Children</li>
+        <li id="pred-opt" class="menu-item" onclick="cxcommand(event)">Show all Predecessors</li>
+        <li id="desc-opt" class="menu-item" onclick="cxcommand(event)">Show all Descendants</li>
+        <li id="back-opt" class="menu-item" onclick="cxcommand(event)">Back to whole Diagram</li>
+        <li id="new-opt" class="menu-item" onclick="cxcommand(event)">New Application</li>
+        <li id="undo-opt" class="menu-item" onclick="cxcommand(event)">Undo</li>
+        <li id="redo-opt" class="menu-item" onclick="cxcommand(event)">Redo</li>
+    </ul>
+
+
 </body>
 <script src="https://cdn.plot.ly/plotly-2.0.0.min.js"></script> <!-- Load Plotly /-->
 <script src="libs/materialize.js"></script>
@@ -555,7 +569,7 @@
 <script src="js/histogram.js"></script>
 <script src="js/nodeTemplate.js"></script>
 <script src="js/linkTemplate.js"></script>
-<script src="js/visualisation.js"></script>
 <script src="js/settings.js"></script>
 <script src="js/tutorial.js"></script>
+<script src="js/eventHandler.js"></script>
 </html>

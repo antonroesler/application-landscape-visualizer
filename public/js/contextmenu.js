@@ -5,7 +5,7 @@
 * Study program:     Engineering Business Information Systems
 * Module:            Advanced Programming 2021
 * Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
-* Date:              21.04.2021
+* Date:              06.07.2021
 *
 */
 
@@ -13,49 +13,120 @@
  * Contains all functions that create, update or delete parts of the gojs diagram. Especially the node and link data
  * array.
  *
- * @author Feng Yi Lu
+ * @author Feng Yi Lu, Anton Rösler
  */
-var parentChildArrayGrew = 0;
-var parentButton;
-var before = 0;
-/**main contextMenu of the diagram*/
-diagram.contextMenu =
-    $("ContextMenu",
-        $("ContextMenuButton",
-            $(go.TextBlock, "Undo"),
-            { click: function (e, obj) { e.diagram.commandHandler.undo(); } },
-            new go.Binding("visible", "", function (o) {
-                return o.diagram.commandHandler.canUndo();
-            }).ofObject()),
-        $("ContextMenuButton",
-            $(go.TextBlock, "Redo"),
-            { click: function (e, obj) { e.diagram.commandHandler.redo(); } },
-            new go.Binding("visible", "", function (o) {
-                return o.diagram.commandHandler.canRedo();
-            }).ofObject()),
-        $("ContextMenuButton",
-            $(go.TextBlock, "New Node"),
-            {
-                click: function (e, obj) {
-                    e.diagram.commit(function (d) {
-                        openCreateNodeModal()
-                        document.getElementById("contextMenu").value = "diagramContextMenu";
+let parentChildArrayGrew = 0;
+let parentButton;
+let before = 0;
 
-                    });
-                }
-            }
-        )
-    );
+const cxElement = document.getElementById("contextMenu");
 
 
-function addNodeAndLink() {
-    document.getElementById("contextMenu").value = "nodeContextMenuAdd";
-    openCreateNodeModal()
+/* Define custom context menu as html info element. */
+const contextMenu = $(go.HTMLInfo, {
+    show: showContextMenu,
+    hide: hideContextMenu
+});
+
+diagram.contextMenu = contextMenu;
+
+/**
+ * Hides the context menu if active.
+ */
+function hideCX() {
+    if (diagram.currentTool instanceof go.ContextMenuTool) {
+        diagram.currentTool.doCancel();
+    }
+}
+
+/**
+ * Shows the context menu. Option depend on if parent-child-feature is active.
+ */
+function showContextMenu(obj, diagram) {
+    let hasMenuItem = false;
+
+    function maybeShowItem(elt, stat) {
+        if (stat) {
+            elt.style.display = "block";
+            hasMenuItem = true;
+        } else {
+            elt.style.display = "none";
+        }
+    }
+
+    maybeShowItem(document.getElementById("parent-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("children-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("pred-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("desc-opt"), parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("back-opt"), parentChildFeatureOn);
+    maybeShowItem(document.getElementById("isolate-opt"), !parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("delete-opt"), !parentChildFeatureOn && obj);
+    maybeShowItem(document.getElementById("new-opt"), obj === null);
+    maybeShowItem(document.getElementById("undo-opt"), obj === null);
+    maybeShowItem(document.getElementById("redo-opt"), obj === null);
+
+
+    if (hasMenuItem) {
+        cxElement.classList.add("show-menu");
+        const mousePt = diagram.lastInput.viewPoint;
+        cxElement.style.left = mousePt.x + 5 + "px";
+        cxElement.style.top = mousePt.y + "px";
+    }
+    window.addEventListener("click", hideCX, true);
+}
+
+function hideContextMenu() {
+    cxElement.classList.remove("show-menu");
+    window.removeEventListener("click", hideCX, true);
+}
+
+/**
+ * Executes a command, that was triggered by a click on a context menu option.
+ * @param event
+ * @param val
+ */
+function cxcommand(event, val) {
+    if (val === undefined) val = event.currentTarget.id;
+    switch (val) {
+        case "isolate-opt":
+            hideAllOtherNodes();
+            break;
+        case "delete-opt":
+            diagram.commandHandler.deleteSelection();
+            break;
+        case "parent-opt":
+            showParents();
+            break;
+        case "children-opt":
+            showChilds();
+            break;
+        case "pred-opt":
+            showAllParentsContextmenu();
+            break;
+        case "desc-opt":
+            showAllChildrenContextmenu();
+            break;
+        case "back-opt":
+            showAll();
+            break;
+        case "new-opt":
+            openCreateNodeModal();
+            document.getElementById("contextMenu").value = "diagramContextMenu";
+            break;
+        case "undo-opt":
+            diagram.commandHandler.undo();
+            break;
+        case "redo-opt":
+            diagram.commandHandler.redo();
+            break;
+
+    }
+    diagram.currentTool.stopTool();
 }
 
 
+
 function hideAllOtherNodes() {
-    diagram.nodeTemplate = mainTemplateParentChild;
     diagramNodeParentChildBeforeFilterIsActive.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     parentChildNodeSet.add(diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key));
     diagram.startTransaction();
@@ -91,21 +162,22 @@ function showAll() {
         showAllActivate();
     }
 }
+
 function showAllParentsContextmenu() {
-    selectedNode = getSelectedNode();
-    parents = new Set();
+    const selectedNode = getSelectedNode();
+    const parents = new Set();
     getAllParentNodes(selectedNode, parents);
-    for (node of parents) {
+    for (const node of parents) {
         parentChildNodeSet.add(node);
     }
     updateDiagram();
 }
 
 function showAllChildrenContextmenu() {
-    selectedNode = getSelectedNode();
-    childs = new Set();
+    const selectedNode = getSelectedNode();
+    const childs = new Set();
     getAllChildNodes(selectedNode, childs);
-    for (node of childs) {
+    for (const node of childs) {
         parentChildNodeSet.add(node);
     }
     updateDiagram();
@@ -113,10 +185,10 @@ function showAllChildrenContextmenu() {
 
 
 function showParents() {
-    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    const selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    parents = getNodesFromKeys(findParentsOfANode(selectedNode));
-    for (node of parents) {
+    const parents = getNodesFromKeys(findParentsOfANode(selectedNode));
+    for (const node of parents) {
         parentChildNodeSet.add(node);
     }
     parentButton = true;
@@ -124,10 +196,10 @@ function showParents() {
 }
 
 function showChilds() {
-    selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
+    const selectedNode = diagram.model.findNodeDataForKey(diagram.selection.toArray()[0].key);
     parentChildNodeSet.add(selectedNode);
-    childs = getNodesFromKeys(findChildsofANode(selectedNode));
-    for (node of childs) {
+    const childs = getNodesFromKeys(findChildsofANode(selectedNode));
+    for (const node of childs) {
         parentChildNodeSet.add(node);
     }
     parentButton = false;
@@ -154,26 +226,25 @@ function toastAlert() {
     if (parentChildArrayGrew > 0 && model.nodeDataArray.length === before && appliedFilters.length != 0) {
         if (parentButton === true) {
             createToast("Parent is not shown because of a filter", 'fail')
-        }
-        else {
+        } else {
             createToast("Child is not shown because of a filter", 'fail')
         }
     } else if (parentChildArrayGrew === 0) {
         if (parentButton === true) {
-            createToast("This node has no parents left", 'fail')
-        }
-        else {
-            createToast("This node has no childrens left", 'fail')
+            createToast("This node has no parent left", 'fail')
+        } else {
+            createToast("This node has no child left", 'fail')
         }
     }
 }
 
-/**function to handle diffrent node adding possibilities depending 
-  on the hidden input value of "contextMenu" */
+/**
+ * function to handle different node adding possibilities depending on the hidden input value of "contextMenu"
+ */
 function handleContextMenuOptions(newNode) {
     var contextMenuValue = document.getElementById("contextMenu").value;
     if (contextMenuValue === "nodeContextMenuAdd") {
-        const newLink = { from: diagram.selection.toArray()[0].key, to: newNode.key };
+        const newLink = {from: diagram.selection.toArray()[0].key, to: newNode.key};
         addLinkToDiagram(newLink);
         if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
             linkHandlerWhileFilterOn();
