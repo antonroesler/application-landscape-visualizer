@@ -130,7 +130,10 @@ let Histogram = null;
  */
 function renderHistogramHandler() {
     const val = document.getElementById("histogram-dropdown").value;
-    renderHistogram(val);      
+    if (val){
+        renderHistogram(val);
+    }
+
 }
 
 
