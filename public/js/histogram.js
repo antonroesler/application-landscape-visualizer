@@ -140,7 +140,6 @@ function renderHistogramHandler() {
  * @param labels
  */
 function sortByValues(values, labels) {
-    console.log(values)
     //1) combine the arrays:
     const tempList = [];
     for (let j = 0; j < values.length; j++)
@@ -237,7 +236,6 @@ function configurePlotlyHistogram(labels, title, values){
                     beginAtZero: true,
                 },
             },
-
         }
     }
 
@@ -251,8 +249,13 @@ function configurePlotlyHistogram(labels, title, values){
 function clickHandler(evt) {
     const points = Histogram.getElementsAtEventForMode(evt, 'nearest', {intersect: true}, true);
     if (points.length) {
-        createFilterFromHistogram(Histogram.data.labels[points[0].index]);
-        tabs.select("filterTab");
+        try {
+            createFilterFromHistogram(Histogram.data.labels[points[0].index]);
+            tabs.select("filterTab");
+        } catch (e) {
+            console.log(e);
+            createToast(e, "fail");
+        }
     }
 }
 
@@ -263,8 +266,13 @@ function clickHandler(evt) {
  */
 function createFilterFromHistogram(attr_value) {
     const attr = document.getElementById('histogram-dropdown').value
-    const filter = createFilterObject(attr_value, attr);
-    addAndApplyFilter(filter);
+
+    if(nodeSelectableAttributes.has(attr) && !attr.endsWith("Date")) {
+        const filter = createFilterObject(attr_value, attr);
+        addAndApplyFilter(filter);
+    } else {
+        throw "Filter not applicable.";
+    }
 }
 
 /**
