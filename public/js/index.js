@@ -21,7 +21,8 @@ const $ = go.GraphObject.make;
 const diagram = $(go.Diagram, "diagramDiv",
     { // enable Ctrl-Z to undo and Ctrl-Y to redo
         "undoManager.isEnabled": true,
-        "toolManager.hoverDelay": 100
+        "toolManager.hoverDelay": 100,
+        "scrollMode": go.Diagram.InfiniteScroll
     });
 
 const model = $(go.GraphLinksModel);
@@ -83,7 +84,8 @@ const selectableKeyFigures = new Map([
 
 const defaultSettings = {
     "checkboxDiagramHover" : true,
-    "checkboxTutorial" : true
+    "checkboxTutorial" : true,
+    "checkboxInfinityScroll" : true
 };
 
 
