@@ -78,29 +78,58 @@ function generateCollapsibleBody(nodeAttribute) {
     let ul = document.createElement("ul");
 
     div.setAttribute("class", "collapsible-body");
-
     div.appendChild(ul);
 
-    for (let value of nodeAttributeValues) {
-        if (value === undefined) {
-            value = "Undefined";
-        }
+    // Create date input field
+    if(nodeAttribute == "startDate" || nodeAttribute == "shutdownDate") {
         let li = document.createElement("li");
-        let label = document.createElement("label");
-        let input = document.createElement("input");
-        let id = value.replace(/\s/g, "") + "_" + uniqueID();
+        let inputDateFrom = document.createElement("input");
+        let inputDateTo;
+        let inputDescriptionFrom = document.createElement("span");
+        let inputDescriptionTo;
 
-        input.setAttribute("type", "checkbox");
-        input.setAttribute("id", `${id}`);
-        input.setAttribute("class", "checkbox-collapsible");
-        input.setAttribute("value", nodeAttribute);
-        label.setAttribute("for", `${id}`);
+        li.setAttribute("class", "sidenav-date-input-box");
+        inputDateFrom.setAttribute("type", "date");
+        inputDateFrom.setAttribute("class", "input-text");
+        inputDateFrom.setAttribute("id", `${nodeAttribute}SidenavInputFrom`);
+        inputDateFrom.setAttribute("attribute", nodeAttribute);
+        inputDateTo = inputDateFrom.cloneNode(true);
+        inputDateTo.setAttribute("id", `${nodeAttribute}SidenavInputTo`);
+        inputDescriptionFrom.setAttribute("class", "dropdown-description")
+        inputDescriptionFrom.style.lineHeight = "1";
+        inputDescriptionFrom.innerHTML = "From:";
+        inputDescriptionTo = inputDescriptionFrom.cloneNode(true);
+        inputDescriptionTo.innerHTML = "To:";
 
-        label.appendChild(input);
-        li.appendChild(label);
+        li.appendChild(inputDescriptionFrom);
+        li.appendChild(inputDateFrom);
+        li.appendChild(inputDescriptionTo);
+        li.appendChild(inputDateTo);
         ul.appendChild(li);
+    }
+    else {
+        // Create checkboxes
+        for (let value of nodeAttributeValues) {
+            if (value === undefined) {
+                value = "Undefined";
+            }
+            let li = document.createElement("li");
+            let label = document.createElement("label");
+            let input = document.createElement("input");
+            let id = value.replace(/\s/g, "") + "_" + uniqueID();
 
-        input.insertAdjacentText("afterend", value);
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("id", `${id}`);
+            input.setAttribute("class", "checkbox-collapsible");
+            input.setAttribute("attribute", nodeAttribute);
+            label.setAttribute("for", `${id}`);
+
+            label.appendChild(input);
+            li.appendChild(label);
+            ul.appendChild(li);
+
+            input.insertAdjacentText("afterend", value);
+        }
     }
     return div;
 }
@@ -112,32 +141,43 @@ function generateCollapsibleBody(nodeAttribute) {
  * and its values.
  */
 function readFilterPropertiesFromSideNav() {
-    const checkboxes = document.querySelectorAll(".checkbox-collapsible:checked");
+    const sidenav = document.querySelector(".sidenav-box");
+    const inputs = sidenav.querySelectorAll("input");
     const filterName = document.getElementById("filterName").value;
+
     if (filterName === "") {
         throw "Exception: No value for name. Please enter a name for the filter.";
-    } else if (checkFilterNameExists(filterName)) {
-        throw "Exception: Duplicated for name. Please enter a unique name.";
+    } else if (filterNameExists(filterName)) {
+        throw "Exception: Name already exists. Please enter a unique name.";
     } else if(filterName.length > 16) {
         throw "Exception: Filter name must have 16 or less characters.";
     } else {
-
 
         let filterObject = {
             name: filterName,
             properties: {}
         };
 
-        for (const checkbox of checkboxes) {
-            const attributeKey = checkbox.getAttribute("value");
+        for (const input of inputs) {
+            const attributeKey = input.getAttribute("attribute");
+            let value;
+
+            if(input.getAttribute("type") == "date") {
+                value = input.value;
+            } else if(input.getAttribute("type") == "checkbox" && input.checked) {
+                    value = input.nextSibling.textContent;
+            } else {
+                continue;
+            }
 
             if (attributeKey in filterObject.properties) {
-                filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
+                filterObject.properties[attributeKey].push(value);
             } else {
                 filterObject.properties[attributeKey] = [];
-                filterObject.properties[attributeKey].push(checkbox.nextSibling.textContent);
+                filterObject.properties[attributeKey].push(value);
             }
         }
+        console.log(filterObject)
         return filterObject;
     }
 }
