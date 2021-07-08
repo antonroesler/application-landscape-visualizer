@@ -44,10 +44,12 @@ function saveSettings() {
 function getSettingsFromModal() {
     const diagramHover = document.getElementById("checkboxDiagramHover").checked;
     const tutorial = document.getElementById("checkboxTutorial").checked;
+    const infinityScroll = document.getElementById("checkboxInfinityScroll").checked;
 
     return {
         "checkboxDiagramHover" : diagramHover,
-        "checkboxTutorial" : tutorial
+        "checkboxTutorial" : tutorial,
+        "checkboxInfinityScroll" : infinityScroll
     }
 }
 
@@ -65,6 +67,9 @@ function applySettings() {
                 break;
             case "checkboxTutorial":
                 toggleTutorialSetting(settings[settingsKey]);
+                break;
+            case "checkboxInfinityScroll":
+                toggleInfinityScrollSetting(settings[settingsKey]);
                 break;
             default:
                 break;
@@ -90,5 +95,13 @@ function toggleTutorialSetting(isActive) {
         toggleTutorial();
     } else {
         document.getElementById("tutorial").style.display = "none";
+    }
+}
+
+function toggleInfinityScrollSetting(isActive) {
+    if(isActive) {
+        diagram.scrollMode = go.Diagram.InfiniteScroll;
+    } else {
+        diagram.scrollMode = go.Diagram.DocumentScroll;;
     }
 }
