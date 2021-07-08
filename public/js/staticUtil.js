@@ -116,7 +116,7 @@ function appNodeNameExists(name) {
  * @return {Set<String>} Values for the specific attribute.
  */
 function getAllValuesForOneNodeAttribute(nodeAttribute) {
-    const values = new Set([]);
+    let values = new Set([]);
 
     // Add every value of the specific node attribute to the set.
     for (const node of model.nodeDataArray) {
@@ -124,13 +124,25 @@ function getAllValuesForOneNodeAttribute(nodeAttribute) {
         // If value is an array, the values need to be extracted.
         if (Array.isArray(node[nodeAttribute])) {
             for (const value of node[nodeAttribute]) {
+
                 values.add(value);
             }
         } else {
             values.add(node[nodeAttribute]);
         }
     }
+    if(values.size != 0) {
+        values = Array.from(values).sort(naturalSorter)
+    }
     return values;
+}
+
+
+function naturalSorter(a, b){
+        return a.localeCompare(b, undefined, {
+            numeric: true,
+            sensitivity: 'base'
+        });
 }
 
 
