@@ -219,7 +219,7 @@ function nodeWithKeyExists(key, nodeArray) {
  * @param enteredName
  * @return {boolean}
  */
-function checkFilterNameExists(enteredName) {
+function filterNameExists(enteredName) {
     for (element of allFilter) {
         if (element.name === enteredName) {
             return true;
