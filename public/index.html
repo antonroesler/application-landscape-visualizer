@@ -55,7 +55,7 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="openLinkLayoutModal()">Link Layout</a></li>
+                    <li><a href="#" onclick="openLinkLayoutModal()">Connection Layout</a></li>
                     <li><a href="#" onclick="openLayoutModal()">Diagram Layout</a></li>
                     <li><a href="#" onclick="loadDiagramNames(); openLoadDiagramModal();">Load</a></li>
                     <li><a href="#" id="saveButton" onclick="openSaveDiagramModal()">Save</a></li>
@@ -86,7 +86,7 @@
             <div class="modal-content">
                 <h2>Create Application.</h2>
                 <form class="modal-form" action="" onsubmit="deleteDropdownMenuOptions(); addAppNode(); closeModal(); return false">
-                    <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Node Name: " required />
+                    <input type="text" autocomplete="off" class="input-text" id="inputName" placeholder="Application Name: " required />
                     <textarea autocomplete="off" class="input-text input-textarea" id="inputDescription"
                         placeholder="Description: " type="text"></textarea>
                     <div class="form-row">
@@ -303,7 +303,7 @@
         <ul id="slide-out" class="sidenav">
             <div class="sidenav-box">
                 <h2>Filter<i class="material-icons material-icons-small tooltipped" data-position="right"
-                        data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all nodes which have a matching<br>value in one of the selected checkboxes.">info_outline</i>
+                        data-tooltip="<img style='height: 48px' src='img/icons/outer_join.png'><br>The filter behaves like a <b>full outer join</b> in SQL.<br> It returns all applications which have a matching<br>value in one of the selected checkboxes.">info_outline</i>
                 </h2>
                 <form id="sidenavForm" class="sidenav-form" action="" onsubmit="return false">
                     <input autocomplete="off" class="input-text sidenav-margin" id="filterName"
@@ -320,9 +320,8 @@
             </div>
         </ul>
 
-        <!-- Element Showed -->
+        <!-- Tutorial Tap Target-->
         <a id="tutorial" class="waves-effect waves-light btn btn-floating fixer" onclick="toggleTutorial()"><i class="material-icons">lightbulb_outline</i></a>
-        <!-- Tap Target Structure -->
         <div class="tap-target" data-target="tutorial">
             <div class="tap-target-content">
                 <h4 class="tutorial-text">Welcome!</h4>
@@ -335,6 +334,7 @@
             </div>
         </div>
 
+        <!-- Tour Layout -->
         <div class="tour-layout">
             <div class="tour-veil"></div>
             <div id="highlightedElement" class=""></div>
@@ -343,8 +343,7 @@
                     <div class="tour-close" onclick="closeTour()">+</div>
                     <h4 class="tour-box-header">Create Applications</h4>
                     <img src="img/tour/node.png" id="tour-img">
-                    <p id="tour-box-text" class="tour-box-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                        ut labore et dolore magna aliquyam erat,sed diam voluptua. At vero eos et accusam et</p>
+                    <p id="tour-box-text" class="tour-box-text"></p>
                 </div>
                 <div class="tour-box-footer">
                     <button id="btnTourBack" class="nav-btn" onclick="tour(this.id)">Back</button>
@@ -356,7 +355,7 @@
 
         <div class="content">
 
-            <div id="overviewDiv" class="contentov"></div>
+            <div id="overviewDiv" class="content-overview"></div>
             <div id="diagramDiv" class="content"></div>
         <div id="heatmap" style="display: none"></div>
         </div>
@@ -392,7 +391,7 @@
                                         <a href="" class="secondary-content">
                                             <i class="material-icons tooltipped" data-position="left"
                                                 onclick="return false"
-                                                data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Nodes that have matching values in<br>all active filters are returned.">info_outline</i>
+                                                data-tooltip="<img style='height: 48px' src='img/icons/inner_join.png'><br>The filter behaves like an <b>inner join</b> in SQL.<br> Applications that have matching values in<br>all active filters are returned.">info_outline</i>
                                         </a>
                                     </div>
                                 </li>

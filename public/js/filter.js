@@ -117,7 +117,7 @@ function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
     const andFilterArray = previousFilterNodeArray.filter(node => nextFilterArray.includes(node));
     console.log(andFilterArray);
     if (andFilterArray.length === 0) {
-        alert("there is are no nodes with this combined filter");
+        alert("There is are no nodes with this combined filter!");
     } else {
         return andFilterArray;
     }
