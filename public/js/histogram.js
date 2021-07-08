@@ -220,7 +220,7 @@ function configurePlotlyHistogram(labels, title, values){
         labels: labels,
             datasets: [
             {
-                label: title,
+                label:"Count",
                 data: values,
                 backgroundColor: 'rgba(20, 124, 229, 0.8)'
             },
