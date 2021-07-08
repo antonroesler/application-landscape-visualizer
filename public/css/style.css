@@ -126,6 +126,13 @@ hr {
     border-bottom: 1px solid var(--silver);
 }
 
+/* Diagram Title */
+.main-nav > p {
+    float: left;
+    margin-right: auto;
+    font-style: italic;
+}
+
 .sub-nav a {
     color: var(--dark-grey);
 }
@@ -1821,6 +1828,7 @@ button.btn-floating {
 
 .legend-row{
     display:flex;
+    align-items: center;
     margin-bottom: 1rem;
     flex: 50%;
 }
@@ -1828,21 +1836,15 @@ button.btn-floating {
 .legend-color-dot {
     border-radius: 1rem;
     margin-right: 0.5rem;
-    border: 2px solid var(--dark-grey);
+    border: 1px solid var(--dark-grey);
     width: 1.5rem;
     height: 1.5rem;
+    min-width: 1.5rem;
 }
 
 .legend-label {
     font-family: "Montserrat", sans-serif;
-}
-
-/* Diagram Title
-   ========================================================================== */
-.main-nav > p {
-    float: left;
-    margin-right: auto;
-
+    font-size: 14px;
 }
 
 /* Tutorial Tour
