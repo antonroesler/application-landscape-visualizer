@@ -249,8 +249,7 @@ hr {
     justify-content: center;
 }
 
-.contentov {
-    /* display: inline-flexbox; */
+.content-overview {
     position: fixed;
     top: 90px;
     left: 0;
