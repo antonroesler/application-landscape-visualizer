@@ -1839,7 +1839,7 @@ button.btn-floating {
     border: 1px solid var(--dark-grey);
     width: 1.5rem;
     height: 1.5rem;
-    min-width: 24px;
+    min-width: 1.5rem;
 }
 
 .legend-label {
