@@ -144,21 +144,83 @@ function applyAllFilters() {
  */
 function filterAppNodes(filter) {
     if (filter == undefined) return null;
-    return model.nodeDataArray.filter(function (currentElement) {
-        if (Array.isArray(currentElementProp)) {
-            for (let property of currentElementProp) {
-                if (currentFilterProps.includes(property)) {
-                    return true;
+    filteredDateNodes = filterDate(filter);
+    newModelArray = model.nodeDataArray.filter(function (currentElement) {
+        for (let key in filter.properties) {
+            if (key != "shutdownDate" || "startDate") {
+                var currentElementProp = currentElement[key];
+                var currentFilterProps = filter.properties[key];
+                if (Array.isArray(currentElementProp)) {
+                    for (let property of currentElementProp) {
+                        if (currentFilterProps.includes(property)) {
+                            return true;
+                        }
+                    }
+                } else {
+                    if (currentFilterProps.includes(currentElementProp)) {
+                        return true;
+                    }
                 }
-            }
-        } else {
-            if (currentFilterProps.includes(currentElementProp)) {
-                return true;
             }
         }
         return false;
     });
+
+    return combineBothArrays(filteredDateNodes, newModelArray);
 }
+
+function combineBothArrays(filteredDateNodes, newModelArray) {
+    if (filteredDateNodes != null) {
+        filteredDateNodes.forEach(node => {
+            if (newModelArray.includes(node) === false) {
+                newModelArray.push(node);
+            }
+        })
+    }
+    return newModelArray;
+
+}
+function filterDate(filter) {
+    var startEnd = ["startDate", "shutdownDate"];
+    if (filter.properties.startDate[0] === "" && filter.properties.startDate[1] === "" && filter.properties.shutdownDate[0] === "" && filter.properties.shutdownDate[1] === "") {
+        console.log("okay bin drin");
+        return null;
+    } else {
+        console.log("okay bin drin2");
+        var nodeDatesArray = modelNodeWithoutFilter.filter(function (currentElement) {
+            for (type of startEnd) {
+                if (type === "startDate") {
+                    var currentElementProp = Date.parse(currentElement.startDate);
+                } else {
+                    var currentElementProp = Date.parse(currentElement.shutdownDate);
+                }
+                if (type === "shutdownDate") {
+                    filterStartDate = filter.properties.shutdownDate[0];
+                    filterEndDate = filter.properties.shutdownDate[1];
+                } else if (type === "startDate") {
+                    filterStartDate = filter.properties.startDate[0];
+                    filterEndDate = filter.properties.startDate[1];
+                }
+                if (filterStartDate != "" && filterEndDate != "") {
+                    if (currentElementProp >= Date.parse(filterStartDate) && currentElementProp <= Date.parse(filterEndDate)) {
+                        return true;
+                    }
+                } else if (filterStartDate != "" && filterEndDate === "") {
+                    if (currentElementProp >= Date.parse(filterStartDate)) {
+                        return true;
+                    }
+                } else if (filterStartDate === "" && filterEndDate != "") {
+                    if (currentElementProp <= Date.parse(filterEndDate)) {
+                        return true;
+                    }
+                }
+            }
+        });
+        console.log(nodeDatesArray);
+        return nodeDatesArray;
+    }
+}
+
 
 
 /**
