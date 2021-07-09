@@ -150,7 +150,7 @@ function hasProperty(filter) {
 
 function isFilterWithDate(filter) {
     for (let key of Object.keys(filter.properties)) {
-        if (key.endsWith("Date")){
+        if (key.endsWith("Date")) {
             return true;
         }
     }
@@ -163,7 +163,7 @@ function isFilterWithDate(filter) {
 function filterAppNodes(filter) {
     if (filter == undefined) return null;
     let filteredDateNodes = new Set;
-    if (isFilterWithDate(filter)){
+    if (isFilterWithDate(filter)) {
         filteredDateNodes = filterDate(filter);
     }
     delete filter.properties.shutdownDate;
@@ -171,26 +171,24 @@ function filterAppNodes(filter) {
     const newModelArray = model.nodeDataArray.filter(function (currentElement) {
         if (hasProperty(filter)) {
             for (let key in filter.properties) {
-                    var currentElementProp = currentElement[key];
-                    var currentFilterProps = filter.properties[key];
-                    if (Array.isArray(currentElementProp)) {
-                        for (let property of currentElementProp) {
-                            if (currentFilterProps.includes(property)) {
-                                return true;
-                            }
-                        }
-                    } else {
-                        if (currentFilterProps.includes(currentElementProp)) {
-                            console.log(currentElement.name)
+                var currentElementProp = currentElement[key];
+                var currentFilterProps = filter.properties[key];
+                if (Array.isArray(currentElementProp)) {
+                    for (let property of currentElementProp) {
+                        if (currentFilterProps.includes(property)) {
                             return true;
                         }
                     }
+                } else {
+                    if (currentFilterProps.includes(currentElementProp)) {
+                        return true;
+                    }
+                }
 
             }
         }
         return false;
     });
-    console.log(newModelArray)
     return Array.from(new Set([...newModelArray, ...filteredDateNodes])); // Merge the two arrays
 }
 
@@ -227,27 +225,18 @@ function isBiggerDate(d1, d2) {
  * @returns {boolean}
  */
 function isSmallerDate(d1, d2) {
-    console.log("---")
-    console.log(d2)
-    console.log(d1)
-
     if (!d2) {
-        console.log("1")
         return true;
 
     }
     if (nConv(d1) && nConv(d2)) {
-        console.log("2")
         return d1 <= d2;
     }
-    console.log("3")
     return false;
 }
 
 function isInRange(date, range) {
-    x = isBiggerDate(date, Date.parse(range[0])) && isSmallerDate(date, Date.parse(range[1]))
-    console.log(x)
-    return x
+    return isBiggerDate(date, Date.parse(range[0])) && isSmallerDate(date, Date.parse(range[1]))
 }
 
 
