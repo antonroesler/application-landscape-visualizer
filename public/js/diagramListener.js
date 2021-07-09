@@ -54,17 +54,21 @@ diagram.addDiagramListener("LinkDrawn", function () {
     } else {
         modelLinkWithoutFilter = model.linkDataArray;
     }
-    diagramEvent()
 });
-
 
 diagram.addDiagramListener("SelectionDeleted", function () {
-    diagramEvent()
-
+    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+    } else {
+        
+        modelLinkWithoutFilter = model.linkDataArray;
+        modelNodeWithoutFilter = model.nodeDataArray;
+    }
 });
+
 
 
 
 diagram.addDiagramListener("PartCreated", function () {
     diagramEvent()
 });
+
