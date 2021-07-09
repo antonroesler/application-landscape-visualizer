@@ -134,9 +134,10 @@ function applyAllFilterInAppliedFilters() {
 
 function applyAllFilters() {
     moreThanOneFilter = false;
-    for (filterName of appliedFilters) {
-        filter = findFilter(filterName);
+    for (filter of allFilter) {
+        filter = findFilter(filter.name);
         applyFilter(filter[0]);
+        appliedFilters.push(filter.name);
     }
 }
 
@@ -414,25 +415,22 @@ function linkHandlerWhileFilterOn() {
         console.log(link);
         if (modelLinkWithoutFilter.includes(link) === false) {
             modelLinkWithoutFilter.push(link);
-        } 
+        }
     })
 }
 
 
-function nodeLinkHandlerWhileFilterOn() {
-    deletedNodes = diagramNodeWhenFilterIsActive.filter(node => {
-        if (model.nodeDataArray.includes(node) === false) {
-            return true;
-        } 
-        return false;
-    })
-    console.log(model.nodeDataArray);
-    console.log(diagramNodeWhenFilterIsActive);
-    console.log(deletedNodes);
-    modelNodeWithoutFilter = modelNodeWithoutFilter.filter(node => {
-        if (deletedNodes.includes(node) === true) {
-            return false;
-        } 
+function nodeLinkHandlerWhileFilterOn(deletedNodes) {
+    modelLinkWithoutFilter = modelLinkWithoutFilter.filter(link => {
+        for (node of deletedNodes) {
+            if (node.key === link.from || node.key === link.to) {
+                console.log(node);
+                return false;
+            } else {
+                return true;
+            }
+
+        }
         return true;
     })
 }

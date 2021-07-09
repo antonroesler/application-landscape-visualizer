@@ -148,7 +148,7 @@ async function colorCategorizedNodeMap(nodes, grad = false) {
     Object.keys(nodes).forEach((key, i) => {
         colorAllNodes(nodes[key], colors[i]);
     })
-    if (!grad){
+    if (!grad) {
         makeLegend(Object.keys(nodes), colors);
     } else {
         removeLegend()
@@ -192,7 +192,7 @@ function _colorChildsAndParents(node) {
         }
     })
     addColorToNode(node.sb, '#ffca3a')
-    makeLegend(["Child", "Parent", "Both", "Selected"], ["#8ac926","#ff595e","#1982c4", '#ffca3a'])
+    makeLegend(["Child", "Parent", "Both", "Selected"], ["#8ac926", "#ff595e", "#1982c4", '#ffca3a'])
 }
 
 
@@ -217,7 +217,10 @@ function getAllDirectChildNodes(node) {
     const childs = new Set();
     model.linkDataArray.forEach(link => {
         if (link.from === node.key) {
-            childs.add(diagram.findNodeForKey(link.to).sb)
+            nodeL = diagram.findNodeForKey(link.to);
+            if (nodeL) {
+                childs.add(nodeL.sb);
+            }
         }
     })
     return childs;
@@ -232,7 +235,10 @@ function getAllDirectParentNodes(node) {
     const parents = new Set();
     model.linkDataArray.forEach(link => {
         if (link.to === node.key) {
-            parents.add(diagram.findNodeForKey(link.from).sb)
+            nodeL = diagram.findNodeForKey(link.from);
+            if (nodeL) {
+                parents.add(nodeL.sb);
+            }
         }
     })
     return parents;
@@ -245,7 +251,7 @@ function getAllDirectParentNodes(node) {
  * @param parents A Set
  */
 function getAllParentNodes(node, parents) {
-    if (parentChildFeatureOn === true) { 
+    if (parentChildFeatureOn === true) {
         setBasedOnMode = getNodesFromKeys(findParentsOfANode(node));
     } else {
         setBasedOnMode = getAllDirectParentNodes(node);
@@ -303,7 +309,7 @@ function isInAnySet(parent, dataObj) {
  * @param label_text The text next to the color
  * @param color the color
  */
-function addLegendElement(label_text, color){
+function addLegendElement(label_text, color) {
     const legend = document.getElementById('legend');
     const row = document.createElement('div');
     const circle = document.createElement('div');
@@ -323,7 +329,7 @@ function addLegendElement(label_text, color){
  * @param labels String Array.
  * @param colors Array of colors.
  */
-function makeLegend(labels, colors){
+function makeLegend(labels, colors) {
     removeLegend()
     for (let i = 0; i < labels.length; i++) {
         addLegendElement(labels[i], colors[i]);
@@ -333,7 +339,7 @@ function makeLegend(labels, colors){
 /**
  * Empties the legend.
  */
-function removeLegend(){
+function removeLegend() {
     document.getElementById('legend').innerHTML = '';
 }
 
