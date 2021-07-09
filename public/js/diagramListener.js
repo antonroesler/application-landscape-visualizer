@@ -54,6 +54,7 @@ diagram.addDiagramListener("LinkDrawn", function () {
     } else {
         modelLinkWithoutFilter = model.linkDataArray;
     }
+    diagramEvent()
 });
 
 diagram.addDiagramListener("SelectionDeleted", function () {
@@ -63,6 +64,7 @@ diagram.addDiagramListener("SelectionDeleted", function () {
         modelLinkWithoutFilter = model.linkDataArray;
         modelNodeWithoutFilter = model.nodeDataArray;
     }
+    diagramEvent()
 });
 
 
