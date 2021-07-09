@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialization of tag chips for createNode modal.
     const tagChips = document.querySelectorAll("#inputTags");
     M.Chips.init(tagChips, {
-        placeholder: "Your tag",
+        placeholder: "Tag",
         secondaryPlaceholder: "+tag",
     });
 

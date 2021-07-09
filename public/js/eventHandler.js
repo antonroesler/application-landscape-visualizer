@@ -22,4 +22,7 @@ function diagramEvent(){
     renderHistogramHandler();
     generateKeyFigureInfo();
     closeHeatmap();
+    if (!['', 'parent-child'].includes(document.getElementById('color-attribute').value)){
+        applyUserColorSetting()
+    }
 }
