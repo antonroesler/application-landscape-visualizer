@@ -144,61 +144,22 @@ function applyAllFilters() {
  */
 function filterAppNodes(filter) {
     if (filter == undefined) return null;
-    var filterStartDate = filter.startDate;
-    var filterEndDate = filter.shutdownDate;
     return model.nodeDataArray.filter(function (currentElement) {
-        for (let key in filter.properties) {
-            var currentElementProp = currentElement[key];
-            var currentFilterProps = filter.properties[key];
-            if (key === shutdownDate || startDate) {
-                if (filterStartDate != "" && filterEndDate != "") {
-                    if (currentElementProp >= filterStartDate && currentElementProp >= filterEndDate) {
-                        return true;
-                    }
-                } else if (filterStartDate != "" && filterEndDate === "") {
-                    if (currentElementProp >= filterStartDate) {
-                        return true;
-                    }
-                }else if (filterStartDate === "" && filterEndDate != "") {
-                    if (currentElementProp <= filterEndDate) {
-                        return true;
-                    }
-                }
-            } else if (Array.isArray(currentElementProp)) {
-                for (let property of currentElementProp) {
-                    if (currentFilterProps.includes(property)) {
-                        return true;
-                    }
-                }
-            } else {
-                if (currentFilterProps.includes(currentElementProp)) {
+        if (Array.isArray(currentElementProp)) {
+            for (let property of currentElementProp) {
+                if (currentFilterProps.includes(property)) {
                     return true;
                 }
+            }
+        } else {
+            if (currentFilterProps.includes(currentElementProp)) {
+                return true;
             }
         }
         return false;
     });
 }
 
-function filterDate(filter) {
-    var nodeStartDate = filter.startDate;
-    var nodeEndDate = filter.shutdownDate;
-    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
-        modelnodesFilteredDates = model.nodeDataArray.filter(function (currentElement) {
-            for (node of model.nodeDataArray) {
-                if (nodeStartDate === "" && nodeEndDate != "") {
-                    if
-             }
-            }
-        });
-
-
-    } else {
-        modelnodesFilteredDates = modelNodeWithoutFilter.filter(function (currentElement) {
-
-        });
-    }
-}
 
 /**
  * updates the diagram model
