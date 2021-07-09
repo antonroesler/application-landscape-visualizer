@@ -519,19 +519,24 @@ function linkHandlerWhileFilterOn() {
 }
 
 
-diagram.addDiagramListener("SelectionDeleted", function (e) {
-    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
-        var deletedNodes = [];
-        e.subject.each(function (p) {
-            if (p.part.data.hasOwnProperty('key')) {
-                deletedNodes.push(p.part.data);
+function nodeLinkHandlerWhileFilterOn(deletedNodes) {
+    modelNodeWithoutFilter = modelNodeWithoutFilter.filter(node => {
+        if (deletedNodes.includes(node)) {
+            return false;
+        }
+        return true;
+    })
+    modelLinkWithoutFilter = modelLinkWithoutFilter.filter(link => {
+        for (node of deletedNodes) {
+            if (node.key === link.from || node.key === link.to) {
+                console.log(node);
+                return false;
+            } else {
+                return true;
             }
-        })
-        nodeLinkHandlerWhileFilterOn(deletedNodes);
-    } else {
-        modelNodeWithoutFilter = model.nodeDataArray;
-        modelLinkWithoutFilter = model.linkDataArray;
-    }
-    diagramEvent()
 
-});
+        }
+        return true;
+    })
+}
+
