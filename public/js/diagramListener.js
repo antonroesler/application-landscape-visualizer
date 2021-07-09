@@ -56,3 +56,13 @@ diagram.addDiagramListener("LinkDrawn", function (e) {
     }
 
 });
+
+diagram.addDiagramListener("SelectionDeleting", function (e) {
+    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+        linkHandlerWhileFilterOn();
+    } else {
+        modelLinkWithoutFilter = model.linkDataArray;
+        modelNodeWithoutFilter = model.nodeDataArray;
+    }
+
+});
