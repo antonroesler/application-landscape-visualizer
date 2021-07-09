@@ -20,7 +20,7 @@ var appliedFilters = [];
 var moreThanOneFilter = false;
 
 /**
- * Used to app a new filter to the diagram from else where in the code. Psuhes the filter to the all-Filter array,
+ * Used to add a new filter to the diagram from else where in the code. Pushes the filter to the all-Filter array,
  * applies the filter and adds it to the html.
  * @param filter
  */
@@ -41,6 +41,7 @@ function filterOff() {
     model.nodeDataArray = Array.from(noDublicates);
     model.linkDataArray = modelLinkWithoutFilter;
     diagram.commitTransaction("filter removed");
+    diagramEvent()
 }
 
 /**
@@ -63,6 +64,7 @@ function filterDiagramFromSidenav() {
     try {
         _filterDiagramFromSidenav();
         createToast("Filter added.", "success");
+        toggleSidenav();
     } catch (e) {
         console.log(e);
         createToast(e, "fail");
@@ -89,7 +91,7 @@ function _filterDiagramFromSidenav() {
 function applyFilter(f) {
     const filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
-        window.alert("there are no Nodes with this setting");
+        createToast("There are no Applications with this property!", "fail");
     } else {
         if (moreThanOneFilter === false) {
             moreThanOneFilter = true;
@@ -103,6 +105,7 @@ function applyFilter(f) {
             filterAppLinks(andFilterArray);
         }
     }
+    diagramEvent()
 }
 
 
@@ -251,7 +254,7 @@ function nodeWithKeyExists(key, nodeArray) {
  * @param enteredName
  * @return {boolean}
  */
-function checkFilterNameExists(enteredName) {
+function filterNameExists(enteredName) {
     for (element of allFilter) {
         if (element.name === enteredName) {
             return true;
@@ -271,7 +274,7 @@ function removeFilterFromArray(filterName) {
         }
         return false;
     })
-    console.log(allFilter);
+    diagramEvent()
 }
 
 /**
@@ -284,7 +287,7 @@ function removeAppliedFilterFromArray(filterName) {
         }
         return false;
     })
-    console.log(appliedFilters);
+    diagramEvent()
 }
 
 /**

@@ -998,6 +998,14 @@ ul:not(.browser-default) {
     margin: 0 0.85rem 0.85rem 0.85rem;
 }
 
+.sidenav-date-input-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: auto !important;
+    padding: 0 0.85rem;
+}
+
 
 /* Collapsible
    ========================================================================== */

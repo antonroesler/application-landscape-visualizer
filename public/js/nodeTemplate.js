@@ -17,7 +17,7 @@
  * @author Feng Yi Lu, Benedikt Möller, Anton Roesler
  *
  */
-const cxElement = document.getElementById("contextMenu");
+
 
 /**
  * function is needed to use the icons in icons.js
@@ -57,90 +57,7 @@ function makePort(name, align, spot, output, input) {
     });
 }
 
-/* Define custom context menu as html info element. */
-const contextMenu = $(go.HTMLInfo, {
-    show: showContextMenu,
-    hide: hideContextMenu
-});
 
-/**
- * Hides the context menu if active.
- */
-function hideCX() {
-    if (diagram.currentTool instanceof go.ContextMenuTool) {
-        diagram.currentTool.doCancel();
-    }
-}
-
-/**
- * Shows the context menu. Option depend on if parent-child-feature is active.
- */
-function showContextMenu(obj, diagram) {
-    let hasMenuItem = false;
-
-    function maybeShowItem(elt, stat) {
-        if (parentChildFeatureOn === stat) {
-            elt.style.display = "block";
-            hasMenuItem = true;
-        } else {
-            elt.style.display = "none";
-        }
-    }
-    maybeShowItem(document.getElementById("parent-opt"), true);
-    maybeShowItem(document.getElementById("children-opt"), true);
-    maybeShowItem(document.getElementById("pred-opt"), true);
-    maybeShowItem(document.getElementById("desc-opt"), true);
-    maybeShowItem(document.getElementById("back-opt"), true);
-    maybeShowItem(document.getElementById("isolate-opt"), false);
-    maybeShowItem(document.getElementById("delete-opt"), false);
-
-    if (hasMenuItem) {
-        cxElement.classList.add("show-menu");
-        const mousePt = diagram.lastInput.viewPoint;
-        cxElement.style.left = mousePt.x + 5 + "px";
-        cxElement.style.top = mousePt.y + "px";
-    }
-    window.addEventListener("click", hideCX, true);
-}
-
-function hideContextMenu() {
-    cxElement.classList.remove("show-menu");
-    window.removeEventListener("click", hideCX, true);
-}
-
-/**
- * Executes a command, that was triggered by a click on a context menu option.
- * @param event
- * @param val
- */
-function cxcommand(event, val) {
-    if (val === undefined) val = event.currentTarget.id;
-    switch (val) {
-        case "isolate-opt":
-            hideAllOtherNodes();
-            break;
-        case "delete-opt":
-            diagram.commandHandler.deleteSelection();
-            break;
-        case "parent-opt":
-            showParents();
-            break;
-        case "children-opt":
-            showChilds();
-            break;
-        case "pred-opt":
-            showAllParentsContextmenu();
-            break;
-        case "desc-opt":
-            showAllChildrenContextmenu();
-            break;
-        case "back-opt":
-            showAll();
-            break;
-
-    }
-    diagram.currentTool.stopTool();
-}
 
 
 /**

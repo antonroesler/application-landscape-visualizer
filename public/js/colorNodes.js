@@ -14,6 +14,7 @@
  *
  * @author Feng Yi Lu, Anton Roesler
  */
+const settings = [];
 
 /* HTML Handler Methods */
 /**

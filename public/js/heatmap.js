@@ -212,7 +212,9 @@ function clickHeatmap(data) {
     const f2_attr = document.getElementById('heatmap-attribute2').value;
     addAndApplyFilter(createFilterObject(f1_value, f1_attr))
     addAndApplyFilter(createFilterObject(f2_value, f2_attr))
-    heatmap() // update heatmap
+    diagramEvent()
+    tabs.select("filterTab");
+    closeHeatmap()
 }
 
 /**

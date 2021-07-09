@@ -98,13 +98,14 @@ async function _saveDiagram() {
 async function loadDiagramNames() {
     const url = 'mongo/diagram/names';
     const res = await fetch(url);
+    console.log(res)
+    let i;
+    const select = document.getElementById("loadCategory");
+    const length = select.options.length;
+    for (i = length - 1; i >= 0; i--) {
+        select.options[i] = null;
+    }
     res.json().then(diagrams => {
-        let i;
-        const select = document.getElementById("loadCategory");
-        const length = select.options.length;
-        for (i = length - 1; i >= 0; i--) {
-            select.options[i] = null;
-        }
         for (i = 0; i < diagrams.length; i++) {
             const opt = diagrams[i];
             const el = document.createElement("option");
@@ -112,6 +113,14 @@ async function loadDiagramNames() {
             el.value = opt;
             select.appendChild(el);
         }
+
+    }).catch(err => {
+        console.log(err)
+        createToast("Database is unavailable", "fail");
+        const el = document.createElement("option");
+        el.textContent = "Demo Diagram";
+        el.value = "Demo Diagram";
+        select.appendChild(el);
     });
 
 }

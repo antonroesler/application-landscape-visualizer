@@ -43,7 +43,7 @@
 
     <header>
         <div class="main-nav">
-            <img class="logo" src="img/logo/ecore_logo_large.png">
+            <img class="logo" src="img/logo/ecore_logo.png">
             <p id="diagram-title-name">Untitled</p>
             <div class="search">
                 <i id="searchIcon" class="material-icons search-icon hovered" onclick="toggleSearchbar()">search</i>
@@ -305,7 +305,7 @@
                         </ul>
                     </li>
                     <button class="modal-btn sidenav-margin margin-top"
-                        onclick="filterDiagramFromSidenav(); toggleSidenav();">Add</button>
+                        onclick="filterDiagramFromSidenav();">Add</button>
                     <button class="modal-btn-cancel sidenav-margin" onclick="toggleSidenav()">Cancel</button>
                 </form>
             </div>
@@ -368,8 +368,8 @@
                 <div class="row">
                     <div class="col s12 tabbar">
                         <ul class="tabs">
-                            <li class="tab col s3"><a href="#filterTab"><i class="material-icons">layers</i></a></li>
-                            <li class="tab col s3"><a href="#visualizationTab"><i class="material-icons">color_lens</i></a></li>
+                            <li class="tab col s3"><a href="#filterTab"><i class="material-icons" onclick="closeHeatmap()">layers</i></a></li>
+                            <li class="tab col s3"><a href="#visualizationTab" ><i class="material-icons" onclick="closeHeatmap()">color_lens</i></a></li>
                             <li class="tab col s3"><a href="#histogramTab"><i class="material-icons">insert_chart</i></a></li>
                             <li class="tab col s3" onclick="exposeLastTab()"><a href="#heatmapTab"><i class="material-icons">bubble_chart</i></a></li>
                         </ul>
@@ -507,8 +507,8 @@
                                 </li>
                             </ul>
                             <div class="margin-top tab-btn-container">
-                                <button id="render-heatmap" onclick="heatmap()" class="nav-btn">Generate
-                                    Heatmap</button>
+                                <button id="render-heatmap" onclick="heatmap(); generateKeyFigureInfo()" class="nav-btn">
+                                    Generate Heatmap</button>
                                 <button id="hide-heatmap" onclick="closeHeatmap()" class="nav-btn">Close
                                     Heatmap</button>
                             </div>
@@ -521,7 +521,7 @@
 
     <footer>
         <div class="footer-content">
-            <a href="https://github.com/antonroesler/application-landscape-visualizer"> This project was developed by a group of students at Frankfurt UAS as part
+            <a href="https://github.com/antonroesler/application-landscape-visualizer" target="_blank"> This project was developed by a group of students at Frankfurt UAS as part
             of the module "Advanced Programming". The source code can be found on GitHub.</a>
         </div>
         <div class="footer-copyright">
@@ -538,6 +538,9 @@
         <li id="pred-opt" class="menu-item" onclick="cxcommand(event)">Show all Predecessors</li>
         <li id="desc-opt" class="menu-item" onclick="cxcommand(event)">Show all Descendants</li>
         <li id="back-opt" class="menu-item" onclick="cxcommand(event)">Back to whole Diagram</li>
+        <li id="new-opt" class="menu-item" onclick="cxcommand(event)">New Application</li>
+        <li id="undo-opt" class="menu-item" onclick="cxcommand(event)">Undo</li>
+        <li id="redo-opt" class="menu-item" onclick="cxcommand(event)">Redo</li>
     </ul>
 
 
@@ -566,7 +569,7 @@
 <script src="js/histogram.js"></script>
 <script src="js/nodeTemplate.js"></script>
 <script src="js/linkTemplate.js"></script>
-<script src="js/visualisation.js"></script>
 <script src="js/settings.js"></script>
 <script src="js/tutorial.js"></script>
+<script src="js/eventHandler.js"></script>
 </html>
