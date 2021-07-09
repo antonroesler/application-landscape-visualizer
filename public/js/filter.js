@@ -148,16 +148,29 @@ function hasProperty(filter) {
     return false;
 }
 
+function isFilterWithDate(filter) {
+    for (let key of Object.keys(filter.properties)) {
+        if (key.endsWith("Date")){
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * Rearranges nodeDataArray according to the filter properties
  */
 function filterAppNodes(filter) {
     if (filter == undefined) return null;
-    const filteredDateNodes = filterDate(filter);
+    let filteredDateNodes = new Set;
+    if (isFilterWithDate(filter)){
+        filteredDateNodes = filterDate(filter);
+    }
+    delete filter.properties.shutdownDate;
+    delete filter.properties.startDate;
     const newModelArray = model.nodeDataArray.filter(function (currentElement) {
         if (hasProperty(filter)) {
             for (let key in filter.properties) {
-                if (key !== "shutdownDate" || key !== "startDate") {
                     var currentElementProp = currentElement[key];
                     var currentFilterProps = filter.properties[key];
                     if (Array.isArray(currentElementProp)) {
@@ -168,14 +181,16 @@ function filterAppNodes(filter) {
                         }
                     } else {
                         if (currentFilterProps.includes(currentElementProp)) {
+                            console.log(currentElement.name)
                             return true;
                         }
                     }
-                }
+
             }
         }
         return false;
     });
+    console.log(newModelArray)
     return Array.from(new Set([...newModelArray, ...filteredDateNodes])); // Merge the two arrays
 }
 
@@ -248,11 +263,6 @@ function filterDate(filter) {
     for (let node of modelNodeWithoutFilter) {
         for (const d of ["shutdownDate", "startDate"]) {
             const cShutDown = Date.parse(node[d])
-            console.log(filter.properties)
-            console.log(filter.properties["startDate"])
-            console.log(filter.properties["shutdownDate"])
-            console.log(d)
-            console.log(filter.properties[d])
             if (filter.properties[d].some(hasValue)) {
                 if (isInRange(cShutDown, filter.properties[d])) {
                     filteredSet.add(node)
