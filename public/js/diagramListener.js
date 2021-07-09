@@ -57,14 +57,22 @@ diagram.addDiagramListener("LinkDrawn", function () {
     diagramEvent()
 });
 
-diagram.addDiagramListener("SelectionDeleted", function () {
+
+diagram.addDiagramListener("SelectionDeleted", function (e) {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+        var deletedNodes = [];
+        e.subject.each(function (p) {
+            if (p.part.data.hasOwnProperty('key')) {
+                deletedNodes.push(p.part.data);
+            }
+        })
+        nodeLinkHandlerWhileFilterOn(deletedNodes);
     } else {
-        
-        modelLinkWithoutFilter = model.linkDataArray;
         modelNodeWithoutFilter = model.nodeDataArray;
+        modelLinkWithoutFilter = model.linkDataArray;
     }
     diagramEvent()
+
 });
 
 

@@ -92,6 +92,7 @@ function applyFilter(f) {
     const filterNodeArray = filterAppNodes(f);
     if (filterNodeArray.length === 0) {
         createToast("There are no Applications with this property!", "fail");
+        return false;
     } else {
         if (moreThanOneFilter === false) {
             moreThanOneFilter = true;
@@ -104,6 +105,7 @@ function applyFilter(f) {
             activateFilter(andFilterArray);
             filterAppLinks(andFilterArray);
         }
+        return true;
     }
     diagramEvent()
 }
@@ -454,15 +456,16 @@ function changeFilterActivation(filterName) {
 
             moreThanOneFilter = true;
         }
-        appliedFilters.push(filterName);
         filters = findFilter(filterName);
-        applyFilter(filters[0]);
-
-        let span = document.createElement("span");
-        span.setAttribute("class", "new badge");
-        span.innerHTML = "Active";
-        filterElement.querySelector("a").appendChild(span);
-        filterElement.classList.add("active");
+        var check = applyFilter(filters[0]);
+        if (check === true) {
+            appliedFilters.push(filterName);
+            let span = document.createElement("span");
+            span.setAttribute("class", "new badge");
+            span.innerHTML = "Active";
+            filterElement.querySelector("a").appendChild(span);
+            filterElement.classList.add("active");
+        }
     }
 }
 
@@ -514,3 +517,21 @@ function linkHandlerWhileFilterOn() {
         }
     })
 }
+
+
+diagram.addDiagramListener("SelectionDeleted", function (e) {
+    if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+        var deletedNodes = [];
+        e.subject.each(function (p) {
+            if (p.part.data.hasOwnProperty('key')) {
+                deletedNodes.push(p.part.data);
+            }
+        })
+        nodeLinkHandlerWhileFilterOn(deletedNodes);
+    } else {
+        modelNodeWithoutFilter = model.nodeDataArray;
+        modelLinkWithoutFilter = model.linkDataArray;
+    }
+    diagramEvent()
+
+});
