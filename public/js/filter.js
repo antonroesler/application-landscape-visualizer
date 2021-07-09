@@ -139,88 +139,129 @@ function applyAllFilters() {
     }
 }
 
+function hasProperty(filter) {
+    for (let key in filter.properties) {
+        if (!["shutdownDate", "startDate"].includes(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * Rearranges nodeDataArray according to the filter properties
  */
 function filterAppNodes(filter) {
     if (filter == undefined) return null;
-    filteredDateNodes = filterDate(filter);
-    newModelArray = model.nodeDataArray.filter(function (currentElement) {
-        for (let key in filter.properties) {
-            if (key != "shutdownDate" || "startDate") {
-                var currentElementProp = currentElement[key];
-                var currentFilterProps = filter.properties[key];
-                if (Array.isArray(currentElementProp)) {
-                    for (let property of currentElementProp) {
-                        if (currentFilterProps.includes(property)) {
+    const filteredDateNodes = filterDate(filter);
+    const newModelArray = model.nodeDataArray.filter(function (currentElement) {
+        if (hasProperty(filter)) {
+            for (let key in filter.properties) {
+                if (key !== "shutdownDate" || key !== "startDate") {
+                    var currentElementProp = currentElement[key];
+                    var currentFilterProps = filter.properties[key];
+                    if (Array.isArray(currentElementProp)) {
+                        for (let property of currentElementProp) {
+                            if (currentFilterProps.includes(property)) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        if (currentFilterProps.includes(currentElementProp)) {
                             return true;
                         }
-                    }
-                } else {
-                    if (currentFilterProps.includes(currentElementProp)) {
-                        return true;
                     }
                 }
             }
         }
         return false;
     });
-
-    return combineBothArrays(filteredDateNodes, newModelArray);
+    return Array.from(new Set([...newModelArray, ...filteredDateNodes])); // Merge the two arrays
 }
 
-function combineBothArrays(filteredDateNodes, newModelArray) {
-    if (filteredDateNodes != null) {
-        filteredDateNodes.forEach(node => {
-            if (newModelArray.includes(node) === false) {
-                newModelArray.push(node);
-            }
-        })
+
+/**
+ * Returns number if it's a number or false if its NaN.
+ * @param number
+ * @returns {boolean|*}
+ */
+function nConv(number) {
+    if (number.isNaN) {
+        return false;
     }
-    return newModelArray;
-
+    return number
 }
+
+/**
+ * Returns true if d1 is a bigger date than d2. Also returns true if d1 or d2 are undefined.
+ * @param d1
+ * @param d2
+ * @returns {boolean}
+ */
+function isBiggerDate(d1, d2) {
+    if (nConv(d1) && nConv(d2)) {
+        return d1 >= d2;
+    }
+    return true;
+}
+
+/**
+ * Returns true if d1 is smaller than d2 or if d2 is undefined. Returns false if d1 is undefined.
+ * @param d1
+ * @param d2
+ * @returns {boolean}
+ */
+function isSmallerDate(d1, d2) {
+    console.log("---")
+    console.log(d2)
+    console.log(d1)
+
+    if (!d2) {
+        console.log("1")
+        return true;
+
+    }
+    if (nConv(d1) && nConv(d2)) {
+        console.log("2")
+        return d1 <= d2;
+    }
+    console.log("3")
+    return false;
+}
+
+function isInRange(date, range) {
+    x = isBiggerDate(date, Date.parse(range[0])) && isSmallerDate(date, Date.parse(range[1]))
+    console.log(x)
+    return x
+}
+
+
+/**
+ * Filters nodes by a date value. If a node does not have a date specified it is counted as a infinite value in the
+ * future. E.g. 01.01.9999
+ * @param filter
+ * @returns {Set<any>}
+ */
 function filterDate(filter) {
-    var startEnd = ["startDate", "shutdownDate"];
-    if (filter.properties.startDate[0] === "" && filter.properties.startDate[1] === "" && filter.properties.shutdownDate[0] === "" && filter.properties.shutdownDate[1] === "") {
-        console.log("okay bin drin");
-        return null;
-    } else {
-        console.log("okay bin drin2");
-        var nodeDatesArray = modelNodeWithoutFilter.filter(function (currentElement) {
-            for (type of startEnd) {
-                if (type === "startDate") {
-                    var currentElementProp = Date.parse(currentElement.startDate);
-                } else {
-                    var currentElementProp = Date.parse(currentElement.shutdownDate);
-                }
-                if (type === "shutdownDate") {
-                    filterStartDate = filter.properties.shutdownDate[0];
-                    filterEndDate = filter.properties.shutdownDate[1];
-                } else if (type === "startDate") {
-                    filterStartDate = filter.properties.startDate[0];
-                    filterEndDate = filter.properties.startDate[1];
-                }
-                if (filterStartDate != "" && filterEndDate != "") {
-                    if (currentElementProp >= Date.parse(filterStartDate) && currentElementProp <= Date.parse(filterEndDate)) {
-                        return true;
-                    }
-                } else if (filterStartDate != "" && filterEndDate === "") {
-                    if (currentElementProp >= Date.parse(filterStartDate)) {
-                        return true;
-                    }
-                } else if (filterStartDate === "" && filterEndDate != "") {
-                    if (currentElementProp <= Date.parse(filterEndDate)) {
-                        return true;
-                    }
+    const hasValue = (element) => element.length !== 0;
+    let filteredSet = new Set();
+    for (let node of modelNodeWithoutFilter) {
+        for (const d of ["shutdownDate", "startDate"]) {
+            const cShutDown = Date.parse(node[d])
+            console.log(filter.properties)
+            console.log(filter.properties["startDate"])
+            console.log(filter.properties["shutdownDate"])
+            console.log(d)
+            console.log(filter.properties[d])
+            if (filter.properties[d].some(hasValue)) {
+                if (isInRange(cShutDown, filter.properties[d])) {
+                    filteredSet.add(node)
                 }
             }
-        });
-        console.log(nodeDatesArray);
-        return nodeDatesArray;
+        }
     }
+    return filteredSet;
 }
-
 
 
 /**
@@ -465,6 +506,7 @@ function deleteFilterElementFromFilterCollection(filterName) {
         }
     }
 }
+
 function linkHandlerWhileFilterOn() {
     model.linkDataArray.forEach(link => {
         console.log(link);
