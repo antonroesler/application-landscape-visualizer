@@ -60,6 +60,7 @@ diagram.addDiagramListener("LinkDrawn", function () {
 
 diagram.addDiagramListener("SelectionDeleted", function (e) {
     if (appliedFilters.length > 0 || parentChildFeatureOn === true) {
+        e.subject.each(function(p) { console.log(p.part.data); })
         nodeLinkHandlerWhileFilterOn();
     } else {
         modelNodeWithoutFilter = model.nodeDataArray;
