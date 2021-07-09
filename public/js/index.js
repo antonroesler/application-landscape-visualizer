@@ -32,7 +32,6 @@ model.linkToPortIdProperty = "toPort";
 
 model.nodeDataArray = [];
 model.linkDataArray = [];
-
 let modelNodeWithoutFilter = [];
 let modelLinkWithoutFilter = [];
 let parentChildNodeSet = new Set();

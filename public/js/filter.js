@@ -15,6 +15,7 @@
  */
 
 
+
 var allFilter = [];
 var appliedFilters = [];
 var moreThanOneFilter = false;
@@ -173,6 +174,7 @@ function activateFilter(filterNodeArray) {
     model.nodeDataArray = filterNodeArray;
     diagram.commitTransaction("filter node applied");
     diagramNodeWhenFilterIsActive = filterNodeArray;
+    console.log(model.nodeDataArray);
     return filterNodeArray;
 }
 
@@ -413,5 +415,24 @@ function linkHandlerWhileFilterOn() {
         if (modelLinkWithoutFilter.includes(link) === false) {
             modelLinkWithoutFilter.push(link);
         } 
+    })
+}
+
+
+function nodeLinkHandlerWhileFilterOn() {
+    deletedNodes = diagramNodeWhenFilterIsActive.filter(node => {
+        if (model.nodeDataArray.includes(node) === false) {
+            return true;
+        } 
+        return false;
+    })
+    console.log(model.nodeDataArray);
+    console.log(diagramNodeWhenFilterIsActive);
+    console.log(deletedNodes);
+    modelNodeWithoutFilter = modelNodeWithoutFilter.filter(node => {
+        if (deletedNodes.includes(node) === true) {
+            return false;
+        } 
+        return true;
     })
 }
