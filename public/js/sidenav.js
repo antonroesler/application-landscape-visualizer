@@ -177,7 +177,6 @@ function readFilterPropertiesFromSideNav() {
                 filterObject.properties[attributeKey].push(value);
             }
         }
-        console.log(filterObject)
         return filterObject;
     }
 }

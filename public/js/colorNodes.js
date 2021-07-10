@@ -5,7 +5,7 @@
 * Study program:     Engineering Business Information Systems
 * Module:            Advanced Programming 2021
 * Professor:         Prof. Dr. Jung, Prof. Dr. Bremm
-* Date:              21.04.2021
+* Date:              10.07.2021
 *
 */
 
@@ -245,6 +245,7 @@ function getAllDirectParentNodes(node) {
  * @param parents A Set
  */
 function getAllParentNodes(node, parents) {
+    let setBasedOnMode;
     if (parentChildFeatureOn === true) { 
         setBasedOnMode = getNodesFromKeys(findParentsOfANode(node));
     } else {
@@ -266,6 +267,7 @@ function getAllParentNodes(node, parents) {
  * @param childs A Set
  */
 function getAllChildNodes(node, childs) {
+    let setBasedOnMode;
     if (parentChildFeatureOn === true) {
         setBasedOnMode = getNodesFromKeys(findChildsofANode(node));
     } else {
@@ -343,11 +345,6 @@ function removeLegend(){
 function colorNodesInSetObject(obj, color) {
     Object.keys(obj).forEach(key => {
         obj[key].forEach(node => {
-            console.log("Node")
-            console.log(node.sb.name)
-            console.log('color')
-            console.log(color[Number(key)])
-            console.log(color)
             addColorToNode(node.sb, color[color.length - Number(key)])
         })
     })
@@ -373,8 +370,6 @@ async function colorNodesByDistance() {
     addAndTraverseParents(parents, node, 0);
     const n_child_gen = getMaxKey(childs)
     const n_parent_gen = getMaxKey(parents)
-    console.log(childs)
-    console.log(n_child_gen)
     const res = await fetch('color/grad?n=' + String(n_child_gen + 1) + "&a=FFFFFF&b=ED553B");
     const pcolor = await res.json();
     const res2 = await fetch('color/grad?n=' + String(n_parent_gen + 1) + "&a=FFFFFF&b=3bd3ed");
@@ -433,7 +428,6 @@ function settingAppNodes(setting) {
     settingProperty.forEach(property => {
         model.nodeDataArray.forEach(node => {
             if (node.category === property) {
-                console.log(node)
                 addColorToNode(node, setting[property]);
             }
         }

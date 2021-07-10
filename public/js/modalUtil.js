@@ -17,7 +17,6 @@
 
 function openSaveDiagramModal() {
     const name = document.getElementById('diagram-title-name').innerText;
-    console.log(name)
     if (!["undefined", "null", "untitled"].includes(String(name).toLowerCase())){
         document.getElementById('saveName').value = name;
     }

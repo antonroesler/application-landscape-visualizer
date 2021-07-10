@@ -67,6 +67,7 @@ function saveDiagram() {
         _saveDiagram().then(r => createToast("Diagram saved.", "success")).catch(error => createToast(error, "fail"));
     } catch (e) {
         console.log(e);
+        createToast(e, "fail");
     }
 }
 
@@ -98,7 +99,6 @@ async function _saveDiagram() {
 async function loadDiagramNames() {
     const url = 'mongo/diagram/names';
     const res = await fetch(url);
-    console.log(res)
     let i;
     const select = document.getElementById("loadCategory");
     const length = select.options.length;
