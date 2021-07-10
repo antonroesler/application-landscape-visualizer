@@ -166,7 +166,7 @@ function isFilterWithDate(filter) {
  */
 function getFilterPropertiesNoDate(properties) {
     const props = [];
-    for (let prop of properties){
+    for (let prop of Object.keys(properties)){
         if (!prop.endsWith("Date")){
             props.push(prop)
         }
@@ -185,7 +185,7 @@ function filterAppNodes(filter) {
     }
     const newModelArray = model.nodeDataArray.filter(function (currentElement) {
         if (hasProperty(filter)) {
-            for (let key in getFilterPropertiesNoDate(filter.properties)) {
+            for (let key of getFilterPropertiesNoDate(filter.properties)) {
                 var currentElementProp = currentElement[key];
                 var currentFilterProps = filter.properties[key];
                 if (Array.isArray(currentElementProp)) {
