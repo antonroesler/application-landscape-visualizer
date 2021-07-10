@@ -260,6 +260,7 @@ function clickHandler(evt) {
             createToast(e, "fail");
         }
     }
+    diagramEvent()
 }
 
 /**

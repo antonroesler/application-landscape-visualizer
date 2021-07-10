@@ -69,6 +69,7 @@ function filterDiagramFromSidenav() {
         console.log(e);
         createToast(e, "fail");
     }
+    diagramEvent()
 }
 
 
@@ -107,7 +108,6 @@ function applyFilter(f) {
         }
         return true;
     }
-    diagramEvent()
 }
 
 
@@ -117,7 +117,6 @@ function applyFilter(f) {
 function applyAdditionalFilter(nextFilter, previousFilterNodeArray) {
     const nextFilterArray = filterAppNodes(nextFilter);
     const andFilterArray = previousFilterNodeArray.filter(node => nextFilterArray.includes(node));
-    console.log(andFilterArray);
     if (andFilterArray.length === 0) {
         alert("There is are no nodes with this combined filter!");
     } else {
@@ -352,7 +351,6 @@ function removeFilterFromArray(filterName) {
         }
         return false;
     })
-    diagramEvent()
 }
 
 /**
@@ -365,7 +363,6 @@ function removeAppliedFilterFromArray(filterName) {
         }
         return false;
     })
-    diagramEvent()
 }
 
 /**
