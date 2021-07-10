@@ -160,6 +160,21 @@ function isFilterWithDate(filter) {
 }
 
 /**
+ * Returns an array of all keys that do not end with 'Date'.
+ * @param properties
+ * @returns {*[]}
+ */
+function getFilterPropertiesNoDate(properties) {
+    const props = [];
+    for (let prop of properties){
+        if (!prop.endsWith("Date")){
+            props.push(prop)
+        }
+    }
+    return props;
+}
+
+/**
  * Rearranges nodeDataArray according to the filter properties
  */
 function filterAppNodes(filter) {
@@ -168,11 +183,9 @@ function filterAppNodes(filter) {
     if (isFilterWithDate(filter)) {
         filteredDateNodes = filterDate(filter);
     }
-    delete filter.properties.shutdownDate;
-    delete filter.properties.startDate;
     const newModelArray = model.nodeDataArray.filter(function (currentElement) {
         if (hasProperty(filter)) {
-            for (let key in filter.properties) {
+            for (let key in getFilterPropertiesNoDate(filter.properties)) {
                 var currentElementProp = currentElement[key];
                 var currentFilterProps = filter.properties[key];
                 if (Array.isArray(currentElementProp)) {
