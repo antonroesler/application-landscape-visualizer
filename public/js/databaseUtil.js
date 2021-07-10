@@ -91,6 +91,7 @@ async function _saveDiagram() {
     } else { // If name doesnt yet exists in DB, the diagram is simply saved.
         await saveDiagramToMongo(diagramName);
     }
+    updateDiagramTitle(diagramName)
 }
 
 /**
