@@ -26,28 +26,6 @@ const mongoose =require('mongoose')
 
 
 /**
- * Saves the whole model. model must be passed in the request's body.
- */
-router.post('/', async (req, res) => {
-    const nodeDataArray = [];
-    const linkDataArray = [];
-    formatNodeDataArray(req, nodeDataArray);
-    formatLinkDataArray(req, linkDataArray);
-    const diagram = new Diagram({
-        name: req.body.name,
-        nodeDataArray: nodeDataArray,
-        linkDataArray: linkDataArray
-    });
-    try {
-        const savedDiagram = await diagram.save()
-        res.json(savedDiagram);
-
-    }catch (err){
-        res.json(err)
-    }
-})
-
-/**
  * Get a diagram form the database. Must be specified by name.
  *
  * mongo/ABC
@@ -77,23 +55,6 @@ router.get('/:name', async (req, res) => {
 
 })
 
-/**
- * Deletes a diagram form the database. Must be specified by name.
- *
- * mongo/ABC
- *
- * to delete the diagram called ABC
- */
-router.delete('/:name', async (req, res) => {
-    const name = req.params.name
-    try {
-        const diagram = await Diagram.deleteMany({name:name});
-        res.json(diagram);
-
-    }catch (err){
-        res.json(err)
-    }
-})
 
 /**
  * Get names of all diagrams stored in the database.
