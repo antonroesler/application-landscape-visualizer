@@ -1060,6 +1060,11 @@ ul:not(.browser-default) {
     margin-top: 0.85rem;
 }
 
+.link {
+    color: var(--focus-blue);
+    text-decoration: underline;
+}
+
 
 /* Collection
    ========================================================================== */
