@@ -155,9 +155,6 @@ async function colorCategorizedNodeMap(nodes, grad = false) {
     }
 }
 
-
-
-
 /* Color child and parent nodes */
 /**
  * Wrapper function for _colorChildsAndParents.
@@ -242,21 +239,20 @@ function getAllDirectParentNodes(node) {
  * Returns a Set of all parent nodes of a node. Here a parent is any node from that it's possible to reach the given
  * node. No matter how far away it is.
  * @param node
- * @param parents A Set
+ * @param allParents A Set
  */
-function getAllParentNodes(node, parents) {
-    let setBasedOnMode;
-    if (parentChildFeatureOn === true) { 
-        setBasedOnMode = getNodesFromKeys(findParentsOfANode(node));
+function getAllParentNodes(node, allParents) {
+    let directParents;
+    if (parentChildFeatureOn === true) {
+        directParents = getNodesFromKeys(findParentsOfANode(node));
     } else {
-        setBasedOnMode = getAllDirectParentNodes(node);
+        directParents = getAllDirectParentNodes(node);
     }
-    setBasedOnMode.forEach(parent => {
-        if (!parents.has(parent)) {
-            parents.add(parent);
-            getAllParentNodes(parent, parents);
+    directParents.forEach(parent => {
+        if (!allParents.has(parent)) {
+            allParents.add(parent);
+            getAllParentNodes(parent, allParents);
         }
-
     })
 }
 
@@ -264,26 +260,26 @@ function getAllParentNodes(node, parents) {
  * Returns a Set of all child nodes of a node. Here a child is any node that is reachable from the given node. No matter
  * how far away it is.
  * @param node
- * @param childs A Set
+ * @param allChildren A Set
  */
-function getAllChildNodes(node, childs) {
-    let setBasedOnMode;
+function getAllChildNodes(node, allChildren) {
+    let directChildren;
     if (parentChildFeatureOn === true) {
-        setBasedOnMode = getNodesFromKeys(findChildsofANode(node));
+        directChildren = getNodesFromKeys(findChildsofANode(node));
     } else {
-        setBasedOnMode = getAllDirectChildNodes(node);
+        directChildren = getAllDirectChildNodes(node);
     }
-    setBasedOnMode.forEach(child => {
-        if (!childs.has(child)) {
-            childs.add(child);
-            getAllChildNodes(child, childs);
+    directChildren.forEach(child => {
+        if (!allChildren.has(child)) {
+            allChildren.add(child);
+            getAllChildNodes(child, allChildren);
         }
     })
 }
 
 
 /**
- * Checks id parent is in any set of the dataObj. dataObj must be an object with only sets as values.
+ * Checks if parent is in any set of the dataObj. dataObj must be an object with only sets as values.
  * @param parent
  * @param dataObj
  * @returns {boolean}
@@ -340,7 +336,23 @@ function removeLegend(){
 }
 
 
-/* Approach to color nodes in a gradient by distance from the selected node - NOT in use yet TODO: Implement or delete.*/
+/**
+ * Function used to color a new created node when a color setting is active.
+ * @param node
+ */
+function applyColorWhenNodeCreated(node) {
+    if (settings.length != 0) {
+        var settingProperty = Object.keys(settings[0]);
+        settingProperty.forEach(property => {
+            if (property === node.category) {
+                addColorToNode(node, settings[0][property]);
+            } else {
+            }
+        });
+    } 
+}
+
+/* Approach to color nodes in a gradient by distance from the selected node - NOT in production use.*/
 
 function colorNodesInSetObject(obj, color) {
     Object.keys(obj).forEach(key => {
@@ -410,20 +422,4 @@ function addAndTraverseParents(dataObj, node, distance) {
 
         })
     }
-}
-
-/**
- * Function used to color a new created node when a color setting is active.
- * @param node
- */
-function applyColorWhenNodeCreated(node) {
-    if (settings.length != 0) {
-        var settingProperty = Object.keys(settings[0]);
-        settingProperty.forEach(property => {
-            if (property === node.category) {
-                addColorToNode(node, settings[0][property]);
-            } else {
-            }
-        });
-    } 
 }
