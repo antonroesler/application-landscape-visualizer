@@ -412,29 +412,10 @@ function addAndTraverseParents(dataObj, node, distance) {
     }
 }
 
-/* Old Functions TODO: Delete if not needed.*/
-
-function settingFromSideBar() {
-    const setting = readSettingProperties();
-    applySetting(setting);
-}
-
-function applySetting(setting) {
-    settingAppNodes(setting);
-}
-
-function settingAppNodes(setting) {
-    var settingProperty = Object.keys(setting);
-    settingProperty.forEach(property => {
-        model.nodeDataArray.forEach(node => {
-            if (node.category === property) {
-                addColorToNode(node, setting[property]);
-            }
-        }
-        )
-    })
-}
-
+/**
+ * Function used to color a new created node when a color setting is active.
+ * @param node
+ */
 function applyColorWhenNodeCreated(node) {
     if (settings.length != 0) {
         var settingProperty = Object.keys(settings[0]);
@@ -444,6 +425,5 @@ function applyColorWhenNodeCreated(node) {
             } else {
             }
         });
-    } else {
-    }
+    } 
 }
