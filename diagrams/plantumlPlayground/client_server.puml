@@ -1,0 +1,15 @@
+@startuml
+
+Client -> Server: Request
+activate Server
+alt Request definded
+  Server -> DB: Request
+  activate DB
+  DB -> Server: Response
+  deactivate DB
+  Server -> Client: Response
+else Request not defined
+  Server -> Client: Error
+  deactivate Server
+end
+@enduml

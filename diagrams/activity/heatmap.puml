@@ -1,0 +1,36 @@
+@startuml
+start
+
+fork
+  :create set1;
+  :iterate over all nodes;
+  while (done?) is (no)
+   :add node's value for desired attribute 1 to set;
+  endwhile (yes)
+  :turn set to array;
+fork again
+  :create set2;
+  :iterate over all nodes;
+  while (done?) is (no)
+   :add node's value for desired attribute 2 to set;
+  endwhile (yes)
+  :turn set to array;
+endfork
+
+:generate 2D-array of size set1 x set2 filled with zeros;
+
+:iterate over all nodes;
+while (done?) is (no)
+ :get node's values for both attributes;
+ :get indexes of theses values in the arrays;
+ :iterate over indexes of values of attribute 1;
+ while (done?) is (no)
+  :iterate over indexes of values of attribute 2;
+  while (done?) is (no)
+    :2D-array at that poition += 1;
+endwhile (yes)
+endwhile (yes)
+endwhile (yes)
+:generate heat map from 2D-array;
+stop
+@enduml

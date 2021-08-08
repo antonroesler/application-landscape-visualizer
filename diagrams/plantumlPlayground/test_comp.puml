@@ -1,0 +1,40 @@
+@startuml
+actor User as u
+() mongoose as moo
+[Page] as p
+
+
+
+node "Client" as c{
+  [JavaScript] as js
+  [HTML]
+  [CSS]
+  [GoJS]
+}
+
+
+
+
+
+node "Server" as s{
+  [nodeJS] as node
+  () RestAPI as api
+}
+
+
+
+cloud "AWS" as a{
+  database "mongoDB" as mongo {
+    [Database]
+  }
+}
+
+u -- p
+p - c: render
+js ----- api
+api - node
+
+s -- moo
+moo --- mongo
+
+@enduml

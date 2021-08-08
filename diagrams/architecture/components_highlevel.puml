@@ -1,0 +1,22 @@
+@startuml
+
+
+node "Client" as c {
+  [Web Application] as w
+}
+
+
+node "Server" as s{
+  [API] as a
+}
+
+cloud "AWS"{
+  database "Database" as mongo
+}
+
+
+w - a
+a - mongo
+
+
+@enduml

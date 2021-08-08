@@ -1,0 +1,11 @@
+@startuml
+component model {
+  [nodeDataArray] as nda
+}
+[nodelNodeWithoutFilter] as full
+
+ 
+nda - event
+event - full
+
+@enduml

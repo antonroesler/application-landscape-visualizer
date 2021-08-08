@@ -1,0 +1,26 @@
+@startuml
+autonumber "<b>[00]"
+participant "Web Application" as w
+participant Server as s
+participant mongoDB as m
+
+u -> w: Load diagram
+w -> s: GET: all diagram names
+s -> m: GET: all diagram names
+m --> s: JSON Response
+s --> w: JSON Response
+w --> u: Display diargam names
+
+u -> w: Choose diagram XY
+w -> s: GET: diagram XY
+s -> m: GET: diagram XY
+m --> s: Diagram XY in JSON
+s --> w: Diagram XY in JSON
+
+w --> u: Render diagram XY
+
+
+
+
+
+@enduml

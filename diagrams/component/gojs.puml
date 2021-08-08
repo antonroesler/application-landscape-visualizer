@@ -1,0 +1,14 @@
+@startuml
+package "GoJS" {
+  component diagram {
+    component model {
+      [nodeDataArray]
+      [linkDataArray]
+      [...]
+    }
+    [contextMenu]
+    [more..]
+  }
+
+}
+@enduml

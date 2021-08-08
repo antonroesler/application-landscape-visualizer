@@ -1,0 +1,15 @@
+@startuml
+start
+:create an empty set parentNodes;
+:add all direct parent nodes of selected node to parentNodes;
+:iterate over all nodes in parentNodes;
+while (done?) is (no)
+  :iterate over all direct parent nodes of current node;
+  if (parent node not in parentNodes) then (yes)
+    :add parent to parent nodes;
+    :do step X for parent node;
+  endif
+endwhile (yes)
+:return data object;
+stop
+@enduml

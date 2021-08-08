@@ -1,0 +1,15 @@
+@startuml
+
+start
+:create data object;
+:iterate over all nodes;
+while (done?) is (no)
+  if (current nodes value for attribute is in data object) then (yes)
+    :increase count of value in data object by 1;
+  else (no)
+    :create value in data object and set count to 1;
+  endif
+endwhile (yes)
+:return data object;
+stop
+@enduml
