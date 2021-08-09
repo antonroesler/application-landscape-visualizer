@@ -1,0 +1,34 @@
+@startuml
+autonumber "<b>[00]"
+actor User as u
+participant "Web Application" as w
+participant Server as s
+participant mongoDB as m
+
+u -> w: Save diagram with name XY
+w -> s: GET: all diagram names
+s -> m: GET: all diagram names
+m --> s: JSON Response: Diagram names
+s --> w: JSON Response: Diagram names
+alt XY in Diagram names
+  w -> u: Overwrite XY?
+  u --> w: Answer
+  alt no
+    w x<->x u: end
+  else yes
+    w o<->o u: continue
+  end
+end
+
+w -> s: POST: diagram XY
+s -> m: POST: diagram XY
+m --> s: Diagram XY saved
+s --> w: Diagram XY saved
+
+w --> u: Toast message: Diagram saved
+
+
+
+
+
+@enduml
