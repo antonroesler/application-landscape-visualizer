@@ -14,7 +14,6 @@ Figures.js
 *go-*.mjs
 *go.mjs
 
-*chart.js
 
 # Other stupid stuff
 .Rhistory
@@ -25,11 +24,6 @@ node_modules
 #url-join
 url-join.js
 
-#materialize
-materialize.js
-
-#chart.js
-libs/chart.js
 
 # jQuery
 jquery*
@@ -736,4 +730,3 @@ MigrationBackup/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,intellij,webstorm,jetbrains,visualstudio,visualstudiocode
 
 .idea/
-public/libs/chart.js
