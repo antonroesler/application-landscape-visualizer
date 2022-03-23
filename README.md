@@ -1,6 +1,8 @@
 # Application Landscape Visualizer
 Summer 2021 group project for the module "Advanced Programming" of the Engineering Business Information Systems B.Sc. program at Frankfurt University of Applied Sciences.
 
+Read more about what the project does here: https://www.antonroesler.com/application-landscape-visualizer#start
+
 The project is still online but we moved it to a free heroku server, so the web app is not that fast. 
 Deploy: https://application-landscape-vis.herokuapp.com/
 
